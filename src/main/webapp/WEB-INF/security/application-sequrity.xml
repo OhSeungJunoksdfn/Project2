@@ -44,8 +44,8 @@
 	 <!-- 데이터베이스 연동 : userService -->
 	 <jdbc-user-service data-source-ref="ds"
 	 	id="userService"
-	 	users-by-username-query="SELECT username,password,enable FROM projectMember WHERE username=?"
-	 	authorities-by-username-query="SELECT username,authority FROM authority WHERE username=?"
+	 	users-by-username-query="SELECT id as username,pwd as password,enable FROM projectMember WHERE id=?"
+	 	authorities-by-username-query="SELECT id as username,authority FROM authority WHERE id=?"
 	 />
 	 
 	 <authentication-manager>

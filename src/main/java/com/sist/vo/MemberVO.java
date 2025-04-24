@@ -22,7 +22,7 @@ POINT	NUMBER
  */
 @Data
 public class MemberVO {
-	private String username,name,password,sex,birthday,email,post,addr1,addr2,phone,content;
+	private String id,fname,sname,pwd,sex,birthday,email,post,addr1,addr2,phone,content;
 	private int enable,point;
 	private Date regdate,modifydate,lastlogin;
 }

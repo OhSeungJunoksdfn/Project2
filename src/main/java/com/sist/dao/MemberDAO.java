@@ -16,11 +16,11 @@ public class MemberDAO {
   public void memberInsert(MemberVO vo)
   {
 	  mapper.memberInsert(vo);
-	  mapper.memberAuthorityInsert(vo.getUsername());
+	  mapper.memberAuthorityInsert(vo.getId());
   }
  
-  public MemberVO memberSessionData(String userid)
+  public MemberVO memberSessionData(String id)
   {
-	  return mapper.memberSessionData(userid);
+	  return mapper.memberSessionData(id);
   }
 }
