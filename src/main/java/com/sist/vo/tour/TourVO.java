@@ -1,4 +1,4 @@
-package com.sist.vo;
+package com.sist.vo.tour;
 
 public class TourVO {
 
