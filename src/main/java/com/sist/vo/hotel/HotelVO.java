@@ -1,4 +1,4 @@
-package com.sist.vo;
+package com.sist.vo.hotel;
 /*
 NO           NOT NULL NUMBER        
 CONTENT_ID   NOT NULL NUMBER        
