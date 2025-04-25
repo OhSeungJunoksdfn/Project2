@@ -5,10 +5,10 @@
 <configuration>
   <typeAliases>
     <typeAlias type="com.sist.vo.hotel.HotelVO" alias="HotelVO"/>
-    <typeAlias type="com.sist.vo.tour.tourVO" alias="TourVO"/>
+    <typeAlias type="com.sist.vo.tour.TourVO" alias="TourVO"/>
   </typeAliases>
   <mappers>
-    <!-- <mapper resource="com/sist/mapper/hotel-mapper.xml"/>
-    <mapper resource="com/sist/mapper/tour-mapper.xml"/> -->
+    <mapper resource="com/sist/mapper/hotel-mapper.xml"/>
+    <mapper resource="com/sist/mapper/tour-mapper.xml"/>
   </mappers>
 </configuration>
