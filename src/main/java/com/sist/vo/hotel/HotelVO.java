@@ -19,4 +19,9 @@ import java.util.*;
 public class HotelVO {
 	private int no, content_id, content_type, areacode, sigungucode;
 	private String title, addr, img, cat1, cat2, cat3, overview;
+	
+	private HotelInfoVO  Info;
+	private List<String> rList = new ArrayList<String>();
+	private List<String> iList = new ArrayList<String>();
+	
 }
