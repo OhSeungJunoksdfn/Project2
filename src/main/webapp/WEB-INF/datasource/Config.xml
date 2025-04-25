@@ -3,7 +3,12 @@
  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
  "https://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+  <typeAliases>
+    <typeAlias type="com.sist.vo.hotel.HotelVO" alias="HotelVO"/>
+    <typeAlias type="com.sist.vo.tour.tourVO" alias="TourVO"/>
+  </typeAliases>
   <mappers>
-
+    <mapper resource="com/sist/mapper/hotel-mapper.xml"/>
+    <mapper resource="com/sist/mapper/tour-mapper.xml"/>
   </mappers>
 </configuration>
