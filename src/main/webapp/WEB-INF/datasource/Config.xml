@@ -8,7 +8,7 @@
     <typeAlias type="com.sist.vo.tour.tourVO" alias="TourVO"/>
   </typeAliases>
   <mappers>
-    <mapper resource="com/sist/mapper/hotel-mapper.xml"/>
-    <mapper resource="com/sist/mapper/tour-mapper.xml"/>
+    <!-- <mapper resource="com/sist/mapper/hotel-mapper.xml"/>
+    <mapper resource="com/sist/mapper/tour-mapper.xml"/> -->
   </mappers>
 </configuration>
