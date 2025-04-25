@@ -9905,12 +9905,6 @@ h5,
 .owl-carousel:hover .owl-nav .owl-next {
   opacity: 1;
 }
-.owl-carousel:hover .owl-nav .owl-prev {
-  left: -25px;
-}
-.owl-carousel:hover .owl-nav .owl-next {
-  right: -25px;
-}
 
 .owl-custom-nav {
   float: right;
@@ -11106,6 +11100,7 @@ textarea.form-control {
   position: relative;
   background: rgba(255, 255, 255, 0.1);
   color: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
 }
 .testimony-wrap .user-img {
   width: 100px;
@@ -11131,6 +11126,9 @@ textarea.form-control {
   color: #fff;
 }
 .testimony-wrap .name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   font-weight: 400;
   font-size: 18px;
   margin-bottom: 0;
@@ -12274,9 +12272,133 @@ textarea.form-control {
 }
 .bb-3 {
   border-bottom: 3px solid black;
+  color: black;
+  font-weight: 700;
 }
 .bb-1 {
   border-bottom: 1px solid black;
+  color: black;
+  font-weight: 700;
+}
+.page-link {
+  margin: 0;
+}
+.pagination > li:first-child {
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
+}
+.pagination > li:last-child {
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+.pagination > li > p {
+  color: black;
+}
+.selected {
+  border: 2px solid black;
+}
+.fifth-section {
+  position: relative;
+}
+
+.fifth-section .owl-carousel {
+  margin: 0;
+}
+.fifth-section .owl-carousel .owl-stage-outer {
+  position: relative;
+}
+.fifth-section .owl-nav {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  display: flex; /* ← flex 로 전환 */
+  justify-content: space-between; /* ← 좌/우 끝 정렬 */
+  transform: translate(-50%, -50%);
+  pointer-events: none; /* 버튼만 클릭 가능하게 */
+  z-index: 10;
+}
+.fifth-section .owl-nav .owl-prev,
+.fifth-section .owl-nav .owl-next {
+  pointer-events: all;
+  position: absolute;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  margin-top: -10px;
+  outline: none !important;
+  -moz-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  -webkit-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  opacity: 0;
+}
+.fifth-section .owl-nav .owl-prev span:before,
+.fifth-section .owl-nav .owl-next span:before {
+  font-size: 30px;
+  color: rgba(210, 210, 210, 0.8);
+  -moz-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  -webkit-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+.fifth-section .owl-nav .owl-prev:hover span:before,
+.fifth-section .owl-nav .owl-prev:focus span:before,
+.fifth-section .owl-nav .owl-next:hover span:before,
+.fifth-section .owl-nav .owl-next:focus span:before {
+  color: #4eb8d1;
+}
+
+.fifth-section:hover .owl-nav .owl-prev,
+.fifth-section:hover .owl-nav .owl-next {
+  opacity: 1;
+}
+
+.fifth-section .owl-dots {
+  text-align: center;
+}
+
+.fifth-section .owl-dots .owl-dot.active {
+  background: #fff;
+}
+
+/* 페이징 dot 완전 숨기기 */
+.fifth-slider .owl-dots {
+  display: none !important;
+}
+
+.fifthImg {
+  width: 100%;
+  height: 250px;
+  background-size: cover;
+  background-position: center;
+}
+
+.f-42 {
+  font-weight: 700;
+  font-size: 42px;
+}
+.findText {
+  border: none;
+}
+.findBtn {
+  border: none;
+  background-color: #4eb8d1;
+  border-radius: 999px;
+  height: 100%;
+  width: 100px;
+  color: white;
+  font-weight: 700;
+}
+.replyBtn {
+  width: 100px;
+  border: none;
+  background-color: #4eb8d1;
+  height: 100%;
+  color: white;
+  font-weight: 700;
 }
 
 @-webkit-keyframes loader-rotate {
