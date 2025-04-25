@@ -1,41 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
-<div
-      class="hero-wrap js-fullheight"
-      style="background-image: url('../images/bg_1.jpg')"
-    >
-      <div class="overlay"></div>
-      <div class="container">
-        <div
-          class="row no-gutters slider-text js-fullheight align-items-center justify-content-start"
-          data-scrollax-parent="true"
-        >
-          <div
-            class="col-md-9 ftco-animate mb-5 pb-5 text-center text-md-left"
-            data-scrollax=" properties: { translateY: '70%' }"
-          >
-            <h1
-              class="mb-4"
-              data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"
-            >
-              Discover <br />A new Place
-            </h1>
-            <p data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">
-              Find great places to stay, eat, shop, or visit from local experts
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <section class="ftco-section justify-content-end ftco-search">
+<section class="ftco-section justify-content-end ftco-search">
       <div class="container-wrap mx-auto">
         <div class="row no-gutters">
           <div class="col-md-12 nav-link-wrap">
@@ -327,7 +299,6 @@
         </div>
       </div>
     </section>
-
     <section class="ftco-section bg-light">
       <div class="container">
         <div class="row">
@@ -426,7 +397,7 @@
             times and everything that was left from its origin would be the word
             "and" and the Little Blind Text should turn around and return to its
             own, safe country. But nothing the copy said could convince her and
-            so it didn’t take long until a few insidious Copy Writers ambushed
+            so it didn��셳 take long until a few insidious Copy Writers ambushed
             her, made her drunk with Longe and Parole and dragged her into their
             agency, where they abused her for their.
           </p>
