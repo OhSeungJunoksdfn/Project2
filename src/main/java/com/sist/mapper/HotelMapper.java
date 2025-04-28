@@ -6,5 +6,5 @@ import org.apache.ibatis.annotations.Select;
 import com.sist.vo.*;
 
 public class HotelMapper {
-//	@Select("SELECT no, ")
+	
 }

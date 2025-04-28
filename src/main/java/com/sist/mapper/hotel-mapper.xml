@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sist.mapper.HotelMapper">
-
+<!--   <select id="hotelListData" resultType="HotelVO" parameterType="map"> -->
+<!--     SELECT h.no, h.title, h.addr, h.img, h.areacode, h.sigungucode,  -->
+<!-- 	hr.no, hr.price, hr.person, hr.person_max -->
+<!-- 	FROM hotel h  -->
+<!-- 	JOIN hotel_room hr -->
+<!-- 	ON h.no = hr.hotel_no -->
+<!-- 	ORDER BY h.title ASC; -->
+<!--   </select> -->
 </mapper>
