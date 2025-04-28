@@ -17,11 +17,10 @@ import lombok.Data;
 import java.util.*;
 @Data
 public class HotelVO {
-	private int no, content_id, content_type, areacode, sigungucode;
+	private int no, content_id, content_type, areacode, sigungucode, minPrice;
 	private String title, addr, img, cat1, cat2, cat3, overview;
+	private Date checkin, checkout;
 	
 	private HotelInfoVO  Info;
-	private List<String> rList = new ArrayList<String>();
-	private List<String> iList = new ArrayList<String>();
 	
 }
