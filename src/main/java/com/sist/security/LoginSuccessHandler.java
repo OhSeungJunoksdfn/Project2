@@ -28,8 +28,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler{
 		MemberVO vo=dao.memberSessionData(authentication.getName());
 		//authentication �젙蹂� => username(id) , password , enable
 		session.setAttribute("id", vo.getId());
-		session.setAttribute("fname", vo.getFname());
-		session.setAttribute("sname", vo.getSname());
+		session.setAttribute("name", vo.getName());
 		session.setAttribute("sex", vo.getSex());
 		response.sendRedirect("../main/main.do");
 	}

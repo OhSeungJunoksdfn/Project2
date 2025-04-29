@@ -23,4 +23,10 @@ public class MemberDAO {
   {
 	  return mapper.memberSessionData(id);
   }
+  
+  public int memberCheckData(String id)
+  {
+	 return mapper.memberCheckData(id);
+	  
+  }
 }
