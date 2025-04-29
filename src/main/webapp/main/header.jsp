@@ -38,7 +38,7 @@
               <a href="places.html" class="nav-link">Places</a>
             </li>
             <li class="nav-item">
-              <a href="hotel.html" class="nav-link">Hotels</a>
+              <a href="../hotel/hotel_list.do" class="nav-link">Hotels</a>
             </li>
             <li class="nav-item">
               <a href="../car/car_list.do" class="nav-link">Car rentals</a>
