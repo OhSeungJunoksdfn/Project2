@@ -41,6 +41,8 @@
     <link rel="stylesheet" href="../css/flaticon.css" />
     <link rel="stylesheet" href="../css/icomoon.css" />
     <link rel="stylesheet" href="../css/style.css" />
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   </head>
   <body>
 
@@ -88,7 +90,7 @@
     <script src="../js/aos.js"></script>
     <script src="../js/jquery.animateNumber.min.js"></script>
     <script src="../js/bootstrap-datepicker.js"></script>
-    <script src="../js/jquery.timepicker.min.js"></script>
+    <!-- <script src="../js/jquery.timepicker.min.js"></script> -->
     <script src="../js/scrollax.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
     <script src="../js/google-map.js"></script>
