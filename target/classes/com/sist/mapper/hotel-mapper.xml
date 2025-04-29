@@ -2,43 +2,36 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sist.mapper.HotelMapper">
   <select id="hotelListData" resultType="HotelVO" parameterType="map">
-    SELECT no, title, addr, img, overview, areacode, sigungucode, content_id,
-			room_no, price, person, person_max, num
-	FROM (SELECT no, title, addr, img, overview, areacode, sigungucode, content_id,
-			room_no, price, person,person_max, ROWNUM AS num
-	FROM (SELECT h.no, h.title, h.addr, h.img, h.overview, h.areacode, h.sigungucode, h.content_id,
-			hr.no AS room_no, hr.price, hr.person, hr.person_max
+    SELECT no, title, img, addr, areacode, sigungucode, content_id, person, person_max, price
+	FROM (SELECT no, title, img, addr, areacode, sigungucode, content_id, person, person_max, price, ROWNUM AS num
+	FROM (SELECT no, title, img, addr, areacode, sigungucode, content_id, person, person_max, price
+	FROM (SELECT h.no, h.title, h.img, h.addr, h.areacode, h.sigungucode, h.content_id, hr.person, hr.person_max, MIN(hr.price) AS price
 	FROM hotel h
 	JOIN hotel_room hr
 	ON hr.hotel_no = h.no
 	<where>
-	  <if test="areacode !=null and areacode !=''">
-	    h.areacode = #{areaCode}
+	  <if test="areacode != null">
+	    AND h.areacode = #{areacode}
 	  </if>
 	  <!-- price bar 구현 -->
-	  <if test="minPrice != null">
-	    AND hr.price >= #{minPrice}
-	  </if>
-	  <if test="maxPrice != null">
-	    AND hr.price &lt;= #{maxPrice}
-	  </if>
+<!-- 	  <if test="minPrice != null"> -->
+<!-- 	    AND hr.price &gt;= #{minPrice} -->
+<!-- 	  </if> -->
+<!-- 	  <if test="maxPrice != null"> -->
+<!-- 	    AND hr.price &lt;= #{maxPrice} -->
+<!-- 	  </if> -->
 	</where>
+	  GROUP BY h.no, h.title, h.img, h.addr, h.areacode, h.sigungucode, h.content_id, hr.person, hr.person_max
 	<choose>
-	  <when test="sort == price_desc">
-	    ORDER BY hr.price DESC
-	  </when>
-	  <!-- 호텔명 순  -->
-	  <when test="sort == title_asc">
-	    ORDER BY h.title ASC
-	  </when>
-	  <when test="sort == title_desc">
-	    ORDER BY h.title DESC
+	  <when test="sort == 'price_desc'">
+	    ORDER BY MIN(hr.price) DESC
 	  </when>
 	  <otherwise>
 	    <!-- 낮은 가격순을 기본 값  -->
-	    ORDER BY hr.price ASC
+	    ORDER BY MIN(hr.price) ASC
 	  </otherwise>
+	  
 	</choose>
-	))WHERE num BETWEEN #{start} AND #{end}
+	 ) WHERE ROWNUM &lt;= #{end})) WHERE num &gt;= #{start}
   </select>
 </mapper>
