@@ -267,85 +267,15 @@
     </section>
 	</div>
     
-    <section class="ftco-section" id="listApp">
+    <section class="ftco-section">
       <div class="container">
         <div class="row d-flex">
-          <div class="col-md-4 d-flex ftco-animate">
+          <div class="col-12 col-md-4 d-flex ftco-animate" v-for="vo in list">
             <div class="blog-entry align-self-stretch ">
               <a href="blog-single.html" class="block-20 r-12" style="background-image: url('https://rentinjeju.com/media/images/렌트카/준중형/thumb/k3_22년형.jpg');">
               </a>
               <div class="text">
                 <h3 class="heading mt-3"><a href="#">8 Best homestay in Philippines that you don't miss out</a></h3>
-                <div class="meta mb-3">
-                  <div><a href="#">October 3, 2018</a></div>
-                  <div><a href="#">Admin</a></div>
-                  <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4 d-flex ftco-animate">
-            <div class="blog-entry align-self-stretch">
-              <a href="blog-single.html" class="block-20 r-12" style="background-image: url('https://rentinjeju.com/media/images/렌트카/준중형/thumb/k3_22년형.jpg');">
-              </a>
-              <div class="text">
-                <h3 class="heading mt-3"><a href="#">Even the all-powerful Pointing has no control about the blind texts</a></h3>
-                <div class="meta mb-3">
-                  <div><a href="#">October 3, 2018</a></div>
-                  <div><a href="#">Admin</a></div>
-                  <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4 d-flex ftco-animate">
-            <div class="blog-entry align-self-stretch">
-              <a href="blog-single.html" class="block-20 r-12" style="background-image: url('https://rentinjeju.com/media/images/렌트카/준중형/thumb/k3_22년형.jpg');">
-              </a>
-              <div class="text">
-                <h3 class="heading mt-3"><a href="#">Even the all-powerful Pointing has no control about the blind texts</a></h3>
-                <div class="meta mb-3">
-                  <div><a href="#">October 3, 2018</a></div>
-                  <div><a href="#">Admin</a></div>
-                  <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4 d-flex ftco-animate">
-            <div class="blog-entry align-self-stretch">
-              <a href="blog-single.html" class="block-20 r-12" style="background-image: url('https://rentinjeju.com/media/images/렌트카/준중형/thumb/k3_22년형.jpg');">
-              </a>
-              <div class="text">
-                <h3 class="heading mt-3"><a href="#">8 Best homestay in Philippines that you don't miss out</a></h3>
-                <div class="meta mb-3">
-                  <div><a href="#">October 3, 2018</a></div>
-                  <div><a href="#">Admin</a></div>
-                  <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4 d-flex ftco-animate">
-            <div class="blog-entry align-self-stretch">
-              <a href="blog-single.html" class="block-20 r-12" style="background-image: url('https://rentinjeju.com/media/images/렌트카/준중형/thumb/k3_22년형.jpg');">
-              </a>
-              <div class="text">
-                <h3 class="heading mt-3"><a href="#">Even the all-powerful Pointing has no control about the blind texts</a></h3>
-                <div class="meta mb-3">
-                  <div><a href="#">October 3, 2018</a></div>
-                  <div><a href="#">Admin</a></div>
-                  <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4 d-flex ftco-animate">
-            <div class="blog-entry align-self-stretch">
-              <a href="blog-single.html" class="block-20 r-12" style="background-image: url('https://rentinjeju.com/media/images/렌트카/준중형/thumb/k3_22년형.jpg');">
-              </a>
-              <div class="text">
-                <h3 class="heading mt-3"><a href="#">Even the all-powerful Pointing has no control about the blind texts</a></h3>
                 <div class="meta mb-3">
                   <div><a href="#">October 3, 2018</a></div>
                   <div><a href="#">Admin</a></div>
@@ -372,69 +302,41 @@
         </div>
       </div>
     </section>
-    <script>
-    	let listApp=Vue.createApp({
-    		data(){
-        		return {
-        			list:[],
-        			curpage:1,
-        			totalpage:0,
-        			startPage:0,
-        			endPage:0
-        			
-        		}
-        	},
-        	mounted(){
-        		// 시작과 동시에 데이터 읽기 => window.onload 
-        		// jquery/angularjs => 연동시에 주로 사용 
-        		// $(function(){})
-        		// useEffect()
-        		this.dataRecv()
-        	},
-        	methods:{
-        		prev(){
-        			this.curpage=this.startPage-1
-        			this.dataRecv()
-        		},
-        		next(){
-        			this.curpage=this.endPage+1
-        			this.dataRecv()
-        		},
-        		pageChange(page){
-        			this.curpage=page
-        			this.dataRecv()
-        		},
-        		range(start,end){
-        			let arr=[]
-        			let len=end-start
-        			for(let i=0;i<=len;i++)
-        			{
-        				arr[i]=start
-        				start++
-        			}
-        			return arr
-        		},
-        		dataRecv(){
-        			axios.get('../car/list_vue.do',{
-            			params:{
-            				page:this.curpage,
-            				cno:this.cno
-            			}
-            		}).then(res=>{
-            			console.log(res.data)
-            			this.list=res.data.list
-            			this.curpage=res.data.curpage
-            			this.totalpage=res.data.totalpage
-            			this.startPage=res.data.startPage
-            			this.endPage=res.data.endPage
-            		}).catch(error=>{
-            			console.log(error.response)
-            		})
-        		}
-        	}
-    	}).mount("#listApp")
-    </script>
     
+    <hr />
+    <!--검색-->
+    <section class="ftco-section ftco-degree-bg">
+      <div class="container">
+        <div class="row justify-content-center">
+          <h1
+            class="col-12 text-center f-42 mb-4"
+            style="font-weight: 700; font-size: 42px"
+          >
+            재미있는 체험 하기
+          </h1>
+          <ul class="col-12 pagination justify-content-center mb-3">
+            <li class="page-item px-2" style="cursor: pointer">전체 검색</li>
+            <li class="page-item px-2 bb-3" style="cursor: pointer">호텔</li>
+            <li class="page-item px-2" style="cursor: pointer">즐길거리</li>
+            <li class="page-item px-2" style="cursor: pointer">음식점</li>
+            <li class="page-item px-2" style="cursor: pointer">항공권</li>
+          </ul>
+          <div
+            class="row input-group secb shadow findContent pl-2 py-1 pr-1 align-items-center"
+            style="width: 900px; border-radius: 999px"
+          >
+            <span class="material-symbols-outlined">search</span>
+            <input
+              class="form-control findText"
+              placeholder="검색하기"
+              type="text"
+            />
+            <button class="findBtn">검색</button>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--검색-->
   </body>
 </body>
 </html>
