@@ -41,6 +41,9 @@
               <a href="hotel.html" class="nav-link">Hotels</a>
             </li>
             <li class="nav-item">
+              <a href="../car/car_list.do" class="nav-link">Car rentals</a>
+            </li>
+            <li class="nav-item">
               <a href="blog.html" class="nav-link">Blog</a>
             </li>
             <li class="nav-item">
