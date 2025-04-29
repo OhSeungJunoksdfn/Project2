@@ -266,13 +266,99 @@
       </div>
     </section>
 	</div>
-    
+    <section class="ftco-section ftco-degree-bg">
+      <div class="container">
+        <div class="row">
+          <ul class="col-12 nav nav-tabs">
+            <li class="nav-item">
+              <a
+                class="tablink nav-link active cursor-pointer"
+                onclick="openPage('Home', this, 'red')"
+                aria-current="page"
+                >Active</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="tablink nav-link cursor-pointer"
+                onclick="openPage('News', this, 'green')"
+                >Link</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="tablink nav-link cursor-pointer"
+                onclick="openPage('Contact', this, 'blue')"
+                >Link</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="tablink nav-link cursor-pointer"
+                onclick="openPage('About', this, 'orange')"
+                >Link</a
+              >
+            </li>
+          </ul>
+          <div
+            id="Home"
+            class="tabcontent"
+            style="color: white; padding: 100px 20px; height: 100%"
+          >
+            <h3>Home</h3>
+            <p>Home is where the heart is..</p>
+          </div>
+
+          <div
+            id="News"
+            class="tabcontent"
+            style="
+              color: white;
+              display: none;
+              padding: 100px 20px;
+              height: 100%;
+            "
+          >
+            <h3>News</h3>
+            <p>Some news this fine day!</p>
+          </div>
+
+          <div
+            id="Contact"
+            class="tabcontent"
+            style="
+              color: white;
+              display: none;
+              padding: 100px 20px;
+              height: 100%;
+            "
+          >
+            <h3>Contact</h3>
+            <p>Get in touch, or swing by for a cup of coffee.</p>
+          </div>
+
+          <div
+            id="About"
+            class="tabcontent"
+            style="
+              color: white;
+              display: none;
+              padding: 100px 20px;
+              height: 100%;
+            "
+          >
+            <h3>About</h3>
+            <p>Who we are and what we do.</p>
+          </div>
+        </div>
+      </div>
+    </section>
     <section class="ftco-section" id="listApp">
       <div class="container">
-        <div class="row d-flex">
+        <div class="row d-flex" style="width:100%">
           <div class="col-12 col-md-4 d-flex ftco-animate" v-for="vo in list">
             <div class="blog-entry align-self-stretch ">
-              <a href="blog-single.html" class="block-20 r-12" :style="background-image: 'url('+vo.poster +')';">
+              <a href="blog-single.html" class="block-20 r-12" :style="{'background-image': 'url('+ vo.poster +')',width:'300px' }">
               </a>
               <div class="text">
                 <h3 class="heading mt-3"><a href="#">{{vo.name}}</a></h3>
@@ -354,7 +440,6 @@
             		}).then(res=>{
             			console.log(res.data)
             			this.list=res.data.list
-            			console.log(this.list)
             			this.curpage=res.data.curpage
             			this.totalpage=res.data.totalpage
             			this.startPage=res.data.startPage
@@ -365,6 +450,32 @@
         		}
         	}
     	}).mount("#listApp")
+    </script>
+   
+    <script>
+      function openPage(pageName, elmnt, color) {
+        // Hide all elements with class="tabcontent" by default */
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+          tabcontent[i].style.display = "none";
+        }
+
+        // Remove the background color of all tablinks/buttons
+        tablinks = document.getElementsByClassName("tablink");
+        for (i = 0; i < tablinks.length; i++) {
+          tablinks[i].classList.remove("active");
+        }
+
+        // Show the specific tab content
+        document.getElementById(pageName).style.display = "block";
+
+        // Add the specific color to the button used to open the tab content
+        elmnt.classList.add("active");
+      }
+
+      // Get the element with id="defaultOpen" and click on it
+      document.getElementById("defaultOpen").click();
     </script>
   </body>
 </body>
