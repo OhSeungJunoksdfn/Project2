@@ -5,6 +5,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 <body>
 <div style="width:100%;display: flex;justify-content: center;">
@@ -207,12 +209,12 @@
           <div class="col-lg-9">
             <div class="row mr-3 pt-3 shadow r-12 secb">
               <div class="col-sm col-md-6 col-lg-4 ftco-animate">
-                <div class="destination">
+                <div class="destination" v-for="vo in list">
                   <a
                     href="../hotel/hotel_detail.do"
                     class="img img-2 d-flex justify-content-center align-items-center r-12"
-                    style="background-image: url(../images/hotel-1.jpg)"
-                  >
+                    >
+                    <img :src="vo.img">
                     <div
                       class="icon d-flex justify-content-center align-items-center"
                     >
@@ -222,19 +224,11 @@
                   <div class="text p-3">
                     <div class="d-flex">
                       <div class="one">
-                        <h3><a href="#">New Orleans, LA</a></h3>
-                        <p class="rate">
-                          <i class="icon-star"></i>
-                          <i class="icon-star"></i>
-                          <i class="icon-star"></i>
-                          <i class="icon-star"></i>
-                          <i class="icon-star-o"></i>
-                          <span>8 Rating</span>
-                        </p>
+                        <h3><a href="#">{{vo.title}}</a></h3>
                       </div>
                       <div class="two">
                         <span class="price per-price"
-                          >$40<br /><small>/night</small></span
+                          >{{vo.price}}원<br /><small>1박</small></span
                         >
                       </div>
                     </div>
@@ -244,7 +238,7 @@
                     </p>
                     <hr />
                     <p class="bottom-area d-flex">
-                      <span><i class="icon-map-o"></i> Miami, Fl</span>
+                      <span><i class="icon-map-o"></i>{{vo.addr}}</span>
                       <span class="ml-auto"><a href="#">Book Now</a></span>
                     </p>
                   </div>
@@ -272,7 +266,7 @@
       let hotelListApp=Vue.createApp({
     	  data() {
     		  return {
-    			  list:[],
+    			  list: [],
     			  curpage: 1,
     			  totalpage: 0,
     			  startPage: 0,
