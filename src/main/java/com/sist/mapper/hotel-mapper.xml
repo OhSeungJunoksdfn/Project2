@@ -2,13 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sist.mapper.HotelMapper">
   <select id="hotelListData" resultType="HotelVO" parameterType="map">
-    SELECT no, title, img, addr, areacode, sigungucode, content_id, person, person_max, price
-	FROM (SELECT no, title, img, addr, areacode, sigungucode, content_id, person, person_max, price, ROWNUM AS num
-	FROM (SELECT no, title, img, addr, areacode, sigungucode, content_id, person, person_max, price
-	FROM (SELECT h.no, h.title, h.img, h.addr, h.areacode, h.sigungucode, h.content_id, hr.person, hr.person_max, MIN(hr.price) AS price
-	FROM hotel h
-	JOIN hotel_room hr
-	ON hr.hotel_no = h.no
+    SELECT * 
+    FROM (SELECT hotl.*, ROWNUM AS num
+    FROM (SELECT * 
+    FROM (SELECT h.no, h.title, h.img, h.addr, h.areacode, h.sigungucode, h.content_id,h.cat3, 
+    		hr.price, hr.person, hr.person_max, ROW_NUMBER()
+    OVER (PARTITION BY h.no
+    ORDER BY hr.price ASC) AS rn
+    FROM hotel h
+    JOIN hotel_room hr
+    ON hr.hotel_no = h.no) rp
+    WHERE rp.rn = 1
 	<where>
 	  <if test="areacode != null">
 	    AND h.areacode = #{areacode}
@@ -21,17 +25,15 @@
 <!-- 	    AND hr.price &lt;= #{maxPrice} -->
 <!-- 	  </if> -->
 	</where>
-	  GROUP BY h.no, h.title, h.img, h.addr, h.areacode, h.sigungucode, h.content_id, hr.person, hr.person_max
 	<choose>
 	  <when test="sort == 'price_desc'">
-	    ORDER BY MIN(hr.price) DESC
+	    ORDER BY rp.price DESC) hotl
 	  </when>
 	  <otherwise>
 	    <!-- 낮은 가격순을 기본 값  -->
-	    ORDER BY MIN(hr.price) ASC
+	    ORDER BY rp.price ASC) hotl
 	  </otherwise>
-	  
 	</choose>
-	 ) WHERE ROWNUM &lt;= #{end})) WHERE num &gt;= #{start}
+	WHERE ROWNUM &lt;= #{end}) WHERE ROWNUM &gt;= #{start}
   </select>
 </mapper>
