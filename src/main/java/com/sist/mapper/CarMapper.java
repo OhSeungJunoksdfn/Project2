@@ -10,9 +10,9 @@ import java.util.*;
 
 
 public interface CarMapper {
-   @Select("SELECT no,poster,name,car_class,seat,fuel,premium_ins_qual,num "
-			  +"FROM (SELECT no,poster,name,car_class,seat,fuel,premium_ins_qual,rownum as num "
-			  +"FROM (SELECT no,poster,name,car_class,seat,fuel,premium_ins_qual "
+   @Select("SELECT no,poster,name,car_class,seat,fuel,premium_ins_price,num "
+			  +"FROM (SELECT no,poster,name,car_class,seat,fuel,premium_ins_price,rownum as num "
+			  +"FROM (SELECT no,poster,name,car_class,seat,fuel,premium_ins_price "
 			  +"FROM car ORDER BY no ASC)) "
 			  +"WHERE num BETWEEN #{start} AND #{end}")
    public List<CarVO> carListData(
