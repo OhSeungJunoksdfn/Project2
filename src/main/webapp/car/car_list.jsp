@@ -418,6 +418,9 @@ span:hover,a:hover{
             			this.totalpage=res.data.totalpage
             			this.startPage=res.data.startPage
             			this.endPage=res.data.endPage
+            			this.$nextTick(() => {
+                            contentWayPoint()
+                       })
             		}).catch(error=>{
             			console.log(error.response)
             		})
