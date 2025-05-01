@@ -1,0 +1,12 @@
+package com.sist.service;
+
+import java.util.*;
+import com.sist.vo.board.*;
+
+public interface BoardService {
+	public List<BoardVO> boardListData(Map map);
+	public int boardTotalPage(Map map);
+	public BoardVO boardDetailData(int no);
+	public void boardInsert(BoardVO vo);
+	public void boardUpdate(BoardVO vo);
+}
