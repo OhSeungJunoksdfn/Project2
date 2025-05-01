@@ -262,7 +262,7 @@ AOS.init({
   };
   counter();
 
-  var contentWayPoint = function () {
+  window.contentWayPoint = function () {
     var i = 0;
     $(".ftco-animate").waypoint(
       function (direction) {

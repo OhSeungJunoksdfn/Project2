@@ -11,9 +11,9 @@
 </head>
 <body>
   <div style="width:100%;display: flex;justify-content: center;">
-	<section class="ftco-section">
+	<section class="ftco-section" id="hotelListApp">
       <div class="container">
-        <div class="row" id="hotelListApp">
+        <div class="row">
           <!--사이드바-->
           <div class="col-lg-3 sidebar ftco-animate shadow pt-3">
             <div class="sidebar-wrap ftco-animate">
@@ -92,6 +92,7 @@
             <div class="row parent">
               <!-- 카드-->
               <div class="col-12 ftco-animate" v-for="vo in list">
+               <div>
                 <div
                   class="destination d-flex shadow"
                   style="
@@ -152,17 +153,14 @@
           <div class="col text-center">
             <div class="block-27">
               <ul>
-                <li><a href="#">&lt;</a></li>
-                <li class="active"><span>1</span></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
-                <li><a href="#">&gt;</a></li>
+                <li class="cursor-pointer" v-if="startPage > 1"><span @click="prev()">&lt;</span></li>
+                <li class="cursor-pointer" v-for="i in range(startPage,endPage)" :class="i===curpage?'active':''"><span @click="pageChange(i)">{{i}}</span></li>
+                <li class="cursor-pointer" v-if="endPage < totalpage"><span @click="next()">&gt;</span></li>
               </ul>
             </div>
           </div>
         </div>
+       </div>
      </section>
   </div>
     <script>
@@ -218,6 +216,10 @@
       			    this.totalpage = res.data.totalpage
       			    this.startPage = res.data.startPage
       			    this.endPage = res.data.endPage
+      			    
+      			  	this.$nextTick(() => {
+      		          	contentWayPoint()
+      		        })
       			}).catch(error => {
       				console.log(error.response)
       			})

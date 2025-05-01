@@ -20,14 +20,14 @@ public class HotelRestController {
 	public Map hotel_list_vue(int page, @RequestParam(value = "sort") String sort,
 			@RequestParam(value = "areacode", required = false) Integer areacode)
 	{
-		int rowSize = 12;
+		int rowSize = 8;
 		int start = (rowSize*page)-(rowSize-1);
 		int end = rowSize*page;
 		int totalpage = service.hotelTotalPage();
 		
 		final int BLOCK = 10;
 		int startPage = ((page - 1) / BLOCK * BLOCK) + 1;
-		int endPage = startPage + BLOCK;
+		int endPage = startPage + BLOCK - 1;
 		if (endPage > totalpage)
 			endPage = totalpage;
 		
@@ -46,7 +46,9 @@ public class HotelRestController {
 		map.put("totalpage", totalpage);
 		map.put("startPage", startPage);
 		map.put("endPage", endPage);
-
+		
+		System.out.println("start=" + start + ", end=" + end + ", page=" + page);
+		
 		return map;
 	}
 }

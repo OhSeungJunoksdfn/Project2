@@ -34,6 +34,6 @@
 	    ORDER BY rp.price ASC) hotl
 	  </otherwise>
 	</choose>
-	WHERE ROWNUM &lt;= #{end}) WHERE ROWNUM &gt;= #{start}
+	WHERE ROWNUM &lt;= #{end}) WHERE num &gt;= #{start}
   </select>
 </mapper>
