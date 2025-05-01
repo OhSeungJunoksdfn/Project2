@@ -11,6 +11,8 @@ import com.sist.vo.board.*;
 
 @Controller
 public class BoardController {
+	
+	String[] boardtype= {"","","공지사항","자유글","호텔","관광지","맛집","렌트"};
 	@Autowired
 	private BoardService service;
 	@GetMapping("board/list.do")
@@ -20,12 +22,12 @@ public class BoardController {
 			page="1";
 		int curpage=Integer.parseInt(page);
 		if(type==null)
-			type="";
+			type="0";
 		int rowSize= 20;
 		Map map = new HashMap();
 		map.put("start",(rowSize*curpage)-(rowSize-1));
 		map.put("end",(rowSize*curpage));
-		map.put("type", type);
+		map.put("type", boardtype[Integer.parseInt(type)]);
 		List<BoardVO> list = service.boardListData(map);
 		int totalpage = service.boardTotalPage(map);
 		
@@ -40,6 +42,7 @@ public class BoardController {
 		model.addAttribute("startPage",startPage);
 		model.addAttribute("endPage",endPage);
 		model.addAttribute("curpage",curpage);
+		model.addAttribute("type",type);
 		model.addAttribute("main_jsp","../board/list.jsp");
 		return "main/main";
 	}

@@ -6,52 +6,37 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script type="text/javascript">
-$(function() {
-	const urlParams = new URLSearchParams(window.location.search);
-	const type = urlParams.get('type');
 
-	$(".tablink").each(function() {
-		const text = $(this).text().trim();
-
-		if (text === type || (!type && text === "전체")) {
-			$(this).addClass("active");
-		}
-	});
-});
-const changeType = (type) => {
-	location.href="../member/list.do?type="+type
-} 
-</script>
 </head>
 <body>
 <section
       class="d-flex justify-content-center m-5 "
+      id="boardListApp"
     >
       <div class="container secb shadow py-2">
         <div class="row p-2">
         <div class="col-12 d-flex justify-content-between align-items-center">
           <ul class="nav nav-tabs">
             <li class="nav-item">
-              <a class="tablink nav-link cursor-pointer" onclick="changeType('')" >전체</a>
+              <a :class="type===1?'tablink nav-link cursor-pointer active':'tablink nav-link cursor-pointer'" @click="changeType('1')" >전체</a>
             </li>
             <li class="nav-item">
-              <a class="tablink nav-link cursor-pointer" onclick="changeType('공지사항')">공지사항</a>
+              <a :class="type===2?'tablink nav-link cursor-pointer active':'tablink nav-link cursor-pointer'" @click="changeType('2')">공지사항</a>
             </li>
             <li class="nav-item">
-              <a class="tablink nav-link cursor-pointer" onclick="changeType('자유글')">자유글</a>
+              <a :class="type===3?'tablink nav-link cursor-pointer active':'tablink nav-link cursor-pointer'" @click="changeType('3')">자유글</a>
             </li>
             <li class="nav-item">
-              <a class="tablink nav-link cursor-pointer" onclick="changeType('호텔')">호텔</a>
+              <a :class="type===4?'tablink nav-link cursor-pointer active':'tablink nav-link cursor-pointer'" @click="changeType('4')">호텔</a>
             </li>
             <li class="nav-item">
-              <a class="tablink nav-link cursor-pointer" onclick="changeType('관광지')">관광지</a>
+              <a :class="type===5?'tablink nav-link cursor-pointer active':'tablink nav-link cursor-pointer'" @click="changeType('5')">관광지</a>
             </li>
             <li class="nav-item">
-              <a class="tablink nav-link cursor-pointer" onclick="changeType('맛집')">맛집</a>
+              <a :class="type===6?'tablink nav-link cursor-pointer active':'tablink nav-link cursor-pointer'" @click="changeType('6')">맛집</a>
             </li>
             <li class="nav-item">
-              <a class="tablink nav-link cursor-pointer" onclick="" >렌트</a>
+              <a :class="type===7?'tablink nav-link cursor-pointer active':'tablink nav-link cursor-pointer'" @click="changeType('7')" >렌트</a>
             </li>
           </ul>
           <input type="button" value="글쓰기" class="btn btn-primary r-12" >
@@ -63,6 +48,7 @@ const changeType = (type) => {
                 <th width="20%">작성자</th>
                 <th width="10%">작성일</th>
                 <th width="10%">조회수</th>
+                
               </tr>
             </thead>
             <tbody>
@@ -99,6 +85,25 @@ const changeType = (type) => {
           </div>
         </div>
       </div>
+     
     </section>
+<script>
+const boardListApp=Vue.createApp({
+	data(){
+		return{
+			type:${type}
+		}
+	},
+	mounted(){
+		console.log(this.type)
+	},
+	methods:{
+		changeType(type){
+			location.href="../board/list.do?type="+type
+			console.log(this.type)
+		}
+	}
+}).mount("#boardListApp")
+</script>
 </body>
 </html>
