@@ -12,7 +12,6 @@ public class MemberDAO {
   @Autowired
   private MemberMapper mapper;
   
-  @Transactional
   public void memberInsert(MemberVO vo)
   {
 	  mapper.memberInsert(vo);
