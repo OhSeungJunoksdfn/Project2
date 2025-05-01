@@ -18,7 +18,7 @@ public interface CarMapper {
    public List<CarVO> carListData(
 		   @Param("start") int start,
 		   @Param("end") int end);
-   @Select("SELECT CEIL(COUNT(*)/20.0) FROM car")
+   @Select("SELECT CEIL(COUNT(*)/6.0) FROM car")
    public int carTotalPage();
    
    @Select("SELECT * FROM busan_food "

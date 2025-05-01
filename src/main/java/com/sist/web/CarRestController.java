@@ -18,8 +18,8 @@ public class CarRestController {
 	@GetMapping("car/list_vue.do")
 	public Map car_list(int page) {
 		
-		int rowSize=12;
-		List<CarVO> list=service.carListData(page, rowSize);
+		int rowSize=6;
+		List<CarVO> list=service.carListData((page-1)*rowSize+1, page*rowSize);
 		int totalpage=service.carTotalPage();
 		
 		final int BLOCK=10;

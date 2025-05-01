@@ -327,8 +327,12 @@ span:hover,a:hover{
         <div class="row d-flex " >
           <div class="col-12 col-md-4 d-flex ftco-animate" v-for="vo in list">
             <div class="blog-entry align-self-stretch ">
-              <a href="blog-single.html" class="block-20 r-12" :style="{'background-image': 'url('+ vo.poster +')',width:'300px' }">
+              <!-- <a href="blog-single.html" class="block-20 r-12" :style="{'background-image': 'url('+ vo.poster +')',width:'300px' }">
+              </a> -->
+              <a href="blog-single.html" class="block-20 r-12">
+              	<img class="block-20 r-12" :src="vo.poster" style="width:300px">
               </a>
+              
               <div class="text" style="margin-bottom:0px">
                 <h3 class="heading" style="margin-bottom:0px"><a href="#">{{vo.name}}</a></h3>
                 <div class="meta">
@@ -408,8 +412,7 @@ span:hover,a:hover{
         		dataRecv(){
         			axios.get('../car/list_vue.do',{
             			params:{
-            				page:this.curpage,
-            				cno:this.cno
+            				page:this.curpage
             			}
             		}).then(res=>{
             			console.log(res.data)
