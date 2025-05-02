@@ -39,7 +39,7 @@
               <a :class="type===7?'tablink nav-link cursor-pointer active':'tablink nav-link cursor-pointer'" @click="changeType('7')" >렌트</a>
             </li>
           </ul>
-          <input type="button" value="글쓰기" class="btn btn-primary r-12" >
+          <a href="../board/insert.do" class="btn btn-primary r-12" >글쓰기</a>
           </div>
           <table class="table">
             <thead>
@@ -70,15 +70,15 @@
             <div class="block-27">
               <ul>
               <c:if test="${startPage>1 }">
-                <li><a href="#">&lt;</a></li>
+                <li><a href="../board/list.do?type=${type }&page=${startPage-1}">&lt;</a></li>
               </c:if>
               
               	<c:forEach var="i" begin="${startPage }" end="${endPage }" >
-                <li class="${i==curpage? 'active':'' }"><span>${i }</span></li>
+                <li class="${i==curpage? 'active':'' }"><a href="../board/list.do?type=${type }&page=${i }" >${i }</a></li>
               	</c:forEach>
                 
                 <c:if test="${endPage<totalpage }">
-                <li><a href="#">&gt;</a></li>
+                <li ><a href="../board/list.do?type=${type }&page=${endPage+1}">&gt;</a></li>
                 </c:if>
               </ul>
             </div>
@@ -98,6 +98,7 @@ const boardListApp=Vue.createApp({
 		console.log(this.type)
 	},
 	methods:{
+		
 		changeType(type){
 			location.href="../board/list.do?type="+type
 			console.log(this.type)
