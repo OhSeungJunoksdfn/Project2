@@ -58,11 +58,10 @@
                 class="btn btn-primary r-12"
                 value="글쓰기"
               />
-              <input
-                type="button"
+              <a
+              	href="../board/list.do"
                 class="btn btn-info bg-white text-dark r-12"
-                value="취소"
-              />
+              >취소</a>
             </div>
           </div>
         </div>

@@ -13,7 +13,7 @@
       id="ftco-navbar"
     >
       <div class="container">
-        <a class="navbar-brand" href="index.html">Adventure</a>
+        <a class="navbar-brand" href="../main/main.do">Adventure</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -29,7 +29,7 @@
         <div class="collapse navbar-collapse" id="ftco-nav">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item active">
-              <a href="index.html" class="nav-link">Home</a>
+              <a href="../main/main.do" class="nav-link">Home</a>
             </li>
             <li class="nav-item">
               <a href="about.html" class="nav-link">About</a>
@@ -44,14 +44,26 @@
               <a href="../car/car_list.do" class="nav-link">Car rentals</a>
             </li>
             <li class="nav-item">
-              <a href="blog.html" class="nav-link">Blog</a>
+              <a href="../board/list.do" class="nav-link">Community</a>
             </li>
             <li class="nav-item">
-              <a href="contact.html" class="nav-link">Contact</a>
+              <a href="../customer/main.do" class="nav-link">Support</a>
             </li>
+            <c:if test="${sessionScope.id != null }">
             <li class="nav-item">
-              <a href="../member/login.do" class="nav-link" >로그인</a>
+              <a href="../mypage/main.do" class="nav-link">Account</a>
             </li>
+            </c:if>
+            <c:if test="${sessionScope.id == null }">
+            <li class="nav-item">
+              <a href="../member/login.do" class="nav-link" >Login</a>
+            </li>
+            </c:if>
+            <c:if test="${sessionScope.id != null }">
+            <li class="nav-item">
+              <a href="../member/logout.do" class="nav-link" >Logout</a>
+            </li>
+            </c:if>
           </ul>
         </div>
         

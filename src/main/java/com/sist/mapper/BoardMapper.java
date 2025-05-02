@@ -11,12 +11,12 @@ public interface BoardMapper {
 	@Select("SELECT no,name,subject,TO_CHAR(regdate, 'YYYY-MM-DD') as dbday,hit,type,num "
 			+ "FROM (SELECT no,name,subject,regdate,hit,type,rownum as num "
 			+ "FROM (SELECT /*+ INDEX_DESC(databoard db_no_pk) */ no,name,subject,regdate,hit,type "
-			+ "FROM databoard WHERE REGEXP_LIKE(type,#{type}))) "
+			+ "FROM databoard WHERE REGEXP_LIKE(type,#{type}) AND REGEXP_LIKE(${fd},#{ss}))) "
 			+ "WHERE num BETWEEN #{start} AND #{end}")
 	public List<BoardVO> boardListData(Map map);
 	
 	@Select("SELECT CEIL(COUNT(*)/12.0) FROM databoard "
-			+ "WHERE type=#{type}")
+			+ "WHERE REGEXP_LIKE(type,#{type})")
 	public int boardTotalPage(Map map);
 	
 	@Update("UPDATE databoard SET "
