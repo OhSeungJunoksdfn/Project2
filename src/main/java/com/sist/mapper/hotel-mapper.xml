@@ -13,27 +13,51 @@
     JOIN hotel_room hr
     ON hr.hotel_no = h.no) rp
     WHERE rp.rn = 1
-	<where>
 	  <if test="areacode != null">
-	    AND h.areacode = #{areacode}
+	    AND areacode = #{areacode}
+	  </if>
+	  <if test="sigungucode != null">
+	    AND sigungucode = #{sigungucode}
+	  </if>
+	  <if test="cat3 != '' and cat3 != null">
+	    AND cat3 = #{cat3}
 	  </if>
 	  <!-- price bar 구현 -->
 <!-- 	  <if test="minPrice != null"> -->
-<!-- 	    AND hr.price &gt;= #{minPrice} -->
+<!-- 	    AND hr.price &gt;= #{minPrice}  -->
 <!-- 	  </if> -->
 <!-- 	  <if test="maxPrice != null"> -->
 <!-- 	    AND hr.price &lt;= #{maxPrice} -->
 <!-- 	  </if> -->
-	</where>
 	<choose>
 	  <when test="sort == 'price_desc'">
-	    ORDER BY rp.price DESC) hotl
+	    ORDER BY rp.price DESC
 	  </when>
 	  <otherwise>
 	    <!-- 낮은 가격순을 기본 값  -->
-	    ORDER BY rp.price ASC) hotl
+	    ORDER BY rp.price ASC
 	  </otherwise>
 	</choose>
+	) hotl
 	WHERE ROWNUM &lt;= #{end}) WHERE num &gt;= #{start}
+  </select>
+  <select id="hotelTotalPage" resultType="int" parameterType="map">
+    SELECT CEIL(COUNT(*)/8.0) 
+    FROM (SELECT DISTINCT h.no 
+    FROM hotel h 
+    JOIN hotel_room hr 
+    ON h.no = hr.hotel_no 
+    <where>
+      <if test="areacode != null">
+	    AND areacode = #{areacode} 
+	  </if>
+	  <if test="sigungucode != null">
+	    AND sigungucode = #{sigungucode} 
+	  </if>
+	  <if test="cat3 != '' and cat3 != null">
+	    AND cat3 = #{cat3}
+	  </if>
+    </where>
+    )
   </select>
 </mapper>
