@@ -29,7 +29,7 @@ import lombok.Data;
 
 @Data
 public class HotelRoomVO {
-	private int no, hotel_no, roome_size, room_count, person, person_max, price, bath1, bath2, aircondition,
-			tv, pc, cable, internet, fridge, toiletries, sofa, cook, tables, hairdryer;
-	private String room_code, title, room_img, room_name;
+	private int no, hotel_no, roome_size, room_count, person, person_max, price;
+	private String room_code, title, room_img, room_name, bath1, bath2, aircondition,
+	tv, pc, cable, internet, fridge, toiletries, sofa, cook, tables, hairdryer;
 }

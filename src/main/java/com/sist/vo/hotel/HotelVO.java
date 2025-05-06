@@ -17,7 +17,7 @@ import lombok.Data;
 import java.util.*;
 @Data
 public class HotelVO {
-	private int no, content_id, content_type, areacode, sigungucode, price, minPrice, maxPrice;
+	private int no, content_id, content_type, areacode, sigungucode, price, minPrice, maxPrice, person, person_max;
 	private String title, addr, img, cat1, cat2, cat3, overview;
 	private Date checkin, checkout;
 	

@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sist.dao.HotelDAO;
+import com.sist.vo.hotel.HotelImgVO;
+import com.sist.vo.hotel.HotelRoomVO;
 import com.sist.vo.hotel.HotelVO;
 
 @Service
@@ -19,11 +21,25 @@ public class HotelServiceImpl implements HotelService {
 		// TODO Auto-generated method stub
 		return dao.hotelListData(map);
 	}
-
 	@Override
-	public int hotelTotalPage() {
+	public int hotelTotalPage(Map map) {
 		// TODO Auto-generated method stub
-		return dao.hotelTotalPage();
+		return dao.hotelTotalPage(map);
+	}
+	@Override
+	public List<HotelRoomVO> hotelDetaiListlData(int no) {
+		// TODO Auto-generated method stub
+		return dao.hotelDetaiListlData(no);
+	}
+	@Override
+	public List<HotelImgVO> hotelImgListData(int no) {
+		// TODO Auto-generated method stub
+		return dao.hotelImgListData(no);
+	}
+	@Override
+	public HotelVO hotelData(int no) {
+		// TODO Auto-generated method stub
+		return dao.hotelData(no);
 	}
 	
 }

@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.sist.mapper.*;
+import com.sist.vo.hotel.HotelImgVO;
+import com.sist.vo.hotel.HotelRoomVO;
 import com.sist.vo.hotel.HotelVO;
 
 import java.util.*;
@@ -17,8 +19,20 @@ public class HotelDAO {
 	{
 		return mapper.hotelListData(map);
 	}
-	public int hotelTotalPage()
+	public int hotelTotalPage(Map map)
 	{
-		return mapper.hotelTotalPage();
+		return mapper.hotelTotalPage(map);
+	}
+	public List<HotelRoomVO> hotelDetaiListlData(int no)
+	{
+		return mapper.hotelDetaiListlData(no);
+	}
+	public List<HotelImgVO> hotelImgListData(int no)
+	{
+		return mapper.hotelImgListData(no);
+	}
+	public HotelVO hotelData(int no)
+	{
+		return mapper.hotelData(no);
 	}
 }
