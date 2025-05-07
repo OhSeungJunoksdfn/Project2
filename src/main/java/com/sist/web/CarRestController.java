@@ -16,11 +16,15 @@ public class CarRestController {
 	CarService service;
 	
 	@GetMapping("car/list_vue.do")
-	public Map car_list(int page) {
+	public Map car_list(int page,String tabVal) {
 		
 		int rowSize=6;
-		List<CarVO> list=service.carListData((page-1)*rowSize+1, page*rowSize);
-		int totalpage=service.carTotalPage();
+		Map map = new HashMap();
+		map.put("start",(page-1)*rowSize+1);
+		map.put("end",page*rowSize);
+		map.put("tabVal",tabVal);
+		List<CarVO> list=service.carListData(map);
+		int totalpage=service.carTotalPage(tabVal);
 		
 		final int BLOCK=10;
 		int startPage=((page-1)/BLOCK*BLOCK)+1;
@@ -30,7 +34,6 @@ public class CarRestController {
 			endPage=totalpage;
 		
 		// Vue로 전송
-		Map map=new HashMap();
 		map.put("list", list);
 		map.put("curpage", page);
 		map.put("totalpage", totalpage);

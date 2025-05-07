@@ -275,34 +275,46 @@ span:hover,a:hover{
       <div class="container">
         <div class="row">
           <ul class="col-12 nav nav-tabs">
-            <li class="nav-item">
+          	<li class="nav-item">
               <a
-                class="tablink nav-link active cursor-pointer"
-                onclick="openPage('Home', this, 'red')"
+                class="tablink nav-link cursor-pointer"
+                :class="{active:tabVal==='전체'}"
+                @click="tabSwitch('전체')"
                 aria-current="page"
-                @click="test()"
-                >Active</a
+                >전체</a
               >
             </li>
             <li class="nav-item">
               <a
                 class="tablink nav-link cursor-pointer"
-                onclick="openPage('News', this, 'green')"
-                >Link</a
+                :class="{active:tabVal==='전기차'}"
+                @click="tabSwitch('전기차')"
+                aria-current="page"
+                >전기차</a
               >
             </li>
             <li class="nav-item">
               <a
                 class="tablink nav-link cursor-pointer"
-                onclick="openPage('Contact', this, 'blue')"
-                >Link</a
+                :class="{active:tabVal==='SUV'}"
+                @click="tabSwitch('SUV')"
+                >SUV</a
               >
             </li>
             <li class="nav-item">
               <a
                 class="tablink nav-link cursor-pointer"
-                onclick="openPage('About', this, 'orange')"
-                >Link</a
+                :class="{active:tabVal==='승합차'}"
+                @click="tabSwitch('승합차')"
+                >승합차</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="tablink nav-link cursor-pointer"
+                :class="{active:tabVal==='수입차'}"
+                @click="tabSwitch('수입차')"
+                >수입차</a
               >
             </li>
           </ul>
@@ -371,7 +383,8 @@ span:hover,a:hover{
         			curpage:1,
         			totalpage:0,
         			startPage:0,
-        			endPage:0
+        			endPage:0,
+        			tabVal:'전체'
         		}
         	},
         	mounted(){
@@ -409,10 +422,16 @@ span:hover,a:hover{
         			}
         			return arr
         		},
+        		tabSwitch(val) {
+        	        this.tabVal = val
+        	        this.curpage=1,
+        	        this.dataRecv()
+        	    },
         		dataRecv(){
         			axios.get('../car/list_vue.do',{
             			params:{
-            				page:this.curpage
+            				page:this.curpage,
+            				tabVal:this.tabVal
             			}
             		}).then(res=>{
             			console.log(res.data)
@@ -433,21 +452,6 @@ span:hover,a:hover{
     </script>
    
     <script>
-      function openPage(pageName, elmnt, color) {
-        // Hide all elements with class="tabcontent" by default */
-        var i, tabcontent, tablinks;
-
-        // Remove the background color of all tablinks/buttons
-        tablinks = document.getElementsByClassName("tablink");
-        for (i = 0; i < tablinks.length; i++) {
-          tablinks[i].classList.remove("active");
-        }
-
-        // Show the specific tab content
-
-        // Add the specific color to the button used to open the tab content
-        elmnt.classList.add("active");
-      }
 
 
     </script>

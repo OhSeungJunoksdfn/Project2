@@ -1,6 +1,6 @@
 package com.sist.service;
 
-import java.util.List;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -14,15 +14,15 @@ public class CarServiceImpl implements CarService{
 	CarDAO dao;
 	
 	@Override
-	public List<CarVO> carListData(int start, int end) {
+	public List<CarVO> carListData(Map map) {
 		// TODO Auto-generated method stub
-		return dao.carListData(start, end);
+		return dao.carListData(map);
 	}
 
 	@Override
-	public int carTotalPage() {
+	public int carTotalPage(String tabVal) {
 		// TODO Auto-generated method stub
-		return dao.carTotalPage();
+		return dao.carTotalPage(tabVal);
 	}
 
 	

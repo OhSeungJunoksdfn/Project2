@@ -10,16 +10,16 @@ import java.util.*;
 
 
 public interface CarMapper {
-   @Select("SELECT no,poster,name,car_class,seat,fuel,premium_ins_price,num "
-			  +"FROM (SELECT no,poster,name,car_class,seat,fuel,premium_ins_price,rownum as num "
-			  +"FROM (SELECT no,poster,name,car_class,seat,fuel,premium_ins_price "
-			  +"FROM car ORDER BY no ASC)) "
-			  +"WHERE num BETWEEN #{start} AND #{end}")
-   public List<CarVO> carListData(
-		   @Param("start") int start,
-		   @Param("end") int end);
-   @Select("SELECT CEIL(COUNT(*)/6.0) FROM car")
-   public int carTotalPage();
+//   @Select("SELECT no,poster,name,car_class,seat,fuel,premium_ins_price,num "
+//			  +"FROM (SELECT no,poster,name,car_class,seat,fuel,premium_ins_price,rownum as num "
+//			  +"FROM (SELECT no,poster,name,car_class,seat,fuel,premium_ins_price "
+//			  +"FROM car ORDER BY no ASC)) "
+//			  +"WHERE num BETWEEN #{start} AND #{end}")
+   public List<CarVO> carListData(Map map);
+   
+   
+  // @Select("SELECT CEIL(COUNT(*)/6.0) FROM car")
+   public int carTotalPage(@Param("tabVal") String tabVal);
    
    @Select("SELECT * FROM busan_food "
 		  +"WHERE fno=#{fno}")
