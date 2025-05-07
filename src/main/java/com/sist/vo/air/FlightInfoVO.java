@@ -18,7 +18,5 @@ import lombok.Data;
 @Data
 public class FlightInfoVO {
 	private int flight_id,economy_charge,prestige_charge;
-	private String airline_code,flight_number,dep_airport_code,arr_airport_code;
-	private Timestamp dep_time,arr_time;
-	private Date regdate;
+	private String airline_code,flight_number,dep_airport_code,arr_airport_code,dep_time,arr_time,regdate;
 }
