@@ -47,29 +47,29 @@ public class HotelRestController {
 			endPage = totalpage;
 		
 		
-		List<Map<String, Object>> SGGList = new ArrayList<>();
-		SGGList.add(Map.of("areacode", 1, "sigungucode", 0, "name", "서울 전체"));
-		SGGList.add(Map.of("areacode", 1, "sigungucode", 1, "name", "강남구"));
-		SGGList.add(Map.of("areacode", 1, "sigungucode", 2, "name", "강동구"));
-		SGGList.add(Map.of("areacode", 1, "sigungucode", 3, "name", "강북구"));
-		SGGList.add(Map.of("areacode", 1, "sigungucode", 4, "name", "강서구"));
-		SGGList.add(Map.of("areacode", 1, "sigungucode", 6, "name", "광진구"));
-		SGGList.add(Map.of("areacode", 1, "sigungucode", 7, "name", "구로구"));
-		SGGList.add(Map.of("areacode", 1, "sigungucode", 11, "name", "동대문구"));
-		SGGList.add(Map.of("areacode", 1, "sigungucode", 13, "name", "마포구"));
-		SGGList.add(Map.of("areacode", 1, "sigungucode", 14, "name", "서대문구"));
-		SGGList.add(Map.of("areacode", 1, "sigungucode", 15, "name", "서초구"));
-		SGGList.add(Map.of("areacode", 1, "sigungucode", 16, "name", "성동구"));
-		SGGList.add(Map.of("areacode", 1, "sigungucode", 17, "name", "성북구"));
-		SGGList.add(Map.of("areacode", 1, "sigungucode", 18, "name", "송파구"));
-		SGGList.add(Map.of("areacode", 1, "sigungucode", 20, "name", "영등포구"));
-		SGGList.add(Map.of("areacode", 1, "sigungucode", 21, "name", "용산구"));
-		SGGList.add(Map.of("areacode", 1, "sigungucode", 23, "name", "종로구"));
-		SGGList.add(Map.of("areacode", 1, "sigungucode", 24, "name", "중구"));
-		
-		SGGList.add(Map.of("areacode", 39, "sigungucode", 0, "name", "제주 전체"));
-		SGGList.add(Map.of("areacode", 39, "sigungucode", 3, "name", "서귀포시"));
-		SGGList.add(Map.of("areacode", 39, "sigungucode", 4, "name", "제주시"));
+//		List<Map<String, Object>> SGGList = new ArrayList<>();
+//		SGGList.add(Map.of("areacode", 1, "sigungucode", 0, "name", "서울 전체"));
+//		SGGList.add(Map.of("areacode", 1, "sigungucode", 1, "name", "강남구"));
+//		SGGList.add(Map.of("areacode", 1, "sigungucode", 2, "name", "강동구"));
+//		SGGList.add(Map.of("areacode", 1, "sigungucode", 3, "name", "강북구"));
+//		SGGList.add(Map.of("areacode", 1, "sigungucode", 4, "name", "강서구"));
+//		SGGList.add(Map.of("areacode", 1, "sigungucode", 6, "name", "광진구"));
+//		SGGList.add(Map.of("areacode", 1, "sigungucode", 7, "name", "구로구"));
+//		SGGList.add(Map.of("areacode", 1, "sigungucode", 11, "name", "동대문구"));
+//		SGGList.add(Map.of("areacode", 1, "sigungucode", 13, "name", "마포구"));
+//		SGGList.add(Map.of("areacode", 1, "sigungucode", 14, "name", "서대문구"));
+//		SGGList.add(Map.of("areacode", 1, "sigungucode", 15, "name", "서초구"));
+//		SGGList.add(Map.of("areacode", 1, "sigungucode", 16, "name", "성동구"));
+//		SGGList.add(Map.of("areacode", 1, "sigungucode", 17, "name", "성북구"));
+//		SGGList.add(Map.of("areacode", 1, "sigungucode", 18, "name", "송파구"));
+//		SGGList.add(Map.of("areacode", 1, "sigungucode", 20, "name", "영등포구"));
+//		SGGList.add(Map.of("areacode", 1, "sigungucode", 21, "name", "용산구"));
+//		SGGList.add(Map.of("areacode", 1, "sigungucode", 23, "name", "종로구"));
+//		SGGList.add(Map.of("areacode", 1, "sigungucode", 24, "name", "중구"));
+//		
+//		SGGList.add(Map.of("areacode", 39, "sigungucode", 0, "name", "제주 전체"));
+//		SGGList.add(Map.of("areacode", 39, "sigungucode", 3, "name", "서귀포시"));
+//		SGGList.add(Map.of("areacode", 39, "sigungucode", 4, "name", "제주시"));
 		
 		
 		map = new HashMap();
@@ -79,7 +79,7 @@ public class HotelRestController {
 		map.put("totalpage", totalpage);
 		map.put("startPage", startPage);
 		map.put("endPage", endPage);
-		map.put("SGGList", SGGList);
+//		map.put("SGGList", SGGList);
 		
 		
 		System.out.println("start=" + start + ", end=" + end + ", page=" + page + ", areacode=" + areacode + ", sigungucode=" + sigungucode);
