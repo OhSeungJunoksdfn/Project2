@@ -1,10 +1,10 @@
 package com.sist.service;
 
-import java.util.List;
+import java.util.*;
 
 import com.sist.vo.car.CarVO;
 
 public interface CarService {
-	public List<CarVO> carListData(int start,int end);
-	public int carTotalPage();
+	public List<CarVO> carListData(Map map);
+	public int carTotalPage(String tabVal);
 }

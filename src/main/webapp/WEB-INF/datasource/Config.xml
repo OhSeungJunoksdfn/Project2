@@ -6,9 +6,11 @@
   <typeAliases>
     <typeAlias type="com.sist.vo.hotel.HotelVO" alias="HotelVO"/>
     <typeAlias type="com.sist.vo.tour.TourVO" alias="TourVO"/>
+    <typeAlias type="com.sist.vo.car.CarVO" alias="CarVO"/>
   </typeAliases>
   <mappers>
     <mapper resource="com/sist/mapper/hotel-mapper.xml"/>
     <mapper resource="com/sist/mapper/tour-mapper.xml"/>
+    <mapper resource="com/sist/mapper/car-mapper.xml"/>
   </mappers>
 </configuration>

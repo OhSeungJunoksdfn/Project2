@@ -1,6 +1,6 @@
 package com.sist.dao;
 
-import java.util.List;
+import java.util.*;
 
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -14,11 +14,11 @@ import com.sist.vo.car.CarVO;
 public class CarDAO {
 	@Autowired
 	CarMapper mapper;
-	public List<CarVO> carListData(int start,int end){
-		return mapper.carListData(start, end);
+	public List<CarVO> carListData(Map map){
+		return mapper.carListData(map);
 	}
 	
-	public int carTotalPage() {
-		return mapper.carTotalPage();
+	public int carTotalPage(String tabVal) {
+		return mapper.carTotalPage(tabVal);
 	}
 }
