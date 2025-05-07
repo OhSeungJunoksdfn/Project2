@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Select;
 
 import com.sist.vo.*;
 import com.sist.vo.hotel.HotelImgVO;
+import com.sist.vo.hotel.HotelInfoVO;
 import com.sist.vo.hotel.HotelRoomVO;
 import com.sist.vo.hotel.HotelVO;
 public interface HotelMapper {
@@ -24,4 +25,10 @@ public interface HotelMapper {
 	
 	@Select("SELECT * FROM hotel WHERE no = #{no}")
 	public HotelVO hotelData(int no);
+	
+	@Select("SELECT hotel_no, checkintime, checkouttime, food_place, parking, seminar, sports, "
+			+ "sauna, beverage, barbecue, bicycle, fitness, publicpc, publicbath "
+			+ "FROM hotel_info "
+			+ "WHERE hotel_no = #{no}")
+	public HotelInfoVO hotelInfoData(int no);
 }

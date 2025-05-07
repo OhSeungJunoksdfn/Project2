@@ -18,8 +18,91 @@
 </style>
 </head>
 <body>
+	<div style="width:100%;display: flex;justify-content: center;">
+	 <section class="ftco-section justify-content-end " style="width:65%; padding: 32px;">
+      <div class="container-wrap mx-auto">
+        <div class="row no-gutters">
+          <div class="col-md-12 tab-wrap rt-12 shadow" style="border-radius:10px">
+            <div class="tab-content p-4 px-5" id="v-pills-tabContent">
+              <div
+                class="tab-pane fade show active"
+                id="v-pills-2"
+                role="tabpanel"
+                aria-labelledby="v-pills-performance-tab"
+              >
+                <form action="#" class="search-destination">
+                  <div class="row">
+                    <div class="col-md align-items-end">
+                      <div class="form-group">
+                        <label for="#">Check In</label>
+                        <div class="form-field">
+                          <div class="icon">
+                            <span class="icon-map-marker"></span>
+                          </div>
+                          <input
+                            type="text"
+                            class="form-control checkin_date"
+                            placeholder="Check In"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md align-items-end">
+                      <div class="form-group">
+                        <label for="#">Check Out</label>
+                        <div class="form-field">
+                          <div class="icon">
+                            <span class="icon-map-marker"></span>
+                          </div>
+                          <input
+                            type="text"
+                            class="form-control checkout_date"
+                            placeholder="From"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md align-items-end">
+                      <div class="form-group">
+                        <label for="#">Guest</label>
+                        <div class="form-field">
+                          <div class="select-wrap">
+                            <div class="icon">
+                              <span class="ion-ios-arrow-down"></span>
+                            </div>
+                            <select name="" id="" class="form-control">
+                              <option value="">1</option>
+                              <option value="">2</option>
+                              <option value="">3</option>
+                              <option value="">4</option>
+                              <option value="">5</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md align-self-end">
+                      <div class="form-group">
+                        <div class="form-field">
+                          <input
+                            type="submit"
+                            value="Search"
+                            class="form-control btn btn-primary"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+	</div>
   <div style="width:100%;display: flex;justify-content: center;">
-	<section class="ftco-section" id="hotelListApp">
+	<section class="ftco-section" style="padding: 32px;" id="hotelListApp">
       <div class="container">
         <div class="row">
           <!--사이드바-->
@@ -45,11 +128,19 @@
                     </label>
                     
                     <p style="font-size: 18px" v-show="locDetail">지역 상세</p>
-                    <label class="checkBoxAll pb-1">
+                    <label class="checkBoxAll pb-1" v-if="areacode === 1">
                       <input type="checkbox" style="display: none"/>
+                      <span class="checkBtn" :class="{ checked: sigungucode === 0 }" @click="selSigungucode(0)">서울 전체</span>
                       <span class="checkBtn" :class="{ checked: sigungucode === sgg.sigungucode }" v-for="sgg in filterSGG" 
                       :key="sgg.areacode+'_'+sgg.sigungucode" @click="selSigungucode(sgg.sigungucode)">{{ sgg.name }}</span>
                     </label>
+                    <label class="checkBoxAll pb-1" v-if="areacode === 39">
+                      <input type="checkbox" style="display: none"/>
+                      <span class="checkBtn" :class="{ checked: sigungucode === 0 }" @click="selSigungucode(0)">제주 전체</span>
+                      <span class="checkBtn" :class="{ checked: sigungucode === sgg.sigungucode }" v-for="sgg in filterSGG" 
+                      :key="sgg.areacode+'_'+sgg.sigungucode" @click="selSigungucode(sgg.sigungucode)">{{ sgg.name }}</span>
+                    </label>
+                    
                    
                     <p style="font-size: 18px" v-show="locDetail">숙박 타입</p>
                     <label class="checkBoxAll pb-1">
@@ -71,7 +162,13 @@
                       <span class="checkBtn" :class="{ checked: cat3 === 'B02010700' }" @click="selCat3('B02010700')">펜션</span>
                     </label>
                     
-                    
+                    <p style="font-size: 18px" v-show="locDetail">편의 시설</p>
+<!--                     <label class="checkBoxAll pb-1" v-show="locDetail"> -->
+<!--                       <input type="checkbox" style="display: none"/> -->
+<!--                       <span class="checkBtn" :class="{ checked: infos.includes(info.key) }" v-for="info in infoList"  -->
+<!--                       :key="info.key" @click="selInfo(info.key)">{{ info.name }}</span> -->
+<!--                     </label> -->
+
 <!--                     <div class="form-group"> -->
 <!-- 		              	<div class="range-slider"> -->
 <!-- 		              		<span> -->
@@ -112,6 +209,7 @@
             </div>
           </div>
           <!-- END-->
+          
           <div class="col-lg-9">
             <div class="row parent">
               <!-- 카드-->
@@ -159,7 +257,7 @@
                     </p>
                     <p class="days"><span></span></p>
                     <hr />
-                    <p class="bottom-area d-flex">
+                    <p class="bottom-area d-flex">s
                       <span><i class="icon-map-o"></i>{{ vo.addr }}</span>
                       <span class="ml-auto"><a href="#">바로 예약</a></span>
                     </p>
@@ -191,22 +289,57 @@
     	  data() {
     		  return {
     			  list: [],
-    			  SGGList: [],
     			  curpage: 1,
     			  totalpage: 0,
     			  startPage: 0,
     			  endPage: 0,
-    			  areacode: [],
-    			  sigungucode: [],
+    			  areacode: 0,
+    			  sigungucode: 0,
     			  sort: 'price_asc',
     			  locDetail: false,
     			  cat3: '',
+    			  SGGList: [
+    				  {areacode: 1, sigungucode: 1, name: "강남구"},
+                      {areacode: 1, sigungucode: 2, name: "강동구"},
+                      {areacode: 1, sigungucode: 3, name: "강북구"},
+                      {areacode: 1, sigungucode: 4, name: "강서구"},
+                      {areacode: 1, sigungucode: 6, name: "광진구"},
+                      {areacode: 1, sigungucode: 7, name: "구로구"},
+                      {areacode: 1, sigungucode: 11, name: "동대문구"},
+                      {areacode: 1, sigungucode: 13, name: "마포구"},
+                      {areacode: 1, sigungucode: 14, name: "서대문구"},
+                      {areacode: 1, sigungucode: 15, name: "서초구"},
+                      {areacode: 1, sigungucode: 16, name: "성동구"},
+                      {areacode: 1, sigungucode: 17, name: "성북구"},
+                      {areacode: 1, sigungucode: 18, name: "송파구"},
+                      {areacode: 1, sigungucode: 20, name: "영등포구"},
+                      {areacode: 1, sigungucode: 21, name: "용산구"},
+                      {areacode: 1, sigungucode: 23, name: "종로구"},
+                      {areacode: 1, sigungucode: 24, name: "중구"},
+                      
+                      {areacode: 39, sigungucode: 3, name: "서귀포시"},
+                      {areacode: 39, sigungucode: 4, name: "제주시"}
+    			  ],
+//     			  infos: [],
+//     			  infoList: [
+//     				  {key: 'food_place', name: '식당'},
+//     				  {key: 'parking', name: '주차'},
+//     				  {key: 'seminar', name: '세미나실'},
+//     				  {key: 'sports', name: '운동 시설'},
+//     				  {key: 'fitness', name: '운동 시설2'},
+//     				  {key: 'sauna', name: '사우나'},
+//     				  {key: 'beverage', name: '바'},
+//     				  {key: 'barbecue', name: '바베큐'},
+//     				  {key: 'bicycle', name: '자전거 대여'},
+//     				  {key: 'publicpc', name: '공용 PC'},
+//     				  {key: 'publicbath', name: '공용 욕실'}
+//     			  ]
     		  }
     	  },
     	  computed: {
 			filterSGG() {
 	      		return this.SGGList.filter(ssg =>
-	      		ssg.areacode === this.areacode
+	      			ssg.areacode === this.areacode
 	      		)
 	      	}
 	      },
@@ -214,6 +347,15 @@
     			this.dataRecv()
     	  },
     	  methods: {
+    		selInfo(info) {
+    			const idx = this.infos.indexOf(info)
+    			if(idx === -1) {
+    				this.infos.push(info)
+    			}
+    			else {
+    				this.infos.splice(idx, 1)
+    			}
+    		},
     		selCat3(Ccode) {
     			this.cat3 = Ccode
     			this.curpage = 1
@@ -237,14 +379,17 @@
     		prev(){
       			this.curpage = this.startPage-1
       			this.dataRecv()
+      			window.scrollTo({ top: 0, behavior: 'smooth' })
       		},
       		next() {
       			this.curpage = this.endPage+1
       			this.dataRecv()
+      			window.scrollTo({ top: 0, behavior: 'smooth' })
       		},
       		pageChange(page) {
       			this.curpage = page
       			this.dataRecv()
+      			window.scrollTo({ top: 0, behavior: 'smooth' })
       		},
       		range(start, end) {
       			let arr = []
@@ -263,7 +408,7 @@
 	      				areacode: this.areacode,
 	      				sigungucode: this.sigungucode,
 	      				cat3: this.cat3,
-	      				sort: this.sort,
+	      				sort: this.sort
       				}
       			}).then(res => {
       				console.log(res.data)
@@ -272,8 +417,6 @@
       			    this.totalpage = res.data.totalpage
       			    this.startPage = res.data.startPage
       			    this.endPage = res.data.endPage
-      			    this.SGGList = res.data.SGGList
-      			    window.scrollTo({ top: 0, behavior: 'smooth' })
       			    
       			  	this.$nextTick(() => {
       		          	contentWayPoint()

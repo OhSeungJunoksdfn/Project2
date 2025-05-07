@@ -21,6 +21,6 @@ public class HotelVO {
 	private String title, addr, img, cat1, cat2, cat3, overview;
 	private Date checkin, checkout;
 	
-	private HotelInfoVO  Info;
-	
+	private int hotel_no, food_place, parking, seminar, sports, sauna, beverage, barbecue, bicycle, fitness, publicpc, publicbath;
+	private String checkintime, checkouttime;
 }

@@ -33,6 +33,6 @@ SUBFACILITY              VARCHAR2(1000)
 @Data
 public class HotelInfoVO {
 	private int hotel_no, content_id, content_type, seminar, sports, sauna, beauty, beverage, karaoke, 
-				barbecue, campfire, bicycle, fitness, publicpc, publicbath;
-	private String roomcount, roomtype, checkintime, checkouttime, pickup, info_tel, parking, scale;
+				barbecue, campfire, bicycle, fitness, publicpc, parking, publicbath;
+	private String roomcount, roomtype, checkintime, checkouttime, pickup, info_tel,  scale;
 }
