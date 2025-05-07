@@ -1,6 +1,8 @@
 package com.sist.vo.air;
 import java.sql.Timestamp;
 import java.util.Date;
+
+import lombok.Data;
 /*
  *  FLIGHT_ID        NOT NULL NUMBER       
 	AIRLINE_CODE     NOT NULL VARCHAR2(10) 
@@ -13,7 +15,8 @@ import java.util.Date;
 	PRESTIGE_CHARGE           NUMBER       
 	REGDATE                   DATE      
  */
-public class Flight_infoVO {
+@Data
+public class FlightInfoVO {
 	private int flight_id,economy_charge,prestige_charge;
 	private String airline_code,flight_number,dep_airport_code,arr_airport_code;
 	private Timestamp dep_time,arr_time;

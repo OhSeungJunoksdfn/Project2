@@ -35,7 +35,7 @@
               <a href="about.html" class="nav-link">About</a>
             </li>
             <li class="nav-item">
-              <a href="places.html" class="nav-link">Places</a>
+              <a href="../air/air_list.do" class="nav-link">Places</a>
             </li>
             <li class="nav-item">
               <a href="../hotel/hotel_list.do" class="nav-link">Hotels</a>
