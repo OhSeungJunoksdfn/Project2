@@ -14,263 +14,28 @@ span:hover,a:hover{
 	cursor:pointer
 }
 </style>
-    
+<script type="text/javascript" src="../shadow/js/shadowbox.js"></script>
+<script type="text/javascript">
+Shadowbox.init({
+	players:['iframe']
+})
+function login(){
+	Shadowbox.open({
+		content:'../car/car_list.do',
+		player:'iframe',
+		width:300,
+		height:260,
+		title:'로그인'
+	})
+}
+</script>
+<script src="./car_reserve_tab.js"></script>
 </head>
 <body>
 	<div id="listApp">
-	<div style="width:100%;display: flex;justify-content: center;">
-		<section class="ftco-section justify-content-end " style="width:80%;">
-      <div class="container-wrap mx-auto">
-        <div class="row no-gutters">
-          <div class="col-md-12 tab-wrap rt-12 shadow" style="border-radius:10px">
-            <div class="tab-content p-4 px-5" id="v-pills-tabContent">
-              <div
-                class="tab-pane fade show active"
-                id="v-pills-1"
-                role="tabpanel"
-                aria-labelledby="v-pills-nextgen-tab"
-              >
-                <form action="#" class="search-destination">
-                  <div class="row">
-                    <div class="col-md align-items-end">
-                      <div class="form-group">
-                        <label for="#">From</label>
-                        <div class="form-field">
-                          <div class="icon">
-                            <span class="icon-my_location"></span>
-                          </div>
-                          <input
-                            type="text"
-                            class="form-control"
-                            placeholder="From"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md align-items-end">
-                      <div class="form-group">
-                        <label for="#">Where</label>
-                        <div class="form-field">
-                          <div class="icon">
-                            <span class="icon-map-marker"></span>
-                          </div>
-                          <input
-                            type="text"
-                            class="form-control"
-                            placeholder="Where"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md align-items-end">
-                      <div class="form-group">
-                        <label for="#">Check In</label>
-                        <div class="form-field">
-                          <div class="icon">
-                            <span class="icon-map-marker"></span>
-                          </div>
-                          <input
-                            type="text"
-                            class="form-control checkin_date"
-                            placeholder="Check In"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md align-items-end">
-                      <div class="form-group">
-                        <label for="#">Check Out</label>
-                        <div class="form-field">
-                          <div class="icon">
-                            <span class="icon-map-marker"></span>
-                          </div>
-                          <input
-                            type="text"
-                            class="form-control checkout_date"
-                            placeholder="From"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md align-items-end">
-                      <div class="form-group">
-                        <label for="#">Travelers</label>
-                        <div class="form-field">
-                          <div class="select-wrap">
-                            <div class="icon">
-                              <span class="ion-ios-arrow-down"></span>
-                            </div>
-                            <select name="" id="" class="form-control">
-                              <option value="">1</option>
-                              <option value="">2</option>
-                              <option value="">3</option>
-                              <option value="">4</option>
-                              <option value="">5</option>
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md align-self-end">
-                      <div class="form-group">
-                        <div class="form-field">
-                          <input
-                            type="submit"
-                            value="Search"
-                            class="form-control btn btn-primary"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </form>
-              </div>
-
-              <div
-                class="tab-pane fade"
-                id="v-pills-2"
-                role="tabpanel"
-                aria-labelledby="v-pills-performance-tab"
-              >
-                <form action="#" class="search-destination">
-                  <div class="row">
-                    <div class="col-md align-items-end">
-                      <div class="form-group">
-                        <label for="#">Check In</label>
-                        <div class="form-field">
-                          <div class="icon">
-                            <span class="icon-map-marker"></span>
-                          </div>
-                          <input
-                            type="text"
-                            class="form-control checkin_date"
-                            placeholder="Check In"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md align-items-end">
-                      <div class="form-group">
-                        <label for="#">Check Out</label>
-                        <div class="form-field">
-                          <div class="icon">
-                            <span class="icon-map-marker"></span>
-                          </div>
-                          <input
-                            type="text"
-                            class="form-control checkout_date"
-                            placeholder="From"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md align-items-end">
-                      <div class="form-group">
-                        <label for="#">Guest</label>
-                        <div class="form-field">
-                          <div class="select-wrap">
-                            <div class="icon">
-                              <span class="ion-ios-arrow-down"></span>
-                            </div>
-                            <select name="" id="" class="form-control">
-                              <option value="">1</option>
-                              <option value="">2</option>
-                              <option value="">3</option>
-                              <option value="">4</option>
-                              <option value="">5</option>
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md align-self-end">
-                      <div class="form-group">
-                        <div class="form-field">
-                          <input
-                            type="submit"
-                            value="Search"
-                            class="form-control btn btn-primary"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </form>
-              </div>
-
-              <div
-                class="tab-pane fade"
-                id="v-pills-3"
-                role="tabpanel"
-                aria-labelledby="v-pills-effect-tab"
-              >
-                <form action="#" class="search-destination">
-                  <div class="row">
-                    <div class="col-md align-items-end">
-                      <div class="form-group">
-                        <label for="#">Where</label>
-                        <div class="form-field">
-                          <div class="icon">
-                            <span class="icon-map-marker"></span>
-                          </div>
-                          <input
-                            type="text"
-                            class="form-control"
-                            placeholder="Where"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md align-items-end">
-                      <div class="form-group">
-                        <label for="#">Check In</label>
-                        <div class="form-field">
-                          <div class="icon">
-                            <span class="icon-map-marker"></span>
-                          </div>
-                          <input
-                            type="text"
-                            class="form-control checkin_date"
-                            placeholder="Check In"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md align-items-end">
-                      <div class="form-group">
-                        <label for="#">Check Out</label>
-                        <div class="form-field">
-                          <div class="icon">
-                            <span class="icon-map-marker"></span>
-                          </div>
-                          <input
-                            type="text"
-                            class="form-control checkout_date"
-                            placeholder="From"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md align-self-end">
-                      <div class="form-group">
-                        <div class="form-field">
-                          <input
-                            type="submit"
-                            value="Search"
-                            class="form-control btn btn-primary"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-	</div>
+	
+	<car-reserve-tab :onclickhandler="test"></car-reserve-tab>
+	
     <section class="ftco-section ftco-degree-bg" style="margin:0px;padding:20px">
       <div class="container">
         <div class="row">
@@ -400,6 +165,9 @@ span:hover,a:hover{
         		}
         	},
         	methods:{
+        		test(){
+        			console.log("testtttt")
+        		},
         		prev(){
         			this.curpage=this.startPage-1
         			this.dataRecv()
@@ -447,13 +215,13 @@ span:hover,a:hover{
             			console.log(error.response)
             		})
         		}
+        		
+        	},
+        	components:{
+        		'car-reserve-tab':car_reserve_tab
         	}
     	}).mount("#listApp")
-    </script>
-   
-    <script>
-
-
+    	
     </script>
   </body>
 </body>
