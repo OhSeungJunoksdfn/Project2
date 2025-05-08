@@ -19,6 +19,12 @@ public interface BoardMapper {
 			+ "WHERE REGEXP_LIKE(type,#{type})")
 	public int boardTotalPage(Map map);
 	
+	@Select("SELECT MAX(no) from databoard ")
+	public int boardMax();
+	
+	@Select("SELECT MIN(no) from databoard ")
+	public int boardMin();
+	
 	@Update("UPDATE databoard SET "
 			+ "hit=hit+1 "
 			+ "WHERE no=#{no}")

@@ -18,8 +18,6 @@
   <form id="postForm" method="post" action="/board/insert" enctype="multipart/form-data">
     <div class="container secb shadow py-2">
       <h3>글쓰기</h3>
-      <%= application.getRealPath("/") %>  
-      <img src="C:\project\images/06f106de-191e-4d14-8dfb-b1c78a8e9a24_스크린샷 2024-03-26 180026.png" />
       <div class="row p-3">
         <div class="input-group mb-2">
           <input

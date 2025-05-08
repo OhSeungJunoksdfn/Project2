@@ -18,6 +18,14 @@ public class BoardDAO {
 	{
 		return mapper.boardTotalPage(map);
 	}
+	public int boardMax()
+	{
+		return mapper.boardMax();
+	}
+	public int boardMin()
+	{
+		return mapper.boardMin();
+	}
 	
 	public BoardVO boardDetailData(int no) 
 	{
