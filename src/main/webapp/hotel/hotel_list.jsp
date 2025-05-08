@@ -163,11 +163,11 @@
                     </label>
                     
                     <p style="font-size: 18px" v-show="locDetail">편의 시설</p>
-<!--                     <label class="checkBoxAll pb-1" v-show="locDetail"> -->
-<!--                       <input type="checkbox" style="display: none"/> -->
-<!--                       <span class="checkBtn" :class="{ checked: infos.includes(info.key) }" v-for="info in infoList"  -->
-<!--                       :key="info.key" @click="selInfo(info.key)">{{ info.name }}</span> -->
-<!--                     </label> -->
+                    <label class="checkBoxAll pb-1" v-show="locDetail">
+                      <input type="checkbox" style="display: none"/>
+                      <span class="checkBtn" :class="{ checked: [1, '1'].includes(this[ivo.key]) }" v-for="ivo in infoList" 
+                      :key="ivo.key" @click="selInfo(ivo.key)">{{ ivo.name }}</span>
+                    </label>
 
 <!--                     <div class="form-group"> -->
 <!-- 		              	<div class="range-slider"> -->
@@ -298,6 +298,9 @@
     			  sort: 'price_asc',
     			  locDetail: false,
     			  cat3: '',
+    			  parking: 0,
+    			  sports: 0,
+    			  sauna: 0,
     			  SGGList: [
     				  {areacode: 1, sigungucode: 1, name: "강남구"},
                       {areacode: 1, sigungucode: 2, name: "강동구"},
@@ -320,20 +323,19 @@
                       {areacode: 39, sigungucode: 3, name: "서귀포시"},
                       {areacode: 39, sigungucode: 4, name: "제주시"}
     			  ],
-//     			  infos: [],
-//     			  infoList: [
+    			  infoList: [
 //     				  {key: 'food_place', name: '식당'},
-//     				  {key: 'parking', name: '주차'},
+    				  {key: 'parking', name: '주차'},
 //     				  {key: 'seminar', name: '세미나실'},
-//     				  {key: 'sports', name: '운동 시설'},
+    				  {key: 'sports', name: '운동 시설'},
 //     				  {key: 'fitness', name: '운동 시설2'},
-//     				  {key: 'sauna', name: '사우나'},
+    				  {key: 'sauna', name: '사우나'},
 //     				  {key: 'beverage', name: '바'},
 //     				  {key: 'barbecue', name: '바베큐'},
 //     				  {key: 'bicycle', name: '자전거 대여'},
 //     				  {key: 'publicpc', name: '공용 PC'},
 //     				  {key: 'publicbath', name: '공용 욕실'}
-//     			  ]
+    			  ]
     		  }
     	  },
     	  computed: {
@@ -347,14 +349,8 @@
     			this.dataRecv()
     	  },
     	  methods: {
-    		selInfo(info) {
-    			const idx = this.infos.indexOf(info)
-    			if(idx === -1) {
-    				this.infos.push(info)
-    			}
-    			else {
-    				this.infos.splice(idx, 1)
-    			}
+    		selInfo(key) {
+    			this[key] = this[key] === 1 ? 0 : 1
     		},
     		selCat3(Ccode) {
     			this.cat3 = Ccode
@@ -402,14 +398,21 @@
       			return arr
       		},
       		dataRecv() {
+      			if (this.parking === 1) params.parking = 1
+      	      	if (this.sports === 1) params.sports = 1
+      	      	if (this.sauna === 1) params.sauna = 1
       			axios.get('http://localhost:8080/hotel/list_vue.do', {
       				params: {
 	      				page: this.curpage,
 	      				areacode: this.areacode,
 	      				sigungucode: this.sigungucode,
 	      				cat3: this.cat3,
-	      				sort: this.sort
+	      				sort: this.sort,
+	      				parking: this.parking,
+	      				sports: this.sports,
+	      				sauna: this.sauna
       				}
+
       			}).then(res => {
       				console.log(res.data)
       				this.list = res.data.list

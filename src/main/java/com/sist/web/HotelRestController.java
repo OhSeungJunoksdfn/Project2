@@ -3,6 +3,7 @@ package com.sist.web;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,7 +20,7 @@ public class HotelRestController {
 	private HotelService service;
 	
 	@GetMapping("list_vue.do")
-	public Map hotel_list_vue(int page, @RequestParam(value = "sort") String sort,
+	public Map hotel_list_vue(HotelInfoVO ivo, int page, @RequestParam(value = "sort") String sort,
 			@RequestParam(value = "areacode", defaultValue = "0" ) int areacode,
 			@RequestParam(value = "sigungucode", defaultValue = "0") int sigungucode,
 			@RequestParam(value = "cat3", defaultValue = "") String cat3)
@@ -38,6 +39,11 @@ public class HotelRestController {
 //		map.put("minPrice", 50000);
 //		map.put("maxPrice", 250000);
 		
+		System.out.println("parking=" + ivo.getParking() + ", sauna=" + ivo.getSauna());
+		
+		map.put("parking", ivo.getParking());
+		map.put("sports", ivo.getSports());
+		map.put("sauna", ivo.getSauna());
 		List<HotelVO> list = service.hotelListData(map);
 		
 		int totalpage = service.hotelTotalPage(map);
@@ -46,6 +52,7 @@ public class HotelRestController {
 		int endPage = startPage + BLOCK - 1;
 		if (endPage > totalpage)
 			endPage = totalpage;
+		
 		
 		
 //		List<Map<String, Object>> SGGList = new ArrayList<>();
