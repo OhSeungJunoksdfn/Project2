@@ -19,7 +19,6 @@ public class CarDAO {
 	}
 	
 	public int carTotalPage(String tabVal) {
-		System.out.println("gitignore 테스트");
 		return mapper.carTotalPage(tabVal);
 	}
 }
