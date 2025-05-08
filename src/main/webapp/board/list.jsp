@@ -39,7 +39,9 @@
               <a :class="type===7?'tablink nav-link cursor-pointer active':'tablink nav-link cursor-pointer'" @click="changeType('7')" >렌트</a>
             </li>
           </ul>
+          <c:if test="${sessionScope.id!=null }">
           <a href="../board/insert.do" class="btn btn-primary r-12" >글쓰기</a>
+          </c:if>
           </div>
           <table class="table">
             <thead>
@@ -54,9 +56,9 @@
             <tbody>
             <c:forEach var="vo" items="${list }">
               <tr>
-                <td width="10%">${vo.no }</td>
+                <td width="10%" class="text-center">${vo.no }</td>
                 <td width="40%">
-                  <a class="cursor-pointer" style="color: black">[${vo.type}] ${vo.subject }</a>
+                  <a href="../board/detail.do?no=${vo.no }" class="cursor-pointer" style="color: black">[${vo.type}] ${vo.subject }</a>
                 </td>
                 <td width="20%" class="text-center">${vo.name }</td>
                 <td width="10%" class="text-center">${vo.dbday }</td>
