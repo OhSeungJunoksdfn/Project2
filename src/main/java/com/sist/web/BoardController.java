@@ -1,10 +1,13 @@
 package com.sist.web;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import com.sist.service.*;
 import com.sist.vo.board.*;
@@ -57,6 +60,23 @@ public class BoardController {
 	public String board_insert(Model model)
 	{
 		model.addAttribute("main_jsp","../board/insert.jsp");
+		return "main/main";
+	}
+
+	@GetMapping("board/detail.do")
+	public String board_detail(Model model,int no)
+	{
+		BoardVO vo = service.boardDetailData(no);
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		String formattedDate = formatter.format(vo.getRegdate());
+		vo.setDbday(formattedDate);
+		int maxNo = service.boardMax();
+		int minNo=service.boardMin();
+		
+		model.addAttribute("maxNo",maxNo);
+		model.addAttribute("minNo",minNo);
+		model.addAttribute("vo",vo);
+		model.addAttribute("main_jsp","../board/detail.jsp");
 		return "main/main";
 	}
 }
