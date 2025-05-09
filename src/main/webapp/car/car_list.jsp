@@ -16,18 +16,9 @@ span:hover,a:hover{
 </style>
 <script type="text/javascript" src="../shadow/js/shadowbox.js"></script>
 <script type="text/javascript">
-Shadowbox.init({
+/* Shadowbox.init({
 	players:['iframe']
-})
-function login(){
-	Shadowbox.open({
-		content:'../car/car_list.do',
-		player:'iframe',
-		width:300,
-		height:260,
-		title:'로그인'
-	})
-}
+})  */
 </script>
 <script src="./car_reserve_tab.js"></script>
 </head>
@@ -83,24 +74,11 @@ function login(){
               >
             </li>
           </ul>
-          <div
-            id="About"
-            class="tabcontent"
-            style="
-              color: white;
-              display: none;
-              padding: 100px 20px;
-              height: 100%;
-            "
-          >
-            <h3>About</h3>
-            <p>Who we are and what we do.</p>
-          </div>
         </div>
       </div>
     </section>
     <section class="ftco-section" style="margin:0px;padding:0px">
-      <div class="container" style="width:100%">
+      <div class="container">
         <div class="row d-flex " >
           <div class="col-12 col-md-4 d-flex ftco-animate" v-for="vo in list">
             <div class="blog-entry align-self-stretch ">
@@ -127,18 +105,20 @@ function login(){
         
       </div>
     </section>
-    <div class="row mt-5 mb-5">
-          <div class="col text-center">
-            <div class="block-27">
-              <ul>
-                <li v-if="startPage>1" ><span  @click="prev()">&lt;</span></li>
-                <li :class="i==curpage?'page-item active':'page-item'" v-for="i in range(startPage,endPage)"><span @click="pageChange(i)">{{i}}</span></li>
-                <li v-if="endPage<totalpage"><span  @click="next()">&gt;</span></li>
-              </ul>
-            </div>
-          </div>
-        </div>
+	
+
+         <div class="col text-center mt-5 mb-5" >
+           <div class="block-27">
+             <ul>
+               <li v-if="startPage>1" ><span  @click="prev()">&lt;</span></li>
+               <li :class="i==curpage?'page-item active':'page-item'" v-for="i in range(startPage,endPage)"><span @click="pageChange(i)">{{i}}</span></li>
+               <li v-if="endPage<totalpage"><span  @click="next()">&gt;</span></li>
+             </ul>
+           </div>
+         </div>
+     
      </div>
+	
     <!--검색-->
     <script>
     	let listApp=Vue.createApp({
@@ -166,7 +146,14 @@ function login(){
         	},
         	methods:{
         		test(){
-        			console.log("testtttt")
+        			console.log("adsfasdf")
+        			/* Shadowbox.open({
+        				content:'../car/car_calendar.do',
+        				player:'iframe',
+        				width:300,
+        				height:260,
+        				title:'로그인'
+        			}) */
         		},
         		prev(){
         			this.curpage=this.startPage-1

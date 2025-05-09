@@ -3,7 +3,7 @@
 const car_reserve_tab = {
 template:
 `
-	<div style="width:100%;display: flex;justify-content: center;" @click="onclickhandler">
+	<div style="display: flex;justify-content: center;" @click="onclickhandler">
 		<section class="ftco-section justify-content-end " style="width:80%;">
 	      <div class="container-wrap mx-auto">
 	        <div class="row no-gutters">
