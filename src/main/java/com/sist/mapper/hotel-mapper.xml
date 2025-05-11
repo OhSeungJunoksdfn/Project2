@@ -6,12 +6,44 @@
     FROM (SELECT hotl.*, ROWNUM AS num
     FROM (SELECT * 
     FROM (SELECT h.no, h.title, h.img, h.addr, h.areacode, h.sigungucode, h.content_id,h.cat3, 
-    		hr.price, hr.person, hr.person_max, ROW_NUMBER()
-    OVER (PARTITION BY h.no
-    ORDER BY hr.price ASC) AS rn
+    		hr.price, hr.person, hr.person_max, 
+    		hi.parking, hi.sauna, hi.sports, 
+    ROW_NUMBER() OVER (PARTITION BY h.no ORDER BY hr.price ASC) AS rn
     FROM hotel h
-    JOIN hotel_room hr
-    ON hr.hotel_no = h.no) rp
+    JOIN hotel_room hr ON hr.hotel_no = h.no
+    JOIN hotel_info hi ON hi.hotel_no = h.no
+    WHERE 1 = 1
+      <if test="parking == 1">
+	    AND parking = 1
+	  </if>
+	  <if test="sauna == 1">
+	    AND hi.sauna = 1
+	  </if>
+	  <if test="sports == 1">
+	    AND hi.sports = 1
+	  </if>
+	  <if test="food_place == 1">
+	    AND hi.food_place = 1
+	  </if>
+	  <if test="beverage == 1">
+	    AND hi.beverage = 1
+	  </if>
+	  <if test="barbecue == 1">
+	    AND hi.barbecue = 1
+	  </if>
+	  <if test="bycle == 1">
+	    AND hi.bycle = 1
+	  </if>
+	  <if test="publicpc == 1">
+	    AND hi.publicpc = 1
+	  </if>
+	  <if test="publicbath == 1">
+	    AND hi.publicbath = 1
+	  </if>
+	  <if test="seminar == 1">
+	    AND hi.seminar = 1
+	  </if>
+    ) rp
     WHERE rp.rn = 1
 	  <if test="areacode != null">
 	    AND areacode = #{areacode}
@@ -22,22 +54,7 @@
 	  <if test="cat3 != '' and cat3 != null">
 	    AND cat3 = #{cat3}
 	  </if>
-	  <!-- price bar 구현 -->
-<!-- 	  <if test="minPrice != null"> -->
-<!-- 	    AND hr.price &gt;= #{minPrice}  -->
-<!-- 	  </if> -->
-<!-- 	  <if test="maxPrice != null"> -->
-<!-- 	    AND hr.price &lt;= #{maxPrice} -->
-<!-- 	  </if> -->
-	<choose>
-	  <when test="sort == 'price_desc'">
-	    ORDER BY rp.price DESC
-	  </when>
-	  <otherwise>
-	    <!-- 낮은 가격순을 기본 값  -->
-	    ORDER BY rp.price ASC
-	  </otherwise>
-	</choose>
+	ORDER BY rp.price ASC
 	) hotl
 	WHERE ROWNUM &lt;= #{end}) WHERE num &gt;= #{start}
   </select>
@@ -45,8 +62,8 @@
     SELECT CEIL(COUNT(*)/8.0) 
     FROM (SELECT DISTINCT h.no 
     FROM hotel h 
-    JOIN hotel_room hr 
-    ON h.no = hr.hotel_no 
+    JOIN hotel_room hr ON hr.hotel_no = h.no
+    JOIN hotel_info hi ON hi.hotel_no = h.no  
     <where>
       <if test="areacode != null">
 	    AND areacode = #{areacode} 
@@ -56,6 +73,33 @@
 	  </if>
 	  <if test="cat3 != '' and cat3 != null">
 	    AND cat3 = #{cat3}
+	  </if>
+	  <if test="parking == 1">
+	    AND parking = 1
+	  </if>
+	  <if test="sauna == 1">
+	    AND hi.sauna = 1
+	  </if>
+	  <if test="sports == 1">
+	    AND hi.sports = 1
+	  </if>
+	  <if test="beverage == 1">
+	    AND hi.beverage = 1
+	  </if>
+	  <if test="barbecue == 1">
+	    AND hi.barbecue = 1
+	  </if>
+	  <if test="bycle == 1">
+	    AND hi.bycle = 1
+	  </if>
+	  <if test="publicpc == 1">
+	    AND hi.publicpc = 1
+	  </if>
+	  <if test="publicbath == 1">
+	    AND hi.publicbath = 1
+	  </if>
+	  <if test="seminar == 1">
+	    AND hi.seminar = 1
 	  </if>
     </where>
     )
