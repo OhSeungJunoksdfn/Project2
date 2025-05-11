@@ -32,9 +32,18 @@ public class HotelController {
 	public String hotel_detail(int no, Model model)
 	{
 		HotelVO vo = service.hotelData(no);
+//		HotelVO rvo = service.hotelRelatedData(sigungucode);
 		List<HotelRoomVO> rList = service.hotelDetaiListlData(no);
 		List<HotelImgVO> iList = service.hotelImgListData(no);
+		for(HotelRoomVO room : rList)
+		{
+			if(room.getRoom_img() == null)
+			{
+				room.setRoom_img("http://tong.visitkorea.or.kr/cms/resource/96/2639696_image2_1.jpg,http://tong.visitkorea.or.kr/cms/resource/95/2639695_image2_1.jpg");
+			}
+		}
 		model.addAttribute("vo", vo);
+//		model.addAttribute("rvo", rvo);
 		model.addAttribute("rList", rList);
 		model.addAttribute("iList", iList);
 		model.addAttribute("main_jsp", "../hotel/hotel_detail.jsp");
