@@ -15,4 +15,5 @@ public interface HotelService {
 	public List<HotelImgVO> hotelImgListData(int no);
 	public HotelVO hotelData(int no);
 	public HotelInfoVO hotelInfoData(int no);
+	public HotelVO hotelRelatedData(int sigungucode);
 }

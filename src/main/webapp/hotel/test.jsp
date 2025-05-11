@@ -9,6 +9,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.0/nouislider.min.js"></script>
 </head>
 <body>
+<h1>한글 깨짐여부 확인</h1>
 <div id="app">
   <div class="form-group">
     <div class="range-slider">

@@ -26,6 +26,11 @@ public interface HotelMapper {
 	@Select("SELECT * FROM hotel WHERE no = #{no}")
 	public HotelVO hotelData(int no);
 	
+	@Select("SELECT * FROM ("
+			+ "SELECT * FROM hotel WHERE sigungucode = #{sigungucode}"
+			+ "ORDER BY DBMS_RANDOM.RANDOM) WHERE ROWNUM <=3")
+	public HotelVO hotelRelatedData(int sigungucode);
+	
 	@Select("SELECT hotel_no, checkintime, checkouttime, food_place, parking, seminar, sports, "
 			+ "sauna, beverage, barbecue, bicycle, fitness, publicpc, publicbath "
 			+ "FROM hotel_info "
