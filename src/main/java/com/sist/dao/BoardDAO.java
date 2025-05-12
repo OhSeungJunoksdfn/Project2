@@ -41,4 +41,18 @@ public class BoardDAO {
 	{
 		mapper.boardUpdate(vo);
 	}
+	public void boardDelete(int no)
+	{
+		mapper.boardDelete(no);
+	}
+	
+	public int boardNext(int no)
+	{
+		return mapper.boardNext(no);
+	}
+	
+	public int boardPrev(int no)
+	{
+		return mapper.boardPrev(no);
+	}
 }

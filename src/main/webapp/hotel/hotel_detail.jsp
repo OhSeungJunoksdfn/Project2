@@ -16,16 +16,19 @@ Shadowbox.init({
 	modal: false,
 	overlayOpacity: 0.85
 })
+
 </script>
 <style type="text/css">
 .two .pricec {
 	font-size: 16px;
 }
-.roomImgDetail {
+.ImgDetail {
 	object-fit: cover;
     border-radius: 10px;
-    margin: 10px;
     cursor: pointer;
+}
+#map {
+	border-radius: 10px;
 }
 </style>
 </head>
@@ -129,7 +132,7 @@ Shadowbox.init({
           		<div class="col-md-12 hotel-single mt-4 mb-5 ftco-animate">
           			<h2>${vo.title }</h2>
           			<p class="rate mb-5">
-          				<span class="loc"><a href="#"><i class="icon-map"></i> ${vo.addr }</a></span>
+          				<span class="loc"><a><i class="icon-map"></i>${vo.addr }</a></span>
           				<span class="star">
     							<i class="icon-star"></i>
     							<i class="icon-star"></i>
@@ -139,21 +142,18 @@ Shadowbox.init({
     					</span>
 
     				</p>
-    				<div class="d-md-flex mt-5 mb-5">
-    					<ul>
-	    					<li>The Big Oxmox advised her not to do so</li>
-	    					<li>When she reached the first hills of the Italic Mountains</li>
-	    					<li>She had a last view back on the skyline of her hometown </li>
-	    					<li>Bookmarksgrove, the headline of Alphabet </li>
-	    				</ul>
-	    				<ul class="ml-md-5">
-	    					<li>Question ran over her cheek, then she continued</li>
-	    					<li>Pityful a rethoric question ran</li>
-	    					<li>Mountains, she had a last view back on the skyline</li>
-	    					<li>Headline of Alphabet Village and the subline</li>
-	    				</ul>
+    				<div>
+<!--     					<div> -->
+<!-- 	    					<div><h3>어메니티</h3></div> -->
+<!-- 	    				</div> -->
+					<hr>
+	    				<div>
+	    					<div id="map" style="width:800px;height:280px;"></div> 
+	    				</div>
     				</div>
-    						<p>When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrove, the headline of Alphabet Village and the subline of her own road, the Line Lane. Pityful a rethoric question ran over her cheek, then she continued her way.</p>
+    				<hr>
+    				<br>
+    						<p>${vo.overview }</p>
           		</div>
           		
           		<div class="col-md-12 hotel-single ftco-animate mb-5 mt-4">
@@ -164,7 +164,7 @@ Shadowbox.init({
 				    			<div class="destination">  
 				    			  <c:set var="imgs" value="${fn:split(room.room_img, ',')}"/>
 				    				   <a href="${fn:trim(imgs[0])}" class="img img-2 r-12" rel="shadowbox[room${room.no}]" title="${room.title}">
-									      <img src="${fn:trim(imgs[0])}" class="roomImgDetail" style="width:215px; height:170px;">
+									      <img src="${fn:trim(imgs[0])}" class="ImgDetail" style="width:230px; height:170px;">
 									    </a>
 									    <c:forEach begin="1" end="${fn:length(imgs)-1}" var="i">
 									      <a href="${fn:trim(imgs[i])}" class="img img-2 r-12" rel="shadowbox[room${room.no}]" title="${room.title}" style="display:none; width:100%; height:100%;"></a>
@@ -246,35 +246,37 @@ Shadowbox.init({
 				  <div class="col-md-12 hotel-single ftco-animate mb-5 mt-5">
 					<h4 class="mb-4">${vo.title }와(과) 유사한 지역의 추천 숙소</h4>
 					<div class="row">
+					 <c:forEach items="${r3List }" var="r3List">
 					  <div class="col-md-4">
 								  <div class="destination">
-									  <a href="${rvo.img }" class="img img-2 r-12" style="background-image: "></a>
+									  <a href="../hotel/hotel_detail.do?no=${r3List.no }" class="img img-2 r-12" style="background-image:none; ">
+									    <img src="${r3List.img }" class="ImgDetail" style="width:230px; height:170px;">
+									  </a>
 									  <div class="text p-3">
 										  <div class="d-flex">
 											   <div class="one">
-												  <h3><a href="#">Hotel, Italy</a></h3>
+												  <h3><a href="#">${r3List.title }</a></h3>
 												  <p class="rate">
 													  <i class="icon-star"></i>
 													  <i class="icon-star"></i>
 													  <i class="icon-star"></i>
 													  <i class="icon-star"></i>
 													  <i class="icon-star-o"></i>
-													  <span>8 Rating</span>
+													  <span></span>
 												  </p>
 											  </div>
 											  <div class="two">
-												  <span class="price per-price">$40<br><small>/night</small></span>
+												  <span class="price" style="font-size: 16px;">
+					    						    <fmt:formatNumber value="${r3List.price}" type="number" groupingUsed="true"/>원
+					    						    <br><small>/ 1박</small>					    							
+				    							  </span>
 											  </div>
 										  </div>
-										  <p>Far far away, behind the word mountains, far from the countries</p>
-										  <hr>
-										  <p class="bottom-area d-flex">
-											  <span><i class="icon-map-o"></i> Miami, Fl</span> 
-											  <span class="ml-auto"><a href="#">Book Now</a></span>
-										  </p>
+										  <p></p>
 									  </div>
 								  </div>
 							  </div>
+							 </c:forEach>
 					</div>
 				</div>
 				<!--추천 끝-->
@@ -284,5 +286,44 @@ Shadowbox.init({
         </div>
       </div>
     </section> <!-- .section -->
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=754884240383c655e9425cfe0a3e1713&libraries=services"></script>
+<script>
+var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+    mapOption = {
+        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+        level: 3 // 지도의 확대 레벨
+    };  
+
+// 지도를 생성합니다    
+var map = new kakao.maps.Map(mapContainer, mapOption); 
+
+// 주소-좌표 변환 객체를 생성합니다
+var geocoder = new kakao.maps.services.Geocoder();
+
+// 주소로 좌표를 검색합니다
+geocoder.addressSearch('${vo.addr }', function(result, status) {
+
+    // 정상적으로 검색이 완료됐으면 
+     if (status === kakao.maps.services.Status.OK) {
+
+        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+        // 결과값으로 받은 위치를 마커로 표시합니다
+        var marker = new kakao.maps.Marker({
+            map: map,
+            position: coords
+        });
+
+        // 인포윈도우로 장소에 대한 설명을 표시합니다
+        var infowindow = new kakao.maps.InfoWindow({
+            content: '<div style="width:150px;text-align:center;padding:6px 0;">${vo.title }</div>'
+        });
+        infowindow.open(map, marker);
+
+        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+        map.setCenter(coords);
+    } 
+})
+</script>
 </body>
 </html>

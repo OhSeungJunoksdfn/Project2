@@ -26,10 +26,18 @@ public interface HotelMapper {
 	@Select("SELECT * FROM hotel WHERE no = #{no}")
 	public HotelVO hotelData(int no);
 	
-	@Select("SELECT * FROM ("
-			+ "SELECT * FROM hotel WHERE sigungucode = #{sigungucode}"
-			+ "ORDER BY DBMS_RANDOM.RANDOM) WHERE ROWNUM <=3")
-	public HotelVO hotelRelatedData(int sigungucode);
+	@Select("SELECT * "
+			+ "FROM (SELECT h.no, h.title, h.addr, h.img, MIN(hr.price) AS price "
+			+ "FROM hotel h "
+			+ "JOIN hotel_room hr ON hr.hotel_no = h.no "
+			+ "WHERE h.areacode = #{areacode} "
+			+ "AND h.sigungucode = #{sigungucode} "
+			+ "AND h.no != #{no} "
+			+ "AND hr.price IS NOT NULL "
+			+ "GROUP BY h.no, h.title, h.addr, h.img "
+			+ "ORDER BY DBMS_RANDOM.RANDOM) "
+			+ "WHERE ROWNUM <= 3")
+	public List<HotelVO> hotelRelatedData(Map map);
 	
 	@Select("SELECT hotel_no, checkintime, checkouttime, food_place, parking, seminar, sports, "
 			+ "sauna, beverage, barbecue, bicycle, fitness, publicpc, publicbath "

@@ -2,6 +2,8 @@ package com.sist.vo.board;
 
 import lombok.Data;
 import java.util.*;
+
+import org.springframework.web.multipart.MultipartFile;
 /*
 NO	NUMBER
 ID	VARCHAR2(30 BYTE)
@@ -21,4 +23,6 @@ public class BoardVO {
 	private int no,filecount,replycount,hit;
 	private String id,name,subject,content,filename,filesize,type,dbday;
 	private Date regdate;
+	
+	private MultipartFile[] uploadFiles;
 }

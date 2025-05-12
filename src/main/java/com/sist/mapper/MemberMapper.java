@@ -16,7 +16,7 @@ public interface MemberMapper {
 		 +"#{id},'ROLE_USER')")
   public void memberAuthorityInsert(String id);
   
-  @Select("SELECT id,fname,sname,sex,email,phone,post,"
+  @Select("SELECT id,fname,sname,name,sex,email,phone,post,"
   		 +"addr1,addr2 "
 		 +"FROM projectMember "
 		 +"WHERE id=#{id}")

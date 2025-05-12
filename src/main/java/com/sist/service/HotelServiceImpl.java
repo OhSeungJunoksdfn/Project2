@@ -48,9 +48,9 @@ public class HotelServiceImpl implements HotelService {
 		return dao.hotelInfoData(no);
 	}
 	@Override
-	public HotelVO hotelRelatedData(int sigungucode) {
+	public List<HotelVO> hotelRelatedData(Map map) {
 		// TODO Auto-generated method stub
-		return dao.hotelRelatedData(sigungucode);
+		return dao.hotelRelatedData(map);
 	}
 	
 }
