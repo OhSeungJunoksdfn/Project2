@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.mapper.AirMapper">
+  <select id="flightListData"
+          parameterType="map"
+          resultType="com.sist.vo.air.FlightInfoVO">
+    SELECT * FROM (
+      SELECT f.*, ROWNUM rn
+      FROM (
+        SELECT * FROM FLIGHT_INFO ORDER BY dep_time
+      ) f
+      WHERE ROWNUM &lt;= #{end}
+    )
+    WHERE rn &gt;= #{start}
+  </select>
+
+  <select id="flightTotalPage"
+          resultType="int">
+    SELECT CEIL(COUNT(*)/20.0) FROM FLIGHT_INFO
+  </select>
+
+  <select id="flightDetailData"
+          parameterType="int"
+          resultType="com.sist.vo.air.FlightInfoVO">
+    SELECT * FROM FLIGHT_INFO WHERE flight_id = #{id}
+  </select>
+
+  <select id="flightListDataFiltered"
+          parameterType="map"
+          resultType="com.sist.vo.air.FlightInfoVO">
+    SELECT * FROM (
+      SELECT f.*, ROWNUM rn
+      FROM (
+        SELECT * FROM FLIGHT_INFO
+        WHERE dep_airport_code = #{from}
+          AND arr_airport_code = #{to}
+          AND TO_CHAR(dep_time,'YYYY-MM-DD') = #{arrtime}
+          AND TO_CHAR(arr_time,'YYYY-MM-DD') = #{deptime}
+        ORDER BY dep_time
+      ) f
+      WHERE ROWNUM &lt;= #{end}
+    )
+    WHERE rn &gt;= #{start}
+  </select>
+
+  <select id="flightTotalPageFiltered"
+          parameterType="map"
+          resultType="int">
+    SELECT CEIL(COUNT(*)/20.0)
+      FROM FLIGHT_INFO
+     WHERE dep_airport_code = #{from}
+       AND arr_airport_code = #{to}
+       AND TO_CHAR(dep_time,'YYYY-MM-DD') = #{arrtime}
+       AND TO_CHAR(arr_time,'YYYY-MM-DD') = #{deptime}
+  </select>
+
+</mapper>
