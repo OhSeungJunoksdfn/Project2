@@ -11,4 +11,7 @@ public interface BoardService {
 	public void boardUpdate(BoardVO vo);
 	public int boardMin();
 	public int boardMax();
+	public void boardDelete(int no);
+	public int boardNext(int no);
+	public int boardPrev(int no);
 }

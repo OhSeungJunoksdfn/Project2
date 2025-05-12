@@ -33,7 +33,7 @@
 <section class="d-flex justify-content-center align-items-center" style="min-height: 100vh">
   <form id="postForm"
         method="post"
-        action="../board/insert.do"
+        action="../board/update.do"
         enctype="multipart/form-data"
         class="w-100"
         >
@@ -43,16 +43,15 @@
       <div class="row p-3">
         <!-- 제목, 유형 -->
         <div class="input-group mb-2">
-          <input type="text" class="col-9 form-control r-12" name="subject" placeholder="제목" required/>
+          <input type="text" class="col-9 form-control r-12" value="${vo.subject }" name="subject" placeholder="제목" required/>
           <select class="col-3 form-select border text-center"
                   style="border-radius: 0 12px 12px 0"
                   name="type" required>
-            <option value="" disabled selected>== 게시글 유형 선택 ==</option>
-            <option value="자유글">자유글</option>
-            <option value="관광지">관광지</option>
-            <option value="호텔">호텔</option>
-            <option value="맛집">맛집</option>
-            <option value="렌트">렌트</option>
+            <option value="자유글" ${vo.type=='자유글'? 'selected':'' } >자유글</option>
+            <option value="관광지" ${vo.type=='관광지'? 'selected':'' }>관광지</option>
+            <option value="호텔" ${vo.type=='호텔'? 'selected':'' }>호텔</option>
+            <option value="맛집" ${vo.type=='맛집'? 'selected':'' }>맛집</option>
+            <option value="렌트" ${vo.type=='렌트'? 'selected':'' }>렌트</option>
           </select>
         </div>
 
@@ -69,15 +68,15 @@
               <button class="ql-image"></button>
             </span>
           </div>
-          <div id="editor" class="border mb-3" style="height:500px;"></div>
+          <div id="editor" class="border mb-3" style="height:500px;">${vo.content }</div>
           <!-- 전송용 hidden -->
           <input type="hidden" name="content" id="contentInput"/>
         </div>
 
         <!-- 버튼 -->
         <div class="col-12 text-right">
-          <button type="submit" class="btn btn-primary r-12">글쓰기</button>
-          <a href="../board/list.do"
+          <button type="submit" class="btn btn-primary r-12">수정</button>
+          <a href="../board/detail.do?no=${vo.no }"
              class="btn btn-info bg-white text-dark r-12">취소</a>
         </div>
       </div>
