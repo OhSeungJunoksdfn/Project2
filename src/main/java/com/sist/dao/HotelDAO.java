@@ -40,8 +40,8 @@ public class HotelDAO {
 	{
 		return mapper.hotelInfoData(no);
 	}
-	public HotelVO hotelRelatedData(int sigungucode)
+	public List<HotelVO> hotelRelatedData(Map map)
 	{
-		return mapper.hotelRelatedData(sigungucode);
+		return mapper.hotelRelatedData(map);
 	}
 }

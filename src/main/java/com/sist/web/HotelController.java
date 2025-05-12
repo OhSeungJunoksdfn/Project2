@@ -32,7 +32,13 @@ public class HotelController {
 	public String hotel_detail(int no, Model model)
 	{
 		HotelVO vo = service.hotelData(no);
-//		HotelVO rvo = service.hotelRelatedData(sigungucode);
+		
+		Map map = new HashMap();
+		map.put("areacode", vo.getAreacode());
+		map.put("sigungucode", vo.getSigungucode());
+		map.put("no", no);
+		
+		List<HotelVO> r3List = service.hotelRelatedData(map);
 		List<HotelRoomVO> rList = service.hotelDetaiListlData(no);
 		List<HotelImgVO> iList = service.hotelImgListData(no);
 		for(HotelRoomVO room : rList)
@@ -43,7 +49,7 @@ public class HotelController {
 			}
 		}
 		model.addAttribute("vo", vo);
-//		model.addAttribute("rvo", rvo);
+		model.addAttribute("r3List", r3List);
 		model.addAttribute("rList", rList);
 		model.addAttribute("iList", iList);
 		model.addAttribute("main_jsp", "../hotel/hotel_detail.jsp");

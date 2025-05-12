@@ -169,32 +169,31 @@
  
                       :key="info.key" @click="selInfo(info.key)">{{ info.name }}</span>
                     </label>
-                    
                   </div>
-                  <div class="form-group">
-                    <input
-                      type="text"
-                      id="checkin_date"
-                      class="form-control checkin_date"
-                      placeholder="Date from"
-                    />
-                  </div>
-                  <div class="form-group">
-                    <input
-                      type="text"
-                      id="checkout_date"
-                      class="form-control checkout_date"
-                      placeholder="Date to"
-                    />
-                  </div>
+<!--                   <div class="form-group"> -->
+<!--                     <input -->
+<!--                       type="text" -->
+<!--                       id="checkin_date" -->
+<!--                       class="form-control checkin_date" -->
+<!--                       placeholder="Date from" -->
+<!--                     /> -->
+<!--                   </div> -->
+<!--                   <div class="form-group"> -->
+<!--                     <input -->
+<!--                       type="text" -->
+<!--                       id="checkout_date" -->
+<!--                       class="form-control checkout_date" -->
+<!--                       placeholder="Date to" -->
+<!--                     /> -->
+<!--                   </div> -->
 
-                  <div class="form-group">
-                    <input
-                      type="submit"
-                      value="Search"
-                      class="btn btn-primary py-3 px-5"
-                    />
-                  </div>
+<!--                   <div class="form-group"> -->
+<!--                     <input -->
+<!--                       type="submit" -->
+<!--                       value="Search" -->
+<!--                       class="btn btn-primary py-3 px-5" -->
+<!--                     /> -->
+<!--                   </div> -->
                 </div>
               </form>
             </div>
@@ -229,7 +228,7 @@
                   <div class="col-9 text p-3">
                     <div class="d-flex">
                       <div class="one">
-                        <h3><a :href="'../hotel/hotel_detail.do?no='+vo.no">{{ vo.title }}</a></h3>
+                        <h3><a :href="'../hotel/hotel_detail.do?no='+vo.no">{{vo.title }}</a></h3>
                         <p class="rate">
                           <i class="icon-star"></i>
                           <i class="icon-star"></i>
@@ -240,11 +239,11 @@
                         </p>
                       </div>
                       <div class="two">
-                        <span class="price text-nowrap">{{ commaPrice(vo.price) }}원<br><small> / 1박</small></span>
+                        <span class="price text-nowrap">{{commaPrice(vo.price) }}원<br><small> / 1박</small></span>
                       </div>
                     </div>
                     <p>
-                      {{ vo.person }} {{vo.person_max}}
+                      체크인 {{vo.checkintime }} / 체크 아웃 {{vo.checkouttime }}
                     </p>
                     <p class="days"><span></span></p>
                     <hr />
