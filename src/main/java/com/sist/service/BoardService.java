@@ -9,4 +9,6 @@ public interface BoardService {
 	public BoardVO boardDetailData(int no);
 	public void boardInsert(BoardVO vo);
 	public void boardUpdate(BoardVO vo);
+	public int boardMin();
+	public int boardMax();
 }

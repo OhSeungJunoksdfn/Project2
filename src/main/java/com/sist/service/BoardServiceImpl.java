@@ -40,5 +40,15 @@ public class BoardServiceImpl implements BoardService {
 		// TODO Auto-generated method stub
 		dao.boardUpdate(vo);
 	}
+	@Override
+	public int boardMin() {
+		// TODO Auto-generated method stub
+		return dao.boardMin();
+	}
+	@Override
+	public int boardMax() {
+		// TODO Auto-generated method stub
+		return dao.boardMax();
+	}
 
 }

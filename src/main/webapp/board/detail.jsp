@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,10 +14,10 @@
     >
       <div class="container secb shadow py-2">
         <div class="row p-2">
-          <h3 class="col-12">제목</h3>
-          <p class="col-12" style="color: black; font-weight: 600">이름</p>
+          <h3 class="col-12">${vo.subject }</h3>
+          <p class="col-12" style="color: black; font-weight: 600">${vo.name }</p>
           <div class="col-12 d-flex justify-content-between border-bottom">
-            <p>날짜</p>
+            <p>${vo.dbday }</p>
             <div class="d-flex">
               <p class="pr-2">좋아요</p>
               <p>댓글 10</p>
@@ -32,23 +33,27 @@
                 outline: none;
               "
               readonly
-            ></textarea>
+            >${vo.content }</textarea>
           </div>
           <div class="col-12 text-right">
-            <input
-              type="button"
+          <c:if test="${minNo<vo.no }">
+            <a
+              href="../board/detail.do?no=${vo.no-1 }"
               class="btn btn-info r-12 bg-white text-dark"
-              value="이전"
-            />
-            <input
-              type="button"
+
+            >이전</a>
+          </c:if>
+          <c:if test="${maxNo>vo.no }">
+            <a
+              href="../board/detail.do?no=${vo.no+1 }"
               class="btn btn-info r-12 bg-white text-dark"
-              value="다음"
-            />
-            <input type="button" class="btn btn-primary r-12" value="목록" />
+
+            >다음</a>
+          </c:if>
+            <a href="../board/list.do" class="btn btn-primary r-12"  >목록</a>
           </div>
 
-          <h3 class="col-12 mb-5">6 Comments</h3>
+          <h3 class="col-12 mb-5">${vo.replycount } Comments</h3>
           <div class="col-12">
             <ul class="comment-list">
               <li class="comment">

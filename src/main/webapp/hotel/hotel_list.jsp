@@ -163,22 +163,13 @@
                     </label>
                     
                     <p style="font-size: 18px" v-show="locDetail">편의 시설</p>
-<!--                     <label class="checkBoxAll pb-1" v-show="locDetail"> -->
-<!--                       <input type="checkbox" style="display: none"/> -->
-<!--                       <span class="checkBtn" :class="{ checked: infos.includes(info.key) }" v-for="info in infoList"  -->
-<!--                       :key="info.key" @click="selInfo(info.key)">{{ info.name }}</span> -->
-<!--                     </label> -->
-
-<!--                     <div class="form-group"> -->
-<!-- 		              	<div class="range-slider"> -->
-<!-- 		              		<span> -->
-<!-- 								<input type="number" value="50000" min="0" max="250000"/>	- -->
-<!-- 								<input type="number" value="50000" min="0" max="120000"/> -->
-<!-- 							</span> -->
-<!-- 								<input value="1000" min="0" max="120000" step="500" type="range"/> -->
-<!-- 								<input value="50000" min="0" max="120000" step="500" type="range"/> -->
-<!-- 						</div> -->
-<!-- 		            </div> -->
+                    <label class="checkBoxAll pb-1" v-show="locDetail">
+                      <input type="checkbox" style="display: none"/>
+                      <span class="checkBtn" :class="{ checked: parseInt(infoValue(info.key)) === 1 }" v-for="info in infoList"
+ 
+                      :key="info.key" @click="selInfo(info.key)">{{ info.name }}</span>
+                    </label>
+                    
                   </div>
                   <div class="form-group">
                     <input
@@ -257,7 +248,7 @@
                     </p>
                     <p class="days"><span></span></p>
                     <hr />
-                    <p class="bottom-area d-flex">s
+                    <p class="bottom-area d-flex">
                       <span><i class="icon-map-o"></i>{{ vo.addr }}</span>
                       <span class="ml-auto"><a href="#">바로 예약</a></span>
                     </p>
@@ -298,6 +289,15 @@
     			  sort: 'price_asc',
     			  locDetail: false,
     			  cat3: '',
+    			  parking: 0,
+    			  sports: 0,
+    			  sauna: 0,
+    			  seminar: 0,
+    			  beverage: 0,
+    			  bicycle: 0,
+    			  barbecue: 0,
+    			  publicpc: 0,
+    			  publicbath: 0,
     			  SGGList: [
     				  {areacode: 1, sigungucode: 1, name: "강남구"},
                       {areacode: 1, sigungucode: 2, name: "강동구"},
@@ -316,24 +316,20 @@
                       {areacode: 1, sigungucode: 21, name: "용산구"},
                       {areacode: 1, sigungucode: 23, name: "종로구"},
                       {areacode: 1, sigungucode: 24, name: "중구"},
-                      
                       {areacode: 39, sigungucode: 3, name: "서귀포시"},
                       {areacode: 39, sigungucode: 4, name: "제주시"}
     			  ],
-//     			  infos: [],
-//     			  infoList: [
-//     				  {key: 'food_place', name: '식당'},
-//     				  {key: 'parking', name: '주차'},
-//     				  {key: 'seminar', name: '세미나실'},
-//     				  {key: 'sports', name: '운동 시설'},
-//     				  {key: 'fitness', name: '운동 시설2'},
-//     				  {key: 'sauna', name: '사우나'},
-//     				  {key: 'beverage', name: '바'},
-//     				  {key: 'barbecue', name: '바베큐'},
-//     				  {key: 'bicycle', name: '자전거 대여'},
-//     				  {key: 'publicpc', name: '공용 PC'},
-//     				  {key: 'publicbath', name: '공용 욕실'}
-//     			  ]
+    			  infoList: [
+    				  {key: 'parking', name: '주차'},
+    				  {key: 'seminar', name: '세미나실'},
+    				  {key: 'sports', name: '운동 시설'},
+    				  {key: 'sauna', name: '사우나'},
+    				  {key: 'beverage', name: '바'},
+    				  {key: 'barbecue', name: '바베큐'},
+    				  {key: 'bicycle', name: '자전거 대여'},
+    				  {key: 'publicpc', name: '공용 PC'},
+    				  {key: 'publicbath', name: '공용 욕실'}
+    			  ]
     		  }
     	  },
     	  computed: {
@@ -347,14 +343,17 @@
     			this.dataRecv()
     	  },
     	  methods: {
-    		selInfo(info) {
-    			const idx = this.infos.indexOf(info)
-    			if(idx === -1) {
-    				this.infos.push(info)
-    			}
-    			else {
-    				this.infos.splice(idx, 1)
-    			}
+    		infoValue(key) {
+    			return this[key]
+    			this.curpage = 1
+    			this.dataRecv()
+    		},
+    		selInfo(key) {
+    			this[key] = this[key] === 1 ? 0 : 1
+    			console.log(`[selInfo] ${key} →`, this[key])
+    			this.curpage = 1
+    			this.dataRecv()
+    			window.scrollTo({ top: 0, behavior: 'smooth' })
     		},
     		selCat3(Ccode) {
     			this.cat3 = Ccode
@@ -402,14 +401,26 @@
       			return arr
       		},
       		dataRecv() {
+      			console.log("🚀 전송 값:", this.parking, this.sauna, this.sports)
       			axios.get('http://localhost:8080/hotel/list_vue.do', {
       				params: {
 	      				page: this.curpage,
 	      				areacode: this.areacode,
 	      				sigungucode: this.sigungucode,
 	      				cat3: this.cat3,
-	      				sort: this.sort
+	      				sort: this.sort,
+	      				parking: this.parking,
+	      				sports: this.sports,
+	      				sauna: this.sauna,
+	      				seminar: this.seminar,
+	      				beverage: this.beverage,
+	      				bicycle: this.bicycle,
+	      				barbecue: this.barbecue,
+	      				publicpc: this.publicpc,
+	      				publicbath: this.publicbath 
+	      				
       				}
+
       			}).then(res => {
       				console.log(res.data)
       				this.list = res.data.list

@@ -1,7 +1,7 @@
 package com.sist.security;
 
-import java.io.IOException;
-
+import java.io.IOException; 
+import java.util.*;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 import com.sist.vo.*;
@@ -26,11 +27,20 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler{
 		// TODO Auto-generated method stub
 		HttpSession session=request.getSession();
 		MemberVO vo=dao.memberSessionData(authentication.getName());
-		//authentication �젙蹂� => username(id) , password , enable
+		
 		session.setAttribute("id", vo.getId());
 		session.setAttribute("name", vo.getName());
 		session.setAttribute("sex", vo.getSex());
-		response.sendRedirect("../main/main.do");
+		
+		Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        boolean isAdmin = authorities.stream()
+                .anyMatch(role -> role.getAuthority().equals("ROLE_ADMIN"));
+
+        if (isAdmin) {
+            response.sendRedirect(request.getContextPath() + "/admin/main.do");
+        } else {
+            response.sendRedirect(request.getContextPath() + "/main/main.do");
+        }
 	}
 
 }
