@@ -1,4 +1,8 @@
 package com.sist.vo.air;
+
+import java.sql.Timestamp;
+import java.util.*;
+
 /*
  * RESERVATION_ID NOT NULL VARCHAR2(20)  
 FLIGHT_ID      NOT NULL NUMBER(38)    
@@ -11,5 +15,8 @@ CREATED_AT              TIMESTAMP(6)
 UPDATED_AT              TIMESTAMP(6)  
  */
 public class ReservationsVO {
-
+	private String       reservationId,bookingNumber,customerName,customerEmail,paymentStatus;   // RESERVATION_ID
+    private int          flightId;        // FLIGHT_ID
+    private Date         bookingDate;
+    private Timestamp    createdAt,updatedAt;
 }
