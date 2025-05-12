@@ -155,12 +155,16 @@ template:
 
 			console.log(puDateType)
 			console.log(rDateType)
-			if(puDateType>rDateType)
+			
+			
+			if(pudate.length===0 || rdate.length===0){
+				alert("날짜를 입력해주세요")
+			}
+			else if(puDateType>=rDateType)
 			{
 				alert("날짜나 시간이 올바르지 않습니다.")
 			}else{
-				console.log(new Date(pudate))
-				console.log(new Date(rdate))
+				console.log("검색")
 			}
 		},
 		generateTimeOptions() {
