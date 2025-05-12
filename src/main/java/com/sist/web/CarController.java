@@ -14,6 +14,18 @@ public class CarController {
 		return "main/main";
 	}
 	
+	@GetMapping("car/car_search_list.do")
+	public String car_search_list(Model model,
+			String pudate, String putime,String rdate, String rtime)
+	{
+		model.addAttribute("pudate",pudate);
+		model.addAttribute("putime",putime);
+		model.addAttribute("rdate",rdate);
+		model.addAttribute("rtime",rtime);
+		model.addAttribute("main_jsp","../car/car_search_list.jsp");
+		return "main/main";
+	}
+	
 	@GetMapping("car/car_calendar.do")
 	public String car_calendar(Model model)
 	{
