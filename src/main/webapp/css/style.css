@@ -11824,6 +11824,34 @@ textarea.form-control {
   color: #fff;
   background: black;
 }
+.comment-list li .comment-body .reply-danger {
+  padding: 5px 10px;
+  background: #f5cbcf;
+  color: #000000;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  font-weight: 400;
+  border-radius: 4px;
+}
+.comment-list li .comment-body .reply-danger:hover {
+  color: #fff;
+  background: #dc3545;
+}
+.comment-list li .comment-body .reply-primary {
+  padding: 5px 10px;
+  background: #d0ecf2;
+  color: #000000;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  font-weight: 400;
+  border-radius: 4px;
+}
+.comment-list li .comment-body .reply-primary:hover {
+  color: #fff;
+  background: #4eb8d1;
+}
 
 .search-form {
   background: #f2f2f2;

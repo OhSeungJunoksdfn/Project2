@@ -1,11 +1,14 @@
 package com.sist.mapper;
-import java.util.*;
+import java.util.*; 
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.SelectKey;
 import org.apache.ibatis.annotations.Update;
 
+import com.sist.vo.ReplyVO;
 import com.sist.vo.board.*;
 
 public interface BoardMapper {
@@ -47,10 +50,64 @@ public interface BoardMapper {
 	public void boardInsert(BoardVO vo);
 	
 	@Update("UPDATE databoard SET "
-			+ "name=#{name},subject=#{subject},content=#{content},filename=#{filename},filesize=#{filesize},type=#{type}")
+			+ "subject=#{subject},content=#{content},filename=#{filename},filesize=#{filesize},type=#{type} "
+			+ "WHERE no=#{no}")
 	public void boardUpdate(BoardVO vo);
 	
 	@Delete("DELETE FROM databoard "
 			+ "WHERE no=#{no}")
 	public void boardDelete(int no);
+	
+	@Delete("DELETE FROM reply "
+			+ "WHERE bno=#{no}")
+	public void boardReplyDelete(int no);
+	
+	/* 댓글 */
+	@Select("SELECT no,bno,id,name,msg,TO_CHAR(regdate,'yyyy-MM-dd  HH24:MI') as dbday,group_tab"
+			+ " FROM reply "
+			+ "WHERE bno=#{bno} AND type=#{type} "
+			+ "ORDER BY group_id DESC, group_step ASC")
+	public List<ReplyVO>  replyListData(ReplyVO vo);
+	
+	
+	@Insert("INSERT INTO reply(no,bno,id,name,msg,group_id,type) "
+			+ "VALUES(reply_no_seq.nextval,#{bno},#{id},#{name},#{msg},"
+			+ "(SELECT NVL(MAX(group_id)+1,1) FROM reply),#{type})")
+	public void replyInsert(ReplyVO vo);
+	
+	@Select("SELECT replycount from databoard WHERE no=#{bno}")
+	public int boardReplycount(ReplyVO vo);
+	
+	
+	@Update("UPDATE reply SET "
+			+ "msg=#{msg} "
+			+ "WHERE no=#{no}")
+	public void replyUpdate(ReplyVO vo);
+	
+	@Select("SELECT no,group_id,group_step "
+			+ "FROM reply WHERE no=#{no}")
+	public ReplyVO replyInfoData(int no);
+	
+	@Delete("DELETE FROM reply "
+			+ "WHERE group_id=#{group_id} AND group_step>=#{group_step}")
+	public void replyDelete(ReplyVO vo);
+	
+	@Select("SELECT group_id,group_step,group_tab "
+			+ "FROM reply "
+			+ "WHERE no=#{no}")
+	public ReplyVO replyParentInfoData(int no);
+	@Update("UPDATE reply SET "
+			+ "group_step=group_step+1 "
+			+ "WHERE group_id=#{group_id} AND group_step>#{group_step}")
+	public void replyGroupStepIncrement(ReplyVO vo);
+	
+	@Insert("INSERT INTO reply(no,bno,id,name,msg, "
+			+ "group_id,group_step,group_tab,type) "
+			+ "reply_no_seq.nextval, "
+			+ "#{bno},#{id},#{name},#{msg}, "
+			+ "#{group_id},#{group_step},#{group_tab},#{type})")
+	public void replyReplyInsert(ReplyVO vo);
+	
+	
+	
 }
