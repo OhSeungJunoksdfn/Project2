@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import java.util.*;
 
-import com.sist.vo.hotel.HotelInfoVO;
 import com.sist.vo.hotel.HotelVO;
 import com.sist.service.*;
 
@@ -20,8 +20,10 @@ public class HotelRestController {
 	private HotelService service;
 	
 	@GetMapping("list_vue.do")
-	public Map hotel_list_vue(int page, 
-			@RequestParam(value = "sort") String sort,
+	public Map hotel_list_vue(int page, @RequestParam("sort") String sort,
+			@RequestParam(value = "checkin", required = false) String checkin, 
+			@RequestParam(value = "checkout", required = false) String checkout, 
+			@RequestParam(value = "person") int person,
 			@RequestParam(value = "areacode", defaultValue = "0" ) int areacode,
 			@RequestParam(value = "sigungucode", defaultValue = "0") int sigungucode,
 			@RequestParam(value = "cat3", defaultValue = "") String cat3,
@@ -46,6 +48,10 @@ public class HotelRestController {
 		if(areacode != 0)map.put("areacode", areacode);
 		if(sigungucode != 0)map.put("sigungucode", sigungucode);
 		if(cat3.isEmpty() && cat3 != null)map.put("cat3", cat3);
+		
+		map.put("checkin", checkin);
+		map.put("checkout", checkout);
+		map.put("person", person);
 		
 		map.put("parking", parking);
 		map.put("sauna", sauna);

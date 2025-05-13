@@ -13,6 +13,10 @@
     JOIN hotel_room hr ON hr.hotel_no = h.no
     JOIN hotel_info hi ON hi.hotel_no = h.no
     WHERE 1 = 1
+      <if test="person != null">
+	    AND hr.person &lt;= #{person}
+	    AND hr.person_max &gt;= #{person}
+	  </if>
       <if test="parking == 1">
 	    AND parking = 1
 	  </if>
@@ -65,6 +69,10 @@
     JOIN hotel_room hr ON hr.hotel_no = h.no
     JOIN hotel_info hi ON hi.hotel_no = h.no  
     <where>
+      <if test="person != null">
+	    AND hr.person &lt;= #{person}
+	    AND hr.person_max &gt;= #{person}
+	  </if>
       <if test="areacode != null">
 	    AND areacode = #{areacode} 
 	  </if>
