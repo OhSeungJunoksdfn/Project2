@@ -19,4 +19,17 @@
 		WHERE car_class LIKE '%'||#{tabVal}||'%'
 	</if>
   </select>
+  
+  <select id="carSearchListData" resultType="CarVO" parameterType="hashmap">
+    SELECT no,poster,name,car_class,seat,fuel,premium_ins_price,NON_INS_QUAL,num
+			  FROM (SELECT no,poster,name,car_class,seat,fuel,premium_ins_price,NON_INS_QUAL,rownum as num
+			  FROM (SELECT no,poster,name,car_class,seat,fuel,premium_ins_price,NON_INS_QUAL
+			  FROM car
+			  ORDER BY no ASC)) 
+			  WHERE num BETWEEN #{start} AND #{end}
+  </select>
+  
+  <select id="carSearchTotalPage" resultType="int" parameterType="string">
+  	SELECT CEIL(COUNT(*)/9.0) FROM car 
+  </select>
 </mapper>

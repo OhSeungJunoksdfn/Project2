@@ -25,6 +25,16 @@ public class CarServiceImpl implements CarService{
 		return dao.carTotalPage(tabVal);
 	}
 
-	
+	@Override
+	public List<CarVO> carSearchListData(Map map) {
+		// TODO Auto-generated method stub
+		return dao.carSearchListData(map);
+	}
 
+	@Override
+	public int carSearchTotalPage() {
+		// TODO Auto-generated method stub
+		return dao.carSearchTotalPage();
+	}
+	
 }

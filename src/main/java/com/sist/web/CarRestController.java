@@ -48,27 +48,26 @@ public class CarRestController {
 				String pudate,String putime,
 				String rdate,String rtime) {
 		
-		int rowSize=6;
-		System.out.println("rdateeeeee"+rdate);
+		int rowSize=9;
 		Map map = new HashMap();
-//		map.put("start",(page-1)*rowSize+1);
-//		map.put("end",page*rowSize);
-//		List<CarVO> list=service.carListData(map);
-//		int totalpage=service.carTotalPage(tabVal);
-//		
-//		final int BLOCK=10;
-//		int startPage=((page-1)/BLOCK*BLOCK)+1;
-//		int endPage=((page-1)/BLOCK*BLOCK)+BLOCK;
-//		
-//		if(endPage>totalpage)
-//			endPage=totalpage;
-//		
-//		// Vue로 전송
-//		map.put("list", list);
-//		map.put("curpage", page);
-//		map.put("totalpage", totalpage);
-//		map.put("startPage", startPage);
-//		map.put("endPage", endPage);
+		map.put("start",(page-1)*rowSize+1);
+		map.put("end",page*rowSize);
+		List<CarVO> list=service.carSearchListData(map);
+		int totalpage=service.carSearchTotalPage();
+		
+		final int BLOCK=10;
+		int startPage=((page-1)/BLOCK*BLOCK)+1;
+		int endPage=((page-1)/BLOCK*BLOCK)+BLOCK;
+		
+		if(endPage>totalpage)
+			endPage=totalpage;
+		
+		// Vue로 전송
+		map.put("list", list);
+		map.put("curpage", page);
+		map.put("totalpage", totalpage);
+		map.put("startPage", startPage);
+		map.put("endPage", endPage);
 		map.put("test", "test");
 		return map;
 	}

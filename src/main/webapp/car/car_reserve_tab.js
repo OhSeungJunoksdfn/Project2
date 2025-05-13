@@ -175,12 +175,8 @@ template:
       		const end = 22
 
 	      	for (let i = start; i <= end; i++) {
-	        	for (let j = 0; j < 60; j += 30) {
-		          	if (i === end && j > 0) break
-		          	const hh = i.toString().padStart(2, '0')
-		          	const mm = j.toString().padStart(2, '0')
-		          	options.push(`${hh}:${mm}`)
-	        	}
+	      		const hh = i.toString().padStart(2, '0')
+	      		options.push(`${hh}:00`)
 	      	}
 
       	return options

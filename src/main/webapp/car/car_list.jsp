@@ -16,9 +16,6 @@ span:hover,a:hover{
 </style>
 <script type="text/javascript" src="../shadow/js/shadowbox.js"></script>
 <script type="text/javascript">
-/* Shadowbox.init({
-	players:['iframe']
-})  */
 </script>
 <script src="./car_reserve_tab.js"></script>
 </head>

@@ -21,4 +21,12 @@ public class CarDAO {
 	public int carTotalPage(String tabVal) {
 		return mapper.carTotalPage(tabVal);
 	}
+	
+	public List<CarVO> carSearchListData(Map map){
+		return mapper.carSearchListData(map);
+	}
+	
+	public int carSearchTotalPage() {
+		return mapper.carSearchTotalPage();
+	}
 }

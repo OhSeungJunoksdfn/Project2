@@ -26,12 +26,17 @@ public class CarController {
 		return "main/main";
 	}
 	
-	@GetMapping("car/car_calendar.do")
-	public String car_calendar(Model model)
+	@GetMapping("car/car_detail.do")
+	public String car_detail(Model model,
+			String pudate, String putime,String rdate, String rtime)
 	{
-		System.out.println("calendarrrrrrrrrrrr");
-		
-		model.addAttribute("main_jsp","../car/car_calendar.jsp");
-		return "car/car_calendar";
+		System.out.println(pudate);
+		model.addAttribute("pudate",pudate);
+		model.addAttribute("putime",putime);
+		model.addAttribute("rdate",rdate);
+		model.addAttribute("rtime",rtime);
+		model.addAttribute("main_jsp","../car/car_detail.jsp");
+		return "main/main";
 	}
+	
 }
