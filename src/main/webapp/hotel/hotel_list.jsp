@@ -18,6 +18,7 @@
 </style>
 </head>
 <body>
+<div id="hotelListApp">
 	<div style="width:100%;display: flex;justify-content: center;">
 	 <section class="ftco-section justify-content-end " style="width:65%; padding: 32px;">
       <div class="container-wrap mx-auto">
@@ -30,7 +31,7 @@
                 role="tabpanel"
                 aria-labelledby="v-pills-performance-tab"
               >
-                <form action="#" class="search-destination">
+                <div class="search-destination">
                   <div class="row">
                     <div class="col-md align-items-end">
                       <div class="form-group">
@@ -43,6 +44,7 @@
                             type="text"
                             class="form-control checkin_date"
                             placeholder="Check In"
+                            v-model="checkin"
                           />
                         </div>
                       </div>
@@ -58,6 +60,7 @@
                             type="text"
                             class="form-control checkout_date"
                             placeholder="From"
+                            v-model="checkout"
                           />
                         </div>
                       </div>
@@ -68,15 +71,9 @@
                         <div class="form-field">
                           <div class="select-wrap">
                             <div class="icon">
-                              <span class="ion-ios-arrow-down"></span>
+<!--                               <span class="ion-ios-arrow-down"></span> -->
                             </div>
-                            <select name="" id="" class="form-control">
-                              <option value="">1</option>
-                              <option value="">2</option>
-                              <option value="">3</option>
-                              <option value="">4</option>
-                              <option value="">5</option>
-                            </select>
+                            <input v-model="person" class="form-control"/>
                           </div>
                         </div>
                       </div>
@@ -84,16 +81,16 @@
                     <div class="col-md align-self-end">
                       <div class="form-group">
                         <div class="form-field">
-                          <input
-                            type="submit"
-                            value="Search"
+                          <button
                             class="form-control btn btn-primary"
-                          />
+                            @click="searchbar"
+                          >
+                          Search</button>
                         </div>
                       </div>
                     </div>
                   </div>
-                </form>
+                </div>
               </div>
             </div>
           </div>
@@ -102,7 +99,7 @@
     </section>
 	</div>
   <div style="width:100%;display: flex;justify-content: center;">
-	<section class="ftco-section" style="padding: 32px;" id="hotelListApp">
+	<section class="ftco-section" style="padding: 32px;">
       <div class="container">
         <div class="row">
           <!--사이드바-->
@@ -274,6 +271,7 @@
        </div>
      </section>
   </div>
+</div>
     <script>
       let hotelListApp=Vue.createApp({
     	  data() {
@@ -328,7 +326,10 @@
     				  {key: 'bicycle', name: '자전거 대여'},
     				  {key: 'publicpc', name: '공용 PC'},
     				  {key: 'publicbath', name: '공용 욕실'}
-    			  ]
+    			  ],
+    			  checkin: '',
+    			  checkout: '',
+    			  person: 2
     		  }
     	  },
     	  computed: {
@@ -342,6 +343,13 @@
     			this.dataRecv()
     	  },
     	  methods: {
+    		searchbar() {
+    			if(!this.checkin || !this.checkout || !this.person) {
+    				return
+    			}
+    			this.curpage = 1
+    			this.dataRecv()
+    		},
     		infoValue(key) {
     			return this[key]
     			this.curpage = 1
@@ -400,7 +408,7 @@
       			return arr
       		},
       		dataRecv() {
-      			console.log("🚀 전송 값:", this.parking, this.sauna, this.sports)
+      			console.log("🚀 전송 값:", this.checkin, this.checkout, this.person)
       			axios.get('http://localhost:8080/hotel/list_vue.do', {
       				params: {
 	      				page: this.curpage,
@@ -416,7 +424,10 @@
 	      				bicycle: this.bicycle,
 	      				barbecue: this.barbecue,
 	      				publicpc: this.publicpc,
-	      				publicbath: this.publicbath 
+	      				publicbath: this.publicbath,
+	      				checkin: this.checkin,
+	      				checkout: this.checkout,
+	      				person: this.person
 	      				
       				}
 
