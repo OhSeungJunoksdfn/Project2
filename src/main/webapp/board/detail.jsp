@@ -15,7 +15,7 @@
   }
 </style>
 <section
-      class="d-flex justify-content-center align-items-center my-5"
+      class="d-flex ftco-animate justify-content-center align-items-center my-5"
       style="min-height: 100vh"
       id="detailApp"
     >
@@ -26,7 +26,7 @@
           <div class="col-12 d-flex justify-content-between border-bottom">
             <p>${vo.dbday }</p>
             <div class="d-flex">
-              <p>댓글 ${vo.replycount }</p>
+              <p>댓글 {{replycount}}</p>
             </div>
           </div>
           <div class="border-bottom w-100 mt-2 mb-2">
@@ -69,48 +69,56 @@
           </c:if>
             <a href="../board/list.do" class="btn btn-primary r-12 ml-2"  >목록</a>
           </div>
-		
-          <h3 class="col-12 mb-5">${vo.replycount } Comments</h3>
+			
+          <h3 class="col-12 mb-5">{{replycount}} Comments</h3>
+          
           <div class="col-12">
             <ul class="comment-list">
-              <li class="comment">
-                <div class="vcard bio">
-                  <img src="../images/person_1.jpg" alt="Image placeholder" />
-                </div>
-                <div class="comment-body">
-                  <h3>John Doe</h3>
-                  <div class="meta">October 03, 2018 at 2:21pm</div>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Pariatur quidem laborum necessitatibus, ipsam impedit vitae
-                    autem, eum officia, fugiat saepe enim sapiente iste iure!
-                    Quam voluptas earum impedit necessitatibus, nihil?
+              <li v-for="(vo,key) in list"  :key="key" class="comment">
+                <div class="comment-body" style="float:left; width:100%">
+                  <h3>{{vo.name}}</h3>
+                  <div class="meta">{{vo.dbday}}</div>
+                  <div>
+                   <pre>{{vo.msg}}</pre>
+                  </div>
+                  <p class="text-right">
+                  <c:if test="${sessionScope.id!=null }">
+                  <a  class="reply mr-1 cursor-pointer">댓글</a>
+                  <c:if test="${sessionScope.id==vo.id }">
+                  <a class="reply-primary mr-1 cursor-pointer">수정</a>
+                  <a @click="replyDelete(vo.no)" class="reply-danger cursor-pointer">삭제</a>
+                  </c:if>
+                  </c:if>
                   </p>
-                  <p><a href="#" class="reply">Reply</a></p>
                 </div>
               </li>
             </ul>
           </div>
+          <c:if test="${sessionScope.id!=null }">
+          
           <h3 class="ml-3">댓글입력</h3>
           <div class="container input-group mb-3">
             <textarea
               class="form-control"
-              placeholder="Recipient's username"
-              aria-label="Recipient's username"
+              placeholder="댓글입력"
               aria-describedby="button-addon2"
               style="
                 resize: none;
                 height: 100px !important;
                 border-radius: 12px 0 0 12px;
               "
+              v-model="msg"
+              ref="msg"
             ></textarea>
             <button
               class="replyBtn cursor-pointer"
               style="border-radius: 0 12px 12px 0"
+              @click="replySubmit()"
             >
               댓글
             </button>
           </div>
+          </c:if>
         </div>
       </div>
     </section>
@@ -118,11 +126,68 @@
     	const detailApp=Vue.createApp({
     		data(){
     			return{
-    				no:${vo.no}
+    				no:${vo.no},
+    				list:[],
+    				msg:'',
+    				replycount:${vo.replycount}
     			}
     		},
+    		mounted(){
+    			axios.get("../boardreply/list.do",{
+    				params:{
+    					type:'board',
+    					bno:this.no
+    				}
+    			})
+    			.then(res => {
+    				console.log(res)
+    				this.list=res.data
+    			})
+    			.catch(err => {
+    				console.log(err.response)
+    			})
+    		},
     		methods:{
-    			
+    			replyDelete(no){
+    				if(confirm("댓글을 삭제하시겠습니까?")){
+    					axios.post("../boardreply/delete.do",null,{
+    						params:{
+    							no:no,
+    							bno:this.no,
+    							type:"board"
+    						}
+    					})
+    					.then(res => {
+    						this.list=res.data.list
+        					this.replycount=res.data.replycount
+    					})
+    					.catch(err => {
+    						console.log(err.response)
+    					})
+    				}
+    			},
+    			replySubmit(){
+    				if(this.msg==="")
+    				{
+    					this.$refs.msg.focus()
+    					return
+    				}
+    				axios.post("../boardreply/insert.do",null,{
+    					params:{
+    						msg:this.msg,
+    						bno:this.no,
+    						type:"board"
+    					}
+    				})
+    				.then(res => {
+    					this.list=res.data.list
+    					this.replycount=res.data.replycount
+    					this.msg=""
+    				})
+    				.catch(err => {
+    					console.log(err.response)
+    				})
+    			},
     			boardDel(no){
     				if(confirm("삭제하시겠습니까?")){
     				axios.post('../board/delete.do',null,{

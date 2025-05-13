@@ -3,11 +3,15 @@ import java.io.*;
 import java.net.URLEncoder;
 import java.util.*;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import com.sist.service.*;
+import com.sist.vo.ReplyVO;
 import com.sist.vo.board.*;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,12 +32,13 @@ public class BoardRestController {
 		      HttpServletRequest request) throws IOException {
 
 		    // 1) 웹앱 하위 resources/board 경로의 실제 디스크 위치 가져오기
-		    String uploadDirPath = request.getSession()
+		  String sess = request.getSession().getId();
+		    String tempDir  = request.getSession()
 		        .getServletContext()
-		        .getRealPath("/resources/board/");
-		    File uploadDir = new File(uploadDirPath);
-		    if (!uploadDir.exists()) {
-		      uploadDir.mkdirs();
+		        .getRealPath("/resources/temp/" + sess + "/");
+		    File dir  = new File(tempDir);
+		    if (!dir .exists()) {
+		    	dir .mkdirs();
 		    }
 
 		    // 2) UUID + 원본 확장자로 저장 파일명 생성
@@ -43,11 +48,11 @@ public class BoardRestController {
 		    String saveName = uuid + ext;
 
 		    // 3) 파일 디스크에 저장
-		    File dest = new File(uploadDir, saveName);
+		    File dest = new File(dir , saveName);
 		    file.transferTo(dest);
 
 		    // 4) 클라이언트에서 img src로 쓸 path 리턴
-		    String fileUrl = request.getContextPath() + "/resources/board/" + saveName;
+		    String fileUrl = request.getContextPath() + "/resources/temp/" + sess + "/" + saveName;
 		    return Collections.singletonMap("url", fileUrl);
 		  }
 	  
@@ -83,7 +88,56 @@ public class BoardRestController {
 			 return "yes";
 		 }
 	 
-	 
+	  @PostMapping("board/cancelTempImages.do")
+	  public void cancelTempImages(HttpServletRequest request) throws Exception {
+		  String sess = request.getSession().getId();
+		    String tempDir  = request.getSession()
+		        .getServletContext()
+		        .getRealPath("/resources/temp/" + sess + "/");
+	      FileUtils.deleteDirectory(new File(tempDir));
+	  }
+	  
+	  
+	  @GetMapping("boardreply/list.do")
+	  public List<ReplyVO> replyList(ReplyVO vo)
+	  {
+		  List<ReplyVO> list = service.replyListData(vo);
+		  
+		  return list;
+	  }
+
+	  @PostMapping("boardreply/insert.do")
+	  public Map replyInsert(ReplyVO vo, HttpSession session)
+	  {
+		String id = (String) session.getAttribute("id");  
+		String name = (String) session.getAttribute("name");  
+		vo.setId(id);
+		vo.setName(name);
+		
+		service.replyInsert(vo);
+		int replycount=service.boardReplycount(vo);
+		List<ReplyVO> list = service.replyListData(vo);
+		
+		Map map = new HashMap();
+		map.put("replycount", replycount);
+		map.put("list",list);
+		
+		return map;
+	  }
+	  @PostMapping("boardreply/delete.do")
+	  public Map replyDelete(int no, ReplyVO vo)
+	  {
+		  ReplyVO rvo = service.replyInfoData(no);
+		  service.replyDelete(rvo);
+		  int replycount=service.boardReplycount(vo);
+		  List<ReplyVO> list = service.replyListData(vo);
+		  Map map = new HashMap();
+			map.put("replycount", replycount);
+			map.put("list",list);
+			
+			return map;
+		  
+	  }
 	 
 
 }

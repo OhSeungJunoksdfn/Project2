@@ -30,7 +30,7 @@
   </style>
 </head>
 <body>
-<section class="d-flex justify-content-center align-items-center" style="min-height: 100vh">
+<section class="d-flex ftco-animate justify-content-center align-items-center" style="min-height: 100vh">
   <form id="postForm"
         method="post"
         action="../board/insert.do"
@@ -77,7 +77,7 @@
         <!-- 버튼 -->
         <div class="col-12 text-right">
           <button type="submit" class="btn btn-primary r-12">글쓰기</button>
-          <a href="../board/list.do"
+          <a id="cancelBtn"
              class="btn btn-info bg-white text-dark r-12">취소</a>
         </div>
       </div>
@@ -130,6 +130,20 @@
   document.getElementById('postForm').addEventListener('submit', () => {
     document.getElementById('contentInput').value = quill.root.innerHTML;
   });
+  
+  document.getElementById('cancelBtn').addEventListener('click', function() {
+	    if (confirm('작성 중인 글을 정말 취소하시겠습니까?')) {
+	      axios.post('../board/cancelTempImages.do')
+	        .then(function() {
+	          // 임시 이미지 삭제 후, 게시글 목록으로 이동
+	          window.location.href = '../board/list.do';
+	        })
+	        .catch(function(err) {
+	          console.error(err);
+	          alert('취소 중 오류가 발생했습니다.');
+	        });
+	    }
+	  });
 </script>
 </body>
 </html>

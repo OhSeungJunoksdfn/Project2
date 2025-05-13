@@ -10,7 +10,7 @@
 </head>
 <body>
 <section
-      class="d-flex justify-content-center m-5 "
+      class="d-flex ftco-animate justify-content-center m-5 "
       id="boardListApp"
     >
       <div class="container secb shadow py-2">

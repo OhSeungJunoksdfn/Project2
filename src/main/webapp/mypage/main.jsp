@@ -18,24 +18,32 @@
               <input
                 type="button"
                 class="form-control r-12 cursor-pointer"
-                value="공지사항"
-                @click="changeSup('../customer/main.do')"
+                value="예약관리"
+                @click="changeSup('../mypage/reserv.do')"
               />
             </div>
             <div class="input-group mb-2">
               <input
                 type="button"
                 class="form-control r-12 cursor-pointer"
-                value="문의하기"
-                 @click="changeSup('../customer/insert.do')"
+                value="작성글 관리"
+                 @click="changeSup('../mypage/list.do')"
               />
             </div>
             <div class="input-group mb-2">
               <input
                 type="button"
                 class="form-control r-12 cursor-pointer"
-                value="내 문의"
-                 @click="changeSup('../customer/list.do')"
+                value="쿠폰함"
+                 @click="changeSup('../mypage/coupon.do')"
+              />
+            </div>
+            <div class="input-group mb-2">
+              <input
+                type="button"
+                class="form-control r-12 cursor-pointer"
+                value="내 정보"
+                 @click="changeSup('../mypage/my.do')"
               />
             </div>
             

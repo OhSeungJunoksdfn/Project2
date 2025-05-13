@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import java.util.*;
 import com.sist.mapper.*;
+import com.sist.vo.ReplyVO;
 import com.sist.vo.board.*;
 @Repository
 public class BoardDAO {
@@ -35,6 +36,7 @@ public class BoardDAO {
 	
 	public void boardInsert(BoardVO vo)
 	{
+		
 		mapper.boardInsert(vo);
 	}
 	public void boardUpdate(BoardVO vo)
@@ -44,6 +46,7 @@ public class BoardDAO {
 	public void boardDelete(int no)
 	{
 		mapper.boardDelete(no);
+		mapper.boardReplyDelete(no);
 	}
 	
 	public int boardNext(int no)
@@ -54,5 +57,48 @@ public class BoardDAO {
 	public int boardPrev(int no)
 	{
 		return mapper.boardPrev(no);
+	}
+	
+	//댓글
+	
+	public List<ReplyVO>  replyListData(ReplyVO vo)
+	{
+		return mapper.replyListData(vo);
+	}
+	
+	public void replyInsert(ReplyVO vo)
+	{
+
+		mapper.replyInsert(vo);
+	}
+	
+	public int boardReplycount(ReplyVO vo)
+	{
+		return mapper.boardReplycount(vo);
+	}
+	
+	public void replyUpdate(ReplyVO vo)
+	{
+		mapper.replyUpdate(vo);
+	}
+	public ReplyVO replyInfoData(int no)
+	{
+		return mapper.replyInfoData(no);
+	}
+	public void replyDelete(ReplyVO vo)
+	{
+		mapper.replyDelete(vo);
+	}
+	public ReplyVO replyParentInfoData(int no)
+	{
+		return mapper.replyParentInfoData(no);
+	}
+	public void replyGroupStepIncrement(ReplyVO vo)
+	{
+		mapper.replyGroupStepIncrement(vo);
+	}
+	public void replyReplyInsert(ReplyVO vo)
+	{
+		mapper.replyReplyInsert(vo);
 	}
 }

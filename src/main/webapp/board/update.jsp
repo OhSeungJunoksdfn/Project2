@@ -30,10 +30,10 @@
   </style>
 </head>
 <body>
-<section class="d-flex justify-content-center align-items-center" style="min-height: 100vh">
+<section class="d-flex ftco-animate justify-content-center align-items-center" style="min-height: 100vh">
   <form id="postForm"
         method="post"
-        action="../board/update.do"
+        action="/board/update_ok.do"
         enctype="multipart/form-data"
         class="w-100"
         >
@@ -44,6 +44,7 @@
         <!-- 제목, 유형 -->
         <div class="input-group mb-2">
           <input type="text" class="col-9 form-control r-12" value="${vo.subject }" name="subject" placeholder="제목" required/>
+          <input type="hidden" name="no" value="${vo.no}" />
           <select class="col-3 form-select border text-center"
                   style="border-radius: 0 12px 12px 0"
                   name="type" required>

@@ -19,6 +19,6 @@ TYPE	VARCHAR2(20 BYTE)
 @Data
 public class ReplyVO {
 	private int no,bno,group_id,group_step,group_tab,root,depth;
-	private String id,name,msg,type;
+	private String id,name,msg,type,dbday;
 	private Date regdate;
 }

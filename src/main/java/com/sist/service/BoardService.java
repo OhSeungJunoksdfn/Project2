@@ -1,6 +1,8 @@
 package com.sist.service;
 
 import java.util.*;
+
+import com.sist.vo.ReplyVO;
 import com.sist.vo.board.*;
 
 public interface BoardService {
@@ -14,4 +16,13 @@ public interface BoardService {
 	public void boardDelete(int no);
 	public int boardNext(int no);
 	public int boardPrev(int no);
+	public List<ReplyVO>  replyListData(ReplyVO vo);
+	public void replyInsert(ReplyVO vo);
+	public void replyUpdate(ReplyVO vo);
+	public ReplyVO replyInfoData(int no);
+	public void replyDelete(ReplyVO vo);
+	public ReplyVO replyParentInfoData(int no);
+	public void replyGroupStepIncrement(ReplyVO vo);
+	public void replyReplyInsert(ReplyVO vo);
+	public int boardReplycount(ReplyVO vo);
 }
