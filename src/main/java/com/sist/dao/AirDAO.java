@@ -26,5 +26,5 @@ public class AirDAO {
     /** 항공편 상세 조회 */
     public FlightInfoVO flightDetailData(int id) {
         return mapper.flightDetailData(id);
-    }
+    } 
 }
