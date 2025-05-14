@@ -94,25 +94,18 @@ public class BoardServiceImpl implements BoardService {
 		// TODO Auto-generated method stub
 		dao.replyDelete(vo);
 	}
-	@Override
-	public ReplyVO replyParentInfoData(int no) {
-		// TODO Auto-generated method stub
-		return dao.replyParentInfoData(no);
-	}
-	@Override
-	public void replyGroupStepIncrement(ReplyVO vo) {
-		// TODO Auto-generated method stub
-		dao.replyGroupStepIncrement(vo);
-	}
-	@Override
-	public void replyReplyInsert(ReplyVO vo) {
-		// TODO Auto-generated method stub
-		dao.replyReplyInsert(vo);
-	}
+	
 	@Override
 	public int boardReplycount(ReplyVO vo) {
 		// TODO Auto-generated method stub
 		return dao.boardReplycount(vo);
+	}
+	
+	@Transactional
+	@Override
+	public void replyReplyInsert(int pno, ReplyVO vo) {
+		// TODO Auto-generated method stub
+		dao.replyReplyInsert(pno, vo);
 	}
 
 }

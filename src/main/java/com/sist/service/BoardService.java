@@ -21,8 +21,6 @@ public interface BoardService {
 	public void replyUpdate(ReplyVO vo);
 	public ReplyVO replyInfoData(int no);
 	public void replyDelete(ReplyVO vo);
-	public ReplyVO replyParentInfoData(int no);
-	public void replyGroupStepIncrement(ReplyVO vo);
-	public void replyReplyInsert(ReplyVO vo);
+	public void replyReplyInsert(int pno,ReplyVO vo);
 	public int boardReplycount(ReplyVO vo);
 }
