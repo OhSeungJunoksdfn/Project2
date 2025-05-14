@@ -21,9 +21,9 @@ public interface CarMapper {
   // @Select("SELECT CEIL(COUNT(*)/6.0) FROM car")
    public int carTotalPage(@Param("tabVal") String tabVal);
    
-   @Select("SELECT * FROM busan_food "
-		  +"WHERE fno=#{fno}")
-   public CarVO busanFoodDetailData(int fno);
+   @Select("SELECT * FROM car "
+		  +"WHERE no=#{no}")
+   public CarVO carDetailData(int no);
    
    
    /*

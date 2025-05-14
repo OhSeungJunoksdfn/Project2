@@ -29,4 +29,9 @@ public class CarDAO {
 	public int carSearchTotalPage() {
 		return mapper.carSearchTotalPage();
 	}
+	
+	public CarVO carDetailData(int no)
+	{
+		return mapper.carDetailData(no);
+	}
 }
