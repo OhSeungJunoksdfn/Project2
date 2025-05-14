@@ -44,4 +44,5 @@ public class HotelDAO {
 	{
 		return mapper.hotelRelatedData(map);
 	}
+	
 }
