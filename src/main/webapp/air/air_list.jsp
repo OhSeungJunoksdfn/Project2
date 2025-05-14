@@ -37,13 +37,20 @@
           </thead>
           <tbody>
             <tr v-for="vo in list" :key="vo.flight_id">
+              <!-- 1) airline_code 대신 mapper에서 조인한 airline_name prop 사용 -->
               <td>{{ vo.flight_id }}</td>
-              <td>{{ vo.airline_code }}</td>
+              <td>{{ vo.airline_name }}</td>
+
               <td>{{ vo.flight_number }}</td>
-              <td>{{ vo.dep_airport_code }} → {{ vo.arr_airport_code }}</td>
+
+              <!-- 2) dep_airport_code/arr_airport_code 대신 dep_airport, arr_airport 사용 -->
+              <td>{{ vo.dep_airport }} → {{ vo.arr_airport }}</td>
+
               <td>{{ vo.dep_time }}</td>
               <td>{{ vo.arr_time }}</td>
+
               <td>{{ vo.economy_charge.toLocaleString() }}</td>
+
               <td>
                 <button class="btn btn-sm btn-primary"
                         @click="selectFlight(vo.flight_id)">
@@ -55,13 +62,14 @@
         </table>
       </div>
     </section>
-  </div><!--/#listApp-->
+  </div>
 
-  <script>
-    Vue.createApp({
+  <script src="./air_reserve_tab.js">
+  import { AirReserveTab } from './air_reserve_tab.js';
+  Vue.createApp({
       data() {
         return {
-          list: [],        // 항상 배열로 초기화
+          list: [],        
           curpage: 1,
           totalpage: 0,
           startPage: 1,
@@ -74,7 +82,6 @@
         };
       },
       methods: {
-        // 검색 탭에서 emit('search', filters) 받을 때
         handleSearch(filters) {
           this.curpage     = 1;
           this.from        = filters.from;
@@ -84,15 +91,14 @@
           this.travellers  = filters.travellers;
           this.dataRecv();
         },
-        // API 호출
         dataRecv() {
           axios.get('../air/list_vue.do', {
             params: {
               page: this.curpage,
               from: this.from,
               to: this.to,
-              arrtime: this.arrtime,      // ★
-              deptime: this.deptime,      // ★
+              arrtime: this.arrtime,
+              deptime: this.deptime,
               travellers: this.travellers
             }
           })
