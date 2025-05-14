@@ -11,6 +11,8 @@ import com.sist.service.*;
 import com.sist.vo.ReplyVO;
 import com.sist.vo.board.*;
 
+import oracle.jdbc.proxy.annotation.Post;
+
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -103,6 +105,11 @@ public class BoardRestController {
 	  {
 		  List<ReplyVO> list = service.replyListData(vo);
 		  
+		  for (ReplyVO svo : list) {
+	            svo.setEditing(false);
+	            svo.setEditText("수정");
+	        }
+		  
 		  return list;
 	  }
 
@@ -137,6 +144,41 @@ public class BoardRestController {
 			
 			return map;
 		  
+	  }
+	  
+	  @PostMapping("boardreply/update.do")
+	  public Map replyUpdate(ReplyVO vo)
+	  {
+		service.replyUpdate(vo);
+		int replycount=service.boardReplycount(vo);
+		List<ReplyVO> list = service.replyListData(vo); 
+		Map map = new HashMap();
+		map.put("replycount", replycount);
+		map.put("list",list);
+		
+		return map;
+	  }
+	  
+	  @PostMapping("boardreply/replyinsert.do")
+	  public Map replyReplyinsert(int pno,int bno,String msg,String type, HttpSession session)
+	  {
+		  String id=(String) session.getAttribute("id");
+			String name=(String) session.getAttribute("name");
+			ReplyVO vo = new ReplyVO();
+			vo.setBno(bno);
+			vo.setMsg(msg);
+			vo.setId(id);
+			vo.setName(name);
+			vo.setType(type);
+			service.replyReplyInsert(pno, vo);
+
+			int replycount=service.boardReplycount(vo);
+			List<ReplyVO> list = service.replyListData(vo); 
+			Map map = new HashMap();
+			map.put("replycount", replycount);
+			map.put("list",list);
+			
+			return map;
 	  }
 	 
 

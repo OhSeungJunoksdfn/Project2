@@ -1,20 +1,12 @@
-
-const air_reserve_tab={
+window.air_reserve_tab={
 template:
 `
-	<div style="width:100%;display: flex;justify-content: center;">
-		<section class="ftco-section justify-content-end " style="width:80%;">
-      <div class="container-wrap mx-auto">
-        <div class="row no-gutters">
-          <div class="col-md-12 tab-wrap rt-12 shadow" style="border-radius:10px">
-            <div class="tab-content p-4 px-5" id="v-pills-tabContent">
-             <div
-                class="tab-pane fade show active"
-                id="v-pills-1"
-                role="tabpanel"
-                aria-labelledby="v-pills-nextgen-tab"
-              >
-               <form @submit.prevent="dataRecv" class="search-destination">
+	<div style="width:100%;display:flex;justify-content:center;">
+      <section class="ftco-section" style="width:80%;">
+        <div class="container-wrap mx-auto">
+          <div class="row no-gutters">
+            <div class="col-md-12 shadow" style="border-radius:10px">
+              <form @submit.prevent="onSubmit" class="search-destination p-4">
                 <div class="row">
 	              <!-- 출발 공항 -->
 	              <div class="col-md-2 align-items-end">
@@ -70,14 +62,34 @@ template:
 		          		</div>
 			           </div>
 				      </div>
-				     </div>
-				    </form>
-				   </div>
-				  </div>
-				 </div>
-				</div>
-			   </div>
-			  </section>
+				       </div> <!-- /.row -->
+		              </form>
+		            </div> <!-- /.col-md-12 -->
+		          </div> <!-- /.row -->
+		        </div> <!-- /.container-wrap -->
+		      </section>
 		     </div>	
-`
-}
+`,
+  emits: ['search'],
+  data() {
+    return {
+      from: '',
+      to: '',
+      arrtime: '',
+      deptime: '',
+      travellers: null
+    };
+  },
+  methods: {
+    onSubmit() {
+      // 부모 컴포넌트로 이벤트와 함께 조건 전달
+      this.$emit('search', {
+        from: this.from,
+        to: this.to,
+        arrtime: this.arrtime,
+        deptime: this.deptime,
+        travellers: this.travellers
+      });
+    }
+  }
+};

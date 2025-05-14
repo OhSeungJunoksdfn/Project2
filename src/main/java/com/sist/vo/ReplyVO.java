@@ -21,4 +21,8 @@ public class ReplyVO {
 	private int no,bno,group_id,group_step,group_tab,root,depth;
 	private String id,name,msg,type,dbday;
 	private Date regdate;
+	private boolean editing = false;
+    private String editText = "수정";
+	
+	
 }

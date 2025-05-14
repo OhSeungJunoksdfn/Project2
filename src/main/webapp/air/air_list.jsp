@@ -6,21 +6,21 @@
   <meta charset="UTF-8">
   <title>Flight Search</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-  <style>
-    span:hover, a:hover { cursor: pointer; }
-  </style>
-  <!-- Vue.js & Axios -->
+  <style> span:hover, a:hover { cursor: pointer; } </style>
   <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <!-- 검색 폼 컴포넌트 -->
   <script src="./air_reserve_tab.js"></script>
 </head>
 <body>
-    <!-- 검색 폼 -->
-    <div id="listApp">
-    
-    <air-reserve-tab></air-reserve-tab>	
-   
-	<section v-if="list.length" class="ftco-section" style="margin:0; padding:20px;">
+  <div id="listApp">
+    <!-- 검색 탭 -->
+    <air-reserve-tab @search="handleSearch"></air-reserve-tab>
+
+    <!-- 결과 테이블: list 배열이 있고, 길이가 있을 때만 렌더 -->
+    <section v-if="list && list.length"
+             class="ftco-section"
+             style="margin:0; padding:20px;">
       <div class="container">
         <table class="table table-bordered text-center">
           <thead>
@@ -36,13 +36,11 @@
             </tr>
           </thead>
           <tbody>
-            <!-- flightListData() 에서 내려주는 list 를 반복 -->
             <tr v-for="vo in list" :key="vo.flight_id">
               <td>{{ vo.flight_id }}</td>
               <td>{{ vo.airline_code }}</td>
               <td>{{ vo.flight_number }}</td>
               <td>{{ vo.dep_airport_code }} → {{ vo.arr_airport_code }}</td>
-              <!-- 이미 Mapper 에서 'YY/MM/DD HH24:MI' 포맷으로 문자열로 내려오기 때문에 slice 없이 그대로 -->
               <td>{{ vo.dep_time }}</td>
               <td>{{ vo.arr_time }}</td>
               <td>{{ vo.economy_charge.toLocaleString() }}</td>
@@ -57,13 +55,13 @@
         </table>
       </div>
     </section>
-   </div>
+  </div><!--/#listApp-->
 
   <script>
     Vue.createApp({
       data() {
         return {
-          list: [],
+          list: [],        // 항상 배열로 초기화
           curpage: 1,
           totalpage: 0,
           startPage: 1,
@@ -75,47 +73,53 @@
           travellers: null
         };
       },
-      mounted() {
-        // 처음 로딩 시에는 리스트를 빈 상태로 두고, 검색 버튼을 눌러야 불러오도록 하려면
-        // 여기서는 호출하지 않습니다.
-        // this.dataRecv();
-      },
       methods: {
+        // 검색 탭에서 emit('search', filters) 받을 때
+        handleSearch(filters) {
+          this.curpage     = 1;
+          this.from        = filters.from;
+          this.to          = filters.to;
+          this.arrtime     = filters.arrtime;
+          this.deptime     = filters.deptime;
+          this.travellers  = filters.travellers;
+          this.dataRecv();
+        },
+        // API 호출
         dataRecv() {
           axios.get('../air/list_vue.do', {
             params: {
               page: this.curpage,
               from: this.from,
               to: this.to,
-              checkin: this.arrtime,
-              checkout: this.deptime,
+              arrtime: this.arrtime,      // ★
+              deptime: this.deptime,      // ★
               travellers: this.travellers
             }
-          }).then(res => {
+          })
+          .then(res => {
             const d = res.data;
-            this.list      = d.list;
-            this.curpage   = d.curpage;
-            this.totalpage = d.totalpage;
-            this.startPage = d.startPage;
-            this.endPage   = d.endPage;
+            this.list      = Array.isArray(d.list) ? d.list : [];
+            this.curpage   = d.curpage   || 1;
+            this.totalpage = d.totalpage || 0;
+            this.startPage = d.startPage || 1;
+            this.endPage   = d.endPage   || 1;
+          })
+          .catch(err => {
+            console.error('API 호출 중 오류:', err);
+            this.list = [];
           });
         },
         selectFlight(id) {
-          // 선택 버튼 클릭 시 처리할 로직
           alert(`편번 ${id} 선택됨`);
         },
-        prev() { /* … */ },
-        next() { /* … */ },
-        pageChange(p) { /* … */ }
+        prev()    { if(this.startPage>1)      { this.curpage=this.startPage-1; this.dataRecv(); } },
+        next()    { if(this.endPage< this.totalpage) { this.curpage=this.endPage+1;   this.dataRecv(); } },
+        pageChange(p) { this.curpage = p; this.dataRecv(); }
       },
-      components:{
-  		'air-reserve-tab':air_reserve_tab
-  	}
+      components: {
+        'air-reserve-tab': air_reserve_tab
+      }
     }).mount('#listApp');
   </script>
 </body>
 </html>
-	
-
-
-

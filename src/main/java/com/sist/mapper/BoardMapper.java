@@ -103,7 +103,7 @@ public interface BoardMapper {
 	
 	@Insert("INSERT INTO reply(no,bno,id,name,msg, "
 			+ "group_id,group_step,group_tab,type) "
-			+ "reply_no_seq.nextval, "
+			+ "VALUES(reply_no_seq.nextval, "
 			+ "#{bno},#{id},#{name},#{msg}, "
 			+ "#{group_id},#{group_step},#{group_tab},#{type})")
 	public void replyReplyInsert(ReplyVO vo);
