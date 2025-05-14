@@ -83,8 +83,7 @@ public class HotelRestController {
 		map.put("endPage", endPage);
 		
 		System.out.println("start=" + start + ", end=" + end + ", page=" + page + ", areacode=" + areacode + ", sigungucode=" + sigungucode);
-		System.err.println("parking= " + parking);
-		System.err.println("sports= " +sports);
+		System.out.println("▶️ checkin=" + checkin + ", checkout=" + checkout + ", person=" + person);
 		return map;
 	}
 }
