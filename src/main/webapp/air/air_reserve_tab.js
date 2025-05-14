@@ -18,7 +18,7 @@ template:
 	                  <option value="CJU">제주 (CJU)</option>
 	                </select>
 		          </div>
-		         </div>
+		         </div> 
 		          <!-- 도착 공항 -->
 		          <div class="col-md align-items-end">
                     <div class="form-group">
