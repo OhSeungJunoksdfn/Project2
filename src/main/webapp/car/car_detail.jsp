@@ -108,31 +108,46 @@
 			        <div class="row">
 			          <div class="col-md-4">
 			            <div class="intro ftco-animate r-12 sidebar shadow p-3">
-			              <h3><span>01</span> Travel</h3>
-			              <p>
-			                A small river named Duden flows by their place and supplies it
-			                with the necessary regelialia. It is a paradisematic country, in
-			                which roasted parts of sentences fly into your mouth.
+			              <span style="display:flex">
+			              	<input type="radio" style="margin-bottom:5px"/>
+			              	<h5 style="font-weight:500;font-size:17px">&nbsp;자차면책 가입안함</h5>
+			              </span>
+			              <hr style="transform: translateY(-10px);">
+			              <p style="font-size:12px">
+			              	<span>-자차 미가입</span>
+			                <h5 style="font-size:12px;margin-top:10px">${vo.non_ins_qual }</h5>
 			              </p>
 			            </div>
 			          </div>
 			          <div class="col-md-4">
 			            <div class="intro ftco-animate r-12 sidebar shadow p-3">
-			              <h3><span>02</span> Experience</h3>
-			              <p>
-			                A small river named Duden flows by their place and supplies it
-			                with the necessary regelialia. It is a paradisematic country, in
-			                which roasted parts of sentences fly into your mouth.
+			              <span style="display:flex">
+			              	<input type="radio" style="margin-bottom:5px"/>
+			              	<h5 style="font-weight:500;font-size:17px">&nbsp;일반자차 포함</h5>
+			              </span>
+			              <hr style="transform: translateY(-10px);">
+			              <p style="font-size:12px">
+			              	<div style="font-size:12px">-{{nor_ins_desc[1]}}</div>
+			              	<div style="font-size:12px">-{{nor_ins_desc[2]}}</div>
+			              	<div style="font-size:12px">-{{nor_ins_desc[3]}}</div>
+			              	<div style="font-size:12px">-{{nor_ins_desc[4]}}</div>
+			                <h5 style="font-size:12px;margin-top:10px">${vo.normal_ins_qual }</h5>
 			              </p>
 			            </div>
 			          </div>
 			          <div class="col-md-4">
 			            <div class="intro ftco-animate r-12 sidebar shadow p-3">
-			              <h3><span>03</span> Relax</h3>
-			              <p>
-			                A small river named Duden flows by their place and supplies it
-			                with the necessary regelialia. It is a paradisematic country, in
-			                which roasted parts of sentences fly into your mouth.
+			              <span style="display:flex">
+			              	<input type="radio" style="margin-bottom:5px"/>
+			              	<h5 style="font-weight:500;font-size:17px">&nbsp;고급자차 포함</h5>
+			              </span>
+			              <hr style="transform: translateY(-10px);">
+			              <p style="font-size:12px">
+			              	<div style="font-size:12px">-{{pre_ins_desc[1]}}</div>
+			              	<div style="font-size:12px">-{{pre_ins_desc[2]}}</div>
+			              	<div style="font-size:12px">-{{pre_ins_desc[3]}}</div>
+			              	<div style="font-size:12px">-{{pre_ins_desc[4]}}</div>
+			                <h5 style="font-size:12px;margin-top:10px">${vo.premium_ins_qual }</h5>
 			              </p>
 			            </div>
 			          </div>
@@ -454,13 +469,17 @@ geocoder.addressSearch('주소입력', function(result, status) {
     			  pudate:'${pudate}',
     			  putime:'${putime}',
     			  rdate:'${rdate}',
-    			  rtime:'${rtime}'
+    			  rtime:'${rtime}',
+    			  nor_ins_desc:'${vo.normal_ins_desc}'.split('-'),
+    			  pre_ins_desc:'${vo.premium_ins_desc}'.split('-')
     		  }
     	  },
     	  computed: {
 	      },
     	  mounted() { 	  
     			console.log(this.pudate)
+    			
+    			console.log(this.nor_ins_desc)
     	  },
     	  methods: {
       		range(start, end) {
