@@ -36,5 +36,12 @@ public class CarServiceImpl implements CarService{
 		// TODO Auto-generated method stub
 		return dao.carSearchTotalPage();
 	}
+
+	@Override
+	public CarVO carDetailData(int no) {
+		// TODO Auto-generated method stub
+		return dao.carDetailData(no);
+	}
+	
 	
 }
