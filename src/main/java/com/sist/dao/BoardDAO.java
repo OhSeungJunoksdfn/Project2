@@ -89,16 +89,14 @@ public class BoardDAO {
 	{
 		mapper.replyDelete(vo);
 	}
-	public ReplyVO replyParentInfoData(int no)
+	
+	public void replyReplyInsert(int pno,ReplyVO vo)
 	{
-		return mapper.replyParentInfoData(no);
-	}
-	public void replyGroupStepIncrement(ReplyVO vo)
-	{
-		mapper.replyGroupStepIncrement(vo);
-	}
-	public void replyReplyInsert(ReplyVO vo)
-	{
-		mapper.replyReplyInsert(vo);
+	ReplyVO pvo =mapper.replyParentInfoData(pno);	
+	mapper.replyGroupStepIncrement(pvo);
+	vo.setGroup_id(pvo.getGroup_id());
+	vo.setGroup_step(pvo.getGroup_step()+1);
+	vo.setGroup_tab(pvo.getGroup_tab()+1);
+	mapper.replyReplyInsert(vo);
 	}
 }

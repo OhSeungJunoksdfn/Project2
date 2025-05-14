@@ -53,12 +53,7 @@
 					<textarea class="r-12 p-2" style="outline: none;resize: none;width:100%;height:200px;border: 1px solid rgb(206, 212, 218);" ></textarea>
 				</td>
 			</tr>
-			<tr>
-				<th class="align-middle text-center" width=20%>이미지첨부</th>
-				<td width=80%>
-					<input type="file" accept="image/*"> 
-				</td>
-			</tr>
+			
 		</tbody>
 	</table>
 		<div class="col-12 text-right">

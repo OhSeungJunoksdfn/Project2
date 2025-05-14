@@ -9,4 +9,5 @@ public interface CarService {
 	public int carTotalPage(String tabVal);
 	public List<CarVO> carSearchListData(Map map);
 	public int carSearchTotalPage();
+	public CarVO carDetailData(int no);
 }
