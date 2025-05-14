@@ -15,7 +15,7 @@ public class AirServiceImpl implements AirService{
 	@Override
 	public List<FlightInfoVO> flightListData(int start, int end) {
 		// TODO Auto-generated method stub
-		return null;
+		return aDAO.flightListData(start, end);
 	}
 
 	@Override
