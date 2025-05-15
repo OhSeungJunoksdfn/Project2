@@ -6,11 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sist.service.AirService;
-import com.sist.vo.air.AirLinesVO;
-import com.sist.vo.air.AirportsVO;
+import com.sist.vo.air.*;
 
 @Controller
 @RequestMapping("air/")
@@ -31,4 +32,42 @@ public class AirController {
         model.addAttribute("main_jsp", "../air/air_list.jsp");
         return "main/main";  
     }
+    /** 2) 예약 확인 화면 (flightId 받아서) */
+    @GetMapping("air_reserve.do")
+    public String air_reserve(
+            @RequestParam("flightId") int flightId,Model model) {
+        model.addAttribute("flight", service.getFlightById(flightId));
+        model.addAttribute("main_jsp", "../air/air_reserve.jsp");
+        return "main/main";
+    }
+
+    /** 3) 승객 입력 폼 화면 */
+    @GetMapping("passenger_form.do")
+    public String passenger_form(
+            @RequestParam("flightId") int flightId,
+            @RequestParam(value="id", required=false) String passengerId, Model model) {
+        if (passengerId != null) {
+            // 수정 모드일 때
+            model.addAttribute("passenger", service.getPassengerById(passengerId));
+        }
+        model.addAttribute("flightId", flightId);
+        model.addAttribute("main_jsp", "../air/passenger_form.jsp");
+        return "main/main";
+    }
+
+    /** 4) 승객 목록 화면 */
+    @GetMapping("passenger_list.do")
+    public String passenger_list(Model model) {
+        model.addAttribute("passengers", service.getAllPassengers());
+        model.addAttribute("main_jsp", "../air/passenger_list.jsp");
+        return "main/main";
+    }
+
+    /** 5) 승객 삭제 후 목록으로 리다이렉트 */
+    @PostMapping("passenger_delete.do")
+    public String passenger_delete(@RequestParam("id") String passengerId) {
+        service.deletePassenger(passengerId);
+        return "redirect:/air/passenger_list.do";
+    }
+    
 }

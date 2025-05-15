@@ -13,14 +13,12 @@
   <script src="./air_reserve_tab.js"></script>
 </head>
 <body>
-  <div id="listApp">
+  <div id="listApp" style="height:80vh; overflow-y:auto;">
     <!-- 검색 탭 -->
     <air-reserve-tab @search="handleSearch"></air-reserve-tab>
 
     <!-- 결과 테이블: list 배열이 있고, 길이가 있을 때만 렌더 -->
-    <section v-if="list && list.length"
-             class="ftco-section"
-             style="margin:0; padding:20px;">
+    <section v-if="list && list.length" class="ftco-section" style="margin:0; padding:20px;">
       <div class="container">
         <table class="table table-bordered text-center">
           <thead>
@@ -31,7 +29,7 @@
               <th>출발공항 → 도착공항</th>
               <th>출발시간</th>
               <th>도착시간</th>
-              <th>운임(₩)</th>
+              <th>운임(1인기준/₩)</th>
               <th>선택</th>
             </tr>
           </thead>
@@ -39,93 +37,105 @@
             <tr v-for="vo in list" :key="vo.flight_id">
               <!-- 1) airline_code 대신 mapper에서 조인한 airline_name prop 사용 -->
               <td>{{ vo.flight_id }}</td>
-              <td>{{ vo.airline_name }}</td>
+              <td>{{ vo.airline_code }}</td>
 
               <td>{{ vo.flight_number }}</td>
 
               <!-- 2) dep_airport_code/arr_airport_code 대신 dep_airport, arr_airport 사용 -->
-              <td>{{ vo.dep_airport }} → {{ vo.arr_airport }}</td>
+              <td>{{ vo.dep_airport_code }} → {{ vo.arr_airport_code }}</td>
 
               <td>{{ vo.dep_time }}</td>
               <td>{{ vo.arr_time }}</td>
 
-              <td>{{ vo.economy_charge.toLocaleString() }}</td>
+              <td>
+			     <span v-if="vo.economy_charge === 0">결항</span>
+			     <span v-else>{{ vo.economy_charge.toLocaleString() }}</span>
+			   </td>
 
               <td>
-                <button class="btn btn-sm btn-primary"
-                        @click="selectFlight(vo.flight_id)">
-                  선택
-                </button>
+                <button :href="'../air/air_list_arr.do" class="btn btn-sm btn-success" @click="selectFlight(vo.flight_id)">왕복선택</button>
+                <button class="btn btn-sm btn-warning" @click="selectFlight(vo.flight_id)">편도예약</button>
               </td>
             </tr>
           </tbody>
         </table>
+        <div ref="sentinel" style="height:1px;"></div>
       </div>
     </section>
   </div>
 
-  <script src="./air_reserve_tab.js">
-  import { AirReserveTab } from './air_reserve_tab.js';
-  Vue.createApp({
-      data() {
-        return {
-          list: [],        
-          curpage: 1,
-          totalpage: 0,
-          startPage: 1,
-          endPage: 1,
-          from: '',
-          to: '',
-          arrtime: '',
-          deptime: '',
-          travellers: null
-        };
-      },
-      methods: {
-        handleSearch(filters) {
-          this.curpage     = 1;
-          this.from        = filters.from;
-          this.to          = filters.to;
-          this.arrtime     = filters.arrtime;
-          this.deptime     = filters.deptime;
-          this.travellers  = filters.travellers;
-          this.dataRecv();
-        },
-        dataRecv() {
-          axios.get('../air/list_vue.do', {
-            params: {
-              page: this.curpage,
-              from: this.from,
-              to: this.to,
-              arrtime: this.arrtime,
-              deptime: this.deptime,
-              travellers: this.travellers
-            }
-          })
-          .then(res => {
-            const d = res.data;
-            this.list      = Array.isArray(d.list) ? d.list : [];
-            this.curpage   = d.curpage   || 1;
-            this.totalpage = d.totalpage || 0;
-            this.startPage = d.startPage || 1;
-            this.endPage   = d.endPage   || 1;
-          })
-          .catch(err => {
-            console.error('API 호출 중 오류:', err);
-            this.list = [];
-          });
-        },
-        selectFlight(id) {
-          alert(`편번 ${id} 선택됨`);
-        },
-        prev()    { if(this.startPage>1)      { this.curpage=this.startPage-1; this.dataRecv(); } },
-        next()    { if(this.endPage< this.totalpage) { this.curpage=this.endPage+1;   this.dataRecv(); } },
-        pageChange(p) { this.curpage = p; this.dataRecv(); }
-      },
-      components: {
-        'air-reserve-tab': air_reserve_tab
+
+<script>
+Vue.createApp({
+  data() {
+    return {
+      list: [],        
+      curpage: 1,
+      totalpage: 0,
+      from: '',
+      to: '',
+      departureDate: '',
+      returnDate: '',
+      travellers: null
+    };
+  },
+  methods: {
+    handleSearch(filters) {
+      this.curpage       = 1;
+      this.list          = [];
+      this.from          = filters.from;
+      this.to            = filters.to;
+      this.departureDate = filters.departureDate || '';
+      this.returnDate    = filters.returnDate    || '';
+      this.travellers    = filters.travellers;
+      this.fetchPage();
+    },
+    fetchPage() {
+      axios.get('../air/list_vue.do', {
+        params: {
+          page: this.curpage,
+          from: this.from,
+          to: this.to,
+          date: this.departureDate,
+          travellers: this.travellers
+        }
+      })
+      .then(res => {
+        const d = res.data;
+        // 첫 페이지면 덮어쓰기, 이후면 이어붙이기
+        if (this.curpage === 1) {
+          this.list = Array.isArray(d.list) ? d.list : [];
+        } else {
+          this.list = this.list.concat(d.list || []);
+        }
+        this.totalpage = d.totalpage || 0;
+      })
+      .catch(err => {
+        console.error('API 호출 중 오류:', err);
+      });
+    },
+    selectFlight(id) {
+      alert(`편번 ${id} 선택됨`);
+    }
+  },
+  mounted() {
+    // viewport 기준, threshold 1.0
+    const io = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting && this.curpage < this.totalpage) {
+        this.curpage++;
+        this.fetchPage();
       }
-    }).mount('#listApp');
-  </script>
+    }, {
+      root: null,         // 전체 창(viewport)
+      rootMargin: '0px',
+      threshold: 1.0      // sentinel이 완전히 보일 때만
+    });
+    // sentinel은 테이블 하단에 <div ref="sentinel"></div>로 배치해두세요
+    io.observe(this.$refs.sentinel);
+  }
+})
+.component('air-reserve-tab', window.air_reserve_tab)
+.mount('#listApp');
+</script>
 </body>
 </html>

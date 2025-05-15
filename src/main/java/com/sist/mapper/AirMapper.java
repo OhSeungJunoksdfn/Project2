@@ -28,12 +28,21 @@ public interface AirMapper {
 	    List<FlightInfoVO> selectFlightsFiltered(Map<String, Object> params);
 	    int selectFlightsCountFiltered(Map<String, Object> params);
 
-	    /** 6) RESERVATIONS 삽입 */
-	    void insertReservation(ReservationsVO vo);
+	    /** 6) 승객 삽입 */
+	    void insertpassengers(PassengersVO vo);
 
-	    /** 7) RESERVATIONS 조회 (고객 이메일 기준) */
-	    List<ReservationsVO> selectReservationsByEmail(@Param("email") String email);
-	    
+	    /** 7) 단일 승객 조회 (ID 기준) */
+	    PassengersVO selectPassengerById(@Param("passengerId") String passengerId);
+
+	    /** 8) 전체 승객 조회 */
+	    List<PassengersVO> selectAllPassengers();
+
+	    /** 9) 승객 정보 수정 */
+	    int updatePassenger(PassengersVO vo);
+
+	    /** 10) 승객 삭제 */
+	    int deletePassenger(@Param("passengerId") String passengerId);
+    
 	    /** 편도(가는 편) 조회 */
 	    List<FlightInfoVO> selectOutbound(
 	      @Param("start")   int start,
@@ -65,4 +74,6 @@ public interface AirMapper {
 	      @Param("to")   String to,
 	      @Param("date") String date
 	    );
+
+		
 	}
