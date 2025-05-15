@@ -47,12 +47,30 @@ public class CarController {
 		//String id=(String)session.getAttribute("userid");
 		//model.addAttribute("sessionId", id);
 		model.addAttribute("vo", vo);
-		
 		model.addAttribute("pudate",pudate);
 		model.addAttribute("putime",putime);
 		model.addAttribute("rdate",rdate);
 		model.addAttribute("rtime",rtime);
 		model.addAttribute("main_jsp","../car/car_detail.jsp");
+		return "main/main";
+	}
+	
+	@GetMapping("car/car_reserve.do")
+	public String car_reserve(Model model,String no,
+			String pudate, String putime,String rdate, String rtime,String ins)
+	{
+		System.out.println(pudate);
+		
+		CarVO vo=service.carDetailData(Integer.parseInt(no));
+		// 배열 => List로 변경 asList
+		//String id=(String)session.getAttribute("userid");
+		//model.addAttribute("sessionId", id);
+		model.addAttribute("vo", vo);
+		model.addAttribute("pudate",pudate);
+		model.addAttribute("putime",putime);
+		model.addAttribute("rdate",rdate);
+		model.addAttribute("rtime",rtime);
+		model.addAttribute("main_jsp","../car/car_reserve.jsp");
 		return "main/main";
 	}
 	

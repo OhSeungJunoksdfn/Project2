@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<section class="ftco-section ftco-degree-bg">
+	<section class="ftco-section ftco-degree-bg">
       <div class="container">
         <div class="row shadow r-12 secb py-3 px-3">
           <div class="col-lg-12">
@@ -28,62 +27,73 @@
               <table class="table" style="border-top: 3px solid gray">
                 <tbody>
                   <tr>
-                    <th width="20%" style="background-color: #e9e9e9; color: black">
+                    <th
+                      width="20%"
+                      style="background-color: #e9e9e9; color: black"
+                    >
                       예약구분
                     </th>
-                    <td width="80%" style="color: red">[객실] 확정예약</td>
+                    <td width="80%" style="color: red">[렌터카] 확정예약</td>
                   </tr>
                   <tr>
-                    <th width="20%" style="background-color: #e9e9e9; color: black">
-                      호텔명
+                    <th
+                      width="20%"
+                      style="background-color: #e9e9e9; color: black"
+                    >
+                      차량명
                     </th>
-                    <td width="80%">${vo.hotel_title }</td>
+                    <td width="80%">모닝</td>
                   </tr>
                   <tr>
-                    <th width="20%" style="background-color: #e9e9e9; color: black">
-                      객실타입
+                    <th
+                      width="20%"
+                      style="background-color: #e9e9e9; color: black"
+                    >
+                      차량정보
                     </th>
-                    <td width="80%">${vo.title }</td>
+                    <td width="80%">준중형/휘발유/4인승</td>
                   </tr>
                   <tr>
-                    <th width="20%" style="background-color: #e9e9e9; color: black">
-                      구매 객실 수
+                    <th
+                      width="20%"
+                      style="background-color: #e9e9e9; color: black"
+                    >
+                      기간
                     </th>
-                    <td width="80%">1개</td>
+                    <td width="80%">2025.04.18(금) ~ 2025.04.20(토)/ 48시간</td>
                   </tr>
                   <tr>
-                    <th width="20%" style="background-color: #e9e9e9; color: black">
-                      이용기간
+                    <th
+                      width="20%"
+                      style="background-color: #e9e9e9; color: black"
+                    >
+                      보험
                     </th>
-                    <td width="80%">${checkin} ~ ${checkout } / ${stay_day }박 ${stay_day+1 }일</td>
+                    <td width="80%">완전자차. 26세이상, 자차 설명</td>
                   </tr>
-                  
                   <tr>
-                    <th width="20%" style="background-color: #e9e9e9; color: black">
-                      객실옵션
+                    <th
+                      width="20%"
+                      style="background-color: #e9e9e9; color: black"
+                    >
+                      차량옵션
                     </th>
-                    <td width="80%"></td>
+                    <td width="80%">에어컨 스마트키</td>
                   </tr>
                   <tr>
-                    <th width="20%" style="background-color: #e9e9e9; color: black">
-                      추가옵션
-                    </th>
-                    <td width="80%"></td>
-                  </tr>
-                  <tr>
-                    <th width="20%" style="background-color: #e9e9e9; color: black">
-                      총 투숙인원
-                    </th>
-                    <td width="80%">${vo.person }명</td>
-                  </tr>
-                  <tr>
-                    <th width="20%" style="background-color: #e9e9e9; color: black">
+                    <th
+                      width="20%"
+                      style="background-color: #e9e9e9; color: black"
+                    >
                       무료 취소 기간
                     </th>
                     <td width="80%">7일전</td>
                   </tr>
                   <tr>
-                    <th width="20%" style="background-color: #e9e9e9; color: black">
+                    <th
+                      width="20%"
+                      style="background-color: #e9e9e9; color: black"
+                    >
                       추가할인
                     </th>
                     <td width="80%"></td>
@@ -158,26 +168,38 @@
               <table class="table" style="border-top: 3px solid gray">
                 <tbody>
                   <tr>
-                    <th width="20%" style="background-color: #e9e9e9; color: black">
+                    <th
+                      width="20%"
+                      style="background-color: #e9e9e9; color: black"
+                    >
                       상품 금액
                     </th>
-                    <td width="80%"><fmt:formatNumber value="${price_total }" type="number" groupingUsed="true"/>원</td>
+                    <td width="80%">339,000원</td>
                   </tr>
                   <tr>
-                    <th width="20%" style="background-color: #e9e9e9; color: black">
+                    <th
+                      width="20%"
+                      style="background-color: #e9e9e9; color: black"
+                    >
                       객실 옵션 금액
                     </th>
                     <td width="80%">0원</td>
                   </tr>
                   <tr>
-                    <th width="20%" style="background-color: #e9e9e9; color: black">
+                    <th
+                      width="20%"
+                      style="background-color: #e9e9e9; color: black"
+                    >
                       쿠폰 할인
                     </th>
                     <td width="80%">-0원</td>
                   </tr>
 
                   <tr>
-                    <th width="20%" style="background-color: #e9e9e9; color: black">
+                    <th
+                      width="20%"
+                      style="background-color: #e9e9e9; color: black"
+                    >
                       포인트
                     </th>
                     <td width="80%">-0원</td>
@@ -185,9 +207,10 @@
                   <tr>
                     <td colspan="2" class="text-right">
                       총 결제금액 &nbsp;
-                      <span style="font-weight: 700; font-size: 24px; color: black">
-                        <fmt:formatNumber value="${price_total }" type="number" groupingUsed="true"/>원
-                      </span>
+                      <span
+                        style="font-weight: 700; font-size: 24px; color: black"
+                        >339,000원</span
+                      >
                     </td>
                   </tr>
                 </tbody>
@@ -203,27 +226,51 @@
               <table class="table" style="border-top: 3px solid gray">
                 <tbody>
                   <tr>
-                    <th width="20%" style="background-color: #e9e9e9; color: black">
+                    <th
+                      width="20%"
+                      style="background-color: #e9e9e9; color: black"
+                    >
                       예약자명
                     </th>
                     <td width="80%">
-                      <input type="text" style="float: left" size="50" value="${vo.name }"/>
+                      <input
+                        type="text"
+                        style="float: left"
+                        size="50"
+                        value="홍길동"
+                      />
                     </td>
                   </tr>
                   <tr>
-                    <th width="20%" style="background-color: #e9e9e9; color: black">
+                    <th
+                      width="20%"
+                      style="background-color: #e9e9e9; color: black"
+                    >
                       이메일
                     </th>
                     <td width="80%">
-                      <input type="text" style="float: left" size="50" value="${vo.email }"/>
+                      <input
+                        type="text"
+                        style="float: left"
+                        size="50"
+                        value="hong@hong.com"
+                      />
                     </td>
                   </tr>
                   <tr>
-                    <th width="20%" style="background-color: #e9e9e9; color: black">
+                    <th
+                      width="20%"
+                      style="background-color: #e9e9e9; color: black"
+                    >
                       휴대폰 번호
                     </th>
                     <td width="80%">
-                      <input type="text" style="float: left" size="50" value="${vo.phone }"/>
+                      <input
+                        type="text"
+                        style="float: left"
+                        size="50"
+                        value="010-0000-0000"
+                      />
                     </td>
                   </tr>
                 </tbody>
@@ -234,10 +281,9 @@
               <div class="form-group m-2">
                 <div class="form-field">
                   <input
-                    type="button"
+                    type="submit"
                     value="결제하기"
                     class="form-control r-12 btn btn-primary"
-                    id="btn_payment"
                   />
                 </div>
               </div>
@@ -256,61 +302,5 @@
       </div>
     </section>
     <!-- .section -->
-<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
-<script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
-<script type="text/javascript">
-$("#btn_payment").click(function () {
-    // IMP 결제 라이브러리 초기화
-    IMP.init("imp06561258");  // ← 아임포트 식별코드로 교체하세요
-
-    // 결제 요청
-    IMP.request_pay({
-        pg: "html5_inicis",  // PG사
-        pay_method: "card",
-        merchant_uid: 'order_' + new Date().getTime(), // 고유 주문번호
-        name: "[호텔 예약] ${vo.hotel_title} ${vo.title}", // 예약명
-        amount: ${price_total}, // 결제 금액 (숫자)
-        buyer_email: "${vo.email}",
-        buyer_name: "${vo.name}",
-        buyer_tel: "${vo.phone}",
-        buyer_addr: "",
-        buyer_postcode: ""
-    }, function (rsp) {
-        // 결제 후 콜백 함수
-        if (rsp.success) {
-            // ✅ 결제 성공 → 서버로 예약 정보와 결제 결과 전송 (AJAX)
-            $.ajax({
-                type: "POST",
-                url: "../hotel/hotel_reserve_insert_vue.do",
-                data: {
-                    hotel_no: ${vo.hotel_no},
-                    room_no: ${vo.no},
-                    user_name: "${vo.name}",
-                    user_phone: "${vo.phone}",
-                    user_email: "${vo.email}",
-                    checkin: "${checkin}",
-                    checkout: "${checkout}",
-                    person: ${person},
-                    price_total: ${price_total},
-                    stay_day: ${stay_day},
-                    imp_uid: rsp.imp_uid,
-                    merchant_uid: rsp.merchant_uid,
-                    amount: rsp.paid_amount
-                },
-                success: function (reservationNo) {
-                    // ✅ DB에 INSERT 성공 → 예약 완료 페이지로 이동
-                    window.location.href = "/hotel/reserve_complete.do?no=" + reservationNo;
-                },
-                error: function () {
-                    alert("예약 저장 중 오류가 발생했습니다. 결제는 완료되었으므로 관리자에게 문의해주세요.");
-                }
-            });
-        } else {
-            // ❌ 결제 실패 처리
-            alert("결제에 실패했습니다: " + rsp.error_msg);
-        }
-    });
-});
-</script>
 </body>
 </html>

@@ -332,10 +332,10 @@
     	  },
     	  methods: {
     		searchbar() {
-    			console.log('checkin:', this.checkin, 'checkout:', this.checkout);
+    			console.log('checkin:', this.checkin, 'checkout:', this.checkout)
     			if (!this.checkin || !this.checkout) {
-    				  alert("체크인·체크아웃을 모두 선택해주세요.");
-    				  return;
+    				  alert("체크인·체크아웃을 모두 선택해주세요.")
+    				  return
     				}
     			this.curpage = 1
     			this.dataRecv()
