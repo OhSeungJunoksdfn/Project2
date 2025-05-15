@@ -148,7 +148,7 @@ Shadowbox.init({
 <!-- 	    				</div> -->
 					<hr>
 	    				<div>
-	    					<div id="map" style="width:800px;height:280px;"></div> 
+	    					<div id="map" style="width:100%;height:280px;"></div> 
 	    				</div>
     				</div>
     				<hr>
@@ -172,7 +172,7 @@ Shadowbox.init({
 				    					<div class="text p-3">
 				    						<div class="d-flex">
 				    							<div class="one">
-						    						<h3><a href="#">${room.title }</a></h3>
+						    						<h3>${room.title }</h3>
 						    						<p class="rate">
 						    							<i class="icon-star"></i>
 						    							<i class="icon-star"></i>
@@ -192,7 +192,7 @@ Shadowbox.init({
 				    						<p>${room.person }인 / 최대 ${room.person_max}인</p>
 				    						<hr>
 				    						<p class="bottom-area d-flex">
-				    							<span class="ml-auto"><a href="#">객실 예약</a></span>
+				    							<span class="ml-auto"><a href="../hotel/hotel_reserve.do?no=${room.no }">객실 예약</a></span>
 				    						</p>
 				    					</div>
 				    			</div>
@@ -255,7 +255,7 @@ Shadowbox.init({
 									  <div class="text p-3">
 										  <div class="d-flex">
 											   <div class="one">
-												  <h3><a href="#">${r3List.title }</a></h3>
+												  <h3><a href="../hotel/hotel_detail.do?no=${r3List.no }">${r3List.title }</a></h3>
 												  <p class="rate">
 													  <i class="icon-star"></i>
 													  <i class="icon-star"></i>

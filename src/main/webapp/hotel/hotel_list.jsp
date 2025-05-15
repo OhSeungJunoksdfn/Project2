@@ -52,7 +52,7 @@
                           <div class="icon">
                             <span class="icon-map-marker"></span>
                           </div>
-                          <input type="date" class="form-control checkout_date" name="checkout" placeholder="Check Out" v-model="checkout"/>
+                          <input type="date" class="form-control" name="checkout" placeholder="Check Out" v-model="checkout"/>
                         </div>
                       </div>
                     </div>
