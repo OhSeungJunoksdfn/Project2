@@ -19,8 +19,9 @@
 </head>
 <body>
 <div id="hotelListApp">
-	<div style="width:100%;display: flex;justify-content: center;">
-	 <section class="ftco-section justify-content-end " style="width:65%; padding: 32px;">
+  <div class="container px-0">
+	<div >
+	 <section class="ftco-section justify-content-end " style="padding-right: 10px; padding-bottom:2em">
       <div class="container-wrap mx-auto">
         <div class="row no-gutters">
           <div class="col-md-12 tab-wrap rt-12 shadow" style="border-radius:10px">
@@ -35,45 +36,35 @@
                   <div class="row">
                     <div class="col-md align-items-end">
                       <div class="form-group">
-                        <label for="#">Check In</label>
+                        <label>Check In</label>
                         <div class="form-field">
                           <div class="icon">
                             <span class="icon-map-marker"></span>
                           </div>
-                          <input
-                            type="text"
-                            class="form-control checkin_date"
-                            placeholder="Check In"
-                            v-model="checkin"
-                          />
+                          <input type="date" class="form-control" name="checkin" placeholder="Check In" v-model="checkin"/>
                         </div>
                       </div>
                     </div>
                     <div class="col-md align-items-end">
                       <div class="form-group">
-                        <label for="#">Check Out</label>
+                        <label>Check Out</label>
                         <div class="form-field">
                           <div class="icon">
                             <span class="icon-map-marker"></span>
                           </div>
-                          <input
-                            type="text"
-                            class="form-control checkout_date"
-                            placeholder="From"
-                            v-model="checkout"
-                          />
+                          <input type="date" class="form-control" name="checkout" placeholder="Check Out" v-model="checkout"/>
                         </div>
                       </div>
                     </div>
                     <div class="col-md align-items-end">
                       <div class="form-group">
-                        <label for="#">Guest</label>
+                        <label>Guest</label>
                         <div class="form-field">
                           <div class="select-wrap">
                             <div class="icon">
 <!--                               <span class="ion-ios-arrow-down"></span> -->
                             </div>
-                            <input v-model="person" class="form-control"/>
+                            <input v-model="person" name="person" class="form-control"/>
                           </div>
                         </div>
                       </div>
@@ -81,11 +72,7 @@
                     <div class="col-md align-self-end">
                       <div class="form-group">
                         <div class="form-field">
-                          <button
-                            class="form-control btn btn-primary"
-                            @click="searchbar"
-                          >
-                          Search</button>
+                          <button class="form-control btn btn-primary"  @click="searchbar">Search</button>
                         </div>
                       </div>
                     </div>
@@ -97,6 +84,7 @@
         </div>
       </div>
     </section>
+	</div>
 	</div>
   <div style="width:100%;display: flex;justify-content: center;">
 	<section class="ftco-section" style="padding: 32px;">
@@ -344,9 +332,11 @@
     	  },
     	  methods: {
     		searchbar() {
-    			if(!this.checkin || !this.checkout || !this.person) {
-    				return
-    			}
+    			console.log('checkin:', this.checkin, 'checkout:', this.checkout);
+    			if (!this.checkin || !this.checkout) {
+    				  alert("체크인·체크아웃을 모두 선택해주세요.");
+    				  return;
+    				}
     			this.curpage = 1
     			this.dataRecv()
     		},

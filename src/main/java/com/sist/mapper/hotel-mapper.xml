@@ -6,7 +6,7 @@
     FROM (SELECT hotl.*, ROWNUM AS num
     FROM (SELECT * 
     FROM (SELECT h.no, h.title, h.img, h.addr, h.areacode, h.sigungucode, h.content_id, h.cat3, 
-    		hr.price, hr.person, hr.person_max, 
+    		hr.price, hr.person, hr.person_max, hr.no AS room_no, 
     		hi.parking, hi.sauna, hi.sports, hi.checkintime, hi.checkouttime,
     ROW_NUMBER() OVER (PARTITION BY h.no ORDER BY hr.price ASC) AS rn
     FROM hotel h

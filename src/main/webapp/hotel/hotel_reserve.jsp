@@ -1,9 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
@@ -15,15 +15,15 @@
             <div
               class="row mb-5 justify-content-between align-items-center bb-3"
             >
-              <h3>¿¹¾àÇÏ±â</h3>
+              <h3>ì˜ˆì•½í•˜ê¸°</h3>
               <div>
-                <span style="font-weight: 700">¿¹¾àÁ¤º¸</span> > ¿¹¾à¿Ï·á
+                <span style="font-weight: 700">ì˜ˆì•½ì •ë³´</span> > ì˜ˆì•½ì™„ë£Œ
               </div>
             </div>
             <!---->
-            <!--Å×ÀÌºí ½ÃÀÛ-->
+            <!--í…Œì´ë¸” ì‹œìž‘-->
             <div class="row mb-3">
-              <h4 class="col-12">¿¹¾àÁ¤º¸</h4>
+              <h4 class="col-12">ì˜ˆì•½ì •ë³´</h4>
               <table class="table" style="border-top: 3px solid gray">
                 <tbody>
                   <tr>
@@ -31,61 +31,53 @@
                       width="20%"
                       style="background-color: #e9e9e9; color: black"
                     >
-                      ¿¹¾à±¸ºÐ
+                      ì˜ˆì•½êµ¬ë¶„
                     </th>
-                    <td width="80%" style="color: red">[°´½Ç] È®Á¤¿¹¾à</td>
+                    <td width="80%" style="color: red">[ê°ì‹¤] í™•ì •ì˜ˆì•½</td>
                   </tr>
                   <tr>
                     <th
                       width="20%"
                       style="background-color: #e9e9e9; color: black"
                     >
-                      È£ÅÚ¸í
+                      í˜¸í…”ëª…
                     </th>
-                    <td width="80%">¼­¸Ó¼Â Á¦ÁÖ½ÅÈ­¿ùµå</td>
+                    <td width="80%">${vo.hotel_title }</td>
                   </tr>
                   <tr>
                     <th
                       width="20%"
                       style="background-color: #e9e9e9; color: black"
                     >
-                      °´½ÇÅ¸ÀÔ
+                      ê°ì‹¤íƒ€ìž…
                     </th>
-                    <td width="80%">ÆÐ¹Ð¸® ½ºÀ§Æ®</td>
+                    <td width="80%">${vo.title }</td>
                   </tr>
                   <tr>
                     <th
                       width="20%"
                       style="background-color: #e9e9e9; color: black"
                     >
-                      ÀÌ¿ë±â°£
+                      êµ¬ë§¤ ê°ì‹¤ ìˆ˜
                     </th>
-                    <td width="80%">2025.04.18(±Ý) ~ 2025.04.20(Åä)/ 2¹Ú</td>
+                    <td width="80%">1ê°œ</td>
                   </tr>
                   <tr>
                     <th
                       width="20%"
                       style="background-color: #e9e9e9; color: black"
                     >
-                      ±¸¸Å °´½Ç ¼ö
+                      ì´ìš©ê¸°ê°„
                     </th>
-                    <td width="80%">1°³</td>
+                    <td width="80%">${sessionScope.checkin} ~ 2025.04.20(í† )/ 2ë°•</td>
                   </tr>
+                  
                   <tr>
                     <th
                       width="20%"
                       style="background-color: #e9e9e9; color: black"
                     >
-                      °´½Ç¿É¼Ç
-                    </th>
-                    <td width="80%"></td>
-                  </tr>
-                  <tr>
-                    <th
-                      width="20%"
-                      style="background-color: #e9e9e9; color: black"
-                    >
-                      Ãß°¡¿É¼Ç
+                      ê°ì‹¤ì˜µì…˜
                     </th>
                     <td width="80%"></td>
                   </tr>
@@ -94,35 +86,44 @@
                       width="20%"
                       style="background-color: #e9e9e9; color: black"
                     >
-                      ÃÑ Åõ¼÷ÀÎ¿ø
+                      ì¶”ê°€ì˜µì…˜
                     </th>
-                    <td width="80%">¼ºÀÎ 2¸í</td>
+                    <td width="80%"></td>
                   </tr>
                   <tr>
                     <th
                       width="20%"
                       style="background-color: #e9e9e9; color: black"
                     >
-                      ¹«·á Ãë¼Ò ±â°£
+                      ì´ íˆ¬ìˆ™ì¸ì›
                     </th>
-                    <td width="80%">7ÀÏÀü</td>
+                    <td width="80%">${vo.person }ëª…</td>
                   </tr>
                   <tr>
                     <th
                       width="20%"
                       style="background-color: #e9e9e9; color: black"
                     >
-                      Ãß°¡ÇÒÀÎ
+                      ë¬´ë£Œ ì·¨ì†Œ ê¸°ê°„
+                    </th>
+                    <td width="80%">7ì¼ì „</td>
+                  </tr>
+                  <tr>
+                    <th
+                      width="20%"
+                      style="background-color: #e9e9e9; color: black"
+                    >
+                      ì¶”ê°€í• ì¸
                     </th>
                     <td width="80%"></td>
                   </tr>
                 </tbody>
               </table>
             </div>
-            <!--Å×ÀÌºí ³¡-->
-            <!--ÇÒÀÎ Å×ÀÌºí-->
+            <!--í…Œì´ë¸” ë-->
+            <!--í• ì¸ í…Œì´ë¸”-->
             <div class="row mb-3">
-              <h4 class="col-12">ÇÒÀÎ/Æ÷ÀÎÆ®</h4>
+              <h4 class="col-12">í• ì¸/í¬ì¸íŠ¸</h4>
               <table class="table" style="border-top: 3px solid gray">
                 <tbody>
                   <tr>
@@ -130,7 +131,7 @@
                       width="20%"
                       style="background-color: #e9e9e9; color: black"
                     >
-                      ÄíÆù ÇÒÀÎ
+                      ì¿ í° í• ì¸
                     </th>
                     <td width="80%">
                       <input
@@ -140,11 +141,11 @@
                         value="0"
                       />
                       <p style="float: left; padding-left: 10px;" class="py-1">
-                        ¿ø »ç¿ë°¡´ÉÄíÆù:<span style="color: #34c0e7">0Àå</span>
+                        ì› ì‚¬ìš©ê°€ëŠ¥ì¿ í°:<span style="color: #34c0e7">0ìž¥</span>
                       </p>
                        <input
                     type="button"
-                    value="ÄíÆù"
+                    value="ì¿ í°"
                     class="btn btn-primary ml-2"
                     style="border-radius: 6px;"
                  	/>
@@ -156,7 +157,7 @@
                       width="20%"
                       style="background-color: #e9e9e9; color: black"
                     >
-                      Æ÷ÀÎÆ®
+                      í¬ì¸íŠ¸
                     </th>
                     <td width="80%">
                       <input
@@ -166,11 +167,11 @@
                         value="0"
                       />
                       <p style="float: left; padding-left: 10px" class="py-1">
-                        P »ç¿ë º¸À¯Æ÷ÀÎÆ®(<span style="color: #34c0e7">0</span>)
+                        P ì‚¬ìš© ë³´ìœ í¬ì¸íŠ¸(<span style="color: #34c0e7">0</span>)
                       </p>
                       <input
 	                    type="button"
-	                    value="¸ðµÎ »ç¿ë"
+	                    value="ëª¨ë‘ ì‚¬ìš©"
 	                    class="btn btn-primary ml-2"
 	                    style="border-radius:6px"
 	                  />
@@ -179,10 +180,10 @@
                 </tbody>
               </table>
             </div>
-            <!--ÇÒÀÎÅ×ÀÌºí ³¡-->
-            <!--°áÁ¦Á¤º¸ ½ÃÀÛ-->
+            <!--í• ì¸í…Œì´ë¸” ë-->
+            <!--ê²°ì œì •ë³´ ì‹œìž‘-->
             <div class="row mb-3">
-              <h4 class="col-12">°áÁ¦Á¤º¸</h4>
+              <h4 class="col-12">ê²°ì œì •ë³´</h4>
               <table class="table" style="border-top: 3px solid gray">
                 <tbody>
                   <tr>
@@ -190,27 +191,27 @@
                       width="20%"
                       style="background-color: #e9e9e9; color: black"
                     >
-                      »óÇ° ±Ý¾×
+                      ìƒí’ˆ ê¸ˆì•¡
                     </th>
-                    <td width="80%">339,000¿ø</td>
+                    <td width="80%">339,000ì›</td>
                   </tr>
                   <tr>
                     <th
                       width="20%"
                       style="background-color: #e9e9e9; color: black"
                     >
-                      °´½Ç ¿É¼Ç ±Ý¾×
+                      ê°ì‹¤ ì˜µì…˜ ê¸ˆì•¡
                     </th>
-                    <td width="80%">0¿ø</td>
+                    <td width="80%">0ì›</td>
                   </tr>
                   <tr>
                     <th
                       width="20%"
                       style="background-color: #e9e9e9; color: black"
                     >
-                      ÄíÆù ÇÒÀÎ
+                      ì¿ í° í• ì¸
                     </th>
-                    <td width="80%">-0¿ø</td>
+                    <td width="80%">-0ì›</td>
                   </tr>
 
                   <tr>
@@ -218,28 +219,28 @@
                       width="20%"
                       style="background-color: #e9e9e9; color: black"
                     >
-                      Æ÷ÀÎÆ®
+                      í¬ì¸íŠ¸
                     </th>
-                    <td width="80%">-0¿ø</td>
+                    <td width="80%">-0ì›</td>
                   </tr>
                   <tr>
                     <td colspan="2" class="text-right">
-                      ÃÑ °áÁ¦±Ý¾× &nbsp;
+                      ì´ ê²°ì œê¸ˆì•¡ &nbsp;
                       <span
                         style="font-weight: 700; font-size: 24px; color: black"
-                        >339,000¿ø</span
+                        >339,000ì›</span
                       >
                     </td>
                   </tr>
                 </tbody>
               </table>
             </div>
-            <!--°áÁ¦Á¤º¸ ³¡-->
-            <!--¿¹¾àÀÚ Á¤º¸ ½ÃÀÛ-->
+            <!--ê²°ì œì •ë³´ ë-->
+            <!--ì˜ˆì•½ìž ì •ë³´ ì‹œìž‘-->
             <div class="row mb-3">
-              <h4 class="col-3">¿¹¾àÀÚ Á¤º¸</h4>
+              <h4 class="col-3">ì˜ˆì•½ìž ì •ë³´</h4>
               <span class="col-9 text-right">
-                <input type="checkbox" /> ¿¹¾àÀÚ¿Í Åõ¼÷ÀÚÀÇ Á¤º¸°¡ ´Ù¸¦½Ã Ã¼Å©
+                <input type="checkbox" /> ì˜ˆì•½ìžì™€ íˆ¬ìˆ™ìžì˜ ì •ë³´ê°€ ë‹¤ë¥¼ì‹œ ì²´í¬
               </span>
               <table class="table" style="border-top: 3px solid gray">
                 <tbody>
@@ -248,14 +249,14 @@
                       width="20%"
                       style="background-color: #e9e9e9; color: black"
                     >
-                      ¿¹¾àÀÚ¸í
+                      ì˜ˆì•½ìžëª…
                     </th>
                     <td width="80%">
                       <input
                         type="text"
                         style="float: left"
                         size="50"
-                        value="È«±æµ¿"
+                        value="${vo.name }"
                       />
                     </td>
                   </tr>
@@ -264,14 +265,14 @@
                       width="20%"
                       style="background-color: #e9e9e9; color: black"
                     >
-                      ÀÌ¸ÞÀÏ
+                      ì´ë©”ì¼
                     </th>
                     <td width="80%">
                       <input
                         type="text"
                         style="float: left"
                         size="50"
-                        value="hong@hong.com"
+                        value="${vo.email }"
                       />
                     </td>
                   </tr>
@@ -280,27 +281,27 @@
                       width="20%"
                       style="background-color: #e9e9e9; color: black"
                     >
-                      ÈÞ´ëÆù ¹øÈ£
+                      íœ´ëŒ€í° ë²ˆí˜¸
                     </th>
                     <td width="80%">
                       <input
                         type="text"
                         style="float: left"
                         size="50"
-                        value="010-0000-0000"
+                        value="${vo.phone }"
                       />
                     </td>
                   </tr>
                 </tbody>
               </table>
             </div>
-            <!--¿¹¾àÀÚ Á¤º¸ ³¡-->
+            <!--ì˜ˆì•½ìž ì •ë³´ ë-->
             <div class="row justify-content-center">
               <div class="form-group m-2">
                 <div class="form-field">
                   <input
                     type="submit"
-                    value="°áÁ¦ÇÏ±â"
+                    value="ê²°ì œí•˜ê¸°"
                     class="form-control r-12 btn btn-primary"
                   />
                 </div>
@@ -309,7 +310,7 @@
                 <div class="form-field">
                   <input
                     type="submit"
-                    value="Ãë¼ÒÇÏ±â"
+                    value="ì·¨ì†Œí•˜ê¸°"
                     class="form-control r-12 btn btn-info"
                   />
                 </div>

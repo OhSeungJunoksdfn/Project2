@@ -44,4 +44,12 @@ public interface HotelMapper {
 			+ "FROM hotel_info "
 			+ "WHERE hotel_no = #{no}")
 	public HotelInfoVO hotelInfoData(int no);
+	
+	@Select("SELECT h.title AS hotel_title, hr.title, hr.no, hr.person, "
+			+ "m.name, m.phone, m.email "
+			+ "FROM hotel_room hr "
+			+ "JOIN hotel h ON hr.hotel_no = h.no "
+			+ "JOIN projectmember m ON m.id = #{member_id} "
+			+ "WHERE hr.no = #{no}")
+	public HotelRoomVO hotelReserveData(Map map);
 }

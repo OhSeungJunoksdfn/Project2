@@ -3,8 +3,8 @@
 const car_reserve_tab = {
 template:
 `
-	<div style="display: flex;justify-content: center;" >
-		<section class="ftco-section justify-content-end " style="width:80%;">
+	<div  >
+		<section class="ftco-section justify-content-end " style="">
 	      <div class="container-wrap mx-auto">
 	        <div class="row no-gutters">
 	          <div class="col-md-12 tab-wrap rt-12 shadow" style="border-radius:10px">

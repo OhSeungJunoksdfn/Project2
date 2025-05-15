@@ -22,10 +22,11 @@ span:hover,a:hover{
 <body>
 	<div id="listApp">
 	
-	<car-reserve-tab :onclickhandler="test"></car-reserve-tab>
+	
 	
     <section class="ftco-section ftco-degree-bg" style="margin:0px;padding:20px">
       <div class="container">
+      <car-reserve-tab :onclickhandler="test"></car-reserve-tab>
         <div class="row">
           <ul class="col-12 nav nav-tabs">
           	<li class="nav-item">

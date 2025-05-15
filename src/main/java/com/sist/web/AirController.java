@@ -7,35 +7,28 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sist.service.AirService;
-import com.sist.vo.air.FlightInfoVO;
+import com.sist.vo.air.AirLinesVO;
+import com.sist.vo.air.AirportsVO;
 
 @Controller
 @RequestMapping("air/")
 public class AirController {
     @Autowired
     private AirService service;
-    
+
+    /** 검색 화면 열기 (JSP) */
     @GetMapping("air_list.do")
-    public String air_list(
-            @RequestParam(defaultValue="1") int page,
-            Model model) {
-        
-        int rowSize = 12;
-        List<FlightInfoVO> list = 
-            service.flightListData((page-1)*rowSize + 1, page*rowSize);
-        int totalPage = service.flightTotalPage();
-        
+    public String air_list(Model model) {
+        // 검색폼에 사용할 드롭다운 데이터
+        List<AirLinesVO> airlines = service.getAllAirlines();
+        List<AirportsVO> airports = service.getAllAirports();
+        model.addAttribute("airlines", airlines);
+        model.addAttribute("airports", airports);
 
-        model.addAttribute("list", list);
-        model.addAttribute("curpage", page);
-        model.addAttribute("totalpage", totalPage);
-        model.addAttribute("rowSize", rowSize);
-        
-
-        model.addAttribute("main_jsp","../air/air_list.jsp");
-        return "main/main";
+        // 실제 jsp 위치를 메인 레이아웃에 전달
+        model.addAttribute("main_jsp", "../air/air_list.jsp");
+        return "main/main";  
     }
 }

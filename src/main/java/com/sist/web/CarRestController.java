@@ -1,6 +1,7 @@
 package com.sist.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -70,5 +71,14 @@ public class CarRestController {
 		map.put("endPage", endPage);
 		map.put("test", "test");
 		return map;
+	}
+	
+	@GetMapping("car/car_detail_vue.do")
+	public Map car_detail_vue(int page, Model model,
+				String pudate,String putime,
+				String rdate) {
+		
+
+		return new HashMap();
 	}
 }

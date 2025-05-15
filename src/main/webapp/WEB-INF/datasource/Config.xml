@@ -8,6 +8,9 @@
     <typeAlias type="com.sist.vo.tour.TourVO" alias="TourVO"/>
     <typeAlias type="com.sist.vo.car.CarVO" alias="CarVO"/>
     <typeAlias type="com.sist.vo.air.FlightInfoVO" alias="FlightInfoVO"/>
+    <typeAlias type="com.sist.vo.air.AirLinesVO" alias="AirLinesVO"/>
+    <typeAlias type="com.sist.vo.air.AirportsVO" alias="AirportsVO"/>
+    <typeAlias type="com.sist.vo.air.ReservationsVO" alias="ReservationsVO"/>
   </typeAliases>
   <mappers>
     <mapper resource="com/sist/mapper/hotel-mapper.xml"/>

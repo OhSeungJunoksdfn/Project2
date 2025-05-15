@@ -21,9 +21,10 @@
 <body>
 	
 	<div id="app">
-  	<car-reserve-tab :onclickhandler="test"></car-reserve-tab>
+  	
   	<section class="ftco-section" style="margin-top:0px;padding-top:0px">
       <div class="container">
+      	<car-reserve-tab :onclickhandler="test"></car-reserve-tab>
         <div class="row">
         
           <!-- 사이드바 -->

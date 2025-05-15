@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.*;
 
+import javax.servlet.http.HttpSession;
+
 import com.sist.vo.hotel.HotelVO;
 import com.sist.service.*;
 
@@ -20,7 +22,7 @@ public class HotelRestController {
 	private HotelService service;
 	
 	@GetMapping("list_vue.do")
-	public Map hotel_list_vue(int page, @RequestParam("sort") String sort,
+	public Map hotel_list_vue(int page, HttpSession session, @RequestParam("sort") String sort,
 			@RequestParam(value = "checkin", required = false) String checkin, 
 			@RequestParam(value = "checkout", required = false) String checkout, 
 			@RequestParam(value = "person") int person,
@@ -83,8 +85,7 @@ public class HotelRestController {
 		map.put("endPage", endPage);
 		
 		System.out.println("start=" + start + ", end=" + end + ", page=" + page + ", areacode=" + areacode + ", sigungucode=" + sigungucode);
-		System.err.println("parking= " + parking);
-		System.err.println("sports= " +sports);
+		System.out.println("▶️ checkin=" + checkin + ", checkout=" + checkout + ", person=" + person);
 		return map;
 	}
 }

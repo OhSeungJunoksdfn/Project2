@@ -13,17 +13,81 @@ public class AirServiceImpl implements AirService{
 	private AirDAO aDAO;
 
 	@Override
-	public List<FlightInfoVO> flightListData(int start, int end) {
+	public List<AirLinesVO> getAllAirlines() {
 		// TODO Auto-generated method stub
-		return aDAO.flightListData(start, end);
+		return aDAO.getAllAirlines();
 	}
 
 	@Override
-	public int flightTotalPage() {
+	public List<AirportsVO> getAllAirports() {
 		// TODO Auto-generated method stub
-		return aDAO.flightTotalPage();
+		return aDAO.getAllAirports();
 	}
 
-	
+	@Override
+	public List<FlightInfoVO> getFlights(int page, int pageSize) {
+		// TODO Auto-generated method stub
+		return aDAO.getFlights(page, pageSize);
+	}
 
+	@Override
+	public int getFlightsCount() {
+		// TODO Auto-generated method stub
+		return aDAO.getFlightsCount();
+	}
+
+	@Override
+	public FlightInfoVO getFlightById(int id) {
+		// TODO Auto-generated method stub
+		return aDAO.getFlightById(id);
+	}
+
+	@Override
+	public List<FlightInfoVO> getFlightsFiltered(int page, int pageSize, String from, String to, String arrtime,
+			String deptime) {
+		// TODO Auto-generated method stub
+		return aDAO.getFlightsFiltered(page, pageSize, from, to, arrtime, deptime);
+	}
+
+	@Override
+	public int getFlightsCountFiltered(String from, String to, String arrtime, String deptime) {
+		// TODO Auto-generated method stub
+		return aDAO.getFlightsCountFiltered(from, to, arrtime, deptime);
+	}
+
+	@Override
+	public void saveReservation(ReservationsVO vo) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<ReservationsVO> getReservationsByEmail(String email) {
+		// TODO Auto-generated method stub
+		return aDAO.getReservationsByEmail(email);
+	}
+
+	@Override
+	public List<FlightInfoVO> getOutbound(int page, int pageSize, String from, String to, String date) {
+		// TODO Auto-generated method stub
+		return aDAO.getOutbound(page, pageSize, from, to, date);
+	}
+
+	@Override
+	public int getOutboundCount(String from, String to, String date) {
+		// TODO Auto-generated method stub
+		return aDAO.getOutboundCount(from, to, date);
+	}
+
+	@Override
+	public List<FlightInfoVO> getInbound(int page, int pageSize, String from, String to, String returnDate) {
+		// TODO Auto-generated method stub
+		return aDAO.getInbound(page, pageSize, from, to, returnDate);
+	}
+
+	@Override
+	public int getInboundCount(String from, String to, String returnDate) {
+		// TODO Auto-generated method stub
+		return aDAO.getInboundCount(from, to, returnDate);
+	}
 }

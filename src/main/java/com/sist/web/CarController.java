@@ -1,11 +1,21 @@
 package com.sist.web;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.sist.service.CarService;
+import com.sist.vo.car.CarVO;
+
 @Controller
 public class CarController {
+	@Autowired
+	CarService service;
 	
 	@GetMapping("car/car_list.do")
 	public String car_list(Model model)
@@ -27,10 +37,17 @@ public class CarController {
 	}
 	
 	@GetMapping("car/car_detail.do")
-	public String car_detail(Model model,
+	public String car_detail(Model model,int no,
 			String pudate, String putime,String rdate, String rtime)
 	{
 		System.out.println(pudate);
+		
+		CarVO vo=service.carDetailData(no);
+		// 배열 => List로 변경 asList
+		//String id=(String)session.getAttribute("userid");
+		//model.addAttribute("sessionId", id);
+		model.addAttribute("vo", vo);
+		
 		model.addAttribute("pudate",pudate);
 		model.addAttribute("putime",putime);
 		model.addAttribute("rdate",rdate);

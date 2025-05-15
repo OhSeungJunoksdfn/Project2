@@ -18,7 +18,7 @@ template:
 	                  <option value="CJU">제주 (CJU)</option>
 	                </select>
 		          </div>
-		         </div>
+		         </div> 
 		          <!-- 도착 공항 -->
 		          <div class="col-md align-items-end">
                     <div class="form-group">
@@ -33,14 +33,14 @@ template:
 		          <!-- 출발시각 -->
 		          <div class="col-md align-items-end">
 		          <div class="form-group">
-		            <label>출발시각</label>
+		            <label>가는날</label>
 		            <input v-model="arrtime" type="date" class="form-control"/>
 		          </div>
 		          </div>
 		          <!-- 도착시각 -->
 		          <div class="col-md align-items-end">
 		          <div class="form-group">
-		            <label>도착시각</label>
+		            <label>오는날</label>
 		            <input v-model="deptime" type="date" class="form-control"/>
 		          </div>
 		          </div>
@@ -58,19 +58,19 @@ template:
 		          <div class="col-md align-self-end">
                       <div class="form-group">
                         <div class="form-field">
-		                  <button type="submit" class="btn btn-primary form-control">Search</button>
+		                  <button type="submit" class="btn btn-primary form-control":disabled="!from || !to || !arrtime">Search</button>
 		          		</div>
 			           </div>
 				      </div>
-				       </div> <!-- /.row -->
+				       </div>
 		              </form>
-		            </div> <!-- /.col-md-12 -->
-		          </div> <!-- /.row -->
-		        </div> <!-- /.container-wrap -->
+		            </div>
+		          </div>
+		        </div>
 		      </section>
 		     </div>	
 `,
-  emits: ['search'],
+  emits:['search'],
   data() {
     return {
       from: '',
@@ -82,14 +82,13 @@ template:
   },
   methods: {
     onSubmit() {
-      // 부모 컴포넌트로 이벤트와 함께 조건 전달
-      this.$emit('search', {
-        from: this.from,
-        to: this.to,
-        arrtime: this.arrtime,
-        deptime: this.deptime,
-        travellers: this.travellers
-      });
+	  this.$emit('search', {
+	    from:this.from,
+	    to:this.to,
+	    departureDate:this.arrtime,
+	    returnDate:this.deptime,
+	    travellers:this.travellers
+	  });
     }
   }
 };
