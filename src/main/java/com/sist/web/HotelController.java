@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +22,6 @@ import com.sist.vo.hotel.HotelVO;
 public class HotelController {
 	@Autowired
 	private HotelService service;
-	
 	
 	@GetMapping("hotel_list.do")
 	public String hotel_list(Model model)
@@ -49,18 +50,31 @@ public class HotelController {
 			}
 		}
 		model.addAttribute("vo", vo);
-		model.addAttribute("r3List", r3List);
+		model.addAttribute("r3List", r3List); // 지역 근처 추천 숙소
 		model.addAttribute("rList", rList);
 		model.addAttribute("iList", iList);
 		model.addAttribute("main_jsp", "../hotel/hotel_detail.jsp");
 		return "main/main";
 	}
 	@GetMapping("hotel_reserve.do")
-	public String hotel_reserve(Model model)
+	public String hotel_reserve(int no, Model model, HttpSession session)
 	{
-		model.addAttribute("main_jsp", "../hotel/hotel_reserve.jsp");
-		return "main/mian";
+		String member_id = (String)session.getAttribute("id");
+		Map map = new HashMap();
+		map.put("no", no);
+		map.put("member_id", member_id);
 		
+		HotelRoomVO vo = service.hotelReserveData(map);
+		map.put("checkin", vo.getCheckin());
+		
+//		session.setAttribute("checkin", checkin);
+//		session.setAttribute("checkout", checkout);
+//		session.setAttribute("person", person);
+		
+		String checkin = (String)session.getAttribute("checkin");
+//		model.addAttribute("checkin", checkin);
+		model.addAttribute("vo", vo);
+		model.addAttribute("main_jsp", "../hotel/hotel_reserve.jsp");
+		return "main/main";
 	}
-	
 }

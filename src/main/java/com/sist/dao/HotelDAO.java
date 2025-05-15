@@ -44,5 +44,8 @@ public class HotelDAO {
 	{
 		return mapper.hotelRelatedData(map);
 	}
-	
+	public HotelRoomVO hotelReserveData(Map map)
+	{
+		return mapper.hotelReserveData(map);
+	}
 }

@@ -42,7 +42,7 @@
                     >
                       호텔명
                     </th>
-                    <td width="80%">서머셋 제주신화월드</td>
+                    <td width="80%">${vo.hotel_title }</td>
                   </tr>
                   <tr>
                     <th
@@ -51,16 +51,7 @@
                     >
                       객실타입
                     </th>
-                    <td width="80%">패밀리 스위트</td>
-                  </tr>
-                  <tr>
-                    <th
-                      width="20%"
-                      style="background-color: #e9e9e9; color: black"
-                    >
-                      이용기간
-                    </th>
-                    <td width="80%">2025.04.18(금) ~ 2025.04.20(토)/ 2박</td>
+                    <td width="80%">${vo.title }</td>
                   </tr>
                   <tr>
                     <th
@@ -71,6 +62,16 @@
                     </th>
                     <td width="80%">1개</td>
                   </tr>
+                  <tr>
+                    <th
+                      width="20%"
+                      style="background-color: #e9e9e9; color: black"
+                    >
+                      이용기간
+                    </th>
+                    <td width="80%">${sessionScope.checkin} ~ 2025.04.20(토)/ 2박</td>
+                  </tr>
+                  
                   <tr>
                     <th
                       width="20%"
@@ -96,7 +97,7 @@
                     >
                       총 투숙인원
                     </th>
-                    <td width="80%">성인 2명</td>
+                    <td width="80%">${vo.person }명</td>
                   </tr>
                   <tr>
                     <th
@@ -255,7 +256,7 @@
                         type="text"
                         style="float: left"
                         size="50"
-                        value="홍길동"
+                        value="${vo.name }"
                       />
                     </td>
                   </tr>
@@ -271,7 +272,7 @@
                         type="text"
                         style="float: left"
                         size="50"
-                        value="hong@hong.com"
+                        value="${vo.email }"
                       />
                     </td>
                   </tr>
@@ -287,7 +288,7 @@
                         type="text"
                         style="float: left"
                         size="50"
-                        value="010-0000-0000"
+                        value="${vo.phone }"
                       />
                     </td>
                   </tr>
