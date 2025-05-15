@@ -32,7 +32,7 @@
         	<div class="col-lg-3 order-md-last sidebar pt-3 shadow" id="sidebar">
         		<div class="sidebar-wrap ftco-animate">
         			<h3 class="heading mb-4">Find City</h3>
-        			<form action="#">
+        			<form action="#" @submit.prevent>
         				<div class="fields">
 		              <div class="form-group">
 		                <input type="text" class="form-control" placeholder="Destination, City">
@@ -66,7 +66,7 @@
 										</div>
 		              </div>
 		              <div class="form-group">
-		                <input type="submit" value="Search" class="btn btn-primary py-3 px-5">
+		                <input type="submit" value="예약하기" class="btn btn-primary py-3 px-5" @click="reserve()">
 		              </div>
 		            </div>
 	            </form>
@@ -90,7 +90,7 @@
 	          					<span style="font-weight:450">운전 자격 :</span> ${fn:substring(vo.non_ins_qual, 3, fn:length(vo.non_ins_qual))}
 	          				</li> 
 	          			</ul>
-	          			<div style="font-weight:400;margin-top:20px">차량 옵션</div>
+	          			<h5 style="font-size:16px;margin-top:20px">차량 옵션</h5>
 	          			<hr >
 	          			<ul style="list-style-type: none;padding-left:10px;">
 	          					<li style="font-size:10px">
@@ -109,7 +109,8 @@
 			          <div class="col-md-4">
 			            <div class="intro ftco-animate r-12 sidebar shadow p-3">
 			              <span style="display:flex">
-			              	<input type="radio" style="margin-bottom:5px"/>
+			              	<input class="ins_radio" type="radio" style="margin-bottom:5px"
+			              	@click="radio_click(1)" id="1"/>
 			              	<h5 style="font-weight:500;font-size:17px">&nbsp;자차면책 가입안함</h5>
 			              </span>
 			              <hr style="transform: translateY(-10px);">
@@ -122,15 +123,13 @@
 			          <div class="col-md-4">
 			            <div class="intro ftco-animate r-12 sidebar shadow p-3">
 			              <span style="display:flex">
-			              	<input type="radio" style="margin-bottom:5px"/>
+			              	<input class="ins_radio" type="radio" style="margin-bottom:5px"
+			              	@click="radio_click(2)" id="2"/>
 			              	<h5 style="font-weight:500;font-size:17px">&nbsp;일반자차 포함</h5>
 			              </span>
 			              <hr style="transform: translateY(-10px);">
 			              <p style="font-size:12px">
-			              	<div style="font-size:12px">-{{nor_ins_desc[1]}}</div>
-			              	<div style="font-size:12px">-{{nor_ins_desc[2]}}</div>
-			              	<div style="font-size:12px">-{{nor_ins_desc[3]}}</div>
-			              	<div style="font-size:12px">-{{nor_ins_desc[4]}}</div>
+			              	<div style="font-size:12px" v-for="(desc,index) in nor_ins_desc.slice(1)">-{{desc}}</div>
 			                <h5 style="font-size:12px;margin-top:10px">${vo.normal_ins_qual }</h5>
 			              </p>
 			            </div>
@@ -138,118 +137,26 @@
 			          <div class="col-md-4">
 			            <div class="intro ftco-animate r-12 sidebar shadow p-3">
 			              <span style="display:flex">
-			              	<input type="radio" style="margin-bottom:5px"/>
+			              	<input class="ins_radio" type="radio" style="margin-bottom:5px"
+			              	@click="radio_click(3)" id="3"/>
 			              	<h5 style="font-weight:500;font-size:17px">&nbsp;고급자차 포함</h5>
 			              </span>
 			              <hr style="transform: translateY(-10px);">
 			              <p style="font-size:12px">
-			              	<div style="font-size:12px">-{{pre_ins_desc[1]}}</div>
-			              	<div style="font-size:12px">-{{pre_ins_desc[2]}}</div>
-			              	<div style="font-size:12px">-{{pre_ins_desc[3]}}</div>
-			              	<div style="font-size:12px">-{{pre_ins_desc[4]}}</div>
-			                <h5 style="font-size:12px;margin-top:10px">${vo.premium_ins_qual }</h5>
+			              	<div style="font-size:12px" v-for="(desc,index) in pre_ins_desc.slice(1)">-{{desc}}</div>
+			                <h5 style="font-size:12px;margin-top:10px">${vo.normal_ins_qual }</h5>
 			              </p>
 			            </div>
 			          </div>
 			        </div>
 			      </div>
+			      <div style="padding:10px;padding-top:100px">
+	    			<div id="map" style="width:100%;height:280px;"></div> 
+	    		</div>
 			    </section>
           		
           		
-          		<!-- 유사한 차량 -->
-          		<div class="col-md-12 hotel-single ftco-animate mb-5 mt-4">
-          			<h4 class="mb-4">Our Rooms</h4>
-          				<div class="row px-3">
-							<div class="col-md-4">
-				    				<div class="destination">
-				    					<a href="hotel-single.html" class="img img-2 r-12" style="background-image: url(../images/room-4.jpg);"></a>
-				    					<div class="text p-3">
-				    						<div class="d-flex">
-				    							<div class="one">
-						    						<h3><a href="hotel-single.html">Hotel, Italy</a></h3>
-						    						<p class="rate">
-						    							<i class="icon-star"></i>
-						    							<i class="icon-star"></i>
-						    							<i class="icon-star"></i>
-						    							<i class="icon-star"></i>
-						    							<i class="icon-star-o"></i>
-						    							<span>8 Rating</span>
-						    						</p>
-					    						</div>
-					    						<div class="two">
-					    							<span class="price per-price">$40<br><small>/night</small></span>
-				    							</div>
-				    						</div>
-				    						<p>Far far away, behind the word mountains, far from the countries</p>
-				    						<hr>
-				    						<p class="bottom-area d-flex">
-				    							<span><i class="icon-map-o"></i> Miami, Fl</span> 
-				    							<span class="ml-auto"><a href="#">Book Now</a></span>
-				    						</p>
-				    					</div>
-				    				</div>
-				    			</div>
-				    			<div class="col-md-4">
-				    				<div class="destination">
-				    					<a href="hotel-single.html" class="img img-2 r-12" style="background-image: url(../images/room-5.jpg);"></a>
-				    					<div class="text p-3">
-				    						<div class="d-flex">
-				    							<div class="one">
-						    						<h3><a href="hotel-single.html">Hotel, Italy</a></h3>
-						    						<p class="rate">
-						    							<i class="icon-star"></i>
-						    							<i class="icon-star"></i>
-						    							<i class="icon-star"></i>
-						    							<i class="icon-star"></i>
-						    							<i class="icon-star-o"></i>
-						    							<span>8 Rating</span>
-						    						</p>
-					    						</div>
-					    						<div class="two">
-					    							<span class="price per-price">$40<br><small>/night</small></span>
-				    							</div>
-				    						</div>
-				    						<p>Far far away, behind the word mountains, far from the countries</p>
-				    						<hr>
-				    						<p class="bottom-area d-flex">
-				    							<span><i class="icon-map-o"></i> Miami, Fl</span> 
-				    							<span class="ml-auto"><a href="#">Book Now</a></span>
-				    						</p>
-				    					</div>
-				    				</div>
-				    			</div>
-				    			<div class="col-md-4">
-				    				<div class="destination">
-				    					<a href="hotel-single.html" class="img img-2 r-12" style="background-image: url(../images/room-6.jpg);"></a>
-				    					<div class="text p-3">
-				    						<div class="d-flex">
-				    							<div class="one">
-						    						<h3><a href="hotel-single.html">Hotel, Italy</a></h3>
-						    						<p class="rate">
-						    							<i class="icon-star"></i>
-						    							<i class="icon-star"></i>
-						    							<i class="icon-star"></i>
-						    							<i class="icon-star"></i>
-						    							<i class="icon-star-o"></i>
-						    							<span>8 Rating</span>
-						    						</p>
-					    						</div>
-					    						<div class="two">
-					    							<span class="price per-price">$40<br><small>/night</small></span>
-				    							</div>
-				    						</div>
-				    						<p>Far far away, behind the word mountains, far from the countries</p>
-				    						<hr>
-				    						<p class="bottom-area d-flex">
-				    							<span><i class="icon-map-o"></i> Miami, Fl</span> 
-				    							<span class="ml-auto"><a href="#">Book Now</a></span>
-				    						</p>
-				    					</div>
-				    				</div>
-				    			</div>
-          			</div>
-          		</div>
-          		<!-- 유사한 차량 -->
+
           		
 
 				<!-- 댓글-->
@@ -394,69 +301,11 @@
       </div>
     </section> <!-- .section -->
 
-		<section class="ftco-section-parallax">
-      <div class="parallax-img d-flex align-items-center">
-        <div class="container">
-          <div class="row d-flex justify-content-center">
-            <div class="col-md-7 text-center heading-section heading-section-white ftco-animate">
-              <h2>Subcribe to our Newsletter</h2>
-              <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in</p>
-              <div class="row d-flex justify-content-center mt-5">
-                <div class="col-md-8">
-                  <form action="#" class="subscribe-form">
-                    <div class="form-group d-flex">
-                      <input type="text" class="form-control" placeholder="Enter email address">
-                      <input type="submit" value="Subscribe" class="submit px-3">
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
     </div>
-<!-- <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=754884240383c655e9425cfe0a3e1713&libraries=services"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=754884240383c655e9425cfe0a3e1713&libraries=services"></script>
 <script>
-var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-    mapOption = {
-        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-        level: 3 // 지도의 확대 레벨
-    };  
 
-// 지도를 생성합니다    
-var map = new kakao.maps.Map(mapContainer, mapOption); 
-
-// 주소-좌표 변환 객체를 생성합니다
-var geocoder = new kakao.maps.services.Geocoder();
-
-// 주소로 좌표를 검색합니다
-geocoder.addressSearch('주소입력', function(result, status) {
-
-    // 정상적으로 검색이 완료됐으면 
-     if (status === kakao.maps.services.Status.OK) {
-
-        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-
-        // 결과값으로 받은 위치를 마커로 표시합니다
-        var marker = new kakao.maps.Marker({
-            map: map,
-            position: coords
-        });
-
-        // 인포윈도우로 장소에 대한 설명을 표시합니다
-        var infowindow = new kakao.maps.InfoWindow({
-            content: '<div style="width:150px;text-align:center;padding:6px 0;">asdf</div>'
-        });
-        infowindow.open(map, marker);
-
-        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-        map.setCenter(coords);
-    } 
-})
-</script> -->
+</script>
 <script>
       let hotelListApp=Vue.createApp({
     	  data() {
@@ -471,27 +320,33 @@ geocoder.addressSearch('주소입력', function(result, status) {
     			  rdate:'${rdate}',
     			  rtime:'${rtime}',
     			  nor_ins_desc:'${vo.normal_ins_desc}'.split('-'),
-    			  pre_ins_desc:'${vo.premium_ins_desc}'.split('-')
+    			  pre_ins_desc:'${vo.premium_ins_desc}'.split('-'),
+    			  checked_ins:''
     		  }
     	  },
     	  computed: {
 	      },
     	  mounted() { 	  
-    			console.log(this.pudate)
-    			
-    			console.log(this.nor_ins_desc)
     	  },
     	  methods: {
-      		range(start, end) {
-      			let arr = []
-      			let len = end-start
-      			for(let i=0; i<=len; i++)
-      			{
-      				arr[i] = start
-      				start++
-      			}
-      			return arr
-      		},
+    		reserve(){
+    			console.log("reserve")
+    			
+    			if(this.checked_ins.length===0){
+    				alert("자차보험을 선택해주세요")
+    			}else{
+    				location.href=`../car/car_reserve.do?
+						pudate=${pudate}&putime=${putime}&
+						rdate=${rdate}&rtime=${rtime}&no=${vo.no}`+'&ins='+this.checked_ins
+    			}
+    			
+    		},
+    		radio_click(value) {
+    			$('.ins_radio').prop('checked',false)
+    			$('#'+value).prop('checked',true)
+    			this.checked_ins=value
+    			console.log(this.checked_ins)
+    		},
       		dataRecv() {
       			axios.get('http://localhost:8080/car/list_search_vue.do', {
       				params: {
@@ -520,6 +375,43 @@ geocoder.addressSearch('주소입력', function(result, status) {
     	  }
     	  
       }).mount("#app")
+      
+      var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+    mapOption = {
+        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+        level: 3 // 지도의 확대 레벨
+    };  
+
+	// 지도를 생성합니다    
+	var map = new kakao.maps.Map(mapContainer, mapOption); 
+	
+	// 주소-좌표 변환 객체를 생성합니다
+	var geocoder = new kakao.maps.services.Geocoder();
+	
+	// 주소로 좌표를 검색합니다
+	geocoder.addressSearch('서울특별시 강남구 논현로 66 (개포동)', function(result, status) {
+	
+	    // 정상적으로 검색이 완료됐으면 
+	     if (status === kakao.maps.services.Status.OK) {
+	
+	        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+	
+	        // 결과값으로 받은 위치를 마커로 표시합니다
+	        var marker = new kakao.maps.Marker({
+	            map: map,
+	            position: coords
+	        });
+	
+	        // 인포윈도우로 장소에 대한 설명을 표시합니다
+	        var infowindow = new kakao.maps.InfoWindow({
+	            content: '<div style="width:150px;text-align:center;padding:6px 0;">asdf</div>'
+	        });
+	        infowindow.open(map, marker);
+	
+	        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+	        map.setCenter(coords);
+	    } 
+	})
 </script>
 </body>
 </html>
