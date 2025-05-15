@@ -1,14 +1,18 @@
 package com.sist.web;
-
+import java.util.*; 
+import com.sist.service.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.*;
-import com.sist.vo.*;
-
+import com.sist.vo.admin.*;
 @Controller
 public class AdminController {
+	@Autowired
+	private AdminService service;
+	
 	@GetMapping("admin/main.do")
 	public String adminMain(Model model)
 	{
@@ -34,8 +38,21 @@ public class AdminController {
 		return "admin/main";
 	}
 	@GetMapping("admin/notice.do")
-	public String adminNotice(Model model)
+	public String adminNotice(Model model,String page)
 	{
+		if(page==null)
+			page="1";
+		int curpage=Integer.parseInt(page);
+		int rowSize=10;
+		Map map = new HashMap();
+		map.put("start", (curpage*rowSize)-(rowSize-1));
+		map.put("end", rowSize*curpage);
+		List<NoticeVO> list= service.noticeListData(map);
+		int totalpage= service.noticeTotalPage();
+		
+		model.addAttribute("curpage",curpage);
+		model.addAttribute("list",list);
+		model.addAttribute("totalpage",totalpage);
 		model.addAttribute("admin_jsp","../admin/notice.jsp");
 		return "admin/main";
 	}
@@ -56,5 +73,26 @@ public class AdminController {
 	{
 		model.addAttribute("admin_jsp","../admin/coupon.jsp");
 		return "admin/main";
+	}
+	
+	@GetMapping("admin/notice_insert.do")
+	public String adminNoticeInsert(Model model)
+	{
+		model.addAttribute("admin_jsp","../admin/notice_insert.jsp");
+		return "admin/main";
+	}
+	@PostMapping("admin/notice_insert_ok.do")
+	public String noticeInsertOk(NoticeVO vo)
+	{
+		try {
+			
+			service.noticeInsert(vo);
+		} catch(Exception e)
+		{
+			System.out.println(e);
+			return "redirect:../admin/notice_insert.do";
+		}
+		return"redirect:../admin/notice.do";
+		
 	}
 }

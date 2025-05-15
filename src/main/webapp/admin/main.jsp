@@ -43,26 +43,15 @@
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <style type="text/css">
-    	.container{
-    	max-width: 100%;
-    	height: 100vh;
     	
-    	
-    	}
-    	.container *{
-    		color: #fff;
-    	}
-    	.row{
-    		height: 100%
-    	}
     	#sideBtn{
     		transition:0.2s;
     	}
     </style>
 </head>
 <body>
-	<div class="container">
-		<div class="row">
+	<div class="container" style="color: #fff; max-width: 100%;height: 100vh;">
+		<div class="row" style="height:100%">
 			<div class="p-2" style="height:100%; width:250px; background-color:#333"  >
 				<h3 class="p-2 text-center" style="border-bottom:1px solid #000" >로고</h3>
 				
@@ -77,11 +66,20 @@
 				<a href="../admin/coupon.do" class="col btn btn-outline-primary border-0 rounded-0 d-flex justify-content-center align-items-center" id="sideBtn" style="height:50px;"  >쿠폰</a>
 				
 			</div>
-			<div class="col bg-light px-0">
-				<div class="text-right bg-white align-center shadow-sm p-3">
-					<a href="../member/logout.do" class="btn btn-primary rounded-0 px-5" >나가기</a>
-				</div>
-			 <jsp:include page="${admin_jsp }"/>
+			<div class="d-flex col flex-column vh-100 bg-light px-0">
+
+			  <div class="text-right bg-white shadow-sm p-3">
+			    <a href="../member/logout.do" class="btn btn-primary rounded-0 px-5">나가기</a>
+			  </div>
+			
+			  <div class="flex-fill overflow-auto">
+			    <div class="container h-100">
+			      <div class="row h-100 justify-content-center pt-4">
+			        <jsp:include page="${admin_jsp }"/>
+			      </div>
+			    </div>
+			  </div>
+			
 			</div>
 		</div>
 	</div>

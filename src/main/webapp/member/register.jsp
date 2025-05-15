@@ -338,10 +338,10 @@
           background-color: rgba(0, 0, 0, 0.1);
           z-index: 999;
           width: 100vw;
-          height: 150vh;
+          height: 100vh;
           position: fixed;
           left: 0;
-          right: 0;
+          top: 0;
 		  display:none;
         "
         id="check_idBox"
@@ -376,7 +376,7 @@
                   v-model="check_id"
                   placeholder="아이디(최대 20자)"
                   maxlength="20"
-                  @keydown="errclear('#nameErr')"
+                  @keydown="hideuseBtn()"
                 />
                 <input type="button" value="중복확인" class="col-3 form-control btn btn-primary r-12" @click="memberCheck()"/>
               </div>
@@ -415,6 +415,10 @@
 			}	
 		},
 		methods:{
+			hideuseBtn(){
+				$("#useBtn").hide()
+				this.errclear('#nameErr')
+			},
 			insertid(){
 				this.id=this.check_id
 				this.hideBox()
