@@ -45,7 +45,7 @@ public interface HotelMapper {
 			+ "WHERE hotel_no = #{no}")
 	public HotelInfoVO hotelInfoData(int no);
 	
-	@Select("SELECT h.title AS hotel_title, hr.title, hr.no, hr.person, "
+	@Select("SELECT h.title AS hotel_title, hr.title, hr.no, hr.person, hr.price, "
 			+ "m.name, m.phone, m.email "
 			+ "FROM hotel_room hr "
 			+ "JOIN hotel h ON hr.hotel_no = h.no "

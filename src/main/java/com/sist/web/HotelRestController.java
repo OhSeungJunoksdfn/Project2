@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -65,7 +66,9 @@ public class HotelRestController {
 		map.put("publicpc", publicpc);
 		map.put("publicbath", publicbath);
 		
-		
+		session.setAttribute("checkin", checkin);
+		session.setAttribute("checkout", checkout);
+		session.setAttribute("person", person);
 		
 		List<HotelVO> list = service.hotelListData(map);
 		
@@ -88,4 +91,9 @@ public class HotelRestController {
 		System.out.println("▶️ checkin=" + checkin + ", checkout=" + checkout + ", person=" + person);
 		return map;
 	}
+//	@PostMapping("hotel_reserve_insert_vue.do")
+//	public String hotel_reserve_insert_vue(HttpSession session)
+//	{
+//		return "";
+//	}
 }

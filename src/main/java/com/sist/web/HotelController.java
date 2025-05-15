@@ -1,5 +1,7 @@
 package com.sist.web;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,8 +32,12 @@ public class HotelController {
 		return "main/main";
 	}
 	@GetMapping("hotel_detail.do")
-	public String hotel_detail(int no, Model model)
+	public String hotel_detail(int no, Model model, HttpSession session)
 	{
+		String checkin = (String) session.getAttribute("checkin");
+		String checkout = (String) session.getAttribute("checkout");
+		int person = (int) session.getAttribute("person");
+		
 		HotelVO vo = service.hotelData(no);
 		
 		Map map = new HashMap();
@@ -49,6 +55,12 @@ public class HotelController {
 				room.setRoom_img("http://tong.visitkorea.or.kr/cms/resource/96/2639696_image2_1.jpg,http://tong.visitkorea.or.kr/cms/resource/95/2639695_image2_1.jpg");
 			}
 		}
+		
+		// 사이드바 출력용
+	    model.addAttribute("checkin", checkin);
+		model.addAttribute("checkout", checkout);
+		model.addAttribute("person", person);
+		
 		model.addAttribute("vo", vo);
 		model.addAttribute("r3List", r3List); // 지역 근처 추천 숙소
 		model.addAttribute("rList", rList);
@@ -60,19 +72,30 @@ public class HotelController {
 	public String hotel_reserve(int no, Model model, HttpSession session)
 	{
 		String member_id = (String)session.getAttribute("id");
+		String checkin = (String) session.getAttribute("checkin");
+		String checkout = (String) session.getAttribute("checkout");
+		int person = (int) session.getAttribute("person");
+		
+		// DATE 값으로 변경 후 N 박으로 계산
+		LocalDate checkinDate = LocalDate.parse(checkin);
+		LocalDate checkoutDate = LocalDate.parse(checkout);
+		int stay_day = (int) ChronoUnit.DAYS.between(checkinDate, checkoutDate);
+		
 		Map map = new HashMap();
 		map.put("no", no);
 		map.put("member_id", member_id);
 		
 		HotelRoomVO vo = service.hotelReserveData(map);
-		map.put("checkin", vo.getCheckin());
+		int price = vo.getPrice();
+		int price_total = price * stay_day;
 		
-//		session.setAttribute("checkin", checkin);
-//		session.setAttribute("checkout", checkout);
-//		session.setAttribute("person", person);
+		System.out.println(price_total);
 		
-		String checkin = (String)session.getAttribute("checkin");
-//		model.addAttribute("checkin", checkin);
+		model.addAttribute("checkin", checkin);
+		model.addAttribute("checkout", checkout);
+		model.addAttribute("person", person);
+		model.addAttribute("stay_day", stay_day);
+		model.addAttribute("price_total", price_total);
 		model.addAttribute("vo", vo);
 		model.addAttribute("main_jsp", "../hotel/hotel_reserve.jsp");
 		return "main/main";
