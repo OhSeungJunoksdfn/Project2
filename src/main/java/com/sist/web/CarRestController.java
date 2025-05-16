@@ -3,6 +3,7 @@ package com.sist.web;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -10,6 +11,8 @@ import com.sist.service.CarService;
 import com.sist.vo.car.CarVO;
 
 import java.util.*;
+
+import javax.servlet.http.HttpSession;
 
 @RestController
 public class CarRestController {
@@ -78,7 +81,29 @@ public class CarRestController {
 				String pudate,String putime,
 				String rdate) {
 		
-
 		return new HashMap();
+	}
+	
+	
+//	no: 5,//렌터카 pk
+//    user_name: "홍길동",
+//    user_phone: "010-1111-2222",
+//    user_email: "oksdfn@gmail.com", <%-- ${vo.email} --%>
+//    pudate:"06/15/2025",
+//	putime:"10:00",
+//	rdate:"06/16/2025",
+//	rtime:"10:00",
+//    price_total: 50000,
+//    imp_uid: rsp.imp_uid,
+//    merchant_uid: rsp.merchant_uid,
+//    amount: rsp.paid_amount
+	@PostMapping("car/car_reserve_insert_vue.do")
+	public int car_reserve_insert_vue(int no,String user_name, String user_email, 
+				String pudate, String putime, String rdate, String rtime,
+				int price_total, String imp_uid, String merchant_uid,String amount
+				,HttpSession session){
+		
+		System.out.println((String)session.getAttribute("id"));
+		return 0;
 	}
 }
