@@ -10,7 +10,7 @@
     <typeAlias type="com.sist.vo.air.FlightInfoVO" alias="FlightInfoVO"/>
     <typeAlias type="com.sist.vo.air.AirLinesVO" alias="AirLinesVO"/>
     <typeAlias type="com.sist.vo.air.AirportsVO" alias="AirportsVO"/>
-    <typeAlias type="com.sist.vo.air.ReservationsVO" alias="ReservationsVO"/>
+    <typeAlias type="com.sist.vo.air.PassengersVO" alias="PassengersVO"/>
   </typeAliases>
   <mappers>
     <mapper resource="com/sist/mapper/hotel-mapper.xml"/>

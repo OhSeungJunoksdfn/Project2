@@ -56,18 +56,6 @@ public class AirServiceImpl implements AirService{
 	}
 
 	@Override
-	public void saveReservation(ReservationsVO vo) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public List<ReservationsVO> getReservationsByEmail(String email) {
-		// TODO Auto-generated method stub
-		return aDAO.getReservationsByEmail(email);
-	}
-
-	@Override
 	public List<FlightInfoVO> getOutbound(int page, int pageSize, String from, String to, String date) {
 		// TODO Auto-generated method stub
 		return aDAO.getOutbound(page, pageSize, from, to, date);
@@ -89,5 +77,35 @@ public class AirServiceImpl implements AirService{
 	public int getInboundCount(String from, String to, String returnDate) {
 		// TODO Auto-generated method stub
 		return aDAO.getInboundCount(from, to, returnDate);
+	}
+
+	@Override
+	public void addPassenger(PassengersVO passenger) {
+		// TODO Auto-generated method stub
+		aDAO.addPassenger(passenger);
+	}
+
+	@Override
+	public PassengersVO getPassengerById(String passengerId) {
+		// TODO Auto-generated method stub
+		return aDAO.getPassengerById(passengerId);
+	}
+
+	@Override
+	public List<PassengersVO> getAllPassengers() {
+		// TODO Auto-generated method stub
+		return aDAO.getAllPassengers();
+	}
+
+	@Override
+	public int updatePassenger(PassengersVO passenger) {
+		// TODO Auto-generated method stub
+		return aDAO.updatePassenger(passenger);
+	}
+
+	@Override
+	public int deletePassenger(String passengerId) {
+		// TODO Auto-generated method stub
+		return aDAO.deletePassenger(passengerId);
 	}
 }

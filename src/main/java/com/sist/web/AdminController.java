@@ -43,7 +43,7 @@ public class AdminController {
 		if(page==null)
 			page="1";
 		int curpage=Integer.parseInt(page);
-		int rowSize=10;
+		int rowSize=5;
 		Map map = new HashMap();
 		map.put("start", (curpage*rowSize)-(rowSize-1));
 		map.put("end", rowSize*curpage);
@@ -93,6 +93,15 @@ public class AdminController {
 			return "redirect:../admin/notice_insert.do";
 		}
 		return"redirect:../admin/notice.do";
-		
 	}
+	@GetMapping("admin/notice_update.do")
+	public String adminNoticeUpdate(int no, Model model)
+	{
+		NoticeVO vo = service.noticeDetailData(no);
+		model.addAttribute("vo",vo);
+		model.addAttribute("admin_jsp","../admin/notice_update.jsp");
+		return "admin/main";
+	}
+	
+	
 }

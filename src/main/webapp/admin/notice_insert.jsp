@@ -23,7 +23,7 @@
           <input type="text" class="col-12 form-control" name="subject" placeholder="제목" required/>
         </div>
 		<div class="col-12 px-0">
-			<textarea style="width:100%; height: 500px; resize:none" name="content"></textarea>
+			<textarea style="width:100%; margin:0; padding:0; height: 500px; resize:none" name="content"></textarea>
 		</div>
     
         <!-- 버튼 -->

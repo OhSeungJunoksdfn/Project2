@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.sist.mapper.AirMapper;
+import com.sist.mapper.*;
 import com.sist.vo.air.*;
 import java.util.*;
 
@@ -71,14 +71,29 @@ public class AirDAO {
 	        return mapper.selectFlightsCountFiltered(params);
 	    }
 
-	    /** 6) RESERVATIONS 삽입 */
-	    public void saveReservation(ReservationsVO vo) {
-	        mapper.insertReservation(vo);
+	    /** 6) 승객 삽입 */
+	    public void addPassenger(PassengersVO passenger) {
+	        mapper.insertpassengers(passenger);
 	    }
 
-	    /** 7) RESERVATIONS 조회 (고객 이메일 기준) */
-	    public List<ReservationsVO> getReservationsByEmail(String email) {
-	        return mapper.selectReservationsByEmail(email);
+	    /** 7) 단일 승객 조회 (ID 기준) */
+	    public PassengersVO getPassengerById(String passengerId) {
+	        return mapper.selectPassengerById(passengerId);
+	    }
+
+	    /** 8) 전체 승객 조회 */
+	    public List<PassengersVO> getAllPassengers() {
+	        return mapper.selectAllPassengers();
+	    }
+
+	    /** 9) 승객 정보 수정 */
+	    public int updatePassenger(PassengersVO passenger) {
+	        return mapper.updatePassenger(passenger);
+	    }
+
+	    /** 10) 승객 삭제 */
+	    public int deletePassenger(String passengerId) {
+	        return mapper.deletePassenger(passengerId);
 	    }
 
 	    /** 편도(가는 편) 조회 */

@@ -16,7 +16,7 @@
 </style>
 </head>
 <body>
-<div class="container" id="noticeApp" style="position:relative">
+<div class="container" id="noticeApp" style="position:relative" id="noticeApp">
 	<div class="col-12 px-0 text-right my-2">
 		<a href="../admin/notice_insert.do" type="button" class="btn btn-primary rounded-0">글쓰기</a>
 	</div>
@@ -30,19 +30,25 @@
 		</tr>
 		</thead>
 		<tbody>
-		<c:forEach var="vo" items="${list }" >
-			<tr>
-				<td class="text-center align-middle" class="text-center">${vo.no }</td>
-				<td class="text-center align-middle cursor-pointer" @click="showBox()">${vo.subject }</td>
-				<td class="text-center align-middle" class="text-center">${vo.dbday }</td>
+			<tr v-for="(vo,key) in list" :key="key">
+				<td class="text-center align-middle" class="text-center">{{vo.no}}</td>
+				<td class="text-center align-middle cursor-pointer" @click="noticeDetailData(vo.no)">{{vo.subject }}</td>
+				<td class="text-center align-middle" class="text-center">{{vo.dbday }}</td>
 				<td class="text-center align-middle">
-					<input type="button" class="btn btn-warning rounded-0 mr-1"  value="수정"/>
-					<input type="button" class="btn btn-danger rounded-0"  value="삭제"/>
+					<input type="button" class="btn btn-warning rounded-0 mr-1" @click="routerUpdate(vo.no)"  value="수정"/>
+					<input type="button" class="btn btn-danger rounded-0" @click="noticeDelete(vo.no)"  value="삭제"/>
 				</td>
 			</tr>
-		</c:forEach>
+		<tr>
+			<td colspan="4" class="text-center">
+				<input v-if="page>1" type="button" @click="prev()" value="이전"/>
+				{{page}} page / {{totalpage}} pages
+				<input v-if="page<totalpage" type="button" @click="next()" value="다음"/>
+			</td>
+		</tr>
 		</tbody>
 	</table>
+	
 	 <section
     	class="row justify-content-center align-items-center"
         style="
@@ -60,7 +66,7 @@
       >
         <div
           class="container rounded-0"
-          style="width: 800px; background-color: white;margin-bottom:300px"
+          style="width: 960px; background-color: white;"
           @click.stop
         >
           <div class="row justify-content-center">
@@ -75,11 +81,14 @@
                 
               "
             >
-              제목
+              {{dvo.subject}}
             </p>
           </div>
           <div width="100%">
-          <div class="text-black" style="color:black;min-height:300px;">내용</div>
+          <pre  style="min-height:300px;max-height:500px; width:100%; 
+          overflow:auto; white-space:pre-wrap; word-wrap:break-word; "
+          >{{dvo.content}}
+          </pre>
           </div>
         </div>
       </section>
@@ -88,14 +97,75 @@
 	const noticeApp = Vue.createApp({
 		data(){
 			return{
-			}	
+				list:[],
+				page:1,
+				totalpage:0,
+				dvo:{}
+			}
+		},
+		mounted(){
+			this.renderData()
 		},
 		methods:{
+			routerUpdate(no){
+				location.href="../admin/notice_update.do?no="+no;
+				
+			},
+			noticeDelete(no){
+				if(confirm("삭제하시겠습니까?")){
+				axios.post("../admin/notice_delete.do",null,{
+					params:{
+						no
+					}
+				})
+				.then((res) => {
+					this.page=1
+					this.renderData()
+				})
+				.catch(err => {
+					console.log(err.response)
+				})
+				}
+			},
+			noticeDetailData(i){
+				axios.get("../admin/notice_detail_vue.do",{
+					params:{
+						no:i
+					}
+				})
+				.then(res => {
+					this.dvo=res.data
+					this.showBox()
+				})
+				.catch(err => {
+					console.log(err.response)
+				})
+				
+			},
 			hideBox(){
 				$("#showBox").hide();
 			},
 			showBox(){
 				$("#showBox").show();
+			},
+			next(){
+				this.page=this.page+1
+				this.renderData()
+			},
+			prev(){
+				this.page=this.page-1
+				this.renderData()
+			},
+			renderData(){
+				axios.get("../notice/list.do",{
+					params:{
+						page:this.page
+					}
+				})
+				.then(res =>{
+					this.list=res.data.list
+					this.totalpage=res.data.totalpage
+				})
 			}
 		}
 	}).mount("#noticeApp")
