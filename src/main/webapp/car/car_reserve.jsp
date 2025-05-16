@@ -5,9 +5,11 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
 </head>
 <body>
-	<section class="ftco-section ftco-degree-bg">
+	<section class="ftco-section ftco-degree-bg" id="app">
       <div class="container">
         <div class="row shadow r-12 secb py-3 px-3">
           <div class="col-lg-12">
@@ -284,6 +286,7 @@
                     type="submit"
                     value="결제하기"
                     class="form-control r-12 btn btn-primary"
+                    @click="payment()"
                   />
                 </div>
               </div>
@@ -301,6 +304,99 @@
         </div>
       </div>
     </section>
-    <!-- .section -->
+<script>
+let listApp=Vue.createApp({
+	data(){
+		return {
+		}
+	},
+	mounted(){
+	},
+	computed:{
+	},
+	methods:{
+		payment(){
+			// IMP 결제 라이브러리 초기화
+		    IMP.init("imp06561258");  // ← 아임포트 식별코드로 교체하세요
+
+		    // 결제 요청
+		    IMP.onclose = function() {
+			    console.log("예약처리")
+			}
+		    IMP.request_pay({
+		        pg: "html5_inicis",  // PG사
+		        pay_method: "card",
+		        merchant_uid: 'order_' + new Date().getTime(), // 고유 주문번호
+		        name: "기아 모닝 예약", // 예약명
+		        amount: 50000, // 결제 금액 (숫자)
+		        buyer_email: "oksdfn@gmail.com",
+		        buyer_name: "홍길동",
+		        buyer_tel: "010-1111-2222",
+		        buyer_addr: "",
+		        buyer_postcode: ""
+		    }, function (rsp) {
+		        // 결제 후 콜백 함수
+		        if (!rsp.success) {
+		            console.log("결제 처리")
+		            $.ajax({
+		                type: "POST",
+		                url: "../car/car_reserve_insert_vue.do",
+		                data: {
+		                    no: 5,//렌터카 pk
+		                    user_name: "홍길동",
+		                    user_phone: "010-1111-2222",
+		                    user_email: "oksdfn@gmail.com",
+		                    pudate:"06/15/2025",
+							putime:"10:00",
+							rdate:"06/16/2025",
+							rtime:"10:00",
+		                    price_total: 50000,
+		                    imp_uid: rsp.imp_uid,
+		                    merchant_uid: rsp.merchant_uid,
+		                    amount: rsp.paid_amount
+		                },
+		                success: function (reservationNo) {
+		                    // ✅ DB에 INSERT 성공 → 예약 완료 페이지로 이동
+		                    //window.location.href = "/hotel/reserve_complete.do?no=" + reservationNo;
+		                    console.log("결제 성공페이지 이동")
+		                },
+		                error: function () {
+		                    alert("예약 저장 중 오류가 발생했습니다. 결제는 완료되었으므로 관리자에게 문의해주세요.");
+		                }
+		            });
+		            
+		        }
+		    });
+		},
+		test(){
+			console.log("adsfasdf")
+		},
+		dataRecv(){
+			axios.get('../car/list_vue.do',{
+    			params:{
+    				page:this.curpage,
+    				tabVal:this.tabVal
+    			}
+    		}).then(res=>{
+    			console.log(res.data)
+    			this.list=res.data.list
+    			this.curpage=res.data.curpage
+    			this.totalpage=res.data.totalpage
+    			this.startPage=res.data.startPage
+    			this.endPage=res.data.endPage
+    			this.$nextTick(() => {
+                    contentWayPoint()
+               })
+    		}).catch(error=>{
+    			console.log(error.response)
+    		})
+		}
+		
+	},
+	components:{
+	}
+}).mount("#app")
+
+</script>
 </body>
 </html>
