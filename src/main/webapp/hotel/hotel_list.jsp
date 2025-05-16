@@ -232,9 +232,10 @@
                     </p>
                     <p class="days"><span></span></p>
                     <hr />
-                    <p class="bottom-area d-flex">
-                      <span><i class="icon-map-o"></i>{{ vo.addr }}</span>
-                      <span class="ml-auto"><a href="#">바로 예약</a></span>
+                    <p class="bottom-area d-flex justify-content-between align-items-center">
+					  <span class="text-truncate" style="max-width: 70%;">
+					    <i class="icon-map-o"></i>{{ vo.addr }}</span>
+                      <span><a :href="'../hotel/hotel_detail.do?no='+vo.no">객실 보기</a></span>
                     </p>
                   </div>
                 </div>

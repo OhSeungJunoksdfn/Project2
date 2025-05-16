@@ -13,6 +13,7 @@ import java.util.*;
 
 import javax.servlet.http.HttpSession;
 
+import com.sist.vo.hotel.HotelReserveVO;
 import com.sist.vo.hotel.HotelVO;
 import com.sist.service.*;
 
@@ -91,9 +92,21 @@ public class HotelRestController {
 		System.out.println("▶️ checkin=" + checkin + ", checkout=" + checkout + ", person=" + person);
 		return map;
 	}
-//	@PostMapping("hotel_reserve_insert_vue.do")
-//	public String hotel_reserve_insert_vue(HttpSession session)
-//	{
-//		return "";
-//	}
+	
+	@GetMapping("hotel_mainPage_vue.do")
+	public List<HotelVO> hotel_mainPage()
+	{
+		return service.hotelMainData();
+	}
+	
+	@PostMapping("hotel_reserve_insert_vue.do")
+	public String hotel_reserve_insert_vue(HotelReserveVO vo, HttpSession session, Model model)
+	{
+		String member_id = (String)session.getAttribute("id");
+		
+		vo.setMember_id(member_id);
+		service.hotelReserveInsertData(vo);
+		
+		return "redirect:/hotel/hotel_reserve_ok.do";
+	}
 }

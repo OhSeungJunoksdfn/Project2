@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import com.sist.mapper.*;
 import com.sist.vo.hotel.HotelImgVO;
 import com.sist.vo.hotel.HotelInfoVO;
+import com.sist.vo.hotel.HotelReserveVO;
 import com.sist.vo.hotel.HotelRoomVO;
 import com.sist.vo.hotel.HotelVO;
 
@@ -47,5 +48,13 @@ public class HotelDAO {
 	public HotelRoomVO hotelReserveData(Map map)
 	{
 		return mapper.hotelReserveData(map);
+	}
+	public HotelReserveVO hotelReserveInsertData(HotelReserveVO vo)
+	{
+		return mapper.hotelReserveInsertData(vo);
+	}
+	public List<HotelVO> hotelMainData()
+	{
+		return mapper.hotelMainData();
 	}
 }

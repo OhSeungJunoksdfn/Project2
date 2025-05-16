@@ -53,22 +53,22 @@
                   </tr>
                   <tr>
                     <th width="20%" style="background-color: #e9e9e9; color: black">
-                      이용기간
+                      예약 기간
                     </th>
-                    <td width="80%">${checkin} ~ ${checkout } / ${stay_day }박 ${stay_day+1 }일</td>
+                    <td width="80%">${stay_day }박 ${stay_day+1 }일</td>
                   </tr>
                   
                   <tr>
                     <th width="20%" style="background-color: #e9e9e9; color: black">
-                      객실옵션
+                      체크 인
                     </th>
-                    <td width="80%"></td>
+                    <td width="80%">${checkin} ${vo.checkintime }시부터</td>
                   </tr>
                   <tr>
                     <th width="20%" style="background-color: #e9e9e9; color: black">
-                      추가옵션
+                      체크 아웃
                     </th>
-                    <td width="80%"></td>
+                    <td width="80%">${checkout } ${vo.checkouttime }시까지</td>
                   </tr>
                   <tr>
                     <th width="20%" style="background-color: #e9e9e9; color: black">

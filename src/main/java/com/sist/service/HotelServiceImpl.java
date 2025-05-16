@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.sist.dao.HotelDAO;
 import com.sist.vo.hotel.HotelImgVO;
 import com.sist.vo.hotel.HotelInfoVO;
+import com.sist.vo.hotel.HotelReserveVO;
 import com.sist.vo.hotel.HotelRoomVO;
 import com.sist.vo.hotel.HotelVO;
 
@@ -56,5 +57,15 @@ public class HotelServiceImpl implements HotelService {
 	public HotelRoomVO hotelReserveData(Map map) {
 		// TODO Auto-generated method stub
 		return dao.hotelReserveData(map);
+	}
+	@Override
+	public HotelReserveVO hotelReserveInsertData(HotelReserveVO vo) {
+		// TODO Auto-generated method stub
+		return dao.hotelReserveInsertData(vo);
+	}
+	@Override
+	public List<HotelVO> hotelMainData() {
+		// TODO Auto-generated method stub
+		return dao.hotelMainData();
 	}
 }

@@ -1,11 +1,13 @@
 package com.sist.mapper;
 import java.util.*;
 
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 
 import com.sist.vo.*;
 import com.sist.vo.hotel.HotelImgVO;
 import com.sist.vo.hotel.HotelInfoVO;
+import com.sist.vo.hotel.HotelReserveVO;
 import com.sist.vo.hotel.HotelRoomVO;
 import com.sist.vo.hotel.HotelVO;
 public interface HotelMapper {
@@ -33,11 +35,28 @@ public interface HotelMapper {
 			+ "WHERE h.areacode = #{areacode} "
 			+ "AND h.sigungucode = #{sigungucode} "
 			+ "AND h.no != #{no} "
-			+ "AND hr.price IS NOT NULL "
 			+ "GROUP BY h.no, h.title, h.addr, h.img "
 			+ "ORDER BY DBMS_RANDOM.RANDOM) "
 			+ "WHERE ROWNUM <= 3")
 	public List<HotelVO> hotelRelatedData(Map map);
+	
+	@Select("SELECT h.title AS hotel_title, hr.title, hr.no, hr.person, hr.price, "
+			+ "hi.checkintime, hi.checkouttime, m.name, m.phone, m.email "
+			+ "FROM hotel_room hr "
+			+ "JOIN hotel h ON hr.hotel_no = h.no "
+			+ "JOIN hotel_info hi ON hi.hotel_no = h.no "
+			+ "JOIN projectmember m ON m.id = #{member_id} "
+			+ "WHERE hr.no = #{no}")
+	public HotelRoomVO hotelReserveData(Map map);
+	
+	@Select("SELECT * "
+			+ "FROM (SELECT h.no, h.title, h.addr, h.img, MIN(hr.price) AS price "
+			+ "FROM hotel h "
+			+ "JOIN hotel_room hr ON hr.hotel_no = h.no "
+			+ "GROUP BY h.no, h.title, h.addr, h.img "
+			+ "ORDER BY DBMS_RANDOM.RANDOM) "
+			+ "WHERE ROWNUM <= 4")
+	public List<HotelVO> hotelMainData();
 	
 	@Select("SELECT hotel_no, checkintime, checkouttime, food_place, parking, seminar, sports, "
 			+ "sauna, beverage, barbecue, bicycle, fitness, publicpc, publicbath "
@@ -45,11 +64,12 @@ public interface HotelMapper {
 			+ "WHERE hotel_no = #{no}")
 	public HotelInfoVO hotelInfoData(int no);
 	
-	@Select("SELECT h.title AS hotel_title, hr.title, hr.no, hr.person, hr.price, "
-			+ "m.name, m.phone, m.email "
-			+ "FROM hotel_room hr "
-			+ "JOIN hotel h ON hr.hotel_no = h.no "
-			+ "JOIN projectmember m ON m.id = #{member_id} "
-			+ "WHERE hr.no = #{no}")
-	public HotelRoomVO hotelReserveData(Map map);
+	@Insert("INSERT INTO hotel_reservation "
+			+ "(no, hotel_no, room_no, member_id, username, checkin, checkout, person, "
+			+ "total_price, stay_days, booking_date, status) "
+			+ "VALUES "
+			+ "(hotel_reservation_seq.nextval, #{hotel_no}, #{room_no}, #{member_id}, #{username}, "
+			+ "#{checkin}, #{checkout}, #{person}, #{total_price}, #{stay_days}, SYSDATE, '예약 완료'")
+	public HotelReserveVO hotelReserveInsertData(HotelReserveVO vo);
+	
 }
