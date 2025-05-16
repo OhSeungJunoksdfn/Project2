@@ -100,4 +100,10 @@ public class HotelController {
 		model.addAttribute("main_jsp", "../hotel/hotel_reserve.jsp");
 		return "main/main";
 	}
+	@GetMapping("hotel_reserve_ok.do")
+	public String hotel_reserve_ok(Model model)
+	{
+		model.addAttribute("main_jsp", "../hotel/hotel_reserve_ok.jsp");
+		return "main/main";
+	}
 }

@@ -18,6 +18,6 @@ STATUS       NOT NULL VARCHAR2(50)
 @Data
 public class HotelReserveVO {
 	private int no, room_no, stay_days, total_price;
-	private String username, guestname, guestphone, status;
+	private String username, guestname, guestphone, status, member_id;
 	private Date checkin, checkout, booking_date;
 }

@@ -35,6 +35,6 @@ public class HotelRoomVO {
 	tv, pc, cable, internet, fridge, toiletries, sofa, cook, tables, hairdryer;
 	
 	private int price_total, stay_day;
-	private String hotel_title, email, name, phone, status, checkin, checkout;
+	private String hotel_title, email, name, phone, status, checkin, checkout, checkintime, checkouttime;
 	private Date booking_date;
 }
