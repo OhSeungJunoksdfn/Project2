@@ -14,7 +14,7 @@ public interface AdminMapper {
 			+ "FROM notice)) "
 			+ "WHERE num BETWEEN #{start} AND #{end}")
 	public List<NoticeVO> noticeListData(Map map);
-	@Select("SELECT CEIL(COUNT(*)/10) FROM notice")
+	@Select("SELECT CEIL(COUNT(*)/5) FROM notice")
 	public int noticeTotalPage();
 	
 	@Select("SELECT no,subject,content,TO_CHAR(regdate,'YYYY-MM-DD') as dbday FROM notice "
@@ -29,7 +29,12 @@ public interface AdminMapper {
 			+ "WHERE no=#{no}")
 	public void noticeUpdate(NoticeVO vo);
 	
-	@Delete("DELETE TABLE notice "
+	@Delete("DELETE FROM notice "
 			+ "WHERE no=#{no}")
 	public void noticeDelete(int no);
+	
+	
+	
+	
+	
 }
