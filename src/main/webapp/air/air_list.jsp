@@ -53,7 +53,7 @@
 			   </td>
 
               <td>
-                <button :href="'../air/air_list_arr.do" class="btn btn-sm btn-success" @click="selectFlight(vo.flight_id)">왕복선택</button>
+                <button :href="'../air/air_list_arr.do'" class="btn btn-sm btn-success" @click="selectFlight(vo.flight_id)">왕복선택</button>
                 <button class="btn btn-sm btn-warning" @click="selectFlight(vo.flight_id)">편도예약</button>
               </td>
             </tr>
