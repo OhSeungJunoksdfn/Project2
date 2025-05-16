@@ -32,6 +32,19 @@ public class AirController {
         model.addAttribute("main_jsp", "../air/air_list.jsp");
         return "main/main";  
     }
+    
+    @GetMapping("air_list_arr.do")
+    public String inbound(Model model) {
+        // 검색폼에 사용할 드롭다운 데이터
+        List<AirLinesVO> airlines = service.getAllAirlines();
+        List<AirportsVO> airports = service.getAllAirports();
+        model.addAttribute("airlines", airlines);
+        model.addAttribute("airports", airports);
+
+        // 실제 jsp 위치를 메인 레이아웃에 전달
+        model.addAttribute("main_jsp", "../air/air_list.jsp");
+        return "main/main";  
+    }
     /** 2) 예약 확인 화면 (flightId 받아서) */
     @GetMapping("air_reserve.do")
     public String air_reserve(
@@ -42,7 +55,7 @@ public class AirController {
     }
 
     /** 3) 승객 입력 폼 화면 */
-    @GetMapping("passenger_form.do")
+    @GetMapping("passenger_info.do")
     public String passenger_form(
             @RequestParam("flightId") int flightId,
             @RequestParam(value="id", required=false) String passengerId, Model model) {
@@ -51,7 +64,7 @@ public class AirController {
             model.addAttribute("passenger", service.getPassengerById(passengerId));
         }
         model.addAttribute("flightId", flightId);
-        model.addAttribute("main_jsp", "../air/passenger_form.jsp");
+        model.addAttribute("main_jsp", "../air/passenger_info.jsp");
         return "main/main";
     }
 

@@ -36,6 +36,7 @@
           <tbody>
             <tr v-for="vo in list" :key="vo.flight_id">
               <!-- 1) airline_code 대신 mapper에서 조인한 airline_name prop 사용 -->
+              
               <td>{{ vo.flight_id }}</td>
               <td>{{ vo.airline_code }}</td>
 
@@ -53,8 +54,8 @@
 			   </td>
 
               <td>
-                <button :href="'../air/air_list_arr.do'" class="btn btn-sm btn-success" @click="selectFlight(vo.flight_id)">왕복선택</button>
-                <button class="btn btn-sm btn-warning" @click="selectFlight(vo.flight_id)">편도예약</button>
+                <button  class="btn btn-sm btn-success" @click.prevent="goToReturn(vo.flight_id)">왕복선택</button>
+                <button class="btn btn-sm btn-warning" @click="goToPassengerForm(vo.flight_id)">편도예약</button>
               </td>
             </tr>
           </tbody>
@@ -90,6 +91,38 @@ Vue.createApp({
       this.travellers    = filters.travellers;
       this.fetchPage();
     },
+    
+    goToReturn(flightId) {
+        const params = new URLSearchParams({
+          from: this.to,                     // 반대로
+          to: this.from,                     // 반대로
+          departureDate: this.returnDate,    // "오는 날" 기준
+          returnDate: this.departureDate,    // (선택) 원래 가는 날
+          travellers: this.travellers
+        });
+        axios.get("../air/air_list_arr.do",{
+        	params:{
+        		from: this.to,                     // 반대로
+                to: this.from,                     // 반대로
+                departureDate: this.returnDate,    // "오는 날" 기준
+                returnDate: this.departureDate,    // (선택) 원래 가는 날
+                travellers: this.travellers
+        	}
+        })
+        .catch(err => {
+        	console.log(err.response)
+        })
+        
+        //window.location.href = `/air/air_list_arr.do?${params.toString()}`;
+      },
+
+      goToPassengerForm(flightId) {
+        console.log('▶ goToPassengerForm, flightId =', flightId);
+        const url = `/air/passenger_info.do?flightId=${flightId}`;
+        console.log('▶ 이동할 URL:', url);
+        window.location.href = url;
+      },
+      
     fetchPage() {
       axios.get('../air/list_vue.do', {
         params: {

@@ -53,7 +53,7 @@
     >
       <div class="container secb shadow py-2" style="max-width: 500px">
         <div class="row">
-          <h3 class="pl-3" style="color: #78d5ef">회원가입</h3>
+          <h3 class="pl-3" style="color: #78d5ef">승객개인정보 입력</h3>
           <form ref="myform" method="post" action="../member/register_ok.do" >
           <div class="col-12">
             <div class="mb-2">

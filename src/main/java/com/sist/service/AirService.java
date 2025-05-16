@@ -30,6 +30,7 @@ public interface AirService {
             int page, int pageSize,
             String from, String to, String returnDate);
 	public int getInboundCount(String from, String to, String returnDate);
+	public List<FlightInfoVO> getInbound(Map<String, Object> params);
 	
 	
 }

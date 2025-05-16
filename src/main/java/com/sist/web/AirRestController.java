@@ -79,7 +79,7 @@ public class AirRestController {
     }
 
     /* 3) 왕복(오는 편) 검색 + 페이징 */
-    @GetMapping("/inbound.do")
+    @GetMapping("air_list_arr_vue.do")
     public Map<String,Object> inbound(
             @RequestParam int page,
             @RequestParam String from,

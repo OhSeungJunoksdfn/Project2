@@ -66,6 +66,7 @@ public interface AirMapper {
 	      @Param("from")    String from,
 	      @Param("to")      String to,
 	      @Param("date")    String date  // 돌아오는 날짜
+//	      @Param("flightid") int flightid
 	    );
 
 	    /** 왕복(오는 편) 총 페이지 수 */
