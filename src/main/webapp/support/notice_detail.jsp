@@ -7,24 +7,28 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<section class="container">
+	<section class="container fecb shadow ml-2 r-12">
     <div class="row">
         <table class="table">
+        	<thead>
             <tr>
-                <td width="80%">
+                <th width="80%">
                     <h3>${vo.subject}</h3>
-                </td>
-                <td width="20%">
+                </th>
+                <th width="20%">
                     ${vo.dbday}
-                </td>
+                </th>
             </tr>
+            </thead>
+            <tbody>
             <tr>
-                <td>
-                    <textarea readonly style="min-height:300px; width:100%; overflow:auto; white-space:pre-wrap; word-wrap:break-word; resize:none;">
+                <td colspan="2">
+                    <pre  style="min-height:300px; width:100%; overflow:auto; white-space:pre-wrap; word-wrap:break-word; ">
 						${vo.content}
-                    </textarea>
+                    </pre>
                 </td>
             </tr>
+            </tbody>
         </table>
     </div>
 </section>

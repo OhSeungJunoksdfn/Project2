@@ -11,9 +11,10 @@
 <body>
 <section
       class="d-flex ftco-animate justify-content-center m-5 "
+      
       id="boardListApp"
     >
-      <div class="container secb shadow py-2">
+      <div class="container secb shadow py-2" style="width:960px">
         <div class="row p-2">
         <div class="col-12 d-flex justify-content-between align-items-center">
           <ul class="nav nav-tabs">
@@ -48,7 +49,7 @@
               <tr class="text-center">
                 <th width="50%" colspan="2">제목</th>
                 <th width="20%">작성자</th>
-                <th width="10%">작성일</th>
+                <th width="20%">작성일</th>
                 <th width="10%">조회수</th>
                 
               </tr>
@@ -61,7 +62,7 @@
                   <a href="../board/detail.do?no=${vo.no }" class="cursor-pointer" style="color: black">[${vo.type}] ${vo.subject }</a>
                 </td>
                 <td width="20%" class="text-center">${vo.name }</td>
-                <td width="10%" class="text-center">${vo.dbday }</td>
+                <td width="20%" class="text-center">${vo.dbday }</td>
                 <td width="10%" class="text-center">${vo.hit }</td>
               </tr>
             </c:forEach>

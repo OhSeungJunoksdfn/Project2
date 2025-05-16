@@ -39,7 +39,7 @@ public class BoardController {
 			fd="subject";
 		if(ss==null)
 			ss="*";
-		int rowSize= 15;
+		int rowSize= 10;
 		Map map = new HashMap();
 		map.put("start",(rowSize*curpage)-(rowSize-1));
 		map.put("end",(rowSize*curpage));
