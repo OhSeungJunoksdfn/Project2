@@ -40,7 +40,7 @@ public interface HotelMapper {
 			+ "WHERE ROWNUM <= 3")
 	public List<HotelVO> hotelRelatedData(Map map);
 	
-	@Select("SELECT h.title AS hotel_title, hr.title, hr.no, hr.person, hr.price, "
+	@Select("SELECT h.no AS hotel_no, h.title AS hotel_title, hr.title, hr.no, hr.person, hr.price, "
 			+ "hi.checkintime, hi.checkouttime, m.name, m.phone, m.email "
 			+ "FROM hotel_room hr "
 			+ "JOIN hotel h ON hr.hotel_no = h.no "
@@ -65,11 +65,11 @@ public interface HotelMapper {
 	public HotelInfoVO hotelInfoData(int no);
 	
 	@Insert("INSERT INTO hotel_reservation "
-			+ "(no, hotel_no, room_no, member_id, username, checkin, checkout, person, "
+			+ "(no, hotel_no, room_no, member_id, username, useremail, userphone, checkin, checkout, person, "
 			+ "total_price, stay_days, booking_date, status) "
 			+ "VALUES "
-			+ "(hotel_reservation_seq.nextval, #{hotel_no}, #{room_no}, #{member_id}, #{username}, "
-			+ "#{checkin}, #{checkout}, #{person}, #{total_price}, #{stay_days}, SYSDATE, '예약 완료'")
-	public HotelReserveVO hotelReserveInsertData(HotelReserveVO vo);
+			+ "(hotel_reservation_reserve_no_seq.nextval, #{hotel_no}, #{room_no}, #{member_id}, #{username}, "
+			+ "#{useremail, jdbcType=VARCHAR}, #{userphone, jdbcType=VARCHAR}, #{checkin}, #{checkout}, #{person}, #{total_price}, #{stay_days}, SYSDATE, '예약 완료')")
+	public int hotelReserveInsertData(HotelReserveVO vo);
 	
 }

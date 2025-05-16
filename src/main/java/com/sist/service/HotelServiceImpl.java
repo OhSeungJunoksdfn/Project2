@@ -59,7 +59,7 @@ public class HotelServiceImpl implements HotelService {
 		return dao.hotelReserveData(map);
 	}
 	@Override
-	public HotelReserveVO hotelReserveInsertData(HotelReserveVO vo) {
+	public int hotelReserveInsertData(HotelReserveVO vo) {
 		// TODO Auto-generated method stub
 		return dao.hotelReserveInsertData(vo);
 	}

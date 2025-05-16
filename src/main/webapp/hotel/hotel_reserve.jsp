@@ -161,7 +161,7 @@
                     <th width="20%" style="background-color: #e9e9e9; color: black">
                       상품 금액
                     </th>
-                    <td width="80%"><fmt:formatNumber value="${price_total }" type="number" groupingUsed="true"/>원</td>
+                    <td width="80%"><fmt:formatNumber value="${price_total}" type="number" groupingUsed="true"/>원</td>
                   </tr>
                   <tr>
                     <th width="20%" style="background-color: #e9e9e9; color: black">
@@ -186,7 +186,7 @@
                     <td colspan="2" class="text-right">
                       총 결제금액 &nbsp;
                       <span style="font-weight: 700; font-size: 24px; color: black">
-                        <fmt:formatNumber value="${price_total }" type="number" groupingUsed="true"/>원
+                        <fmt:formatNumber value="${price_total}" type="number" groupingUsed="true"/>원
                       </span>
                     </td>
                   </tr>
@@ -207,7 +207,7 @@
                       예약자명
                     </th>
                     <td width="80%">
-                      <input type="text" style="float: left" size="50" value="${vo.name }"/>
+                      <input type="text" style="float: left" size="50" value="${vo.name}"/>
                     </td>
                   </tr>
                   <tr>
@@ -215,7 +215,7 @@
                       이메일
                     </th>
                     <td width="80%">
-                      <input type="text" style="float: left" size="50" value="${vo.email }"/>
+                      <input type="text" style="float: left" size="50" value="${vo.email}"/>
                     </td>
                   </tr>
                   <tr>
@@ -223,7 +223,7 @@
                       휴대폰 번호
                     </th>
                     <td width="80%">
-                      <input type="text" style="float: left" size="50" value="${vo.phone }"/>
+                      <input type="text" style="float: left" size="50" value="${vo.phone}"/>
                     </td>
                   </tr>
                 </tbody>
@@ -260,55 +260,58 @@
 <script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
 <script type="text/javascript">
 $("#btn_payment").click(function () {
-    // IMP 결제 라이브러리 초기화
-    IMP.init("imp06561258");  // ← 아임포트 식별코드로 교체하세요
+    // 아임포트 초기화
+    IMP.init("imp06561258");
+
+    // 고유 주문번호 생성
+    var merchant_uid = 'order_' + new Date().getTime();
 
     // 결제 요청
     IMP.request_pay({
-        pg: "html5_inicis",  // PG사
+        pg: "html5_inicis",
         pay_method: "card",
-        merchant_uid: 'order_' + new Date().getTime(), // 고유 주문번호
-        name: "[호텔 예약] ${vo.hotel_title} ${vo.title}", // 예약명
-        amount: ${price_total}, // 결제 금액 (숫자)
+        merchant_uid: merchant_uid,
+        name: "[호텔 예약] ${vo.hotel_title} ${vo.title}",
+        amount: ${price_total},
         buyer_email: "${vo.email}",
         buyer_name: "${vo.name}",
         buyer_tel: "${vo.phone}",
         buyer_addr: "",
         buyer_postcode: ""
     }, function (rsp) {
-        // 결제 후 콜백 함수
-        if (rsp.success) {
-            // ✅ 결제 성공 → 서버로 예약 정보와 결제 결과 전송 (AJAX)
-            $.ajax({
-                type: "POST",
-                url: "../hotel/hotel_reserve_insert_vue.do",
-                data: {
-                    hotel_no: ${vo.hotel_no},
-                    room_no: ${vo.no},
-                    user_name: "${vo.name}",
-                    user_phone: "${vo.phone}",
-                    user_email: "${vo.email}",
-                    checkin: "${checkin}",
-                    checkout: "${checkout}",
-                    person: ${person},
-                    price_total: ${price_total},
-                    stay_day: ${stay_day},
-                    imp_uid: rsp.imp_uid,
-                    merchant_uid: rsp.merchant_uid,
-                    amount: rsp.paid_amount
-                },
-                success: function (reservationNo) {
-                    // ✅ DB에 INSERT 성공 → 예약 완료 페이지로 이동
-                    window.location.href = "/hotel/reserve_complete.do?no=" + reservationNo;
-                },
-                error: function () {
-                    alert("예약 저장 중 오류가 발생했습니다. 결제는 완료되었으므로 관리자에게 문의해주세요.");
-                }
-            });
-        } else {
-            // ❌ 결제 실패 처리
-            alert("결제에 실패했습니다: " + rsp.error_msg);
-        }
+        // ✅ 결제 결과와 상관없이 insert 요청
+        $.ajax({
+            type: "POST",
+            url: "../hotel/hotel_reserve_insert_vue.do",
+            data: {
+            	// 값 바인딩 시 form 태그 이용하면 편함 (혹은 JSON 사용 원하시면 gpt 찾아보시면 잘 나와있는 듯 합니다.)
+            	// 이미 작성을 해버렸다면 ?
+            	// *** 컬럼명: 객체값 형태로 작성 
+            	// *** 테이블의 컬럼명 = ReserVO의 필드명 = data의 data명 모두 일치 해야함.
+            	// 숫자열은 그냥 작성, 문자열은 따옴표 필수
+            	hotel_no: ${vo.hotel_no},
+                room_no: ${vo.no},
+                username: "${vo.name}",
+                userphone: "${vo.phone}",
+                useremail: "${vo.email}",
+                checkin: "${checkin}",
+                checkout: "${checkout}",
+                person: ${person},
+                total_price: ${price_total},
+                stay_days: ${stay_day},
+                imp_uid: rsp.imp_uid || "",				// 결제 번호 생성 => 관련 실패 시 빈 문자열
+                merchant_uid: rsp.merchant_uid || merchant_uid, // 주문 번호 생성 관련
+                amount: rsp.paid_amount || 0,			// 결제 금액 관련
+                success: rsp.success					// 성공 여부 플래그
+            },
+            success: function () {
+                // 항상 완료 페이지로 이동 (RestController void로 변경)
+                window.location.href = "../hotel/hotel_reserve_ok.do"
+            },
+            error: function () {
+                alert("예약 저장 중 오류가 발생했습니다. 관리자에게 문의해주세요.");
+            }
+        });
     });
 });
 </script>

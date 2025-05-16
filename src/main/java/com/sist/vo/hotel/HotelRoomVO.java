@@ -34,7 +34,7 @@ public class HotelRoomVO {
 	private String room_code, title, room_img, room_name, bath1, bath2, aircondition,
 	tv, pc, cable, internet, fridge, toiletries, sofa, cook, tables, hairdryer;
 	
-	private int price_total, stay_day;
+	private int price_total, stay_days;
 	private String hotel_title, email, name, phone, status, checkin, checkout, checkintime, checkouttime;
 	private Date booking_date;
 }

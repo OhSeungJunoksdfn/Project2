@@ -3,12 +3,13 @@ package com.sist.web;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import javax.servlet.http.HttpSession;
@@ -99,14 +100,12 @@ public class HotelRestController {
 		return service.hotelMainData();
 	}
 	
-	@PostMapping("hotel_reserve_insert_vue.do")
-	public String hotel_reserve_insert_vue(HotelReserveVO vo, HttpSession session, Model model)
+	@RequestMapping("hotel_reserve_insert_vue.do")
+	public void hotel_reserve_insert_vue(HotelReserveVO vo, HttpSession session, Model model)
 	{
-		String member_id = (String)session.getAttribute("id");
+		// Return 필요 없어서 void 사용
+		vo.setMember_id((String)session.getAttribute("id"));
 		
-		vo.setMember_id(member_id);
 		service.hotelReserveInsertData(vo);
-		
-		return "redirect:/hotel/hotel_reserve_ok.do";
 	}
 }

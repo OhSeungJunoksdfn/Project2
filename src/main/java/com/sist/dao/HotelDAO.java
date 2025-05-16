@@ -49,7 +49,7 @@ public class HotelDAO {
 	{
 		return mapper.hotelReserveData(map);
 	}
-	public HotelReserveVO hotelReserveInsertData(HotelReserveVO vo)
+	public int hotelReserveInsertData(HotelReserveVO vo)
 	{
 		return mapper.hotelReserveInsertData(vo);
 	}
