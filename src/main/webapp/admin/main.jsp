@@ -53,17 +53,16 @@
 	<div class="container" style="color: #fff; max-width: 100%;height: 100vh;">
 		<div class="row" style="height:100%">
 			<div class="p-2" style="height:100%; width:250px; background-color:#333"  >
-				<h3 class="p-2 text-center" style="border-bottom:1px solid #000" >로고</h3>
 				
-				<a href="../admin/main.do" class="col btn btn-outline-primary border-0 rounded-0 d-flex justify-content-center align-items-center" id="sideBtn" style="height:50px;"  >대시보드</a>
-				<a href="../admin/board.do" class="col btn btn-outline-primary border-0 rounded-0 d-flex justify-content-center align-items-center" id="sideBtn" style="height:50px;"  >게시판관리</a>
-				<a href="../admin/member.do" class="col btn btn-outline-primary border-0 rounded-0 d-flex justify-content-center align-items-center" id="sideBtn" style="height:50px;"  >회원관리</a>
-				<a href="../admin/reply.do" class="col btn btn-outline-primary border-0 rounded-0 d-flex justify-content-center align-items-center" id="sideBtn" style="height:50px;"  >댓글관리</a>
-				<a href="../admin/qna.do" class="col btn btn-outline-primary border-0 rounded-0 d-flex justify-content-center align-items-center" id="sideBtn" style="height:50px;"  >문의글</a>
-				<a href="../admin/main.do" class="col btn btn-outline-primary border-0 rounded-0 d-flex justify-content-center align-items-center" id="sideBtn" style="height:50px;"  >예약관리</a>
-				<a href="../admin/notice.do" class="col btn btn-outline-primary border-0 rounded-0 d-flex justify-content-center align-items-center" id="sideBtn" style="height:50px;"  >공지사항</a>
-				<a href="../admin/statistics.do" class="col btn btn-outline-primary border-0 rounded-0 d-flex justify-content-center align-items-center" id="sideBtn" style="height:50px;"  >통계</a>
-				<a href="../admin/coupon.do" class="col btn btn-outline-primary border-0 rounded-0 d-flex justify-content-center align-items-center" id="sideBtn" style="height:50px;"  >쿠폰</a>
+				<a href="../admin/main.do" class="col btn btn-outline-primary border-0 rounded-0 d-flex justify-content-center align-items-center" id="sideBtn" style="height:50px; color:white"  >대시보드</a>
+				<a href="../admin/board.do" class="col btn btn-outline-primary border-0 rounded-0 d-flex justify-content-center align-items-center" id="sideBtn" style="height:50px; color:white"  >게시판관리</a>
+				<a href="../admin/member.do" class="col btn btn-outline-primary border-0 rounded-0 d-flex justify-content-center align-items-center" id="sideBtn" style="height:50px; color:white"  >회원관리</a>
+				<a href="../admin/reply.do" class="col btn btn-outline-primary border-0 rounded-0 d-flex justify-content-center align-items-center" id="sideBtn" style="height:50px; color:white"  >댓글관리</a>
+				<a href="../admin/qna.do" class="col btn btn-outline-primary border-0 rounded-0 d-flex justify-content-center align-items-center" id="sideBtn" style="height:50px; color:white"  >문의글</a>
+				<a href="../admin/main.do" class="col btn btn-outline-primary border-0 rounded-0 d-flex justify-content-center align-items-center" id="sideBtn" style="height:50px; color:white"  >예약관리</a>
+				<a href="../admin/notice.do" class="col btn btn-outline-primary border-0 rounded-0 d-flex justify-content-center align-items-center" id="sideBtn" style="height:50px; color:white"  >공지사항</a>
+				<a href="../admin/statistics.do" class="col btn btn-outline-primary border-0 rounded-0 d-flex justify-content-center align-items-center" id="sideBtn" style="height:50px; color:white"  >통계</a>
+				<a href="../admin/coupon.do" class="col btn btn-outline-primary border-0 rounded-0 d-flex justify-content-center align-items-center" id="sideBtn" style="height:50px; color:white"  >쿠폰</a>
 				
 			</div>
 			<div class="d-flex col flex-column vh-100 bg-light px-0">

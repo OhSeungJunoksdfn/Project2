@@ -19,7 +19,7 @@ public interface BoardMapper {
 			+ "WHERE num BETWEEN #{start} AND #{end}")
 	public List<BoardVO> boardListData(Map map);
 	
-	@Select("SELECT CEIL(COUNT(*)/15.0) FROM databoard "
+	@Select("SELECT CEIL(COUNT(*)/10.0) FROM databoard "
 			+ "WHERE REGEXP_LIKE(type,#{type})")
 	public int boardTotalPage(Map map);
 	

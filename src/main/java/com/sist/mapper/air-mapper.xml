@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sist.mapper.AirMapper">
-  <!-- 1) AIRLINES 전체 조회 -->
+  <!-- AIRLINES 전체 조회 -->
   <select id="selectAirlines"
           resultType="com.sist.vo.air.AirLinesVO">
     SELECT
@@ -13,7 +13,7 @@
     ORDER BY AIRLINE_NAME_KO
   </select>
 
-  <!-- 2) AIRPORTS 전체 조회 -->
+  <!-- AIRPORTS 전체 조회 -->
   <select id="selectAirports"
           resultType="com.sist.vo.air.AirportsVO">
     SELECT
@@ -27,7 +27,7 @@
     ORDER BY CITY, AIRPORT_NAME_EN
   </select>
 
-  <!-- 3) FLIGHT_INFO 페이징 조회 (필터 없이) -->
+  <!-- FLIGHT_INFO 페이징 조회 (필터 없이) -->
   <select id="selectFlights"
           parameterType="map"
           resultType="com.sist.vo.air.FlightInfoVO">
@@ -57,9 +57,9 @@
     SELECT CEIL(COUNT(*)/20.0) FROM FLIGHT_INFO
   </select>
 
-  <!-- 4) FLIGHT_INFO 상세 조회 -->
+  <!-- FLIGHT_INFO 상세 조회 -->
   <select id="selectFlightById"
-          parameterType="int"
+          parameterType="map"
           resultType="com.sist.vo.air.FlightInfoVO">
     SELECT
       flight_id,
@@ -75,92 +75,53 @@
     WHERE flight_id = #{id}
   </select>
 
-  <!-- 5) FLIGHT_INFO 필터 + 페이징 조회 -->
-  <select id="selectFlightsFiltered"
-          parameterType="map"
-          resultType="com.sist.vo.air.FlightInfoVO">
-    SELECT * FROM (
-      SELECT f.*, ROWNUM rn
-      FROM (
-        SELECT
-          flight_id,
-          airline_code,
-          flight_number,
-          dep_airport_code,
-          arr_airport_code,
-          TO_CHAR(dep_time,'YYYY-MM-DD HH24:MI') AS dep_time,
-          TO_CHAR(arr_time,'YYYY-MM-DD HH24:MI') AS arr_time,
-          economy_charge,
-          prestige_charge
-        FROM FLIGHT_INFO
-        WHERE dep_airport_code = #{from,jdbcType=VARCHAR}
-          AND arr_airport_code = #{to,jdbcType=VARCHAR}
-          AND TO_CHAR(dep_time,'YYYY-MM-DD') = #{arrtime,jdbcType=VARCHAR}
-          AND TO_CHAR(arr_time,'YYYY-MM-DD') = #{deptime,jdbcType=VARCHAR}
-        ORDER BY dep_time
-      ) f
-      WHERE ROWNUM &lt;= #{end}
-    )
-    WHERE rn &gt;= #{start}
-  </select>
-
-  <select id="selectFlightsCountFiltered"
-          parameterType="map"
-          resultType="int">
-    SELECT CEIL(COUNT(*)/20.0)
+ <!-- 1) FLIGHT_INFO 필터 + 페이징 조회 -->
+<select id="selectFlightsFiltered"
+        parameterType="map"
+        resultType="com.sist.vo.air.FlightInfoVO">
+  SELECT * FROM (
+    SELECT f.*, ROWNUM rn
+    FROM (
+      SELECT
+        flight_id,
+        airline_code,
+        flight_number,
+        dep_airport_code,
+        arr_airport_code,
+        TO_CHAR(dep_time,'YYYY-MM-DD HH24:MI') AS dep_time,
+        TO_CHAR(arr_time,'YYYY-MM-DD HH24:MI') AS arr_time,
+        economy_charge,
+        prestige_charge
       FROM FLIGHT_INFO
-     WHERE dep_airport_code = #{from,jdbcType=VARCHAR}
-       AND arr_airport_code = #{to,jdbcType=VARCHAR}
-       AND TO_CHAR(dep_time,'YYYY-MM-DD') = #{arrtime,jdbcType=VARCHAR}
+      WHERE dep_airport_code = #{from,jdbcType=VARCHAR}
+        AND arr_airport_code = #{to,jdbcType=VARCHAR}
+        AND TO_CHAR(dep_time,'YYYY-MM-DD') = #{arrtime,jdbcType=VARCHAR}
+        <if test="deptime != null and deptime != ''">
+          AND TO_CHAR(arr_time,'YYYY-MM-DD') = #{deptime,jdbcType=VARCHAR}
+        </if>
+      ORDER BY dep_time
+    ) f
+    WHERE ROWNUM &lt;= #{end}
+  )
+  WHERE rn &gt;= #{start}
+</select>
+
+<!-- 2) FLIGHT_INFO 필터된 건수 조회 -->
+<select id="selectFlightsCountFiltered"
+        parameterType="map"
+        resultType="int">
+  SELECT CEIL(COUNT(*)/20.0)
+    FROM FLIGHT_INFO
+   WHERE dep_airport_code = #{from,jdbcType=VARCHAR}
+     AND arr_airport_code = #{to,jdbcType=VARCHAR}
+     AND TO_CHAR(dep_time,'YYYY-MM-DD') = #{arrtime,jdbcType=VARCHAR}
+     <if test="deptime != null and deptime != ''">
        AND TO_CHAR(arr_time,'YYYY-MM-DD') = #{deptime,jdbcType=VARCHAR}
-  </select>
+     </if>
+</select>
 
-  <!-- 6) RESERVATIONS 삽입 -->
-  <insert id="insertReservation"
-          parameterType="com.sist.vo.air.ReservationsVO">
-    INSERT INTO RESERVATIONS (
-      RESERVATION_ID,
-      FLIGHT_ID,
-      BOOKING_NUMBER,
-      CUSTOMER_NAME,
-      CUSTOMER_EMAIL,
-      BOOKING_DATE,
-      PAYMENT_STATUS,
-      CREATED_AT,
-      UPDATED_AT
-    ) VALUES (
-      #{reservationId},
-      #{flightId},
-      #{bookingNumber},
-      #{customerName},
-      #{customerEmail},
-      #{bookingDate},
-      #{paymentStatus},
-      #{createdAt},
-      #{updatedAt}
-    )
-  </insert>
-
-  <!-- 7) RESERVATIONS 조회 (이메일 기준) -->
-  <select id="selectReservationsByEmail"
-          parameterType="string"
-          resultType="com.sist.vo.air.ReservationsVO">
-    SELECT
-      RESERVATION_ID   AS reservationId,
-      FLIGHT_ID        AS flightId,
-      BOOKING_NUMBER   AS bookingNumber,
-      CUSTOMER_NAME    AS customerName,
-      CUSTOMER_EMAIL   AS customerEmail,
-      BOOKING_DATE     AS bookingDate,
-      PAYMENT_STATUS   AS paymentStatus,
-      CREATED_AT       AS createdAt,
-      UPDATED_AT       AS updatedAt
-    FROM RESERVATIONS
-    WHERE CUSTOMER_EMAIL = #{email}
-    ORDER BY BOOKING_DATE DESC
-  </select>
   
-  <!-- 8) 편도(가는 편) 조회 -->
+  <!-- 편도(가는 편) 조회 -->
   <select id="selectOutbound" parameterType="map" resultType="com.sist.vo.air.FlightInfoVO">
     SELECT * FROM (
       SELECT f.*, ROWNUM rn
@@ -190,7 +151,7 @@
        AND TO_CHAR(dep_time,'YYYY-MM-DD') = #{date}
   </select>
 
-  <!-- 9) 왕복(오는 편) 조회: from/to 뒤집고 date는 돌아오는 날짜 -->
+  <!--  왕복(오는 편) 조회: from/to 뒤집고 date는 돌아오는 날짜 -->
   <select id="selectInbound" parameterType="map" resultType="com.sist.vo.air.FlightInfoVO">
     SELECT * FROM (
       SELECT f.*, ROWNUM rn
@@ -219,5 +180,63 @@
        AND arr_airport_code = #{from}
        AND TO_CHAR(dep_time,'YYYY-MM-DD') = #{date}
   </select>
+  
+   <!-- 회원정보 삽입 -->
+   <insert id="insertPassenger" parameterType="com.sist.vo.air.PassengersVO">
+    INSERT INTO PASSENGERS(PASSENGER_ID, FIRST_NAME, LAST_NAME, PASSPORT_NUMBER, BIRTHDAY, SEX, EMAIL, CREATED_AT, UPDATED_AT)
+    VALUES(#{passenger_id}, #{first_name}, #{last_name}, #{passport_number}, #{birthday}, #{sex}, #{email}, SYSDATE, SYSDATE)
+  </insert>
+	
+	<select id="selectPassengerById"
+          parameterType="string"
+          resultType="com.sist.vo.air.PassengersVO">
+	    SELECT
+	      PASSENGER_ID      AS passenger_id,
+	      FIRST_NAME        AS first_name,
+	      LAST_NAME         AS last_name,
+	      PASSPORT_NUMBER   AS passport_number,
+	      BIRTHDAY,
+	      SEX,
+	      EMAIL,
+	      CREATED_AT,
+	      UPDATED_AT        AS updated_at
+	    FROM PASSENGERS
+	    WHERE PASSENGER_ID = #{passengerId}
+  </select>
 
+  <!-- 승객 검색 -->
+  <select id="selectAllPassengers"
+          resultType="com.sist.vo.air.PassengersVO">
+    SELECT
+      PASSENGER_ID      AS passenger_id,
+      FIRST_NAME        AS first_name,
+      LAST_NAME         AS last_name,
+      PASSPORT_NUMBER   AS passport_number,
+      BIRTHDAY,
+      SEX,
+      EMAIL,
+      CREATED_AT,
+      UPDATED_AT        AS updated_at
+    FROM PASSENGERS
+    ORDER BY LAST_NAME, FIRST_NAME
+  </select>
+
+<!-- 승객정보 수정 -->
+  <update id="updatePassenger" parameterType="com.sist.vo.air.PassengersVO">
+    UPDATE PASSENGERS
+      SET FIRST_NAME      = #{first_name},
+          LAST_NAME       = #{last_name},
+          PASSPORT_NUMBER = #{passport_number},
+          BIRTHDAY        = #{birthday},
+          SEX             = #{sex},
+          EMAIL           = #{email},
+          UPDATED_AT      = SYSDATE
+    WHERE PASSENGER_ID   = #{passenger_id}
+  </update>
+
+  <!-- 승객삭제 -->
+  <delete id="deletePassenger" parameterType="string">
+    DELETE FROM PASSENGERS
+    WHERE PASSENGER_ID = #{passengerId}
+  </delete>
 </mapper>
