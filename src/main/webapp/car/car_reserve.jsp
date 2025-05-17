@@ -342,7 +342,7 @@ let listApp=Vue.createApp({
 		                type: "POST",
 		                url: "../car/car_reserve_insert_vue.do",
 		                data: {
-		                    no: 5,//렌터카 pk
+		                    car_no: 5,//렌터카 pk
 		                    user_name: "홍길동",
 		                    user_phone: "010-1111-2222",
 		                    user_email: "oksdfn@gmail.com",
@@ -351,14 +351,14 @@ let listApp=Vue.createApp({
 							rdate:"06/16/2025",
 							rtime:"10:00",
 		                    price_total: 50000,
+		                    ins_desc : "자차보험 설명",
 		                    imp_uid: rsp.imp_uid,
 		                    merchant_uid: rsp.merchant_uid,
 		                    amount: rsp.paid_amount
 		                },
 		                success: function (reservationNo) {
 		                    // ✅ DB에 INSERT 성공 → 예약 완료 페이지로 이동
-		                    //window.location.href = "/hotel/reserve_complete.do?no=" + reservationNo;
-		                    console.log("결제 성공페이지 이동")
+		                    window.location.href = "../car/car_reserve_ok.do?reservationNo=" + reservationNo;
 		                },
 		                error: function () {
 		                    alert("예약 저장 중 오류가 발생했습니다. 결제는 완료되었으므로 관리자에게 문의해주세요.");

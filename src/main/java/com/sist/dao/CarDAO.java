@@ -34,4 +34,9 @@ public class CarDAO {
 	{
 		return mapper.carDetailData(no);
 	}
+	
+	public void insertCarReserve(Map map)
+	{
+		mapper.insertCarReserve(map);
+	}
 }

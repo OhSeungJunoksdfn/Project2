@@ -21,12 +21,25 @@
   </select>
   
   <select id="carSearchListData" resultType="CarVO" parameterType="hashmap">
-    SELECT no,poster,name,car_class,seat,fuel,premium_ins_price,NON_INS_QUAL,num
-			  FROM (SELECT no,poster,name,car_class,seat,fuel,premium_ins_price,NON_INS_QUAL,rownum as num
-			  FROM (SELECT no,poster,name,car_class,seat,fuel,premium_ins_price,NON_INS_QUAL
-			  FROM car
-			  ORDER BY no ASC)) 
-			  WHERE num BETWEEN #{start} AND #{end}
+    SELECT no,poster,name,car_class,seat,fuel,premium_ins_price,NON_INS_QUAL,pickup_date,return_date,num
+	  FROM (SELECT no,poster,name,car_class,seat,fuel,premium_ins_price,NON_INS_QUAL,pickup_date,return_date,rownum as num
+	  FROM (SELECT c.no,poster,name,car_class,seat,fuel,premium_ins_price,NON_INS_QUAL,pickup_date,return_date
+	  FROM car c LEFT OUTER JOIN car_reserve cr ON c.no = cr.car_no
+	  WHERE pickup_date is null or 
+	  cr.car_no not in(
+	  		SELECT car_no
+    		FROM car_reserve WHERE(
+		  		(pickup_date BETWEEN #{pickup_date} AND #{return_date}) 
+		  		OR
+		  		(return_date BETWEEN #{pickup_date} AND #{return_date}) 
+		  		OR
+		  		(#{pickup_date} BETWEEN pickup_date AND return_date)
+		  		OR
+		  		(#{return_date} BETWEEN pickup_date AND return_date)
+	  		)
+	  	)
+	  ORDER BY c.no ASC))
+	  WHERE num BETWEEN #{start} AND #{end}
   </select>
   
   <select id="carSearchTotalPage" resultType="int" parameterType="string">

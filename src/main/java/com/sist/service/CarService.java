@@ -10,4 +10,5 @@ public interface CarService {
 	public List<CarVO> carSearchListData(Map map);
 	public int carSearchTotalPage();
 	public CarVO carDetailData(int no);
+	public void insertCarReserve(Map map);
 }

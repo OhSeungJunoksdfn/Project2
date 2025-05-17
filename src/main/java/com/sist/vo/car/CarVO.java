@@ -1,5 +1,7 @@
 package com.sist.vo.car;
 
+import java.util.Date;
+
 import lombok.Data;
 
 @Data
@@ -26,4 +28,5 @@ DETAIL_OPTION              VARCHAR2(500)
 	int no,seat,non_ins_price,normal_ins_price,premium_ins_price,car_year;
 	String name,poster,car_class,manufacturer,fuel,non_ins_qual,normal_ins_qual,normal_ins_desc,
 	premium_ins_qual,premium_ins_desc,detail_option;
+	Date pickup_date,return_date;
 }

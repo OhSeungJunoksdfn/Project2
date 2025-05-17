@@ -74,4 +74,12 @@ public class CarController {
 		return "main/main";
 	}
 	
+	@GetMapping("car/car_reserve_ok.do")
+	public String car_reserve_ok(Model model)
+	{
+		
+		model.addAttribute("main_jsp","../car/car_reserve_ok.jsp");
+		return "main/main";
+	}
+	
 }

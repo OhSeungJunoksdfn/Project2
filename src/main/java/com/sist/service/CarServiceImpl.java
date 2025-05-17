@@ -42,6 +42,12 @@ public class CarServiceImpl implements CarService{
 		// TODO Auto-generated method stub
 		return dao.carDetailData(no);
 	}
+
+	@Override
+	public void insertCarReserve(Map map) {
+		// TODO Auto-generated method stub
+		dao.insertCarReserve(map);
+	}
 	
 	
 }
