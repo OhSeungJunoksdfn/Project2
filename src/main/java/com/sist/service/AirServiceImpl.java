@@ -109,9 +109,4 @@ public class AirServiceImpl implements AirService{
 		return aDAO.deletePassenger(passengerId);
 	}
 
-	@Override
-	public List<FlightInfoVO> getInbound(Map<String, Object> params) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

@@ -8,16 +8,16 @@ import org.springframework.web.bind.annotation.*;
 
 import com.sist.service.AirService;
 import com.sist.vo.air.*;
-
+/* REST < Vue.js용 */
 @RestController
 @RequestMapping("air/")
 public class AirRestController {
     @Autowired
     private AirService service;
 
-    @GetMapping("/outbound.do")
+    @GetMapping("outbound.do")
     public Map<String,Object> flightlistVue(
-            @RequestParam Integer page,
+            @RequestParam(required=false) Integer page,
             @RequestParam(required = false) String from,
             @RequestParam(required = false) String to,
             @RequestParam(required = false) String arrtime,

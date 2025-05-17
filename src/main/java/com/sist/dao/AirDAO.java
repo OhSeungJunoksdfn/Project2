@@ -118,6 +118,7 @@ public class AirDAO {
 	        int end   = page * pageSize;
 	        return mapper.selectInbound(start, end, from, to, returnDate);
 	    }
+	    /** 왕복편(오는 편) 총 페이지 수 조회 */
 	    public int getInboundCount(String from, String to, String returnDate) {
 	        return mapper.countInbound(from, to, returnDate);
 	    }

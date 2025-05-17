@@ -43,7 +43,7 @@
           TO_CHAR(dep_time,'YYYY-MM-DD HH24:MI') AS dep_time,
           TO_CHAR(arr_time,'YYYY-MM-DD HH24:MI') AS arr_time,
           economy_charge,
-          prestige_charge,
+          prestige_charge
         FROM FLIGHT_INFO
         ORDER BY dep_time
       ) f
@@ -59,7 +59,7 @@
 
   <!-- FLIGHT_INFO 상세 조회 -->
   <select id="selectFlightById"
-          parameterType="map"
+          parameterType="int"
           resultType="com.sist.vo.air.FlightInfoVO">
     SELECT
       flight_id,
@@ -182,7 +182,7 @@
   </select>
   
    <!-- 회원정보 삽입 -->
-   <insert id="insertPassenger" parameterType="com.sist.vo.air.PassengersVO">
+   <insert id="insertpassenger" parameterType="com.sist.vo.air.PassengersVO">
     INSERT INTO PASSENGERS(PASSENGER_ID, FIRST_NAME, LAST_NAME, PASSPORT_NUMBER, BIRTHDAY, SEX, EMAIL, CREATED_AT, UPDATED_AT)
     VALUES(#{passenger_id}, #{first_name}, #{last_name}, #{passport_number}, #{birthday}, #{sex}, #{email}, SYSDATE, SYSDATE)
   </insert>

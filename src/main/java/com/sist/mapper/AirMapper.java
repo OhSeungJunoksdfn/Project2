@@ -7,8 +7,8 @@ import org.apache.ibatis.annotations.Param;
 import org.mybatis.spring.annotation.MapperScan;
 
 import com.sist.vo.air.*;
-
-@MapperScan
+/* Mybatis 스캐닝 어노테이션 => */
+@MapperScan("com.sist.mapper")
 public interface AirMapper {
  
 	    /** 1) AIRLINES 전체 조회 */
@@ -28,21 +28,7 @@ public interface AirMapper {
 	    List<FlightInfoVO> selectFlightsFiltered(Map<String, Object> params);
 	    int selectFlightsCountFiltered(Map<String, Object> params);
 
-	    /** 6) 승객 삽입 */
-	    void insertpassengers(PassengersVO vo);
-
-	    /** 7) 단일 승객 조회 (ID 기준) */
-	    PassengersVO selectPassengerById(@Param("passengerId") String passengerId);
-
-	    /** 8) 전체 승객 조회 */
-	    List<PassengersVO> selectAllPassengers();
-
-	    /** 9) 승객 정보 수정 */
-	    int updatePassenger(PassengersVO vo);
-
-	    /** 10) 승객 삭제 */
-	    int deletePassenger(@Param("passengerId") String passengerId);
-    
+	    
 	    /** 편도(가는 편) 조회 */
 	    List<FlightInfoVO> selectOutbound(
 	      @Param("start")   int start,
@@ -66,7 +52,6 @@ public interface AirMapper {
 	      @Param("from")    String from,
 	      @Param("to")      String to,
 	      @Param("date")    String date  // 돌아오는 날짜
-//	      @Param("flightid") int flightid
 	    );
 
 	    /** 왕복(오는 편) 총 페이지 수 */
@@ -75,6 +60,22 @@ public interface AirMapper {
 	      @Param("to")   String to,
 	      @Param("date") String date
 	    );
+	    
+	    /** 6) 승객 삽입 */
+	    void insertpassengers(PassengersVO vo);
+
+	    /** 7) 단일 승객 조회 (ID 기준) */
+	    PassengersVO selectPassengerById(@Param("passengerId") String passengerId);
+
+	    /** 8) 전체 승객 조회 */
+	    List<PassengersVO> selectAllPassengers();
+
+	    /** 9) 승객 정보 수정 */
+	    int updatePassenger(PassengersVO vo);
+
+	    /** 10) 승객 삭제 */
+	    int deletePassenger(@Param("passengerId") String passengerId);
+    
 
 		
 	}

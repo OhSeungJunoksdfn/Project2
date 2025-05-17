@@ -9,17 +9,16 @@
   <style> span:hover, a:hover { cursor: pointer; } </style>
   <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <!-- 검색 폼 컴포넌트 -->
   <script src="./air_reserve_tab.js"></script>
 </head>
 <body>
   <div id="listApp" style="height:80vh; overflow-y:auto;">
-    <!-- 검색 탭 -->
+    <!-- 검색 탭 (handleSearch → 편도 모드) -->
     <air-reserve-tab @search="handleSearch"></air-reserve-tab>
 
-    <!-- 결과 테이블: list 배열이 있고, 길이가 있을 때만 렌더 -->
-    <section v-if="list && list.length" class="ftco-section" style="margin:0; padding:20px;">
-      <div class="container">
+    <!-- 결과 테이블: list가 있을 때만 렌더 -->
+    <section class="ftco-section" style="margin:0; padding:20px;">
+      <div class="container" v-if="list.length">
         <table class="table table-bordered text-center">
           <thead>
             <tr>
@@ -29,141 +28,156 @@
               <th>출발공항 → 도착공항</th>
               <th>출발시간</th>
               <th>도착시간</th>
-              <th>운임(1인기준/₩)</th>
+              <th>운임(₩)</th>
               <th>선택</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="vo in list" :key="vo.flight_id">
-              <!-- 1) airline_code 대신 mapper에서 조인한 airline_name prop 사용 -->
-              
               <td>{{ vo.flight_id }}</td>
               <td>{{ vo.airline_code }}</td>
-
               <td>{{ vo.flight_number }}</td>
-
-              <!-- 2) dep_airport_code/arr_airport_code 대신 dep_airport, arr_airport 사용 -->
+              <!-- 편도/왕복 공통: data/state 에 따라 변경 -->
               <td>{{ vo.dep_airport_code }} → {{ vo.arr_airport_code }}</td>
-
               <td>{{ vo.dep_time }}</td>
               <td>{{ vo.arr_time }}</td>
-
               <td>
-			     <span v-if="vo.economy_charge === 0">결항</span>
-			     <span v-else>{{ vo.economy_charge.toLocaleString() }}</span>
-			   </td>
-
+                <span v-if="vo.economy_charge===0">결항</span>
+                <span v-else>{{ vo.economy_charge.toLocaleString() }}</span>
+              </td>
               <td>
-                <button  class="btn btn-sm btn-success" @click.prevent="goToReturn(vo.flight_id)">왕복선택</button>
-                <button class="btn btn-sm btn-warning" @click="goToPassengerForm(vo.flight_id)">편도예약</button>
+                <!-- 편도 vs 왕복 구분 -->
+                <button v-if="!isInbound"
+                        class="btn btn-sm btn-success"
+                        @click="goToReturn(vo.flight_id)">
+                  왕복선택
+                </button>
+                <button class="btn btn-sm btn-warning"
+                        @click="goToPassengerForm(vo.flight_id)">
+                  편도예약
+                </button>
               </td>
             </tr>
           </tbody>
         </table>
-        <div ref="sentinel" style="height:1px;"></div>
       </div>
+     <div ref="sentinel" style="height:1px;"></div>
     </section>
   </div>
-
 
 <script>
 Vue.createApp({
   data() {
     return {
-      list: [],        
-      curpage: 1,
+      list: [], 
+      curpage: 1, 
       totalpage: 0,
-      from: '',
-      to: '',
-      departureDate: '',
-      returnDate: '',
-      travellers: null
+      from:'', 
+      to:'', 
+      departureDate:'', 
+      returnDate:'', 
+      adults: 1,
+      children: 0,
+      isInbound: false   // ← 편도(false) vs 왕복(true)
     };
   },
   methods: {
+    // 1) 검색(편도 모드)
     handleSearch(filters) {
-      this.curpage       = 1;
-      this.list          = [];
-      this.from          = filters.from;
-      this.to            = filters.to;
-      this.departureDate = filters.departureDate || '';
-      this.returnDate    = filters.returnDate    || '';
-      this.travellers    = filters.travellers;
+      this.isInbound      = false;
+      this.curpage        = 1;
+      this.list           = [];
+      this.from           = filters.from;
+      this.to             = filters.to;
+      this.departureDate  = filters.departureDate;
+      this.returnDate     = filters.returnDate;
+      this.adults         = filters.adults;
+      this.children       = filters.children;
       this.fetchPage();
     },
-    
-    goToReturn(flightId) {
-        const params = new URLSearchParams({
-          from: this.to,                     // 반대로
-          to: this.from,                     // 반대로
-          departureDate: this.returnDate,    // "오는 날" 기준
-          returnDate: this.departureDate,    // (선택) 원래 가는 날
-          travellers: this.travellers
-        });
-        axios.get("../air/air_list_arr.do",{
-        	params:{
-        		from: this.to,                     // 반대로
-                to: this.from,                     // 반대로
-                departureDate: this.returnDate,    // "오는 날" 기준
-                returnDate: this.departureDate,    // (선택) 원래 가는 날
-                travellers: this.travellers
-        	}
-        })
-        .catch(err => {
-        	console.log(err.response)
-        })
-        
-        //window.location.href = `/air/air_list_arr.do?${params.toString()}`;
-      },
 
-      goToPassengerForm(flightId) {
-        console.log('▶ goToPassengerForm, flightId =', flightId);
-        const url = `/air/passenger_info.do?flightId=${flightId}`;
-        console.log('▶ 이동할 URL:', url);
-        window.location.href = url;
-      },
-      
+    // 2) 편도 API
     fetchPage() {
-      axios.get('../air/list_vue.do', {
-        params: {
-          page: this.curpage,
-          from: this.from,
-          to: this.to,
-          date: this.departureDate,
-          travellers: this.travellers
+      axios.get('/air/list_vue.do', {
+        params:{
+          page:this.curpage,
+          from:this.from,
+          to:this.to,
+          date:this.departureDate,
+          adults:   this.adults,
+          children: this.children
         }
       })
-      .then(res => {
+      .then(res=>{
         const d = res.data;
-        // 첫 페이지면 덮어쓰기, 이후면 이어붙이기
-        if (this.curpage === 1) {
-          this.list = Array.isArray(d.list) ? d.list : [];
-        } else {
-          this.list = this.list.concat(d.list || []);
-        }
-        this.totalpage = d.totalpage || 0;
+        // 첫 페이지면 덮어쓰기, else 이어붙이기
+        this.list = this.curpage===1
+                    ? (d.list||[])
+                    : this.list.concat(d.list||[]);
+        this.totalpage = d.totalpage;
       })
-      .catch(err => {
-        console.error('API 호출 중 오류:', err);
-      });
+      .catch(console.error);
     },
-    selectFlight(id) {
-      alert(`편번 ${id} 선택됨`);
+
+   // 3) 왕복 선택 시 별도 JSP 페이지로 이동
+   goToReturn(outboundFlightId) {
+     // from/to 뒤집기
+     const totalAdults  = this.adults;
+  	 const totalChildren = this.children;
+	 const params = new URLSearchParams({
+	   from:          this.to,
+	   to:            this.from,
+	   departureDate: this.returnDate,  // 컨트롤러가 기대하는 키
+	   returnDate:    this.departureDate,
+	   adults:        totalAdults,
+	   children:      totalChildren,
+	   outboundFlightId: outboundFlightId
+	 });
+     // 전체 페이지 리다이렉트
+     
+	  // 2) (디버깅용) 콘솔
+	  console.log('redirect params:', params.toString());
+	  //    => from=GMP&to=CJU&departureDate=…&returnDate=…&travellers=…
+
+	  // 3) 완성된 쿼리스트링을 한 번에 붙여 리다이렉트
+	  window.location.href = '/air/air_list_arr.do?' + params.toString();
+   },
+
+    // 4) 왕복 API
+    fetchInboundPage() {
+      axios.get('/air/air_list_arr_vue.do', {
+        params:{
+          page:this.curpage,
+          from:this.from,
+          to:this.to,
+          returnDate:this.returnDate,
+          adults:        this.adults,
+   	      children:      this.children
+        }
+      })
+      .then(res=>{
+        const d = res.data;
+        this.list = this.curpage===1
+                    ? (d.list||[])
+                    : this.list.concat(d.list||[]);
+        this.totalpage = d.totalpage;
+      })
+      .catch(console.error);
+    },
+
+    goToPassengerForm(id) {
+      window.location.href = `/air/passenger_info.do?flightId=${id}`;
     }
   },
   mounted() {
-    // viewport 기준, threshold 1.0
-    const io = new IntersectionObserver(entries => {
-      if (entries[0].isIntersecting && this.curpage < this.totalpage) {
-        this.curpage++;
-        this.fetchPage();
-      }
-    }, {
-      root: null,         // 전체 창(viewport)
-      rootMargin: '0px',
-      threshold: 1.0      // sentinel이 완전히 보일 때만
-    });
-    // sentinel은 테이블 하단에 <div ref="sentinel"></div>로 배치해두세요
+    // 무한 스크롤: 편도/왕복 모드에 따라 분기
+    const io = new IntersectionObserver(entries=>{
+      if(!entries[0].isIntersecting) return;
+      if(this.curpage >= this.totalpage) return;
+      this.curpage++;
+      if(this.isInbound) this.fetchInboundPage();
+      else               this.fetchPage();
+    },{ root:null, rootMargin:'200px', threshold:1.0 });
     io.observe(this.$refs.sentinel);
   }
 })

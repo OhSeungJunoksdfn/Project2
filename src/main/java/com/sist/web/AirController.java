@@ -34,25 +34,32 @@ public class AirController {
     }
     
     @GetMapping("air_list_arr.do")
-    public String inbound(Model model) {
-        // 검색폼에 사용할 드롭다운 데이터
+    public String inbound(
+            @RequestParam String from,
+            @RequestParam String to,
+            @RequestParam String departureDate,
+            @RequestParam String returnDate,
+            @RequestParam int adults,
+            @RequestParam int children,
+            Model model) {
+
+        // 드롭다운 데이터
         List<AirLinesVO> airlines = service.getAllAirlines();
         List<AirportsVO> airports = service.getAllAirports();
         model.addAttribute("airlines", airlines);
         model.addAttribute("airports", airports);
 
-        // 실제 jsp 위치를 메인 레이아웃에 전달
-        model.addAttribute("main_jsp", "../air/air_list.jsp");
+        // **검색 기준 파라미터**도 모델에 담기
+        model.addAttribute("from",          from);
+        model.addAttribute("to",            to);
+        model.addAttribute("departureDate", departureDate);
+        model.addAttribute("returnDate",    returnDate);
+        model.addAttribute("adults",    adults);
+        model.addAttribute("children", children);
+        model.addAttribute("main_jsp", "../air/air_list_arr.jsp");
         return "main/main";  
     }
-    /** 2) 예약 확인 화면 (flightId 받아서) */
-    @GetMapping("air_reserve.do")
-    public String air_reserve(
-            @RequestParam("flightId") int flightId,Model model) {
-        model.addAttribute("flight", service.getFlightById(flightId));
-        model.addAttribute("main_jsp", "../air/air_reserve.jsp");
-        return "main/main";
-    }
+
 
     /** 3) 승객 입력 폼 화면 */
     @GetMapping("passenger_info.do")

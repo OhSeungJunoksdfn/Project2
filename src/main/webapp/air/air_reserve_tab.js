@@ -1,4 +1,12 @@
 window.air_reserve_tab={
+props: {
+    initialFrom:        { type: String, default: '' },
+    initialTo:          { type: String, default: '' },
+    initialArrtime:     { type: String, default: '' },
+    initialDeptime:     { type: String, default: '' },
+    initialAdults:    	{ type: Number, default: 1 },
+    initialChildren:  	{ type: Number, default: 0 }, 
+  },
 template:
 `
 	<div style="width:100%;display:flex;justify-content:center;">
@@ -104,14 +112,15 @@ template:
 `,
   emits:['search'],
   data() {
-    return {
-      from: '',
-      to: '',
-      arrtime: '',
-      deptime: '',
-      adults: 1,
-      children: 0,
-      errorMsg: ''
+        return {
+      // 부모로부터 받은 초기값을 v-model 에 바인딩
+      from:      this.initialFrom,
+      to:        this.initialTo,
+     arrtime:   this.initialArrtime,
+      deptime:   this.initialDeptime,
+     adults:   this.initialAdults,
+     children: this.initialChildren,
+     errorMsg:  ''
     };
   },
   methods: {
@@ -155,7 +164,8 @@ template:
 	    to:this.to,
 	    departureDate:this.arrtime,
 	    returnDate:this.deptime || null,
-	    ttravellers: this.adults + this.children
+	    adults:        this.adults,
+        children:      this.children
 	  });
     }
   }

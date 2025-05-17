@@ -21,7 +21,6 @@ public interface AirService {
 	public List<PassengersVO> getAllPassengers();
 	public int updatePassenger(PassengersVO passenger);
 	public int deletePassenger(String passengerId);
-	
 	public List<FlightInfoVO> getOutbound(
             int page, int pageSize,
             String from, String to, String date);
@@ -30,7 +29,5 @@ public interface AirService {
             int page, int pageSize,
             String from, String to, String returnDate);
 	public int getInboundCount(String from, String to, String returnDate);
-	public List<FlightInfoVO> getInbound(Map<String, Object> params);
-	
 	
 }
