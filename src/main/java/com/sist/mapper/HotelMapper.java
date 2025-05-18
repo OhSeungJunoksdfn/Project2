@@ -69,7 +69,26 @@ public interface HotelMapper {
 			+ "total_price, stay_days, booking_date, status) "
 			+ "VALUES "
 			+ "(hotel_reservation_reserve_no_seq.nextval, #{hotel_no}, #{room_no}, #{member_id}, #{username}, "
-			+ "#{useremail, jdbcType=VARCHAR}, #{userphone, jdbcType=VARCHAR}, #{checkin}, #{checkout}, #{person}, #{total_price}, #{stay_days}, SYSDATE, '예약 완료')")
+			+ "#{useremail, jdbcType=VARCHAR}, #{userphone, jdbcType=VARCHAR}, #{checkin}, #{checkout}, #{person}, #{total_price}, #{stay_days}, SYSDATE, '예약 진행 중')")
 	public int hotelReserveInsertData(HotelReserveVO vo);
+	
+	@Select("SELECT rv.no, rv.hotel_no, rv.room_no, rv.username, checkin, checkout, "
+			+ "rv.stay_days, rv.total_price, rv.booking_date, rv.status, rv.person, rv.useremail, rv.userphone, h.title AS hotel_title, hr.title AS room_title "
+			+ "FROM hotel_reservation rv "
+			+ "JOIN hotel h ON hotel_no = h.no "
+			+ "JOIN hotel_room hr ON room_no = hr.no "
+			+ "JOIN projectmember m ON member_id = m.id "
+			+ "WHERE member_id = #{member_id}")
+	public List<HotelReserveVO> hotelReserveListData(String member_id);
+	
+	@Select("SELECT rv.no, rv.hotel_no, rv.room_no, rv.member_id, rv.username, checkin, checkout, "
+			+ " rv.stay_days, rv.total_price, rv.booking_date, rv.status, rv.person, rv.useremail, rv.userphone, "
+			+ "h.title AS hotel_title, hr.title AS room_title, hi.checkintime, hi.checkouttime "
+			+ "FROM hotel_reservation rv "
+			+ "JOIN hotel h ON hotel_no = h.no "
+			+ "JOIN hotel_info hi ON hi.hotel_no = h.no "
+			+ "JOIN hotel_room hr ON room_no = hr.no "
+			+ "WHERE rv.no = #{no}")
+	public HotelReserveVO hotelReserveDetailData(int no);
 	
 }

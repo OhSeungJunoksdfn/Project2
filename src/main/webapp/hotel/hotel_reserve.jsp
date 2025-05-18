@@ -31,7 +31,7 @@
                     <th width="20%" style="background-color: #e9e9e9; color: black">
                       예약구분
                     </th>
-                    <td width="80%" style="color: red">[객실] 확정예약</td>
+                    <td width="80%" style="color: red">[객실 예약]</td>
                   </tr>
                   <tr>
                     <th width="20%" style="background-color: #e9e9e9; color: black">
@@ -243,11 +243,13 @@
               </div>
               <div class="form-group m-2">
                 <div class="form-field">
+                 <a href="javascript:history.back()">
                   <input
                     type="submit"
                     value="취소하기"
                     class="form-control r-12 btn btn-info"
                   />
+                 </a>
                 </div>
               </div>
             </div>
