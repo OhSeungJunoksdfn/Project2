@@ -32,9 +32,9 @@ public class CarServiceImpl implements CarService{
 	}
 
 	@Override
-	public int carSearchTotalPage() {
+	public int carSearchTotalPage(Map map) {
 		// TODO Auto-generated method stub
-		return dao.carSearchTotalPage();
+		return dao.carSearchTotalPage(map);
 	}
 
 	@Override

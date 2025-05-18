@@ -21,12 +21,12 @@
   </select>
   
   <select id="carSearchListData" resultType="CarVO" parameterType="hashmap">
-    SELECT no,poster,name,car_class,seat,fuel,premium_ins_price,NON_INS_QUAL,pickup_date,return_date,num
-	  FROM (SELECT no,poster,name,car_class,seat,fuel,premium_ins_price,NON_INS_QUAL,pickup_date,return_date,rownum as num
-	  FROM (SELECT c.no,poster,name,car_class,seat,fuel,premium_ins_price,NON_INS_QUAL,pickup_date,return_date
+    SELECT no,poster,name,car_class,seat,fuel,premium_ins_price,NON_INS_QUAL,num
+	  FROM (SELECT no,poster,name,car_class,seat,fuel,premium_ins_price,NON_INS_QUAL,rownum as num
+	  FROM (SELECT DISTINCT c.no,poster,name,car_class,seat,fuel,premium_ins_price,NON_INS_QUAL
 	  FROM car c LEFT OUTER JOIN car_reserve cr ON c.no = cr.car_no
-	  WHERE pickup_date is null or 
-	  cr.car_no not in(
+	  WHERE (pickup_date is null OR
+	  cr.car_no NOT IN(
 	  		SELECT car_no
     		FROM car_reserve WHERE(
 		  		(pickup_date BETWEEN #{pickup_date} AND #{return_date}) 
@@ -37,12 +37,44 @@
 		  		OR
 		  		(#{return_date} BETWEEN pickup_date AND return_date)
 	  		)
-	  	)
+	  	))
+		<if test="class_checked != null and class_checked.length > 0">
+		  AND (
+		  <foreach item="class" collection="class_checked" separator="OR" >
+		    car_class LIKE '%'||#{class}||'%'
+		  </foreach>
+		  )
+	  </if>
 	  ORDER BY c.no ASC))
 	  WHERE num BETWEEN #{start} AND #{end}
+	  
   </select>
   
-  <select id="carSearchTotalPage" resultType="int" parameterType="string">
-  	SELECT CEIL(COUNT(*)/9.0) FROM car 
+  <select id="carSearchTotalPage" resultType="int" parameterType="hashmap">
+   	SELECT CEIL(COUNT(*)/9.0) 
+   	FROM(SELECT DISTINCT c.no
+    FROM car c LEFT OUTER JOIN car_reserve cr ON c.no = cr.car_no
+    WHERE (pickup_date is null OR
+	  cr.car_no NOT IN(
+	  		SELECT car_no
+    		FROM car_reserve WHERE(
+		  		(pickup_date BETWEEN #{pickup_date} AND #{return_date}) 
+		  		OR
+		  		(return_date BETWEEN #{pickup_date} AND #{return_date}) 
+		  		OR
+		  		(#{pickup_date} BETWEEN pickup_date AND return_date)
+		  		OR
+		  		(#{pickup_date} BETWEEN pickup_date AND return_date)
+	  		)
+	  	))
+		<if test="class_checked != null and class_checked.length > 0">
+		  AND (
+		  <foreach item="class" collection="class_checked" separator="OR" >
+		    car_class LIKE '%'||#{class}||'%'
+		  </foreach>
+		  )
+	  </if>
+	)
+  	
   </select>
 </mapper>

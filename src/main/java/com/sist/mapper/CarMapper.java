@@ -63,6 +63,6 @@ public interface CarMapper {
     */
    
    public List<CarVO> carSearchListData(Map map);
-   public int carSearchTotalPage();
+   public int carSearchTotalPage(Map map);
    
 }

@@ -52,30 +52,37 @@ public class CarRestController {
 	@GetMapping("car/list_search_vue.do")
 	public Map car_list_search(int page,
 				String pudate,String putime,
-				String rdate,String rtime) {
+				String rdate,String rtime,
+				String class_checked, String fuel_checked) {
 		
 		int rowSize=9;
+		System.out.println(class_checked);
+		System.out.println(fuel_checked);
 		SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm");
 		Map map = new HashMap();
 		map.put("start",(page-1)*rowSize+1);
 		map.put("end",page*rowSize);
+
+
+		map.put("class_checked", class_checked.split(","));
+		map.put("fuel_checked", fuel_checked.split(","));
 		String puRegDateStr = pudate + " " + putime;
 		String rRegDateStr = rdate + " " + rtime;
-		Date puRegDate = null;
-		Date rRegDate = null;
+		Date puRegDate;
+		Date rRegDate;
 		try {
 			puRegDate = formatter.parse(puRegDateStr);
 			rRegDate = formatter.parse(rRegDateStr);
-			System.out.println(puRegDateStr.toString());
+			map.put("pickup_date", puRegDate);
+			map.put("return_date", rRegDate);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		map.put("pickup_date", puRegDate);
-		map.put("return_date", rRegDate);
+		
 		
 		List<CarVO> list=service.carSearchListData(map);
-		int totalpage=service.carSearchTotalPage();
+		int totalpage=service.carSearchTotalPage(map);
 		
 		final int BLOCK=10;
 		int startPage=((page-1)/BLOCK*BLOCK)+1;

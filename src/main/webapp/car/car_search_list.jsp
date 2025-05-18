@@ -36,7 +36,7 @@
               <h3 class="heading mb-4">필터</h3>
               <form action="#">
                 <div class="fields">
-                  <p style="font-size: 18px">필터명</p>
+                  <p style="font-size: 16px">지역</p>
                   <div class="form-group col-12 px-0">
                     <label class="checkBoxAll pb-1">
                       <input
@@ -54,7 +54,7 @@
                         id="test"
                         style="display: none"
                       />
-                      <span class="checkBtn">check</span>
+                      <span class="checkBtn">서울</span>
                     </label>
                     <label>
                       <input
@@ -63,54 +63,69 @@
                         id="test"
                         style="display: none"
                       />
-                      <span class="checkBtn">check</span>
-                    </label>
-                    <label>
-                      <input
-                        type="checkbox"
-                        name="test"
-                        id="test"
-                        style="display: none"
-                      />
-                      <span class="checkBtn">check</span>
-                    </label>
-                    <label c>
-                      <input
-                        type="checkbox"
-                        name="test"
-                        id="test"
-                        style="display: none"
-                      />
-                      <span class="checkBtn">check</span>
-                    </label>
-                    <label>
-                      <input
-                        type="checkbox"
-                        name="test"
-                        id="test"
-                        style="display: none"
-                      />
-                      <span class="checkBtn">check</span>
+                      <span class="checkBtn">제주</span>
                     </label>
                   </div>
-                  <div class="form-group">
+                  <hr>
+                  <p style="font-size: 16px">차량등급</p>
+                  <div class="form-group col-12 px-0">
+					<label style="margin-right:10px">
+            			<input type="checkbox" class="class_all" @click="handleClassCheckAll()" value="전체">전체
+            		</label>
+            		<label style="margin-right:10px">
+            			<input type="checkbox" class="car_class_check" @click="handleFilter()" value="경차">경차
+            		</label>
+					<label style="margin-right:10px">
+            			<input type="checkbox" class="car_class_check" @click="handleFilter()" value="소형차">소형차
+            		</label>
+                    <label style="margin-right:10px">
+            			<input type="checkbox" class="car_class_check" @click="handleFilter()" value="준중형">준중형
+            		</label>
+            		<label style="margin-right:10px">
+            			<input type="checkbox" class="car_class_check" @click="handleFilter()" value="중형차">중형차
+            		</label>
+            		<label style="margin-right:10px">
+            			<input type="checkbox" class="car_class_check" @click="handleFilter()" value="승합">승합차
+            		</label>
+            		<label style="margin-right:10px">
+            			<input type="checkbox" class="car_class_check" @click="handleFilter()" value="수입">수입차
+            		</label>
+            		
+            		<label style="margin-right:10px">
+            			<input type="checkbox" class="car_class_check" @click="handleFilter()" value="RV/SUV">RV/SUV
+            		</label>
+                  </div>
+                  <hr>
+                  <p style="font-size: 16px">연료</p>
+                  <div class="form-group col-12 px-0">
+					<label style="margin-right:10px">
+            			<input type="checkbox" class="fuel_all" @click="handleFuelCheckAll()" value="전체">전체
+            		</label>
+            		<label style="margin-right:10px">
+            			<input type="checkbox" class="car_fuel_check" @click="handleFilter()" value="휘발유">휘발유
+            		</label>
+					<label style="margin-right:10px">
+            			<input type="checkbox" class="car_fuel_check" @click="handleFilter()" value="경유">경유
+            		</label>
+                    <label style="margin-right:10px">
+            			<input type="checkbox" class="car_fuel_check" @click="handleFilter()" value="LPG">LPG
+            		</label>
+            		<label style="margin-right:10px">
+            			<input type="checkbox" class="car_fuel_check" @click="handleFilter()" value="전기">전기
+            		</label>
+                  </div>
+                  <hr>
+				  <p style="font-size: 16px">차량 모델</p>
+                  <div class="form-field" style="margin-bottom:30px">
                     <input
+                      style="font-weight:250"
                       type="text"
-                      id="checkin_date"
-                      class="form-control checkin_date"
-                      placeholder="Date from"
+                      class="form-control"
+                      placeholder="모델명으로 검색할 수 있습니다"
                     />
                   </div>
-                  <div class="form-group">
-                    <input
-                      type="text"
-                      id="checkout_date"
-                      class="form-control checkout_date"
-                      placeholder="Date to"
-                    />
-                  </div>
-
-                  <div class="form-group">
+				  <hr>
+                  <div class="form-group" style="margin-top:20px">
                     <input
                       type="submit"
                       value="Search"
@@ -220,6 +235,8 @@
     			  putime:'${putime}',
     			  rdate:'${rdate}',
     			  rtime:'${rtime}',
+    			  class_checked:'',
+    			  fuel_checked:''
     		  }
     	  },
     	  computed: {
@@ -228,6 +245,26 @@
     			this.dataRecv()
     	  },
     	  methods: {
+    		handleClassCheckAll(){
+    			$('.car_class_check').prop('checked', $(".class_all").is(':checked'));
+    			this.handleFilter()
+    		},
+    		handleFuelCheckAll(){
+    			$('.car_fuel_check').prop('checked', $(".fuel_all").is(':checked'));
+    			this.handleFilter()
+    		},
+    		handleFilter(){
+    			this.class_checked=$('.car_class_check:checked').map(function() {
+					return $(this).val()
+  				}).get().join(",");
+    			this.fuel_checked=$('.car_fuel_check:checked').map(function() {
+					return $(this).val()
+  				}).get().join(",");
+    			
+    			this.dataRecv();
+    			console.log("class",this.class_checked.length)
+    			console.log("fuel",this.fuel_checked.length)
+    		},
     		prev(){
       			this.curpage = this.startPage-1
       			this.dataRecv()
@@ -261,6 +298,8 @@
 						putime:this.putime,
 						rdate:this.rdate,
 						rtime:this.rtime,
+						class_checked:this.class_checked,
+						fuel_checked:this.fuel_checked
       				}
 
       			}).then(res => {
@@ -270,6 +309,7 @@
       			    this.totalpage = res.data.totalpage
       			    this.startPage = res.data.startPage
       			    this.endPage = res.data.endPage
+      			    console.log(this.class_checked)
       			    
       			  	this.$nextTick(() => {
       		          	contentWayPoint()

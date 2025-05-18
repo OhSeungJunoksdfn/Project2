@@ -10,6 +10,7 @@
 			/WEB-INF/datasource/application-datasource.xml
 			/WEB-INF/security/application-sequrity.xml
 			</param-value>
+			
       </context-param>
 	 
     
@@ -58,7 +59,6 @@
 		    <filter-name>springSecurityFilterChain</filter-name>
 		    <url-pattern>/*</url-pattern>
 		</filter-mapping> 
-		
 
 		
 </web-app>
