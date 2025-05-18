@@ -57,4 +57,13 @@ public class HotelDAO {
 	{
 		return mapper.hotelMainData();
 	}
+	// 옮길지 의논하기
+	public List<HotelReserveVO> hotelReserveListData(String member_id)
+	{
+		return mapper.hotelReserveListData(member_id);
+	}
+	public HotelReserveVO hotelReserveDetailData(int no)
+	{
+		return mapper.hotelReserveDetailData(no);
+	}
 }

@@ -20,4 +20,6 @@ public interface HotelService {
 	public HotelRoomVO hotelReserveData(Map map);
 	public int hotelReserveInsertData(HotelReserveVO vo);
 	public List<HotelVO> hotelMainData();
+	public List<HotelReserveVO> hotelReserveListData(String member_id);
+	public HotelReserveVO hotelReserveDetailData(int no);
 }

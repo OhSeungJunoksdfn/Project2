@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -332,15 +332,25 @@
     			this.dataRecv()
     	  },
     	  methods: {
-    		searchbar() {
-    			console.log('checkin:', this.checkin, 'checkout:', this.checkout)
-    			if (!this.checkin || !this.checkout) {
-    				  alert("체크인·체크아웃을 모두 선택해주세요.")
-    				  return
-    				}
-    			this.curpage = 1
-    			this.dataRecv()
-    		},
+    		  searchbar() {
+      			console.log('checkin:', this.checkin, 'checkout:', this.checkout)
+      			if (!this.checkin || !this.checkout) {
+      				alert("체크인·체크아웃을 모두 선택해주세요.")
+      				return
+      			}
+      			else if (new Date(this.checkin) < new Date()) {
+      				alert("체크인은 오늘 이후여야 합니다.")
+      				return
+      			} 
+      			else if (new Date(this.checkin) >= new Date(this.checkout)) {
+      				alert("체크아웃은 체크인 이후여야 합니다.")
+      				return
+      			}
+      			else {
+      				this.curpage = 1
+          			this.dataRecv()
+      			}
+      		},
     		infoValue(key) {
     			return this[key]
     			this.curpage = 1
