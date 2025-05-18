@@ -111,4 +111,11 @@ public class HotelController {
 		model.addAttribute("main_jsp", "../hotel/hotel_reserve_ok.jsp");
 		return "main/main";
 	}
+//	@GetMapping("hotel_reserve_list.do")
+//	public String hotel_reserve_list(Model model)
+//	{
+//		model.addAttribute("mypage_jsp", "../mypage/hotel_reserve_list.jsp");
+//		model.addAttribute("main_jsp", "../mypage/main.jsp");
+//		return "main/main";
+//	}
 }
