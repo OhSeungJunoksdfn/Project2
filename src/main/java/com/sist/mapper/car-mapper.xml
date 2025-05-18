@@ -44,7 +44,14 @@
 		    car_class LIKE '%'||#{class}||'%'
 		  </foreach>
 		  )
-	  </if>
+	  	</if>
+	  	<if test="fuel_checked != null and fuel_checked.length > 0">
+		  AND (
+		  <foreach item="fuel" collection="fuel_checked" separator="OR" >
+		    fuel LIKE '%'||#{fuel}||'%'
+		  </foreach>
+		  )
+	  	</if>
 	  ORDER BY c.no ASC))
 	  WHERE num BETWEEN #{start} AND #{end}
 	  
@@ -73,7 +80,14 @@
 		    car_class LIKE '%'||#{class}||'%'
 		  </foreach>
 		  )
-	  </if>
+	  	</if>
+	  	<if test="fuel_checked != null and fuel_checked.length > 0">
+		  AND (
+		  <foreach item="fuel" collection="fuel_checked" separator="OR" >
+		    fuel LIKE '%'||#{fuel}||'%'
+		  </foreach>
+		  )
+	  	</if>
 	)
   	
   </select>

@@ -34,7 +34,7 @@
           >
             <div class="sidebar-wrap ftco-animate">
               <h3 class="heading mb-4">필터</h3>
-              <form action="#">
+              <form action="#" @submit.prevent>
                 <div class="fields">
                   <p style="font-size: 16px">지역</p>
                   <div class="form-group col-12 px-0">
@@ -128,8 +128,9 @@
                   <div class="form-group" style="margin-top:20px">
                     <input
                       type="submit"
-                      value="Search"
+                      value="검색 조건 초기화"
                       class="btn btn-primary py-3 px-5"
+                      @click="searchInit()"
                     />
                   </div>
                 </div>
@@ -245,6 +246,11 @@
     			this.dataRecv()
     	  },
     	  methods: {
+    		searchInit(){
+    			$('.car_class_check, .class_all').prop('checked', false);
+    			$('.car_fuel_check, .fuel_all').prop('checked', false);
+    			this.handleFilter()
+    		},
     		handleClassCheckAll(){
     			$('.car_class_check').prop('checked', $(".class_all").is(':checked'));
     			this.handleFilter()
