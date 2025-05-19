@@ -20,8 +20,9 @@
             </tr>
             <tr>
                 <td>
-                    <textarea readonly style="min-height:300px; width:100%; overflow:auto; white-space:pre-wrap; word-wrap:break-word; resize:none;">
-						${vo.content}
+                    <textarea readonly style="min-height:300px; width:100%; overflow:auto; white-space:pre-wrap; 
+                    word-wrap:break-word; resize:none;"
+                    >${vo.content}
                     </textarea>
                 </td>
             </tr>

@@ -52,4 +52,9 @@ public class MemberController {
 		   
 		return "redirect:../main/main.do";
 	}
+	@PostMapping("ban/main.do")
+	public String banMain()
+	{
+		return "ban/main";
+	}
 }

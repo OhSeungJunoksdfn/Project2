@@ -1,12 +1,19 @@
 package com.sist.web;
-import java.util.*; 
+import java.text.SimpleDateFormat; 
+import java.util.*;
+
+import javax.servlet.http.HttpSession;
+
 import com.sist.service.*;
+import com.sist.vo.MemberVO;
+import com.sist.vo.ReplyVO;
 import com.sist.vo.admin.*;
 import com.sist.vo.board.BoardVO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -56,16 +63,11 @@ public class AdminRestController {
 	@GetMapping("admin/board_list_vue.do")
 	public Map adminBoardList(String type, int page,String fd, String ss )
 	{
-		System.out.println(type);
-		System.out.println(fd);
-		System.out.println(ss);
-		System.out.println(page);
 		
 		if(fd==null)
 			fd="subject";
 		if(ss.equals(""))
 			ss="*";
-		System.out.println(ss);
 		int rowSize= 10;
 		Map map = new HashMap();
 		map.put("start",(rowSize*page)-(rowSize-1));
@@ -81,7 +83,6 @@ public class AdminRestController {
 		int endPage = ((page-1)/BLOCK*BLOCK)+BLOCK;
 		if(endPage>totalpage)
 			endPage=totalpage;
-		System.out.println("list:"+list);
 		map = new HashMap();
 		map.put("list", list);
 		map.put("totalpage", totalpage);
@@ -91,4 +92,97 @@ public class AdminRestController {
 		return map;
 	}
 	
+	@GetMapping("admin/board_detail_vue.do")
+	public BoardVO adminBoardDetailVue(int no)
+	{
+		BoardVO vo = bservice.boardDetailData(no);
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		String formattedDate = formatter.format(vo.getRegdate());
+		vo.setDbday(formattedDate);
+		
+		return vo;
+	}
+	
+	@GetMapping("admin/reply_list_vue.do")
+	public Map adminReplyListVue(String type,int page)
+	{
+		int rowSize= 10;
+		Map map = new HashMap();
+		map.put("start",(rowSize*page)-(rowSize-1));
+		map.put("end",(rowSize*page));
+		map.put("type", type);
+		List<ReplyVO> list = service.AdminreplyListData(map);
+		int totalpage = service.AdminReplyTotalPage(map);
+		
+		final int BLOCK = 10;
+		int startPage= ((page-1)/BLOCK*BLOCK)+1;
+		int endPage = ((page-1)/BLOCK*BLOCK)+BLOCK;
+		if(endPage>totalpage)
+			endPage=totalpage;
+		map = new HashMap();
+		map.put("list", list);
+		map.put("totalpage", totalpage);
+		map.put("startPage", startPage);
+		map.put("endPage", endPage);
+		
+		return map;
+	}
+	
+	@PostMapping("admin/reply_delete.do")
+	public void adminReplyDelete(ReplyVO vo,HttpSession session)
+	{
+		String id = (String) session.getAttribute("id");
+		vo.setId(id);
+		service.adminReplyDelete(vo);
+	}
+	 @PostMapping("admin/reply_deleteMultiple.do")
+	  public void adminReplyDeleteMultiple(@RequestBody List<Integer> nos,HttpSession session) {
+		ReplyVO vo = new ReplyVO();
+		String id=(String) session.getAttribute("id");
+		vo.setId(id);
+		for(Integer no : nos) {
+			vo.setNo(no);
+			service.adminReplyDelete(vo);
+		}
+	  }
+	
+	@GetMapping("admin/user_list_vue.do")
+	public Map adminUserListVue(int page)
+	{
+		int rowSize= 10;
+		Map map = new HashMap();
+		map.put("start",(rowSize*page)-(rowSize-1));
+		map.put("end",(rowSize*page));
+		List<MemberVO> list = service.userListData(map);
+		int count = service.userCount();
+		int totalpage= (int) Math.ceil(count/10.0);
+		
+		final int BLOCK = 10;
+		int startPage= ((page-1)/BLOCK*BLOCK)+1;
+		int endPage = ((page-1)/BLOCK*BLOCK)+BLOCK;
+		if(endPage>totalpage)
+			endPage=totalpage;
+		
+		map.put("list", list);
+		map.put("totalpage", totalpage);
+		map.put("startPage", startPage);
+		map.put("endPage", endPage);
+		map.put("count", count);
+		return map;
+	}
+	
+	@PostMapping("admin/member_Suspended.do")
+	public void adminMemberSuspended(String id)
+	{
+		System.out.println(id);
+		service.adminMemberSuspended(id);
+	}
+	
+	
+	@PostMapping("admin/member_Activate.do")
+	public void adminMemberActivate(String id)
+	{
+		System.out.println(id);
+		service.adminMemberActivate(id);
+	}
 }
