@@ -29,7 +29,7 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
 				
 			} else if(exception instanceof DisabledException)
 			{
-				errorMsg="휴먼 계정입니다.";
+				errorMsg="접근이 제한된 계정입니다!";
 			}
 		}
 		catch(Exception ex) {}

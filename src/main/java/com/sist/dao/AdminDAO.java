@@ -4,6 +4,8 @@ import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.sist.vo.MemberVO;
+import com.sist.vo.ReplyVO;
 import com.sist.vo.admin.*;
 import com.sist.mapper.*;
 
@@ -36,5 +38,38 @@ public class AdminDAO {
 	public int noticeTotalPage()
 	{
 		return mapper.noticeTotalPage();
+	}
+	public List<ReplyVO>  AdminreplyListData(Map map)
+	{
+		return mapper.AdminreplyListData(map);
+	}
+	public int AdminReplyTotalPage(Map map)
+	{
+		return mapper.AdminReplyTotalPage(map);
+	}
+	public void adminReplyDelete(ReplyVO vo)
+	{
+		mapper.adminReplyDelete(vo);
+	}
+	
+	public List<MemberVO> userListData(Map map)
+	{
+		return mapper.userListData(map);
+	}
+	public int userCount()
+	{
+		return mapper.userCount();
+	}
+	
+	public void adminMemberSuspended(String id)
+	{
+		mapper.adminMemberSuspended(id);
+		mapper.adminAuthoritySuspended(id);
+	}
+	
+	public void adminMemberActivate(String id)
+	{
+		mapper.adminMemberActivate(id);
+		mapper.adminAuthorityActivate(id);
 	}
 }
