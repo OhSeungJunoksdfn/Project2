@@ -122,4 +122,34 @@ public class AirDAO {
 	    public int getInboundCount(String from, String to, String returnDate) {
 	        return mapper.countInbound(from, to, returnDate);
 	    }
+	    
+	    /** 11) 전체 좌석 조회 */
+	    public List<SeatVO> getAllSeats() {
+	        return mapper.selectSeats();
+	    }
+
+	    /** 12) 단일 좌석 조회 */
+	    public SeatVO getSeatById(int seatId) {
+	        return mapper.selectSeatById(seatId);
+	    }
+
+	    /** 13) 특정 항공편의 좌석 현황 조회 */
+	    public List<FlightSeatVO> getFlightSeats(int flightId) {
+	        return mapper.selectFlightSeats(flightId);
+	    }
+
+	    /** 14) 좌석 예약 삽입 (flight_seat) */
+	    public int addFlightSeat(FlightSeatVO fs) {
+	        return mapper.insertFlightSeat(fs);
+	    }
+
+	    /** 15) 예약 상태 변경 */
+	    public int updateFlightSeatStatus(int flightId, int seatId, String status) {
+	        return mapper.updateFlightSeatStatus(flightId, seatId, status);
+	    }
+
+	    /** 16) 좌석 예약 취소 (flight_seat 삭제) */
+	    public int deleteFlightSeat(int flightId, int seatId) {
+	        return mapper.deleteFlightSeat(flightId, seatId);
+	    }
 	}

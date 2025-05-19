@@ -108,5 +108,33 @@ public class AirServiceImpl implements AirService{
 		// TODO Auto-generated method stub
 		return aDAO.deletePassenger(passengerId);
 	}
+	 @Override
+	    public List<SeatVO> getAllSeats() {
+	        return aDAO.getAllSeats();
+	    }
 
+	    @Override
+	    public SeatVO getSeatById(int seatId) {
+	        return aDAO.getSeatById(seatId);
+	    }
+
+	    @Override
+	    public List<FlightSeatVO> getFlightSeats(int flightId) {
+	        return aDAO.getFlightSeats(flightId);
+	    }
+
+	    @Override
+	    public int addFlightSeat(FlightSeatVO flightSeat) {
+	        return aDAO.addFlightSeat(flightSeat);
+	    }
+
+	    @Override
+	    public int updateFlightSeatStatus(int flightId, int seatId, String status) {
+	        return aDAO.updateFlightSeatStatus(flightId, seatId, status);
+	    }
+
+	    @Override
+	    public int deleteFlightSeat(int flightId, int seatId) {
+	        return aDAO.deleteFlightSeat(flightId, seatId);
+	    }
 }

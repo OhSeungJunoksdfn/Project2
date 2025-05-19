@@ -76,6 +76,24 @@ public interface AirMapper {
 	    /** 10) 승객 삭제 */
 	    int deletePassenger(@Param("passengerId") String passengerId);
     
+	    /** 11) 전체 좌석 조회 */
+	    List<SeatVO> selectSeats();
 
-		
+	    /** 12) 단일 좌석 조회 (seat_id 기준) */
+	    SeatVO selectSeatById(@Param("seatId") int seatId);
+
+	    /** 13) 특정 항공편(flight_id)의 좌석 현황 조회 */
+	    List<FlightSeatVO> selectFlightSeats(@Param("flightId") int flightId);
+
+	    /** 14) flight_seat 레코드 삽입 */
+	    int insertFlightSeat(FlightSeatVO vo);
+
+	    /** 15) flight_seat 상태(status) 업데이트 */
+	    int updateFlightSeatStatus(@Param("flightId") int flightId,
+	                               @Param("seatId")   int seatId,
+	                               @Param("status")   String status);
+
+	    /** 16) flight_seat 삭제 (취소 등) */
+	    int deleteFlightSeat(@Param("flightId") int flightId,
+	                         @Param("seatId")   int seatId);
 	}

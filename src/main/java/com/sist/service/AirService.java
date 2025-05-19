@@ -30,4 +30,21 @@ public interface AirService {
             String from, String to, String returnDate);
 	public int getInboundCount(String from, String to, String returnDate);
 	
+    /** 17) 전체 좌석 조회 */
+    List<SeatVO> getAllSeats();
+
+    /** 18) 단일 좌석 조회 */
+    SeatVO getSeatById(int seatId);
+
+    /** 19) 특정 항공편 좌석 현황 조회 */
+    List<FlightSeatVO> getFlightSeats(int flightId);
+
+    /** 20) 좌석 예약 삽입 */
+    int addFlightSeat(FlightSeatVO flightSeat);
+
+    /** 21) 예약 상태(status) 업데이트 */
+    int updateFlightSeatStatus(int flightId, int seatId, String status);
+
+    /** 22) 좌석 예약 취소 */
+    int deleteFlightSeat(int flightId, int seatId);
 }

@@ -239,4 +239,66 @@
     DELETE FROM PASSENGERS
     WHERE PASSENGER_ID = #{passengerId}
   </delete>
+  
+  <!-- 11) 전체 좌석 조회 -->
+  <select id="selectSeats" resultType="com.sist.vo.air.SeatVO">
+    SELECT
+      seat_id    AS seatId,
+      row_label  AS rowLabel,
+      col_num    AS colNum,
+      class      AS seatClass
+    FROM seat
+    ORDER BY row_label, col_num
+  </select>
+
+  <!-- 12) 단일 좌석 조회 -->
+  <select id="selectSeatById" parameterType="int" resultType="com.sist.vo.air.SeatVO">
+    SELECT
+      seat_id    AS seatId,
+      row_label  AS rowLabel,
+      col_num    AS colNum,
+      class      AS seatClass
+    FROM seat
+    WHERE seat_id = #{seatId}
+  </select>
+
+  <!-- 13) 특정 항공편의 좌석 현황 조회 -->
+  <select id="selectFlightSeats" parameterType="int" resultType="com.sist.vo.air.FlightSeatVO">
+    SELECT
+      fs.flight_id    AS flightId,
+      fs.seat_id      AS seatId,
+      fs.status       AS status,
+      fs.booking_id   AS bookingId,
+      s.row_label     AS "seat.rowLabel",
+      s.col_num       AS "seat.colNum",
+      s.class         AS "seat.seatClass"
+    FROM flight_seat fs
+    JOIN seat s ON fs.seat_id = s.seat_id
+    WHERE fs.flight_id = #{flightId}
+    ORDER BY s.row_label, s.col_num
+  </select>
+
+  <!-- 14) flight_seat 삽입 -->
+  <insert id="insertFlightSeat" parameterType="com.sist.vo.air.FlightSeatVO">
+    INSERT INTO flight_seat (
+      flight_id, seat_id, status, booking_id
+    ) VALUES (
+      #{flightId}, #{seatId}, #{status}, #{bookingId}
+    )
+  </insert>
+
+  <!-- 15) flight_seat 상태 업데이트 -->
+  <update id="updateFlightSeatStatus">
+    UPDATE flight_seat
+      SET status     = #{status}
+    WHERE flight_id  = #{flightId}
+      AND seat_id    = #{seatId}
+  </update>
+
+  <!-- 16) flight_seat 삭제 -->
+  <delete id="deleteFlightSeat" parameterType="map">
+    DELETE FROM flight_seat
+    WHERE flight_id = #{flightId}
+      AND seat_id   = #{seatId}
+  </delete>
 </mapper>

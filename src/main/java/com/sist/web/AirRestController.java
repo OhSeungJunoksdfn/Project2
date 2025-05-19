@@ -148,5 +148,53 @@ public class AirRestController {
         return ResponseEntity.ok(Collections.singletonMap("deletedRows",cnt));
     }
     
+    /** 12) 좌석 전체 조회 */
+    @GetMapping("seats")
+    public List<SeatVO> apiGetAllSeats() {
+        return service.getAllSeats();
+    }
+
+    /** 13) 단일 좌석 조회 */
+    @GetMapping("seats/{seatId}")
+    public ResponseEntity<SeatVO> apiGetSeatById(@PathVariable int seatId) {
+        SeatVO seat = service.getSeatById(seatId);
+        if (seat == null) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(seat);
+    }
+
+    /** 14) 특정 항공편 좌석 현황 조회 */
+    @GetMapping("flightSeats")
+    public List<FlightSeatVO> apiGetFlightSeats(@RequestParam int flightId) {
+        return service.getFlightSeats(flightId);
+    }
+
+    /** 15) 좌석 예약 (삽입) */
+    @PostMapping("flightSeats")
+    public ResponseEntity<?> apiBookSeat(@RequestBody FlightSeatVO vo) {
+        service.addFlightSeat(vo);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                             .body(Collections.singletonMap("status","booked"));
+    }
+
+    /** 16) 예약 상태 변경 */
+    @PutMapping("flightSeats/{flightId}/{seatId}")
+    public ResponseEntity<?> apiUpdateSeatStatus(
+            @PathVariable int flightId,
+            @PathVariable int seatId,
+            @RequestBody Map<String,String> body) {
+        String status = body.get("status");
+        service.updateFlightSeatStatus(flightId, seatId, status);
+        return ResponseEntity.ok(Collections.singletonMap("status","updated"));
+    }
+
+    /** 17) 좌석 예약 취소 (삭제) */
+    @DeleteMapping("flightSeats/{flightId}/{seatId}")
+    public ResponseEntity<?> apiCancelSeat(
+            @PathVariable int flightId,
+            @PathVariable int seatId) {
+        service.deleteFlightSeat(flightId, seatId);
+        return ResponseEntity.ok(Collections.singletonMap("status","canceled"));
+    }
+    
     
 }

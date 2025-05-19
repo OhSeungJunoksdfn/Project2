@@ -53,8 +53,8 @@
                   왕복선택
                 </button>
                 <button class="btn btn-sm btn-warning"
-                        @click="goToPassengerForm(vo.flight_id)">
-                  편도예약
+                        @click="goToSeatMap(vo.flightId)">
+                  편도 좌석선택
                 </button>
               </td>
             </tr>
@@ -165,9 +165,17 @@ Vue.createApp({
       .catch(console.error);
     },
 
-    goToPassengerForm(id) {
-      window.location.href = `/air/passenger_info.do?flightId=${id}`;
-    }
+    goToSeatMap(flightId) {
+        console.log('▶ seatMap 호출, flightId =', flightId,
+                    'adults =', this.adults,
+                    'children =', this.children);
+        const params = new URLSearchParams({
+          flightId,
+          adults:    this.adults,
+          children:  this.children
+        });
+        window.location.href = `/air/seat_map.do?${params.toString()}`;
+      }
   },
   mounted() {
     // 무한 스크롤: 편도/왕복 모드에 따라 분기
