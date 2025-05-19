@@ -52,6 +52,9 @@
 		  </foreach>
 		  )
 	  	</if>
+	  	<if test="name_search_data.length() > 0">
+		  AND (name LIKE '%'||#{name_search_data}||'%')
+	  	</if>
 	  ORDER BY c.no ASC))
 	  WHERE num BETWEEN #{start} AND #{end}
 	  
@@ -87,6 +90,9 @@
 		    fuel LIKE '%'||#{fuel}||'%'
 		  </foreach>
 		  )
+	  	</if>
+	  	<if test="name_search_data.length() > 0">
+		  AND (name LIKE '%'||#{name_search_data}||'%')
 	  	</if>
 	)
   	
