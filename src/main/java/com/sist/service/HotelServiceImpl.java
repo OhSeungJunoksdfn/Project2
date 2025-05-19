@@ -78,4 +78,9 @@ public class HotelServiceImpl implements HotelService {
 		// TODO Auto-generated method stub
 		return dao.hotelReserveDetailData(no);
 	}
+	@Override
+	public List<HotelReserveVO> adminHotelListData(int no) {
+		// TODO Auto-generated method stub
+		return dao.adminHotelListData(no);
+	}
 }

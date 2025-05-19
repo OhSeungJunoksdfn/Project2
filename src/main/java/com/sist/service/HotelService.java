@@ -22,4 +22,5 @@ public interface HotelService {
 	public List<HotelVO> hotelMainData();
 	public List<HotelReserveVO> hotelReserveListData(String member_id);
 	public HotelReserveVO hotelReserveDetailData(int no);
+	public List<HotelReserveVO> adminHotelListData(int no);
 }

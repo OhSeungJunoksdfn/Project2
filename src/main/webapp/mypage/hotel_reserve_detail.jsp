@@ -55,7 +55,7 @@
                     <th width="20%" style="background-color: #e9e9e9; color: black">
                       예약 기간
                     </th>
-                    <td width="80%">${stay_day }박 ${stay_day+1 }일</td>
+                    <td width="80%">${vo.stay_days }박 ${vo.stay_days+1 }일</td>
                   </tr>
                   
                   <tr>

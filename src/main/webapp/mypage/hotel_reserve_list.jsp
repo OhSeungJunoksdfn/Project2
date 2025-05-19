@@ -43,10 +43,29 @@
 	font-size: 14px;
 	color: black;
 }
+
+.mainTab_nav li {
+	display: inline-block;
+	margin: 0 20px;
+}
+
+.mainTab a {
+	display: inline-block;
+	width: 220px; 
+	text-align: center;
+}
 </style>
 </head>
 <body>
-  <div class="wrap">
+<div class="wrap">
+    <div class="tab">
+      <ul class="mainTab_nav">
+        <li class="mainTab"><a href="#" style="color: black;">항공권 예약 조회</a></li>
+        <li class="mainTab"><a href="#" style="color: black;">렌트카 예약 조회</a></li>
+        <li class="mainTab" ><a href="../mypage/hotel_reserve_list.do" style="color: black; font-weight: bold;">호텔 예약 조회</a></li>
+      </ul>
+    </div>
+  <div>
     <div class="tab">
       <ul class="tab_nav">
         <li><a href="#tab1">확정 대기 예약</a></li>
@@ -95,7 +114,6 @@
         <table class="table">
           <thead>
             <tr>
-              
               <th>호텔명</th>
               <th>객실명</th>
               <th>체크인</th>
@@ -159,6 +177,7 @@
       </div>
     </div>
   </div>
+</div>
 <script>
 $(function(){
   $('.tab_contents > div').hide();
