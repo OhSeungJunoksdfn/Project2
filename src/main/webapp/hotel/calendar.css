@@ -1,0 +1,68 @@
+@charset "UTF-8";
+.calendar {
+      max-width: 400px;
+      margin: 50px auto;
+      font-family: sans-serif;
+    }
+    .calendar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .calendar-header button {
+      background: none;
+      border: 1px solid #666;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+    .calendar-header h2 {
+      margin: 0;
+      font-size: 1.2rem;
+    }
+    .weekdays, .days {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+    }
+    .weekdays div, .days div {
+      text-align: center;
+      padding: 8px 0;
+    }
+    .disabled-day {
+    color: gray !important;
+    pointer-events: none; /* 클릭 시 동작 막기 */
+  }
+   .days div {
+    color: black;       /* 평일 기본 검정 */
+  }
+  .weekend {            
+    color: #e33;        /* 주말(일·토)만 빨간 */
+  }
+  .other-month {       
+    color: gray !important;  
+  }
+  .today {
+    background: #4285f4;
+    color: #fff;
+    border-radius: 50%;
+  }
+  .disabled-day {
+    pointer-events: none;
+  }
+ 	.weekdays .sunday { color: red; }
+  .weekdays .saturday { color: blue; }
+
+  /* 날짜 셀 */
+  .days .sunday { color: red; }
+  .days .saturday { color: blue; }
+
+  /* 이전/다음 달, 비활성, 오늘 등 기존 스타일 */
+  .other-month { color: gray !important; }
+  .disabled-day { color: gray !important; pointer-events: none; }
+  .today { background: #4285f4; color: #fff; border-radius: 50%; }
+  
+    .weekdays div { font-weight: bold; }
+    .days div { border: 1px solid #eee; }
+    .other-month { color: #bbb; }
+    .today { background: #4285f4; color: #fff; border-radius: 50%; }
+    .weekend { color: #e33; }

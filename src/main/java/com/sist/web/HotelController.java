@@ -81,6 +81,9 @@ public class HotelController {
 		String checkin = (String) session.getAttribute("checkin");
 		String checkout = (String) session.getAttribute("checkout");
 		int person = (int) session.getAttribute("person");
+		if (member_id == null) {
+	        return "redirect:../member/login.do"; // 로그인 안 된 경우 로그인 페이지로 이동
+	    }
 		
 		// DATE 값으로 변경 후 N 박으로 계산
 		LocalDate checkinDate = LocalDate.parse(checkin);
