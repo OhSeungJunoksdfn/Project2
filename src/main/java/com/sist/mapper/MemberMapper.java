@@ -3,6 +3,7 @@ import java.util.*;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import com.sist.vo.*;
 public interface MemberMapper {
@@ -26,4 +27,19 @@ public interface MemberMapper {
   @Select("SELECT COUNT(*) FROM projectMember WHERE id=#{id}")
   public int memberCheckData(String id);
 
+  
+  @Select("SELECT COUNT(*) FROM projectMember WHERE email=#{email}")
+  public int checkEmail(String email);
+  
+  @Select("SELECT SUBSTR(id, 1, LENGTH(id) - 2) || '**' AS id FROM projectmember WHERE email = #{email}")
+  public String findIdData(String email);
+  
+  @Select("SELECT COUNT(*) FROM projectmember "
+  		+ "WHERE id=#{id} AND phone=#{phone}")
+  public int checkMember(MemberVO vo);
+  
+  @Update("UPDATE projectmember SET "
+  		+ "pwd=#{pwd} "
+  		+ "WHERE id=#{id}")
+  public void pwdUpdate(MemberVO vo);
 }

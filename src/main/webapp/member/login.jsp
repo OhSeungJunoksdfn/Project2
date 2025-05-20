@@ -59,16 +59,10 @@
               />
             </div>
           </div>
-          <div class="col-6">
-            <p class="text-center cursor-pointer"><a href="../member/find.do?sel=id">아이디 찾기</a></p>
+          <div class="col-12">
+            <p class="text-right cursor-pointer"><a href="../member/find.do">아이디/비밀번호 찾기</a></p>
           </div>
-          <div class="col-6">
-            <p class="text-center cursor-pointer" style="cursor: pointer">
-            	<a href="../member.find.do?sel=pwd" >
-              비밀번호 찾기
-            	</a>
-            </p>
-          </div>
+          
         </div>
       </div>
       </form>
