@@ -62,16 +62,20 @@ public class AirController {
     }
 
 
-    /** 3) 승객 입력 폼 화면 */
+    /** 예약 확정 후 → 승객 정보 입력 페이지로 이동 */
     @GetMapping("passenger_info.do")
     public String passenger_form(
-            @RequestParam("flightId") int flightId,
-            @RequestParam(value="id", required=false) String passengerId, Model model) {
-        if (passengerId != null) {
-            // 수정 모드일 때
-            model.addAttribute("passenger", service.getPassengerById(passengerId));
-        }
-        model.addAttribute("flightId", flightId);
+            @RequestParam("bookingId") int bookingId,
+            Model model) {
+
+        // 1) 예약 헤더 조회 (성인/소아)
+        BookingVO booking = service.getBookingById(bookingId);
+        model.addAttribute("booking", booking);
+
+        // 2) 해당 예약 좌석 목록 조회
+        List<FlightSeatVO> bookedSeats = service.getSeatsByBookingId(bookingId);
+        model.addAttribute("seats", bookedSeats);
+
         model.addAttribute("main_jsp", "../air/passenger_info.jsp");
         return "main/main";
     }
@@ -91,15 +95,15 @@ public class AirController {
         return "redirect:/air/passenger_list.do";
     }
     
-    /** 좌석 전체 목록 조회 (admin용 등) */
-    @GetMapping("seats.do")
-    public String seats(Model model) {
-        List<SeatVO> seats = service.getAllSeats();
-        model.addAttribute("seats", seats);
-        model.addAttribute("main_jsp", "../air/seat_list.jsp");
-        return "main/main";
-    }
-
+//    /** 좌석 전체 목록 조회 (admin용 등) */
+//    @GetMapping("seats.do")
+//    public String seats(Model model) {
+//        List<SeatVO> seats = service.getAllSeats();
+//        model.addAttribute("seats", seats);
+//        model.addAttribute("main_jsp", "../air/seat_list.jsp");
+//        return "main/main";
+//    }
+//
     /** 특정 항공편 좌석맵 조회 */
     @GetMapping("seat_map.do")
     public String seatMap(
@@ -118,39 +122,39 @@ public class AirController {
         model.addAttribute("main_jsp", "../air/seat_map.jsp");
         return "main/main";
     }
-
-    /** 좌석 예약 (flight_seat 삽입) */
-    @PostMapping("seat_book.do")
-    public String bookSeat(
-            @RequestParam int flightId,
-            @RequestParam int seatId,
-            @RequestParam(required=false) Integer bookingId) {
-        FlightSeatVO vo = new FlightSeatVO();
-        vo.setFlightId(flightId);
-        vo.setSeatId(seatId);
-        vo.setStatus("BOOKED");
-        vo.setBookingId(bookingId);
-        service.addFlightSeat(vo);
-        return "redirect:/air/seat_map.do?flightId=" + flightId;
-    }
-
-    /** 좌석 예약 취소 (flight_seat 삭제) */
-    @PostMapping("seat_cancel.do")
-    public String cancelSeat(
-            @RequestParam int flightId,
-            @RequestParam int seatId) {
-        service.deleteFlightSeat(flightId, seatId);
-        return "redirect:/air/seat_map.do?flightId=" + flightId;
-    }
-
-    /** 좌석 상태 변경 (예: AVAILABLE / HELD 등) */
-    @PostMapping("seat_status.do")
-    public String changeSeatStatus(
-            @RequestParam int flightId,
-            @RequestParam int seatId,
-            @RequestParam String status) {
-        service.updateFlightSeatStatus(flightId, seatId, status);
-        return "redirect:/air/seat_map.do?flightId=" + flightId;
-    }
-    
+//
+//    /** 좌석 예약 (flight_seat 삽입) */
+//    @PostMapping("seat_book.do")
+//    public String bookSeat(
+//            @RequestParam int flightId,
+//            @RequestParam int seatId,
+//            @RequestParam(required=false) Integer bookingId) {
+//        FlightSeatVO vo = new FlightSeatVO();
+//        vo.setFlightId(flightId);
+//        vo.setSeatId(seatId);
+//        vo.setStatus("BOOKED");
+//        vo.setBookingId(bookingId);
+//        service.addFlightSeat(vo);
+//        return "redirect:/air/seat_map.do?flightId=" + flightId;
+//    }
+//
+//    /** 좌석 예약 취소 (flight_seat 삭제) */
+//    @PostMapping("seat_cancel.do")
+//    public String cancelSeat(
+//            @RequestParam int flightId,
+//            @RequestParam int seatId) {
+//        service.deleteFlightSeat(flightId, seatId);
+//        return "redirect:/air/seat_map.do?flightId=" + flightId;
+//    }
+//
+//    /** 좌석 상태 변경 (예: AVAILABLE / HELD 등) */
+//    @PostMapping("seat_status.do")
+//    public String changeSeatStatus(
+//            @RequestParam int flightId,
+//            @RequestParam int seatId,
+//            @RequestParam String status) {
+//        service.updateFlightSeatStatus(flightId, seatId, status);
+//        return "redirect:/air/seat_map.do?flightId=" + flightId;
+//    }
+//    
 }

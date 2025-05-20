@@ -137,4 +137,24 @@ public class AirServiceImpl implements AirService{
 	    public int deleteFlightSeat(int flightId, int seatId) {
 	        return aDAO.deleteFlightSeat(flightId, seatId);
 	    }
+	    
+    @Override
+    public int createBooking(BookingVO booking) {
+        return aDAO.createBooking(booking);
+    }
+
+    @Override
+    public BookingVO getBookingById(int bookingId) {
+        return aDAO.getBookingById(bookingId);
+    }
+
+    @Override
+    public List<FlightSeatVO> getSeatsByBookingId(int bookingId) {
+        return aDAO.getSeatsByBookingId(bookingId);
+    }
+
+    @Override
+    public void addFlightSeatsBatch(int flightId, List<FlightSeatVO> seats) {
+        aDAO.addFlightSeatsBatch(flightId, seats);
+    }
 }

@@ -152,4 +152,31 @@ public class AirDAO {
 	    public int deleteFlightSeat(int flightId, int seatId) {
 	        return mapper.deleteFlightSeat(flightId, seatId);
 	    }
+	    
+	    /** 17) 예약 정보 삽입 → 생성된 bookingId 를 VO에 채워서 반환 */
+	    public int createBooking(BookingVO booking) {
+	        // booking.bookingId 는 insert 후 채워집니다 (useGeneratedKeys)
+	        mapper.insertBooking(booking);
+	        return booking.getBookingId();
+	    }
+
+	    /** 18) 단일 예약 조회 */
+	    public BookingVO getBookingById(int bookingId) {
+	        return mapper.selectBookingById(bookingId);
+	    }
+
+	    /** ───────── 예약된 좌석(batch) ───────── */
+
+	    /** 19) bookingId 로 묶인 좌석 목록 조회 */
+	    public List<FlightSeatVO> getSeatsByBookingId(int bookingId) {
+	        return mapper.selectSeatsByBookingId(bookingId);
+	    }
+
+	    /** 20) 예약된 좌석 일괄 저장 */
+	    public void addFlightSeatsBatch(int flightId, List<FlightSeatVO> seats) {
+	        for (FlightSeatVO fs : seats) {
+	            // fs 에는 seatId, status, bookingId, passengerType 등이 세팅되어 있어야 합니다
+	            mapper.insertFlightSeat(fs);
+	        }
+	    }
 	}

@@ -96,4 +96,13 @@ public interface AirMapper {
 	    /** 16) flight_seat 삭제 (취소 등) */
 	    int deleteFlightSeat(@Param("flightId") int flightId,
 	                         @Param("seatId")   int seatId);
+	    /** 17) 예약 정보 삽입 → 생성된 bookingId를 VO에 채워 줌 */
+	    int insertBooking(BookingVO booking);
+
+	    /** 18) 단일 예약 조회 */
+	    BookingVO selectBookingById(@Param("bookingId") int bookingId);
+
+	    /** ────────── 예약된 좌석 조회 ────────── */
+	    /** 19) bookingId로 묶여 있는 좌석 목록 조회 */
+	    List<FlightSeatVO> selectSeatsByBookingId(@Param("bookingId") int bookingId);
 	}

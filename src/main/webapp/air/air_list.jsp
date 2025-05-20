@@ -15,7 +15,12 @@
   <div id="listApp" style="height:80vh; overflow-y:auto;">
     <!-- 검색 탭 (handleSearch → 편도 모드) -->
     <air-reserve-tab @search="handleSearch"></air-reserve-tab>
-
+	
+	    <!-- 2단계 디버그: list 전체 찍어 보기 -->
+	<!--  <pre style="background:#f8f8f8; padding:8px; margin:16px 0;">
+      {{ JSON.stringify(list, null, 2) }}
+    </pre> -->
+	
     <!-- 결과 테이블: list가 있을 때만 렌더 -->
     <section class="ftco-section" style="margin:0; padding:20px;">
       <div class="container" v-if="list.length">
@@ -41,22 +46,28 @@
               <td>{{ vo.dep_airport_code }} → {{ vo.arr_airport_code }}</td>
               <td>{{ vo.dep_time }}</td>
               <td>{{ vo.arr_time }}</td>
+              
               <td>
                 <span v-if="vo.economy_charge===0">결항</span>
                 <span v-else>{{ vo.economy_charge.toLocaleString() }}</span>
               </td>
               <td>
                 <!-- 편도 vs 왕복 구분 -->
-                <button v-if="!isInbound"
+                  <button v-if="!isInbound"
                         class="btn btn-sm btn-success"
                         @click="goToReturn(vo.flight_id)">
                   왕복선택
                 </button>
-                <button class="btn btn-sm btn-warning"
-                        @click="goToSeatMap(vo.flightId)">
-                  편도 좌석선택
-                </button>
-              </td>
+      			<a
+			        class="btn btn-sm btn-warning"
+			        v-bind:href="
+			          '/air/seat_map.do?flightId=' + vo.flight_id
+			          + '&adults=' + adults
+			          + '&children=' + children
+			        ">
+			        편도 좌석선택
+			      </a>
+			    </td>
             </tr>
           </tbody>
         </table>
@@ -165,7 +176,7 @@ Vue.createApp({
       .catch(console.error);
     },
 
-    goToSeatMap(flightId) {
+/*      goToSeatMap(flightId) {
         console.log('▶ seatMap 호출, flightId =', flightId,
                     'adults =', this.adults,
                     'children =', this.children);
@@ -175,8 +186,21 @@ Vue.createApp({
           children:  this.children
         });
         window.location.href = `/air/seat_map.do?${params.toString()}`;
-      }
-  },
+      }  */
+      
+/*        openSeatMap(evt, flightId) {
+    	     // 1) 올바른 파라미터 출력
+    	     console.log('▶ 선택된 flightId:', flightId,
+    	                 '성인:', this.adults,
+    	                 '소아:', this.children);
+    	  
+    	     // 2) href 속성 확인
+    	     console.log('▶ 이동할 URL:', evt.currentTarget.href);
+    	  
+    	     // 3) 새 탭 열기
+    	     window.open(evt.currentTarget.href, '_blank');
+    	   } */
+    },
   mounted() {
     // 무한 스크롤: 편도/왕복 모드에 따라 분기
     const io = new IntersectionObserver(entries=>{

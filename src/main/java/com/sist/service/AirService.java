@@ -47,4 +47,16 @@ public interface AirService {
 
     /** 22) 좌석 예약 취소 */
     int deleteFlightSeat(int flightId, int seatId);
+    
+    /** 23) 예약 헤더 생성 후 bookingId 반환 */
+    int createBooking(BookingVO booking);
+
+   /** 24) bookingId로 예약 조회 */
+    BookingVO getBookingById(int bookingId);
+
+    /** 25) bookingId에 속한 좌석 목록 조회 */
+    List<FlightSeatVO> getSeatsByBookingId(int bookingId);
+
+   /** 26) 좌석 일괄 예약 (flight_seat) */
+   void addFlightSeatsBatch(int flightId, List<FlightSeatVO> seats);
 }

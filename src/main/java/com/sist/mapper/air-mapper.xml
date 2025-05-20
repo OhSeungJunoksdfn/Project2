@@ -301,4 +301,66 @@
     WHERE flight_id = #{flightId}
       AND seat_id   = #{seatId}
   </delete>
+<!-- 17) 예약 정보 삽입 -->
+  <insert id="insertBooking"
+          parameterType="com.sist.vo.air.BookingVO"
+          useGeneratedKeys="true"
+          keyProperty="bookingId"
+          keyColumn="booking_id">
+    INSERT INTO booking
+      (booking_id, flight_id, adults, children)
+    VALUES
+      (booking_seq.NEXTVAL,
+       #{flightId},
+       #{adults},
+       #{children})
+  </insert>
+
+  <!-- 18) 예약 단건 조회 -->
+  <select id="selectBookingById"
+          parameterType="int"
+          resultType="com.sist.vo.air.BookingVO">
+    SELECT
+      booking_id   AS bookingId,
+      flight_id    AS flightId,
+      adults       AS adults,
+      children     AS children,
+      created_at   AS createdAt
+    FROM booking
+    WHERE booking_id = #{bookingId}
+  </select>
+
+  <!-- 19) 예약된 좌석 목록 조회 -->
+  <select id="selectSeatsByBookingId"
+          parameterType="int"
+          resultMap="FlightSeatMap">
+    SELECT
+      fs.flight_id    AS flightId,
+      fs.seat_id      AS seatId,
+      fs.status       AS status,
+      fs.booking_id   AS bookingId,
+      s.row_label     AS "seat.rowLabel",
+      s.col_num       AS "seat.colNum",
+      s.class         AS "seat.seatClass",
+      fs.passenger_type AS passengerType  <!-- if you added this column -->
+    FROM flight_seat fs
+    JOIN seat s ON fs.seat_id = s.seat_id
+    WHERE fs.booking_id = #{bookingId}
+    ORDER BY s.row_label, s.col_num
+  </select>
+
+  <!-- FlightSeatVO 매핑(resultMap) -->
+  <resultMap id="FlightSeatMap" type="com.sist.vo.air.FlightSeatVO">
+    <id     property="flightId"      column="flightId"/>
+    <id     property="seatId"        column="seatId"/>
+    <result property="status"        column="status"/>
+    <result property="bookingId"     column="bookingId"/>
+    <result property="passengerType" column="passengerType"/> <!-- optional -->
+    <association property="seat" javaType="com.sist.vo.air.SeatVO">
+      <id     property="seatId"    column="seatId"/>
+      <result property="rowLabel"  column="seat.rowLabel"/>
+      <result property="colNum"    column="seat.colNum"/>
+      <result property="seatClass" column="seat.seatClass"/>
+    </association>
+  </resultMap>
 </mapper>

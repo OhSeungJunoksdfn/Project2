@@ -167,34 +167,67 @@ public class AirRestController {
     public List<FlightSeatVO> apiGetFlightSeats(@RequestParam int flightId) {
         return service.getFlightSeats(flightId);
     }
+//
+//    /** 15) 좌석 예약 (삽입) */
+//    @PostMapping("flightSeats")
+//    public ResponseEntity<?> apiBookSeat(@RequestBody FlightSeatVO vo) {
+//        service.addFlightSeat(vo);
+//        return ResponseEntity.status(HttpStatus.CREATED)
+//                             .body(Collections.singletonMap("status","booked"));
+//    }
+//
+//    /** 16) 예약 상태 변경 */
+//    @PutMapping("flightSeats/{flightId}/{seatId}")
+//    public ResponseEntity<?> apiUpdateSeatStatus(
+//            @PathVariable int flightId,
+//            @PathVariable int seatId,
+//            @RequestBody Map<String,String> body) {
+//        String status = body.get("status");
+//        service.updateFlightSeatStatus(flightId, seatId, status);
+//        return ResponseEntity.ok(Collections.singletonMap("status","updated"));
+//    }
+//
+//    /** 17) 좌석 예약 취소 (삭제) */
+//    @DeleteMapping("flightSeats/{flightId}/{seatId}")
+//    public ResponseEntity<?> apiCancelSeat(
+//            @PathVariable int flightId,
+//            @PathVariable int seatId) {
+//        service.deleteFlightSeat(flightId, seatId);
+//        return ResponseEntity.ok(Collections.singletonMap("status","canceled"));
+//    }
+//    
+    @PostMapping("seat_book_batch.do")
+    public String bookSeatBatch(@RequestBody Map<String,Object> body) {
+        // JSON body에서 꺼내기
+        int flightId   = (int) body.get("flightId");
+        @SuppressWarnings("unchecked")
+        List<Integer> seatIds = (List<Integer>) body.get("seatIds");
+        int adults     = (int) body.get("adults");
+        int children   = (int) body.get("children");
 
-    /** 15) 좌석 예약 (삽입) */
-    @PostMapping("flightSeats")
-    public ResponseEntity<?> apiBookSeat(@RequestBody FlightSeatVO vo) {
-        service.addFlightSeat(vo);
-        return ResponseEntity.status(HttpStatus.CREATED)
-                             .body(Collections.singletonMap("status","booked"));
-    }
+        // 1) 예약 헤더 생성
+        BookingVO bk = new BookingVO();
+        bk.setFlightId(flightId);
+        bk.setAdults(adults);
+        bk.setChildren(children);
+        int bookingId = service.createBooking(bk);
 
-    /** 16) 예약 상태 변경 */
-    @PutMapping("flightSeats/{flightId}/{seatId}")
-    public ResponseEntity<?> apiUpdateSeatStatus(
-            @PathVariable int flightId,
-            @PathVariable int seatId,
-            @RequestBody Map<String,String> body) {
-        String status = body.get("status");
-        service.updateFlightSeatStatus(flightId, seatId, status);
-        return ResponseEntity.ok(Collections.singletonMap("status","updated"));
-    }
+        // 2) 선택 좌석 일괄 저장
+        List<FlightSeatVO> fsList = new ArrayList<>();
+        for (Integer seatId : seatIds) {
+            FlightSeatVO fs = new FlightSeatVO();
+            fs.setFlightId(flightId);
+            fs.setSeatId(seatId);
+            fs.setStatus("BOOKED");
+            fs.setBookingId(bookingId);
+            fsList.add(fs);
+        }
+        service.addFlightSeatsBatch(flightId, fsList);
 
-    /** 17) 좌석 예약 취소 (삭제) */
-    @DeleteMapping("flightSeats/{flightId}/{seatId}")
-    public ResponseEntity<?> apiCancelSeat(
-            @PathVariable int flightId,
-            @PathVariable int seatId) {
-        service.deleteFlightSeat(flightId, seatId);
-        return ResponseEntity.ok(Collections.singletonMap("status","canceled"));
+        // 3) 리다이렉트 URL 리턴
+        return "/air/passenger_info.do?bookingId=" + bookingId
+             + "&adults=" + adults
+             + "&children=" + children;
     }
-    
     
 }
