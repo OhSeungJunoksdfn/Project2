@@ -83,7 +83,7 @@
           </div>
           
       <script>
-    	const detailApp=Vue.createApp({
+    	const replyApp=Vue.createApp({
     		data(){
     			return{
     				no: Number(${bno}),
@@ -107,7 +107,6 @@
     				}
     			})
     			.then(res => {
-    				console.log(res.data)
     				this.list = res.data
     			})
     			.catch(err => {

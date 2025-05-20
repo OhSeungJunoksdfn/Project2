@@ -26,12 +26,17 @@ public class CarDAO {
 		return mapper.carSearchListData(map);
 	}
 	
-	public int carSearchTotalPage() {
-		return mapper.carSearchTotalPage();
+	public int carSearchTotalPage(Map map) {
+		return mapper.carSearchTotalPage(map);
 	}
 	
 	public CarVO carDetailData(int no)
 	{
 		return mapper.carDetailData(no);
+	}
+	
+	public void insertCarReserve(Map map)
+	{
+		mapper.insertCarReserve(map);
 	}
 }

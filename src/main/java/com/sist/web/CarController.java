@@ -43,6 +43,9 @@ public class CarController {
 		System.out.println(pudate);
 		
 		CarVO vo=service.carDetailData(no);
+		System.out.println("carnameeeeeee"+vo.getBranch().getBranch_name());
+		System.out.println("carvoooo"+vo.getBranch().getNo());
+		System.out.println("carvoooo"+vo.getName());
 		// 배열 => List로 변경 asList
 		//String id=(String)session.getAttribute("userid");
 		//model.addAttribute("sessionId", id);
@@ -71,6 +74,14 @@ public class CarController {
 		model.addAttribute("rdate",rdate);
 		model.addAttribute("rtime",rtime);
 		model.addAttribute("main_jsp","../car/car_reserve.jsp");
+		return "main/main";
+	}
+	
+	@GetMapping("car/car_reserve_ok.do")
+	public String car_reserve_ok(Model model)
+	{
+		
+		model.addAttribute("main_jsp","../car/car_reserve_ok.jsp");
 		return "main/main";
 	}
 	

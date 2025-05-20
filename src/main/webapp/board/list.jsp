@@ -22,9 +22,6 @@
               <a :class="type===1?'tablink nav-link cursor-pointer active':'tablink nav-link cursor-pointer'" @click="changeType('1')" >전체</a>
             </li>
             <li class="nav-item">
-              <a :class="type===2?'tablink nav-link cursor-pointer active':'tablink nav-link cursor-pointer'" @click="changeType('2')">공지사항</a>
-            </li>
-            <li class="nav-item">
               <a :class="type===3?'tablink nav-link cursor-pointer active':'tablink nav-link cursor-pointer'" @click="changeType('3')">자유글</a>
             </li>
             <li class="nav-item">

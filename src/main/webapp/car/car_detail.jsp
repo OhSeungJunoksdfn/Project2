@@ -103,7 +103,7 @@
           		
           		
           		
-          		<section class="ftco-section bg-light">
+          		<section class="ftco-section ">
 			      <div class="container">
 			        <div class="row">
 			          <div class="col-md-4">
@@ -118,6 +118,7 @@
 			              	<span>-자차 미가입</span>
 			                <h5 style="font-size:12px;margin-top:10px">${vo.non_ins_qual }</h5>
 			              </p>
+			              <h5 style="position:absolute;bottom:0">${vo.non_ins_price }원</h5>
 			            </div>
 			          </div>
 			          <div class="col-md-4">
@@ -151,7 +152,25 @@
 			        </div>
 			      </div>
 			      <div style="padding:10px;padding-top:100px">
+			      	<h5>${vo.branch.branch_name }</h5>
 	    			<div id="map" style="width:100%;height:280px;"></div> 
+	    			
+	    			<div style="padding:10px">
+	    				<div style="">
+		    				<h5 style="font-size:15px">주소</h5>
+		    				<div style="font-size:14px">${vo.branch.location }</div>
+		    			</div>
+		    			<div style="margin-top:20px">
+		    				<h5 style="font-size:15px">전화</h5>
+		    				<div style="font-size:14px">${vo.branch.branch_phone }</div>
+		    			</div>
+		    			<div style="margin-top:20px">
+		    				<h5 style="font-size:15px">영업시간</h5>
+		    				<div style="font-size:14px">${vo.branch.open_time }-${vo.branch.close_time }</div>
+		    			</div>
+	    			</div>
+	    			
+	    			
 	    		</div>
 			    </section>
           		
@@ -326,7 +345,8 @@
     	  },
     	  computed: {
 	      },
-    	  mounted() { 	  
+    	  mounted() { 
+	    	  console.log("location",'${vo.location}')
     	  },
     	  methods: {
     		reserve(){
@@ -389,7 +409,7 @@
 	var geocoder = new kakao.maps.services.Geocoder();
 	
 	// 주소로 좌표를 검색합니다
-	geocoder.addressSearch('서울특별시 강남구 논현로 66 (개포동)', function(result, status) {
+	geocoder.addressSearch('${vo.branch.location}', function(result, status) {
 	
 	    // 정상적으로 검색이 완료됐으면 
 	     if (status === kakao.maps.services.Status.OK) {
@@ -403,10 +423,10 @@
 	        });
 	
 	        // 인포윈도우로 장소에 대한 설명을 표시합니다
-	        var infowindow = new kakao.maps.InfoWindow({
-	            content: '<div style="width:150px;text-align:center;padding:6px 0;">asdf</div>'
+	        /* var infowindow = new kakao.maps.InfoWindow({
+	            content: '<div style="width:150px;text-align:center;padding:6px 0;">${vo.branch.branch_name}</div>'
 	        });
-	        infowindow.open(map, marker);
+	        infowindow.open(map, marker); */
 	
 	        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
 	        map.setCenter(coords);

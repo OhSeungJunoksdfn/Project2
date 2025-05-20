@@ -1,7 +1,9 @@
 package com.sist.mapper;
 
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.SelectKey;
 import org.springframework.stereotype.Repository;
 
 import com.sist.vo.car.CarVO;
@@ -21,9 +23,25 @@ public interface CarMapper {
   // @Select("SELECT CEIL(COUNT(*)/6.0) FROM car")
    public int carTotalPage(@Param("tabVal") String tabVal);
    
-   @Select("SELECT * FROM car "
-		  +"WHERE no=#{no}")
    public CarVO carDetailData(int no);
+   
+   @Insert("INSERT INTO car_reserve ("+
+	            "no,car_no,member_id,pickup_date,return_date,status,ins_price,ins_desc) "
+	            + "VALUES ((SELECT NVL(MAX(no)+1,1) FROM car_reserve),"
+	            + "	#{car_no},"
+	            + " #{member_id},"
+	            + "#{pickup_date},"
+	            + "#{return_date},"
+	            + "#{status},"
+	            + "#{ins_price},"
+	            + "#{ins_desc})")
+   @SelectKey(
+	        statement = "SELECT NVL(MAX(no)+1,1) FROM car_reserve",
+	        keyProperty = "no",
+	        before = true,
+	        resultType = Integer.class
+	    )
+   void insertCarReserve(Map map);
    
    
    /*
@@ -43,6 +61,6 @@ public interface CarMapper {
     */
    
    public List<CarVO> carSearchListData(Map map);
-   public int carSearchTotalPage();
+   public int carSearchTotalPage(Map map);
    
 }

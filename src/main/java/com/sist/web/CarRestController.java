@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sist.service.CarService;
 import com.sist.vo.car.CarVO;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import javax.servlet.http.HttpSession;
@@ -50,14 +52,39 @@ public class CarRestController {
 	@GetMapping("car/list_search_vue.do")
 	public Map car_list_search(int page,
 				String pudate,String putime,
-				String rdate,String rtime) {
+				String rdate,String rtime,
+				String class_checked, String fuel_checked,String name_search_data,
+				String loc_search_data) {
 		
 		int rowSize=9;
+
+		SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm");
 		Map map = new HashMap();
 		map.put("start",(page-1)*rowSize+1);
 		map.put("end",page*rowSize);
+
+		System.out.println("lsd"+loc_search_data);	
+		map.put("name_search_data", name_search_data);
+		map.put("loc_search_data", loc_search_data.split(","));
+		map.put("class_checked", class_checked.split(","));
+		map.put("fuel_checked", fuel_checked.split(","));
+		String puRegDateStr = pudate + " " + putime;
+		String rRegDateStr = rdate + " " + rtime;
+		Date puRegDate;
+		Date rRegDate;
+		try {
+			puRegDate = formatter.parse(puRegDateStr);
+			rRegDate = formatter.parse(rRegDateStr);
+			map.put("pickup_date", puRegDate);
+			map.put("return_date", rRegDate);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 		List<CarVO> list=service.carSearchListData(map);
-		int totalpage=service.carSearchTotalPage();
+		int totalpage=service.carSearchTotalPage(map);
 		
 		final int BLOCK=10;
 		int startPage=((page-1)/BLOCK*BLOCK)+1;
@@ -98,12 +125,37 @@ public class CarRestController {
 //    merchant_uid: rsp.merchant_uid,
 //    amount: rsp.paid_amount
 	@PostMapping("car/car_reserve_insert_vue.do")
-	public int car_reserve_insert_vue(int no,String user_name, String user_email, 
+	public int car_reserve_insert_vue(int car_no,String user_name, String user_email, 
 				String pudate, String putime, String rdate, String rtime,
-				int price_total, String imp_uid, String merchant_uid,String amount
+				int price_total, String imp_uid, String merchant_uid,String amount, String ins_desc
 				,HttpSession session){
 		
+		Map map = new HashMap();
+		SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+		String puRegDateStr = pudate + " " + putime;
+		String rRegDateStr = rdate + " " + rtime;
+		Date puRegDate = null;
+		Date rRegDate = null;
+		try {
+			puRegDate = formatter.parse(puRegDateStr);
+			rRegDate = formatter.parse(rRegDateStr);
+			System.out.println(puRegDateStr.toString());
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		System.out.println((String)session.getAttribute("id"));
-		return 0;
+		map.put("car_no", car_no);
+		map.put("member_id", (String)session.getAttribute("id"));
+		map.put("pickup_date", puRegDate);
+		map.put("return_date", rRegDate);
+		map.put("status", "대기중");
+		map.put("ins_price", price_total);
+		map.put("ins_desc", ins_desc);
+		
+		service.insertCarReserve(map);
+		
+		return (Integer)map.get("no");
 	}
 }

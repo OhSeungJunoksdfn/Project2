@@ -1,5 +1,5 @@
 package com.sist.web;
-import java.util.*;
+import java.util.*; 
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -52,4 +52,28 @@ public class MemberController {
 		   
 		return "redirect:../main/main.do";
 	}
+
+	@GetMapping("member/find.do")
+	public String memberFind(Model model)
+	{
+		model.addAttribute("member_jsp","../member/find.jsp");
+		return "member/main";
+	}
+	
+	@GetMapping("member/findid.do")
+	public String memberFindId(Model model,String id)
+	{
+		model.addAttribute("id",id);
+		model.addAttribute("member_jsp","../member/findid.jsp");
+		return "member/main";
+	}
+	@GetMapping("member/findpwd.do")
+	public String memberFindpwd(Model model,String id)
+	{
+		model.addAttribute("id",id);
+		model.addAttribute("member_jsp","../member/findpwd.jsp");
+		return "member/main";
+	}
+	
+	
 }

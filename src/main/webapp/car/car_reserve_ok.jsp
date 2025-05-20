@@ -34,16 +34,12 @@
     <div class="row justify-content-center">
        <div class="form-group m-2">
           <div class="form-field">
-            <a href="../mypage/hotel_reserve_list.do">
              <input type="button" value="예약 상세보기" class="form-control r-12 btn btn-primary"/>
-            </a>
           </div>
        </div>
        <div class="form-group m-2">
           <div class="form-field">
-           <a href="../main/main.do">
              <input type="submit" value="홈으로" class="form-control r-12 btn btn-info"/>
-           </a>
           </div>
        </div>
     </div>

@@ -28,4 +28,20 @@ public class MemberDAO {
 	 return mapper.memberCheckData(id);
 	  
   }
+  public String findIdData(String email)
+  {
+	  return mapper.findIdData(email);
+  }
+  public int checkEmail(String email)
+  {
+	  return mapper.checkEmail(email);
+  }
+  public int checkMember(MemberVO vo)
+  {
+	  return mapper.checkMember(vo);
+  }
+  public void pwdUpdate(MemberVO vo)
+  {
+	  mapper.pwdUpdate(vo);
+  }
 }

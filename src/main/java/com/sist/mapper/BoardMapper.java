@@ -58,6 +58,7 @@ public interface BoardMapper {
 			+ "WHERE no=#{no}")
 	public void boardDelete(int no);
 	
+	
 	@Delete("DELETE FROM reply "
 			+ "WHERE bno=#{no}")
 	public void boardReplyDelete(int no);
