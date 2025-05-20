@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="<c:url value='/hotel/calendar.css' />">
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <style type="text/css">
@@ -62,7 +63,6 @@
                         <div class="form-field">
                           <div class="select-wrap">
                             <div class="icon">
-<!--                               <span class="ion-ios-arrow-down"></span> -->
                             </div>
                             <input v-model="person" name="person" class="form-control"/>
                           </div>
@@ -155,30 +155,6 @@
                       :key="info.key" @click="selInfo(info.key)">{{ info.name }}</span>
                     </label>
                   </div>
-<!--                   <div class="form-group"> -->
-<!--                     <input -->
-<!--                       type="text" -->
-<!--                       id="checkin_date" -->
-<!--                       class="form-control checkin_date" -->
-<!--                       placeholder="Date from" -->
-<!--                     /> -->
-<!--                   </div> -->
-<!--                   <div class="form-group"> -->
-<!--                     <input -->
-<!--                       type="text" -->
-<!--                       id="checkout_date" -->
-<!--                       class="form-control checkout_date" -->
-<!--                       placeholder="Date to" -->
-<!--                     /> -->
-<!--                   </div> -->
-
-<!--                   <div class="form-group"> -->
-<!--                     <input -->
-<!--                       type="submit" -->
-<!--                       value="Search" -->
-<!--                       class="btn btn-primary py-3 px-5" -->
-<!--                     /> -->
-<!--                   </div> -->
                 </div>
               </form>
             </div>

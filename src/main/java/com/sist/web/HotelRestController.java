@@ -14,6 +14,7 @@ import java.util.*;
 
 import javax.servlet.http.HttpSession;
 
+import com.sist.vo.admin.NoticeVO;
 import com.sist.vo.hotel.HotelReserveVO;
 import com.sist.vo.hotel.HotelVO;
 import com.sist.service.*;
@@ -137,6 +138,17 @@ public class HotelRestController {
 		
 		
 		return map;
+	}
+	
+	@GetMapping("hotel/calenda_vue.do")
+	public void hotel_calenda_vue(HttpSession session,
+			@RequestParam(value = "checkin", required = false) String checkin, 
+			@RequestParam(value = "checkout", required = false) String checkout, 
+			@RequestParam(value = "person") int person)
+	{
+		session.setAttribute("checkin", checkin);
+		session.setAttribute("checkout", checkout);
+		session.setAttribute("person", person);
 	}
 	
 	@PostMapping("mypage/hotel_reserve_delete.do")

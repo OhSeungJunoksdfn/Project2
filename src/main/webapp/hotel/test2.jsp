@@ -7,29 +7,111 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="<c:url value='/hotel/calendar.css'/>">
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script src="./hotel_searchbar.js"></script>
 <style type="text/css">
 .checkBtn {
 	margin: 1px;
 	padding: 2px 10px;
 	white-space: nowrap;
 }
-.ftco-section justify-content-end {
-  padding-right: 10px;
-  padding-bottom: 2em;
-}
-
-.col-md-12.tab-wrap.rt-12.shadow {
-  border-radius: 10px;
-}
 </style>
 </head>
 <body>
 <div id="hotelListApp">
-
-<hotel-search-bar @search="handleSearch"></hotel-search-bar>
+  <div class="container px-0">
+	<div >
+	 <section class="ftco-section justify-content-end " style="padding-right: 10px; padding-bottom:2em">
+      <div class="container-wrap mx-auto">
+        <div class="row no-gutters">
+          <div class="col-md-12 tab-wrap rt-12 shadow" style="border-radius:10px">
+            <div class="tab-content p-4 px-5" id="v-pills-tabContent">
+              <div
+                class="tab-pane fade show active"
+                id="v-pills-2"
+                role="tabpanel"
+                aria-labelledby="v-pills-performance-tab"
+              >
+                <div class="search-destination">
+                  <div class="row">
+                    <div class="col-md align-items-end">
+                      <div class="form-group">
+                        <label>Check In</label>
+                        <div class="form-field">
+                          <div class="icon">
+                            <span class="icon-map-marker"></span>
+                          </div>
+                          <input type="date" class="form-control" name="checkin" placeholder="Check In" v-model="checkin" @click="hotelCalendaData()"/>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md align-items-end" @click="hotelCalendaData()">
+                      <div class="form-group">
+                        <label>Check Out</label>
+                        <div class="form-field">
+                          <div class="icon">
+                            <span class="icon-map-marker"></span>
+                          </div>
+                          <input type="date" class="form-control" name="checkout" placeholder="Check Out" v-model="checkout" @click="hotelCalendaData()"/>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md align-items-end">
+                      <div class="form-group">
+                        <label>Guest</label>
+                        <div class="form-field">
+                          <div class="select-wrap">
+                            <div class="icon">
+                            </div>
+                            <input v-model="person" name="person" class="form-control"/>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md align-self-end">
+                      <div class="form-group">
+                        <div class="form-field">
+                          <button class="form-control btn btn-primary"  @click="searchbar">Search</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+	</div>
+	</div>
+	
+<section
+	v-show="calendarView"
+	style="
+          background-color: rgba(0, 0, 0, 0.1);
+          z-index: 999;
+          width: 100vw;
+          height: 100vh;
+          position: fixed;
+          left: 0;
+          top: 0;
+		  display:none;
+        "
+        id="showBox"
+        @click="hideBox()"
+>
+	<div class="calendar" @click.stop>
+	  <div class="calendar-header">
+	    <button id="prevBtn">&lt;</button>
+	    <h2 id="yearMonth"></h2>
+	    <button id="nextBtn">&gt;</button>
+	  </div>
+	  <div class="weekdays" id="weekdays"></div>
+	  <div class="days" id="days"></div>
+	</div>
+</section>
 
   <div style="width:100%;display: flex;justify-content: center;">
 	<section class="ftco-section" style="padding: 32px;">
@@ -100,30 +182,6 @@
                       :key="info.key" @click="selInfo(info.key)">{{ info.name }}</span>
                     </label>
                   </div>
-<!--                   <div class="form-group"> -->
-<!--                     <input -->
-<!--                       type="text" -->
-<!--                       id="checkin_date" -->
-<!--                       class="form-control checkin_date" -->
-<!--                       placeholder="Date from" -->
-<!--                     /> -->
-<!--                   </div> -->
-<!--                   <div class="form-group"> -->
-<!--                     <input -->
-<!--                       type="text" -->
-<!--                       id="checkout_date" -->
-<!--                       class="form-control checkout_date" -->
-<!--                       placeholder="Date to" -->
-<!--                     /> -->
-<!--                   </div> -->
-
-<!--                   <div class="form-group"> -->
-<!--                     <input -->
-<!--                       type="submit" -->
-<!--                       value="Search" -->
-<!--                       class="btn btn-primary py-3 px-5" -->
-<!--                     /> -->
-<!--                   </div> -->
                 </div>
               </form>
             </div>
@@ -263,7 +321,8 @@
     			  ],
     			  checkin: '',
     			  checkout: '',
-    			  person: 2
+    			  person: 2,
+    			  calendarView: false
     		  }
     	  },
     	  computed: {
@@ -277,13 +336,44 @@
     			this.dataRecv()
     	  },
     	  methods: {
-   		    handleSearch({ checkin, checkout, person }) {
-   	            this.checkin = checkin;
-   	            this.checkout = checkout;
-   	            this.person = person;
-   	            this.curpage = 1;
-   	            this.dataRecv();
-   	        },
+  			  hotelCalendaData() {
+  				  axios.get("../hotel/calenda_vue.do", {
+  					  params: {
+  						  checkin: this.checkin,
+  						  checkout: this.checkout,
+  						  person: this.person
+  					  }
+  				  }).then(res => ({
+  					  calendarView: true
+  				  })).catch(err => {
+  					  console.log(err.response)
+  				  })
+  			  },
+  			  hideBox(){
+  				  $("#showBox").hide();
+  			  },
+  			  showBox(){
+  				  $("#showBox").show();
+  			  },
+    		  searchbar() {
+      			console.log('checkin:', this.checkin, 'checkout:', this.checkout)
+      			if (!this.checkin || !this.checkout) {
+      				alert("체크인·체크아웃을 모두 선택해주세요.")
+      				return
+      			}
+      			else if (new Date(this.checkin) < new Date()) {
+      				alert("체크인은 오늘 이후여야 합니다.")
+      				return
+      			} 
+      			else if (new Date(this.checkin) >= new Date(this.checkout)) {
+      				alert("체크아웃은 체크인 이후여야 합니다.")
+      				return
+      			}
+      			else {
+      				this.curpage = 1
+          			this.dataRecv()
+      			}
+      		},
     		infoValue(key) {
     			return this[key]
     			this.curpage = 1
@@ -362,9 +452,8 @@
 	      				checkin: this.checkin,
 	      				checkout: this.checkout,
 	      				person: this.person
-	      				
       				}
-
+      			
       			}).then(res => {
       				console.log(res.data)
       				this.list = res.data.list
@@ -380,11 +469,85 @@
       				console.log(error.response)
       			})
       		}
-    	  },
-    	  components:{
-      		'hotel-search-bar': hotel_searchbar
-      	  }
+    	  }
       }).mount("#hotelListApp")
+    </script>
+    <script>
+    (function(){
+    	  const $ = s => document.querySelector(s);
+    	  const WEEKDAYS = ['일','월','화','수','목','금','토'];
+    	  let current = new Date();
+
+    	  function initWeekdays(){
+    	    $('#weekdays').innerHTML = WEEKDAYS
+    	      .map((d,i) => {
+    	        const cls = i === 0
+    	          ? 'sunday'
+    	          : i === 6
+    	            ? 'saturday'
+    	            : '';
+    	        return `<div class="${cls}">${d}</div>`;
+    	      })
+    	      .join('');
+    	  }
+
+    	  function render(){
+    	    const year     = current.getFullYear();
+    	    const month    = current.getMonth();
+    	    const today    = new Date();
+    	    today.setHours(0,0,0,0);
+
+    	    $('#yearMonth').textContent = `${year}년 ${month+1}월`;
+
+    	    const firstDay = new Date(year, month, 1).getDay();
+    	    const lastDate = new Date(year, month+1, 0).getDate();
+    	    const prevLast = new Date(year, month, 0).getDate();
+
+    	    const cells = [];
+    	    // 이전달 꼬리
+    	    for(let i = firstDay - 1; i >= 0; i--){
+    	      cells.push({ num: prevLast - i, other: true });
+    	    }
+    	    // 이번달 본문
+    	    for(let d = 1; d <= lastDate; d++){
+    	      cells.push({ num: d, other: false });
+    	    }
+    	    // 다음달 머리
+    	    while(cells.length % 7){
+    	      cells.push({ num: cells.length - firstDay - lastDate + 1, other: true });
+    	    }
+
+    	    $('#days').innerHTML = cells.map((c, idx) => {
+    	      const classes = [];
+    	      if(c.other){
+    	        // 이전/다음 달 날짜는 weekend 색 제외
+    	        classes.push('other-month','disabled-day');
+    	      } else {
+    	        const cellDate = new Date(year, month, c.num);
+    	        if(cellDate < today)                     classes.push('disabled-day');
+    	        if(cellDate.getTime() === today.getTime()) classes.push('today');
+    	        // 이번달만 Sunday/Saturday 스타일
+    	        if(idx % 7 === 0)      classes.push('sunday');
+    	        else if(idx % 7 === 6) classes.push('saturday');
+    	      }
+    	      return `<div class="${classes.join(' ')}">${c.num}</div>`;
+    	    }).join('');
+    	  }
+
+    	  $('#prevBtn').addEventListener('click', ()=>{
+    	    current.setMonth(current.getMonth() - 1);
+    	    render();
+    	  });
+    	  $('#nextBtn').addEventListener('click', ()=>{
+    	    current.setMonth(current.getMonth() + 1);
+    	    render();
+    	  });
+
+    	  initWeekdays();
+    	  render();
+    	})();
+
+      //달력 자바스크립트
     </script>
 </body>
 </html>
