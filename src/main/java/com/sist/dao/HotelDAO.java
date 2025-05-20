@@ -66,8 +66,20 @@ public class HotelDAO {
 	{
 		return mapper.hotelReserveDetailData(no);
 	}
-	public List<HotelReserveVO> adminHotelListData(int no)
+	public List<HotelReserveVO> adminHotelListData(Map map)
 	{
-		return mapper.adminHotelListData(no);
+		return mapper.adminHotelListData(map);
+	}
+	public void hotelReserveDelete(int no)
+	{
+		mapper.hotelReserveDelete(no);
+	}
+	public int adminHotelListTotalPage()
+	{
+		return mapper.adminHotelListTotalPage();
+	}
+	public void adminHotelUpdate(HotelReserveVO vo)
+	{
+		mapper.adminHotelUpdate(vo);
 	}
 }

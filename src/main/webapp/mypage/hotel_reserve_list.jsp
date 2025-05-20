@@ -43,17 +43,6 @@
 	font-size: 14px;
 	color: black;
 }
-
-.mainTab_nav li {
-	display: inline-block;
-	margin: 0 20px;
-}
-
-.mainTab a {
-	display: inline-block;
-	width: 220px; 
-	text-align: center;
-}
 </style>
 </head>
 <body>
@@ -65,6 +54,7 @@
         <li class="mainTab" ><a href="../mypage/hotel_reserve_list.do" style="color: black; font-weight: bold;">호텔 예약 조회</a></li>
       </ul>
     </div>
+    <br>
   <div>
     <div class="tab">
       <ul class="tab_nav">
@@ -96,12 +86,12 @@
               <td>${ing.checkinStr }</td>
               <td>${ing.checkoutStr }</td>
               <td>${ing.status }</td>
-              <td>
+              <td style="padding-left: 2px; padding-right: 2px; padding-top: 6px;">
                 <a href="../mypage/hotel_reserve_detail.do?no=${ing.no }">
                   <input type="button" value="예약 상세보기" class="btn btn-primary r-12"/>
                 </a>
               </td>
-              <td>
+              <td style="padding-left: 2px; padding-right: 2px; padding-top: 6px;">
                 <a class="btn btn-outline-danger r-12 cursor-pointer text-dark ml-2">예약 취소</a>
               </td>
             </tr>
@@ -132,12 +122,12 @@
               <td>${confd.checkinStr }</td>
               <td>${confd.checkoutStr }</td>
               <td>${confd.status }</td>
-              <td>
+              <td style="padding-left: 2px; padding-right: 2px; padding-top: 6px;">
                 <a href="../mypage/hotel_reserve_detail.do?no=${confd.no }">
                   <input type="button" value="예약 상세보기" class="btn btn-primary r-12"/>
                 </a>
               </td>
-              <td>
+              <td style="padding-left: 2px; padding-right: 2px; padding-top: 6px;">
                 <a class="btn btn-outline-danger r-12 cursor-pointer text-dark ml-2">예약 취소</a>
               </td>
             </tr>
@@ -165,7 +155,7 @@
               <td>${past.room_title }</td>
               <td>${past.checkinStr }</td>
               <td>${past.checkoutStr }</td>
-              <td>
+              <td style="padding-left: 2px; padding-right: 2px; padding-top: 6px;">
                 <a href="../mypage/hotel_reserve_detail.do?no=${past.no }">
                   <input type="button" value="예약 상세보기" class="btn btn-primary r-12"/>
                 </a>
