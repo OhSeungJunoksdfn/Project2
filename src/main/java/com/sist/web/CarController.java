@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import com.sist.service.CarService;
 import com.sist.vo.car.CarVO;
@@ -58,21 +59,20 @@ public class CarController {
 		return "main/main";
 	}
 	
-	@GetMapping("car/car_reserve.do")
+	@PostMapping("car/car_reserve.do")
 	public String car_reserve(Model model,String no,
-			String pudate, String putime,String rdate, String rtime,String ins)
+			String pudate, String putime,String rdate, String rtime,String ins,int price)
 	{
-		System.out.println(pudate);
-		
+		System.out.println(rdate);
+
 		CarVO vo=service.carDetailData(Integer.parseInt(no));
-		// 배열 => List로 변경 asList
-		//String id=(String)session.getAttribute("userid");
-		//model.addAttribute("sessionId", id);
 		model.addAttribute("vo", vo);
 		model.addAttribute("pudate",pudate);
 		model.addAttribute("putime",putime);
 		model.addAttribute("rdate",rdate);
 		model.addAttribute("rtime",rtime);
+		model.addAttribute("ins",ins);
+		model.addAttribute("price",price);
 		model.addAttribute("main_jsp","../car/car_reserve.jsp");
 		return "main/main";
 	}
