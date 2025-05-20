@@ -31,45 +31,38 @@
         <div class="row">
         	<div class="col-lg-3 order-md-last sidebar pt-3 shadow" id="sidebar">
         		<div class="sidebar-wrap ftco-animate">
-        			<h3 class="heading mb-4">Find City</h3>
+        			<h3 class="heading mb-4">결제 정보</h3>
         			<form action="#" @submit.prevent>
-        				<div class="fields">
-		              <div class="form-group">
-		                <input type="text" class="form-control" placeholder="Destination, City">
-		              </div>
-		              <div class="form-group">
-		                <div class="select-wrap one-third">
-	                    <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-	                    <select name="" id="" class="form-control" placeholder="Keyword search">
-	                      <option value="">Select Location</option>
-	                      <option value="">San Francisco USA</option>
-	                      <option value="">Berlin Germany</option>
-	                      <option value="">Lodon United Kingdom</option>
-	                      <option value="">Paris Italy</option>
-	                    </select>
-	                  </div>
-		              </div>
-		              <div class="form-group">
-		                <input type="text" id="checkin_date" class="form-control" placeholder="Date from">
-		              </div>
-		              <div class="form-group">
-		                <input type="text" id="checkin_date" class="form-control" placeholder="Date to">
-		              </div>
-		              <div class="form-group">
-		              	<div class="range-slider">
-		              		<span>
-										    <input type="number" value="25000" min="0" max="120000"/>	-
-										    <input type="number" value="50000" min="0" max="120000"/>
-										  </span>
-										  <input value="1000" min="0" max="120000" step="500" type="range"/>
-										  <input value="50000" min="0" max="120000" step="500" type="range"/>
-										</div>
-		              </div>
-		              <div class="form-group">
-		                <input type="submit" value="예약하기" class="btn btn-primary py-3 px-5" @click="reserve()">
-		              </div>
-		            </div>
-	            </form>
+	        			<div class="fields">
+	
+			              <div class="form-group">
+			              	대여일시
+			                <input type="text" id="checkin_date" class="form-control" readonly
+			                	:value="pudate + '   ' +putime">
+			              </div>
+			              <div class="form-group">
+			              	반납일시
+			                <input type="text" id="checkin_date" class="form-control" readonly
+			                	:value="rdate + '   ' +rtime">
+			              </div>
+			              <div class="text-center">{{timeInterval}}</div>
+						  <hr>
+						  <div class="form-group">
+						  	<span style="font-size:15px">보험</span>
+			                <span style="font-size:15px;position:absolute;right:0">{{ins_kind}}</span>
+			                <div></div>
+			              </div>
+			              <hr>
+			              <div style="display:flex;">
+			              		<h5 style="font-size:18px">결제액 </h5>
+			              		<h5 style="font-size:18px;margin-left:auto"> {{calcRentalPrice}}원</h5>
+			              </div>
+			              
+			              <div class="form-group">
+			                <input type="submit" value="예약하기" class="btn btn-primary py-3 px-5" @click="reserve()">
+			              </div>
+			            </div>
+	            	</form>
         		</div>
           </div>
           <div class="col-lg-9">
@@ -116,9 +109,11 @@
 			              <hr style="transform: translateY(-10px);">
 			              <p style="font-size:12px">
 			              	<span>-자차 미가입</span>
-			                <h5 style="font-size:12px;margin-top:10px">${vo.non_ins_qual }</h5>
+			                <h5 style="font-size:12px;margin-top:10px;margin-bottom:40px">${vo.non_ins_qual }</h5>
 			              </p>
-			              <h5 style="position:absolute;bottom:0">${vo.non_ins_price }원</h5>
+			              <h5 style="position:absolute;bottom:0;right:0;margin-right:20px;">
+			              	{{non_ins_price.toLocaleString()}}원
+			              </h5>
 			            </div>
 			          </div>
 			          <div class="col-md-4">
@@ -131,8 +126,11 @@
 			              <hr style="transform: translateY(-10px);">
 			              <p style="font-size:12px">
 			              	<div style="font-size:12px" v-for="(desc,index) in nor_ins_desc.slice(1)">-{{desc}}</div>
-			                <h5 style="font-size:12px;margin-top:10px">${vo.normal_ins_qual }</h5>
+			                <h5 style="font-size:12px;margin-top:10px;margin-bottom:40px">${vo.normal_ins_qual }</h5>
 			              </p>
+			              <h5 style="position:absolute;bottom:0;right:0;margin-right:20px;">
+			              	{{normal_ins_price.toLocaleString()}}원
+			              </h5>
 			            </div>
 			          </div>
 			          <div class="col-md-4">
@@ -145,8 +143,11 @@
 			              <hr style="transform: translateY(-10px);">
 			              <p style="font-size:12px">
 			              	<div style="font-size:12px" v-for="(desc,index) in pre_ins_desc.slice(1)">-{{desc}}</div>
-			                <h5 style="font-size:12px;margin-top:10px">${vo.normal_ins_qual }</h5>
+			                <h5 style="font-size:12px;margin-top:10px;margin-bottom:40px">${vo.normal_ins_qual }</h5>
 			              </p>
+			              <h5 style="position:absolute;bottom:0;right:0;margin-right:20px;">
+			              	{{premium_ins_price.toLocaleString()}}원
+			              </h5>
 			            </div>
 			          </div>
 			        </div>
@@ -329,68 +330,110 @@
       let hotelListApp=Vue.createApp({
     	  data() {
     		  return {
-    			  list: [],
-    			  curpage: 1,
-    			  totalpage: 0,
-    			  startPage: 0,
-    			  endPage: 0,
     			  pudate:'${pudate}',
     			  putime:'${putime}',
     			  rdate:'${rdate}',
     			  rtime:'${rtime}',
     			  nor_ins_desc:'${vo.normal_ins_desc}'.split('-'),
     			  pre_ins_desc:'${vo.premium_ins_desc}'.split('-'),
-    			  checked_ins:''
+    			  non_ins_price:Number('${vo.non_ins_price}'),
+    			  normal_ins_price:Number('${vo.normal_ins_price}'),
+    			  premium_ins_price:Number('${vo.premium_ins_price}'),
+    			  checked_ins:0,
+    			  puDateObject:new Date(`${pudate} ${putime}`),
+    			  rDateObject:new Date(`${rdate} ${rtime}`),
+    			  rentalPrice:0
     		  }
     	  },
     	  computed: {
+    		  timeInterval(){
+    			  const diffMs = this.rDateObject - this.puDateObject
+    			  const diffHours = Math.floor(diffMs / ((1000 * 60 * 60))%24);
+    			  const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+    			  
+    			  const str = diffDays + '일 ' + diffHours + '시간'
+    			  return str
+    		  },
+    		  calcRentalPrice(){
+    			  const diffMs = this.rDateObject - this.puDateObject
+    			  const diffHours = diffMs / (1000 * 60 * 60);
+    			  const ins_prices = [0,
+    				  				this.non_ins_price,
+    				  				this.normal_ins_price,
+    				  				this.premium_ins_price]
+    			  this.rentalPrice = ins_prices[this.checked_ins]*diffHours
+    			  return this.rentalPrice.toLocaleString()
+    		  },
+    		  ins_kind(){
+    			  const inss = ["","자차면책 가입 안함","일반자차","고급자차"]
+    			  return inss[this.checked_ins]
+    		  }
 	      },
     	  mounted() { 
-	    	  console.log("location",'${vo.location}')
+	    	  console.log(this.puDateObject)
+
     	  },
     	  methods: {
     		reserve(){
     			console.log("reserve")
     			
-    			if(this.checked_ins.length===0){
+    			if(this.checked_ins===0){
     				alert("자차보험을 선택해주세요")
     			}else{
-    				location.href=`../car/car_reserve.do?
-						pudate=${pudate}&putime=${putime}&
-						rdate=${rdate}&rtime=${rtime}&no=${vo.no}`+'&ins='+this.checked_ins
+					this.postData()
     			}
     			
     		},
     		radio_click(value) {
     			$('.ins_radio').prop('checked',false)
     			$('#'+value).prop('checked',true)
-    			this.checked_ins=value
+    			this.checked_ins=Number(value)
     			console.log(this.checked_ins)
     		},
-      		dataRecv() {
-      			axios.get('http://localhost:8080/car/list_search_vue.do', {
-      				params: {
-	      				page: this.curpage,
-						pudate:this.pudate,
-						putime:this.putime,
-						rdate:this.rdate,
-						rtime:this.rtime,
-      				}
-
-      			}).then(res => {
-      				console.log(res.data)
-      				this.list = res.data.list
-      			    this.curpage = res.data.curpage
-      			    this.totalpage = res.data.totalpage
-      			    this.startPage = res.data.startPage
-      			    this.endPage = res.data.endPage
-      			    
-      			  	this.$nextTick(() => {
-      		          	contentWayPoint()
-      		        })
-      			}).catch(error => {
-      				console.log(error.response)
-      			})
+      		postData() {
+    			const form = document.createElement("form");
+				form.method = "POST";
+				form.action = "../car/car_reserve.do";
+	
+				const inputPudate = document.createElement("input");
+				inputPudate.type = "hidden";
+				inputPudate.name = "pudate";
+				inputPudate.value = this.pudate;
+				const inputPutime = document.createElement("input");
+				inputPutime.type = "hidden";
+				inputPutime.name = "putime";
+				inputPutime.value = this.putime;
+				const inputRdate = document.createElement("input");
+				inputRdate.type = "hidden";
+				inputRdate.name = "rdate";
+				inputRdate.value = this.rdate;
+				const inputRtime = document.createElement("input");
+				inputRtime.type = "hidden";
+				inputRtime.name = "rtime";
+				inputRtime.value = this.rtime;
+				const inputIns = document.createElement("input");
+				inputIns.type = "hidden";
+				inputIns.name = "ins";
+				inputIns.value = this.checked_ins;
+				const inputNo = document.createElement("input");
+				inputNo.type = "hidden";
+				inputNo.name = 'no';
+				inputNo.value = '${vo.no}';
+				const inputPrice = document.createElement("input");
+				inputPrice.type = "hidden";
+				inputPrice.name = 'price';
+				inputPrice.value = this.rentalPrice;
+	
+				form.appendChild(inputPudate);
+				form.appendChild(inputPutime);
+				form.appendChild(inputRdate);
+				form.appendChild(inputRtime);
+				form.appendChild(inputIns);
+				form.appendChild(inputNo);
+				form.appendChild(inputPrice);
+				document.body.appendChild(form);
+				
+				form.submit();
       		}
     	  }
     	  

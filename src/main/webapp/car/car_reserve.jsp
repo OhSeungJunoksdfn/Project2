@@ -44,7 +44,7 @@
                     >
                       차량명
                     </th>
-                    <td width="80%">모닝</td>
+                    <td width="80%">${vo.name}</td>
                   </tr>
                   <tr>
                     <th
@@ -53,7 +53,7 @@
                     >
                       차량정보
                     </th>
-                    <td width="80%">준중형/휘발유/4인승</td>
+                    <td width="80%">${vo.car_class}ㆍ${vo.seat}인승ㆍ${vo.fuel}ㆍ자동</td>
                   </tr>
                   <tr>
                     <th
@@ -62,7 +62,7 @@
                     >
                       기간
                     </th>
-                    <td width="80%">2025.04.18(금) ~ 2025.04.20(토)/ 48시간</td>
+                    <td width="80%">{{pudate}}  {{putime}} ~ {{rdate}}  {{rtime}}&nbsp;&nbsp;&nbsp;{{timeInterval}}</td>
                   </tr>
                   <tr>
                     <th
@@ -71,7 +71,7 @@
                     >
                       보험
                     </th>
-                    <td width="80%">완전자차. 26세이상, 자차 설명</td>
+                    <td width="80%"></td>
                   </tr>
                   <tr>
                     <th
@@ -308,11 +308,32 @@
 let listApp=Vue.createApp({
 	data(){
 		return {
+			  pudate:'${pudate}',
+			  putime:'${putime}',
+			  rdate:'${rdate}',
+			  rtime:'${rtime}',
+			  nor_ins_desc:'${vo.normal_ins_desc}'.split('-'),
+			  pre_ins_desc:'${vo.premium_ins_desc}'.split('-'),
+			  non_ins_price:Number('${vo.non_ins_price}'),
+			  normal_ins_price:Number('${vo.normal_ins_price}'),
+			  premium_ins_price:Number('${vo.premium_ins_price}'),
+			  ins:0,
+			  puDateObject:new Date(`${pudate} ${putime}`),
+			  rDateObject:new Date(`${rdate} ${rtime}`),
+			  price:0
 		}
 	},
 	mounted(){
 	},
 	computed:{
+		timeInterval(){
+			const diffMs = this.rDateObject - this.puDateObject
+			const diffHours = Math.floor(diffMs / ((1000 * 60 * 60))%24);
+			const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+			  
+			const str = diffDays + '일 ' + diffHours + '시간'
+			return str
+		},
 	},
 	methods:{
 		payment(){
