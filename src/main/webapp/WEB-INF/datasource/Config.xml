@@ -7,6 +7,8 @@
     <typeAlias type="com.sist.vo.hotel.HotelVO" alias="HotelVO"/>
     <typeAlias type="com.sist.vo.tour.TourVO" alias="TourVO"/>
     <typeAlias type="com.sist.vo.car.CarVO" alias="CarVO"/>
+    <typeAlias type="com.sist.vo.car.CarBranchVO" alias="CarBranchVO"/>
+    <typeAlias type="com.sist.vo.car.CarReserveVO" alias="CarReserveVO"/>
     <typeAlias type="com.sist.vo.air.FlightInfoVO" alias="FlightInfoVO"/>
     <typeAlias type="com.sist.vo.air.AirLinesVO" alias="AirLinesVO"/>
     <typeAlias type="com.sist.vo.air.AirportsVO" alias="AirportsVO"/>

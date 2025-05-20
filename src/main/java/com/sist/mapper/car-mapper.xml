@@ -20,11 +20,79 @@
 	</if>
   </select>
   
+  <resultMap id="BranchResultMap" type="CarBranchVO">
+	<result property="no" column="branch_no"/>
+  	<result property="branch_name" column="branch_name"/>
+    <result property="location" column="location"/>
+    <result property="branch_phone" column="branch_phone"/>
+    <result property="open_time" column="open_time"/>
+    <result property="close_time" column="close_time"/>
+  </resultMap>
+  
+  <resultMap id="CarResultMap" type="CarVO">
+        <result property="no" column="no"/>
+        <result property="name" column="name"/>
+        <result property="poster" column="poster"/>
+        <result property="car_class" column="car_class"/>
+        <result property="seat" column="seat"/>
+        <result property="manufacturer" column="manufacturer"/>
+        <result property="fuel" column="fuel"/>
+        <result property="car_year" column="car_year"/>
+        <result property="detail_option" column="detail_option"/>
+        <result property="non_ins_qual" column="non_ins_qual"/>
+        <result property="non_ins_price" column="non_ins_price"/>
+        <result property="normal_ins_qual" column="normal_ins_qual"/>
+        <result property="normal_ins_desc" column="normal_ins_desc"/>
+        <result property="normal_ins_price" column="normal_ins_price"/>
+        <result property="premium_ins_qual" column="premium_ins_qual"/>
+        <result property="premium_ins_desc" column="premium_ins_desc"/>
+        <result property="premium_ins_price" column="premium_ins_price"/>
+
+        <association property="branch" resultMap="BranchResultMap"/>
+    </resultMap>
+  
+  <select id="carDetailData" resultMap="CarResultMap" parameterType="int">
+	SELECT
+	    c.no AS no,
+	    c.name AS name,
+	    poster,
+	    car_class,
+	    seat,
+	    manufacturer,
+	    fuel,
+	    car_year,
+	    detail_option,
+	    non_ins_qual,
+	    non_ins_price,
+	    normal_ins_qual,
+	    normal_ins_desc,
+	    normal_ins_price,
+	    premium_ins_qual,
+	    premium_ins_desc,
+	    premium_ins_price,
+	    
+	    cb.no as branch_no,
+	    branch_name,
+	    location,
+	    branch_phone,
+	    open_time,
+	    close_time
+	FROM
+	    car c
+	JOIN car_branch cb
+	    ON c.branch_no = cb.no
+	WHERE c.no = #{no}
+  </select>
+  
   <select id="carSearchListData" resultType="CarVO" parameterType="hashmap">
     SELECT no,poster,name,car_class,seat,fuel,premium_ins_price,NON_INS_QUAL,num
 	  FROM (SELECT no,poster,name,car_class,seat,fuel,premium_ins_price,NON_INS_QUAL,rownum as num
 	  FROM (SELECT DISTINCT c.no,poster,name,car_class,seat,fuel,premium_ins_price,NON_INS_QUAL
-	  FROM car c LEFT OUTER JOIN car_reserve cr ON c.no = cr.car_no
+	  FROM car c 
+	  	LEFT OUTER JOIN car_reserve cr 
+	  		ON c.no = cr.car_no 
+	  	LEFT JOIN car_branch cb 
+	  		ON c.branch_no = cb.NO
 	  WHERE (pickup_date is null OR
 	  cr.car_no NOT IN(
 	  		SELECT car_no
@@ -55,6 +123,13 @@
 	  	<if test="name_search_data.length() > 0">
 		  AND (name LIKE '%'||#{name_search_data}||'%')
 	  	</if>
+	  	<if test="loc_search_data != null and loc_search_data.length > 0">
+		  AND (
+		  <foreach item="loc" collection="loc_search_data" separator="OR" >
+		    location LIKE '%'||#{loc}||'%'
+		  </foreach>
+		  )
+	  	</if>
 	  ORDER BY c.no ASC))
 	  WHERE num BETWEEN #{start} AND #{end}
 	  
@@ -63,7 +138,11 @@
   <select id="carSearchTotalPage" resultType="int" parameterType="hashmap">
    	SELECT CEIL(COUNT(*)/9.0) 
    	FROM(SELECT DISTINCT c.no
-    FROM car c LEFT OUTER JOIN car_reserve cr ON c.no = cr.car_no
+    FROM car c 
+	  	LEFT OUTER JOIN car_reserve cr 
+	  		ON c.no = cr.car_no 
+	  	LEFT JOIN car_branch cb 
+	  		ON c.branch_no = cb.NO
     WHERE (pickup_date is null OR
 	  cr.car_no NOT IN(
 	  		SELECT car_no
@@ -93,6 +172,13 @@
 	  	</if>
 	  	<if test="name_search_data.length() > 0">
 		  AND (name LIKE '%'||#{name_search_data}||'%')
+	  	</if>
+	  	<if test="loc_search_data != null and loc_search_data.length > 0">
+		  AND (
+		  <foreach item="loc" collection="loc_search_data" separator="OR" >
+		    location LIKE '%'||#{loc}||'%'
+		  </foreach>
+		  )
 	  	</if>
 	)
   	

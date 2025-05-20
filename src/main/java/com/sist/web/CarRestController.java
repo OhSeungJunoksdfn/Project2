@@ -53,7 +53,8 @@ public class CarRestController {
 	public Map car_list_search(int page,
 				String pudate,String putime,
 				String rdate,String rtime,
-				String class_checked, String fuel_checked,String name_search_data) {
+				String class_checked, String fuel_checked,String name_search_data,
+				String loc_search_data) {
 		
 		int rowSize=9;
 
@@ -62,9 +63,9 @@ public class CarRestController {
 		map.put("start",(page-1)*rowSize+1);
 		map.put("end",page*rowSize);
 
-		System.out.println("nsd"+name_search_data);	
+		System.out.println("lsd"+loc_search_data);	
 		map.put("name_search_data", name_search_data);
-		
+		map.put("loc_search_data", loc_search_data.split(","));
 		map.put("class_checked", class_checked.split(","));
 		map.put("fuel_checked", fuel_checked.split(","));
 		String puRegDateStr = pudate + " " + putime;
