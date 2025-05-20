@@ -151,7 +151,7 @@
                   "
                 >
                   <a
-                    :href="'../car/car_detail.do?no='+vo.no+'&pudate=${pudate }&putime=${putime }&rdate=${rtime }&rtime=${rtime }'"
+                    :href="'../car/car_detail.do?no='+vo.no+'&pudate=${pudate }&putime=${putime }&rdate=${rdate }&rtime=${rtime }'"
                     class="col-3 d-flex justify-content-center align-items-center"
                 
                   >
