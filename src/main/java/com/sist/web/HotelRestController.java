@@ -19,12 +19,11 @@ import com.sist.vo.hotel.HotelVO;
 import com.sist.service.*;
 
 @RestController
-@RequestMapping("hotel/")
 public class HotelRestController {
 	@Autowired
 	private HotelService service;
 	
-	@GetMapping("list_vue.do")
+	@GetMapping("hotel/list_vue.do")
 	public Map hotel_list_vue(int page, HttpSession session, @RequestParam("sort") String sort,
 			@RequestParam(value = "checkin", required = false) String checkin, 
 			@RequestParam(value = "checkout", required = false) String checkout, 
@@ -94,18 +93,60 @@ public class HotelRestController {
 		return map;
 	}
 	
-	@GetMapping("hotel_mainPage_vue.do")
+	@GetMapping("hotel/hotel_mainPage_vue.do")
 	public List<HotelVO> hotel_mainPage()
 	{
 		return service.hotelMainData();
 	}
 	
-	@RequestMapping("hotel_reserve_insert_vue.do")
+	@RequestMapping("hotel/hotel_reserve_insert_vue.do")
 	public void hotel_reserve_insert_vue(HotelReserveVO vo, HttpSession session, Model model)
 	{
 		// Return 필요 없어서 void 사용
 		vo.setMember_id((String)session.getAttribute("id"));
 		
 		service.hotelReserveInsertData(vo);
+	}
+	@GetMapping("admin/hotel_reserve_list_vue.do")
+	public Map hotel_reserveList_vue(int page)
+	{
+		int rowSize = 10;
+		int start = (page-1) * rowSize+1;
+		int end = page * rowSize;
+		
+		Map map=new HashMap();
+		map.put("start", start);
+		map.put("end", end);
+		
+		int totalpage = service.adminHotelListTotalPage();
+		
+		final int BLOCK = 10;
+		int startPage = ((page - 1) / BLOCK * BLOCK) + 1;
+		int endPage = startPage + BLOCK - 1;
+		if (endPage > totalpage)
+			endPage = totalpage;
+		
+		List<HotelReserveVO> list = service.adminHotelListData(map);
+		
+		map = new HashMap();
+		map.put("curpage", page);
+		map.put("startPage", startPage);
+		map.put("endPage", endPage);
+		map.put("totalpage", totalpage);
+		map.put("list", list);
+		
+		return map;
+	}
+	
+	@RequestMapping("admin/hotel_reserve_update_vue.do")
+	public void hotel_reserve_update_vue(HotelReserveVO vo)
+	{
+		service.adminHotelUpdate(vo);
+	}
+	
+	@PostMapping("mypage/hotel_reserve_delete_vue.do")
+	public void hotel_reserve_delete_vue(int no)
+	{
+		
 	}
 }

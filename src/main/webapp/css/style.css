@@ -12340,10 +12340,10 @@ textarea.form-control {
   top: 50%;
   left: 50%;
   width: 100%;
-  display: flex; /* ← flex 로 전환 */
-  justify-content: space-between; /* ← 좌/우 끝 정렬 */
+  display: flex; /* �넀 flex 濡� �쟾�솚 */
+  justify-content: space-between; /* �넀 醫�/�슦 �걹 �젙�젹 */
   transform: translate(-50%, -50%);
-  pointer-events: none; /* 버튼만 클릭 가능하게 */
+  pointer-events: none; /* 踰꾪듉留� �겢由� 媛��뒫�븯寃� */
   z-index: 10;
 }
 .fifth-section .owl-nav .owl-prev,
@@ -12392,7 +12392,7 @@ textarea.form-control {
   background: #fff;
 }
 
-/* 페이징 dot 완전 숨기기 */
+/* �럹�씠吏� dot �셿�쟾 �닲湲곌린 */
 .fifth-slider .owl-dots {
   display: none !important;
 }
@@ -12480,4 +12480,45 @@ textarea.form-control {
     stroke-dasharray: 89, 200;
     stroke-dashoffset: -136px;
   }
+}
+
+
+.mainTab_nav li {
+	display: inline-block;
+	margin: 0 20px;
+}
+
+.mainTab a {
+  display: inline-block;
+  width: 220px;
+  text-align: center;
+  color: black;
+  text-decoration: none;
+  position: relative;
+  padding: 8px 0;
+  transition: color 0.3s ease;
+  font-weight: bold;
+}
+
+/* 밑줄: 처음에는 숨김 */
+.mainTab a::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background-color: #78d5ef;
+  transition: width 0.3s ease-in-out;
+}
+
+/* 마우스 오버 시 밑줄 부드럽게 표시 */
+.mainTab a:hover::after {
+  width: 100%;
+}
+
+.table thead tr th
+.table tbody tr td {
+	font-size: 12px;
+	color: black;
 }
