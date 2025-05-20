@@ -79,7 +79,7 @@
 				<a href="../admin/member.do" class="col btn btn-outline-primary border-0 rounded-0 d-flex justify-content-center align-items-center" id="sideBtn" style="height:50px; color:white"  >회원관리</a>
 				<a href="../admin/reply.do" class="col btn btn-outline-primary border-0 rounded-0 d-flex justify-content-center align-items-center" id="sideBtn" style="height:50px; color:white"  >댓글관리</a>
 				<a href="../admin/qna.do" class="col btn btn-outline-primary border-0 rounded-0 d-flex justify-content-center align-items-center" id="sideBtn" style="height:50px; color:white"  >문의글</a>
-				<a href="../admin/main.do" class="col btn btn-outline-primary border-0 rounded-0 d-flex justify-content-center align-items-center" id="sideBtn" style="height:50px; color:white"  >예약관리</a>
+				<a href="../admin/reserve.do" class="col btn btn-outline-primary border-0 rounded-0 d-flex justify-content-center align-items-center" id="sideBtn" style="height:50px; color:white"  >예약관리</a>
 				<a href="../admin/notice.do" class="col btn btn-outline-primary border-0 rounded-0 d-flex justify-content-center align-items-center" id="sideBtn" style="height:50px; color:white"  >공지사항</a>
 				<a href="../admin/statistics.do" class="col btn btn-outline-primary border-0 rounded-0 d-flex justify-content-center align-items-center" id="sideBtn" style="height:50px; color:white"  >통계</a>
 				<a href="../admin/coupon.do" class="col btn btn-outline-primary border-0 rounded-0 d-flex justify-content-center align-items-center" id="sideBtn" style="height:50px; color:white"  >쿠폰</a>

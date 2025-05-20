@@ -82,7 +82,14 @@ public interface HotelMapper {
 			+ "JOIN hotel_room hr ON room_no = hr.no "
 			+ "JOIN projectmember m ON member_id = m.id "
 			+ "WHERE member_id = #{member_id}")
-	public List<HotelReserveVO> hotelReserveListData(String member_id);
+	public List<HotelReserveVO> mypageHotelReserveListData(String member_id);
+	
+	@Select("SELECT CEIL(COUNT(*)/10.0) "
+			+ "FROM hotel_reservation rv "
+			+ "JOIN hotel h ON hotel_no = h.no "
+			+ "JOIN hotel_room hr ON room_no = hr.no "
+			+ "JOIN projectmember m ON member_id = m.id ")
+	public int mypageHotelListTotalPage();
 	
 	@Select("SELECT rv.no, rv.hotel_no, rv.room_no, rv.member_id, rv.username, checkin, checkout, "
 			+ " rv.stay_days, rv.total_price, rv.booking_date, rv.status, rv.person, rv.useremail, rv.userphone, "

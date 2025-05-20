@@ -58,9 +58,9 @@ public class HotelDAO {
 		return mapper.hotelMainData();
 	}
 	////////////////////////////////////////////////////////////////// 옮길지 의논하기
-	public List<HotelReserveVO> hotelReserveListData(String member_id)
+	public List<HotelReserveVO> mypageHotelReserveListData(String member_id)
 	{
-		return mapper.hotelReserveListData(member_id);
+		return mapper.mypageHotelReserveListData(member_id);
 	}
 	public HotelReserveVO hotelReserveDetailData(int no)
 	{
@@ -81,5 +81,9 @@ public class HotelDAO {
 	public void adminHotelUpdate(HotelReserveVO vo)
 	{
 		mapper.adminHotelUpdate(vo);
+	}
+	public int mypageHotelListTotalPage()
+	{
+		return mapper.mypageHotelListTotalPage();
 	}
 }

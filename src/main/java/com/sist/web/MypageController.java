@@ -59,7 +59,7 @@ public class MypageController {
 		if (member_id == null) {
 	        return "redirect:../member/login.do"; // 로그인 안 된 경우 로그인 페이지로 이동
 	    }
-		List<HotelReserveVO> list = hService.hotelReserveListData(member_id);
+		List<HotelReserveVO> list = hService.mypageHotelReserveListData(member_id);
 		List<HotelReserveVO> ingList = new ArrayList<>();
 		List<HotelReserveVO> confirmedList = new ArrayList<>();
 		List<HotelReserveVO> pastList = new ArrayList<>();

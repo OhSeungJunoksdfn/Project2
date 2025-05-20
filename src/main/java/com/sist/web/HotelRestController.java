@@ -42,8 +42,8 @@ public class HotelRestController {
 			@RequestParam(value = "publicbath", defaultValue = "0")int publicbath)
 	{
 		int rowSize = 8;
-		int start = (rowSize*page)-(rowSize-1);
-		int end = rowSize*page;
+		int start = (page-1) * rowSize+1;
+		int end = page * rowSize;
 		
 		Map map=new HashMap();
 		map.put("start", start);
@@ -120,7 +120,7 @@ public class HotelRestController {
 		
 		int totalpage = service.adminHotelListTotalPage();
 		
-		final int BLOCK = 10;
+		final int BLOCK = 5;
 		int startPage = ((page - 1) / BLOCK * BLOCK) + 1;
 		int endPage = startPage + BLOCK - 1;
 		if (endPage > totalpage)
@@ -129,24 +129,25 @@ public class HotelRestController {
 		List<HotelReserveVO> list = service.adminHotelListData(map);
 		
 		map = new HashMap();
+		map.put("list", list);
 		map.put("curpage", page);
 		map.put("startPage", startPage);
 		map.put("endPage", endPage);
 		map.put("totalpage", totalpage);
-		map.put("list", list);
+		
 		
 		return map;
+	}
+	
+	@PostMapping("mypage/hotel_reserve_delete.do")
+	public void hotel_reserve_delete(int no)
+	{
+		service.hotelReserveDelete(no);
 	}
 	
 	@RequestMapping("admin/hotel_reserve_update_vue.do")
 	public void hotel_reserve_update_vue(HotelReserveVO vo)
 	{
 		service.adminHotelUpdate(vo);
-	}
-	
-	@PostMapping("mypage/hotel_reserve_delete_vue.do")
-	public void hotel_reserve_delete_vue(int no)
-	{
-		
 	}
 }

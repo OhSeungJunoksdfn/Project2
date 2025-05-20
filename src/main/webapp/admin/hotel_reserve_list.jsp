@@ -15,17 +15,17 @@
 </style>
 </head>
 <body>
-<div class="container" id="hotelReserveApp">
-  <div class="tab">
-    <ul class="mainTab_nav">
-      <li class="mainTab"><a href="#">항공권 예약 조회</a></li>
-      <li class="mainTab"><a href="#">렌트카 예약 조회</a></li>
-      <li class="mainTab" ><a href="../admin/hotel_reserve_list.do">호텔 예약 조회</a></li>
+
+<div class="container secb rounded-0 shadow py-2 bg-white" id="hotelReserveApp">
+<div class="tab">
+    <ul class="mainTab_nav mb-0 mt-2">
+      <li class="mainTab"><a href="#">항공권 예약 관리</a></li>
+      <li class="mainTab"><a href="#">렌트카 예약 관리</a></li>
+      <li class="mainTab" ><a href="../admin/hotel_reserve_list.do">호텔 예약 관리</a></li>
     </ul>
   </div>
-   <br>
     <div class="row">
-      <table class="table">
+      <table class="table"  style="margin: 20px;">
         <thead>
           <tr>
             <th>호텔명</th>
@@ -102,8 +102,8 @@
 					  }
 				  }).then(res => {
 					  alert("예약이 확정 되었습니다.")
-					  this.curpage = page
-  			  		  this.dataRecv()
+					  this.curpage = 1
+					  this.dataRecv()
 				  }).catch(err => {
 					  console.log(err.response)
 				  })
@@ -124,6 +124,7 @@
     			return arr
     	  },
 		  pageChange(page) {
+    		  console.log(page)
     			this.curpage = page
     			this.dataRecv()
     	  },
@@ -146,6 +147,10 @@
 				  this.curpage = res.data.curpage
 				  this.startPage = res.data.startPage
     			  this.endPage = res.data.endPage
+    			  
+    			  this.$nextTick(() => {
+    		          	contentWayPoint()
+    		        })
 			  }).catch(error => {
 				  console.log(error.response)
 			  })

@@ -46,7 +46,7 @@
 </style>
 </head>
 <body>
-<div class="wrap">
+<div class="wrap" id="mypageListApp">
     <div class="tab">
       <ul class="mainTab_nav">
         <li class="mainTab"><a href="#" style="color: black;">항공권 예약 조회</a></li>
@@ -92,7 +92,10 @@
                 </a>
               </td>
               <td style="padding-left: 2px; padding-right: 2px; padding-top: 6px;">
-                <a class="btn btn-outline-danger r-12 cursor-pointer text-dark ml-2">예약 취소</a>
+                <a class="btn btn-outline-danger r-12 cursor-pointer text-dark ml-2"
+                	data-no="${ing.no }" 
+                	onclick="delHotel(${ing.no })"
+                >예약 취소</a>
               </td>
             </tr>
            </c:forEach>
@@ -128,7 +131,10 @@
                 </a>
               </td>
               <td style="padding-left: 2px; padding-right: 2px; padding-top: 6px;">
-                <a class="btn btn-outline-danger r-12 cursor-pointer text-dark ml-2">예약 취소</a>
+                <a class="btn btn-outline-danger r-12 cursor-pointer text-dark ml-2"
+                	data-no="${confd.no }" 
+                	onclick="delHotel(${confd.no })"
+                >예약 취소</a>
               </td>
             </tr>
            </c:forEach>
@@ -178,6 +184,24 @@ $(function(){
     return false;
   }).filter(':eq(0)').click(); // 첫 번째 탭 클릭 효과 실행
 });
+
+function delHotel(no) {
+	console.log(no)
+	var msg = confirm("예약을 취소 하시겠습니까?");
+	$.ajax({
+		type: "POST",
+		url: "../mypage/hotel_reserve_delete.do",
+		data: {
+			no: no
+		},
+		success: function() {
+			alert("예약이 취소 되었습니다.");
+			window.location.href = "../mypage/hotel_reserve_delete_ok.do";
+		},
+		error: function() {
+		}
+	})
+}
 </script>
 </body>
 </html>

@@ -17,26 +17,27 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.sist.service.HotelService;
+import com.sist.vo.admin.NoticeVO;
 import com.sist.vo.hotel.HotelImgVO;
 import com.sist.vo.hotel.HotelRoomVO;
 import com.sist.vo.hotel.HotelVO;
 
 @Controller
-@RequestMapping("hotel/")
 public class HotelController {
 	@Autowired
 	private HotelService service;
 	
-	@GetMapping("hotel_list.do")
+	@GetMapping("hotel/hotel_list.do")
 	public String hotel_list(Model model)
 	{
 		model.addAttribute("main_jsp", "../hotel/hotel_list.jsp");
 		return "main/main";
 	}
-	@GetMapping("hotel_detail.do")
+	@GetMapping("hotel/hotel_detail.do")
 	public String hotel_detail(int no, Model model, HttpSession session)
 	{
 		String checkin = (String) session.getAttribute("checkin");
@@ -73,7 +74,7 @@ public class HotelController {
 		model.addAttribute("main_jsp", "../hotel/hotel_detail.jsp");
 		return "main/main";
 	}
-	@GetMapping("hotel_reserve.do")
+	@GetMapping("hotel/hotel_reserve.do")
 	public String hotel_reserve(int no, Model model, HttpSession session)
 	{
 		String member_id = (String)session.getAttribute("id");
@@ -105,17 +106,30 @@ public class HotelController {
 		model.addAttribute("main_jsp", "../hotel/hotel_reserve.jsp");
 		return "main/main";
 	}
-	@GetMapping("hotel_reserve_ok.do")
+	@GetMapping("hotel/hotel_reserve_ok.do")
 	public String hotel_reserve_ok(Model model)
 	{
 		model.addAttribute("main_jsp", "../hotel/hotel_reserve_ok.jsp");
 		return "main/main";
 	}
-//	@GetMapping("hotel_reserve_list.do")
-//	public String hotel_reserve_list(Model model)
-//	{
-//		model.addAttribute("mypage_jsp", "../mypage/hotel_reserve_list.jsp");
-//		model.addAttribute("main_jsp", "../mypage/main.jsp");
-//		return "main/main";
-//	}
+	///////////////////////// 마이페이지
+	@GetMapping("mypage/hotel_reserve_delete_ok.do")
+	public String hotel_reserve_delete_ok(Model model, HttpSession session)
+	{
+		return "redirect:../mypage/hotel_reserve_list.do";
+	}
+	
+	///////////////////////// 어드민페이지
+	@GetMapping("admin/hotel_reserve_list.do")
+	public String amdin_hotel_reserveList(Model model)
+	{
+		model.addAttribute("admin_jsp","../admin/hotel_reserve_list.jsp");
+		return "admin/main";
+	}
+	@GetMapping("admin/reserve.do")
+	public String admin_reserve(Model model)
+	{
+		model.addAttribute("admin_jsp","../admin/hotel_reserve_list.jsp");
+		return "admin/main";
+	}
 }
