@@ -118,6 +118,7 @@
 			              	<span>-자차 미가입</span>
 			                <h5 style="font-size:12px;margin-top:10px">${vo.non_ins_qual }</h5>
 			              </p>
+			              <h5 style="position:absolute;bottom:0">${vo.non_ins_price }원</h5>
 			            </div>
 			          </div>
 			          <div class="col-md-4">
