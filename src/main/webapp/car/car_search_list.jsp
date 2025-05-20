@@ -41,29 +41,23 @@
                     <label class="checkBoxAll pb-1">
                       <input
                         type="checkbox"
-                        name="test"
-                        id="test"
                         style="display: none"
                       />
-                      <span class="checkBtn checked">전체</span>
+                      <span id="all" class="checkBtn" @click="selectLoc('all')" style="user-select:none" data-value="">전체</span>
                     </label>
                     <label>
                       <input
                         type="checkbox"
-                        name="test"
-                        id="test"
                         style="display: none"
                       />
-                      <span class="checkBtn">서울</span>
+                      <span class="checkBtn" id="seoul" @click="selectLoc('seoul')" style="user-select:none" data-value="서울">서울</span>
                     </label>
                     <label>
                       <input
                         type="checkbox"
-                        name="test"
-                        id="test"
                         style="display: none"
                       />
-                      <span class="checkBtn">제주</span>
+                      <span class="checkBtn" id="jeju" @click="selectLoc('jeju')" style="user-select:none" data-value="제주">제주</span>
                     </label>
                   </div>
                   <hr>
@@ -122,15 +116,17 @@
                       type="text"
                       class="form-control"
                       placeholder="모델명으로 검색할 수 있습니다"
+                      @keyup.enter="nameSearch()"
+                      v-model="name_search_data"
                     />
                   </div>
 				  <hr>
                   <div class="form-group" style="margin-top:20px">
                     <input
-                      type="submit"
+                      type="button"
                       value="검색 조건 초기화"
                       class="btn btn-primary py-3 px-5"
-                      @click="searchInit()"
+                      @click="filterInit()"
                     />
                   </div>
                 </div>
@@ -237,7 +233,8 @@
     			  rdate:'${rdate}',
     			  rtime:'${rtime}',
     			  class_checked:'',
-    			  fuel_checked:''
+    			  fuel_checked:'',
+    			  name_search_data:''
     		  }
     	  },
     	  computed: {
@@ -246,7 +243,32 @@
     			this.dataRecv()
     	  },
     	  methods: {
-    		searchInit(){
+    		selectLoc(id){
+    			if(id==='all'){
+    				if($('#all').hasClass('checked')){
+    					$('.checkBtn').removeClass('checked')
+    				}
+    				else{
+    					$('.checkBtn').addClass('checked')
+    				}
+    					
+    			}
+    			else
+    				$("#"+id).toggleClass('checked');
+    			
+    			let checkedLoc=""
+    			$('.checkBtn.checked').each(function(){
+    				checkedLoc+=($(this).data("value")+",")
+    			})
+    			console.log(checkedLoc.replace(/^,|,$/g, ''))
+    		},
+    		nameSearch(){
+    			console.log(this.name_search_data)
+    			this.handleFilter()
+    		},
+    		filterInit(){
+    			console.log("initttttttt")
+    			this.name_search_data=''
     			$('.car_class_check, .class_all').prop('checked', false);
     			$('.car_fuel_check, .fuel_all').prop('checked', false);
     			this.handleFilter()
@@ -305,7 +327,8 @@
 						rdate:this.rdate,
 						rtime:this.rtime,
 						class_checked:this.class_checked,
-						fuel_checked:this.fuel_checked
+						fuel_checked:this.fuel_checked,
+						name_search_data:this.name_search_data
       				}
 
       			}).then(res => {

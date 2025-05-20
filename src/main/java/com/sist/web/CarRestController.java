@@ -53,17 +53,18 @@ public class CarRestController {
 	public Map car_list_search(int page,
 				String pudate,String putime,
 				String rdate,String rtime,
-				String class_checked, String fuel_checked) {
+				String class_checked, String fuel_checked,String name_search_data) {
 		
 		int rowSize=9;
-		System.out.println(class_checked);
-		System.out.println(fuel_checked);
+
 		SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm");
 		Map map = new HashMap();
 		map.put("start",(page-1)*rowSize+1);
 		map.put("end",page*rowSize);
 
-
+		System.out.println("nsd"+name_search_data);	
+		map.put("name_search_data", name_search_data);
+		
 		map.put("class_checked", class_checked.split(","));
 		map.put("fuel_checked", fuel_checked.split(","));
 		String puRegDateStr = pudate + " " + putime;
