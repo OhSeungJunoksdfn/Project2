@@ -109,7 +109,7 @@
                   style="border-radius: 0 12px 12px 0;border: 1px solid #ced4da;"
                 >
                   <option value="@naver.com">@naver.com</option>
-                  <option value="@daum.com">@daum.com</option>
+                  <option value="@daum.com">@daum.net</option>
                   <option value="@google.co.kr">@google.co.kr</option>
                 </select>
               </div>
@@ -534,14 +534,14 @@
 					}
 				if(this.birthday==="")
 				{
-					this.$refs.pwd.focus()
+					this.$refs.birthday.focus()
 					$("#dayErr").text("생년월일을 입력해주세요")
 					return
 				}
 				
 				if(this.phone==="" || this.phone.length!==8)
 				{
-					this.$refs.fname.focus()
+					this.$refs.phone.focus()
 					$("#phoneErr").text("번호를 8자리까지 입력해주세요")
 					return
 				}

@@ -27,5 +27,25 @@ public class MemberServiceImpl implements MemberService {
 		// TODO Auto-generated method stub
 		return dao.memberSessionData(id);
 	}
+	@Override
+	public String findIdData(String email) {
+		int a = dao.checkEmail(email);
+		if(a!=1)
+		{
+			return "";
+		}
+		return dao.findIdData(email);
+	}
+	
+	@Override
+	public int checkMember(MemberVO vo) {
+		// TODO Auto-generated method stub
+		return dao.checkMember(vo);
+	}
+	@Override
+	public void pwdUpdate(MemberVO vo) {
+		// TODO Auto-generated method stub
+		dao.pwdUpdate(vo);
+	}
 
 }
