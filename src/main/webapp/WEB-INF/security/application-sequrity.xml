@@ -47,8 +47,14 @@
 	 	users-by-username-query="SELECT id as username,pwd as password,enable FROM projectMember WHERE id=?"
 	 	authorities-by-username-query="SELECT id as username,authority FROM authority WHERE id=?"
 	 />
+	  <beans:bean id="bannedAuthProvider"
+              class="com.sist.security.AuthenticationProvider"
+              p:userDetailsService-ref="userService"
+              p:passwordEncoder-ref="bcryptEncoder"/>
 	 
 	 <authentication-manager>
+	 	<authentication-provider ref="bannedAuthProvider"/>
+	 
 	 	<authentication-provider user-service-ref="userService">
 	 		<password-encoder ref="bcryptEncoder" />
 	 	</authentication-provider>

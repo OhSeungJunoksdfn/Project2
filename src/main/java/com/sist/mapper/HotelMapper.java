@@ -72,6 +72,7 @@ public interface HotelMapper {
 			+ "#{useremail, jdbcType=VARCHAR}, #{userphone, jdbcType=VARCHAR}, #{checkin}, #{checkout}, #{person}, #{total_price}, #{stay_days}, SYSDATE, '예약 진행 중')")
 	public int hotelReserveInsertData(HotelReserveVO vo);
 	
+	//////////////////////////////////////////////////////////////////////////////////////////
 	@Select("SELECT rv.no, rv.hotel_no, rv.room_no, rv.username, checkin, checkout, "
 			+ "rv.stay_days, rv.total_price, rv.booking_date, rv.status, rv.person, rv.useremail, rv.userphone, h.title AS hotel_title, hr.title AS room_title "
 			+ "FROM hotel_reservation rv "
@@ -90,5 +91,13 @@ public interface HotelMapper {
 			+ "JOIN hotel_room hr ON room_no = hr.no "
 			+ "WHERE rv.no = #{no}")
 	public HotelReserveVO hotelReserveDetailData(int no);
+	
+	@Select("SELECT rv.no, rv.hotel_no, rv.room_no, checkin, checkout, rv.total_price, rv.booking_date, "
+			+ "rv.status, rv.person, rv.useremail, rv.userphone, h.title AS hotel_title, hr.title AS room_title "
+			+ "FROM hotel_reservation rv "
+			+ "JOIN hotel h ON hotel_no = h.no "
+			+ "JOIN hotel_room hr ON room_no = hr.no "
+			+ "WHERE rv.no = #{no}")
+	public List<HotelReserveVO> adminHotelListData(int no);
 	
 }

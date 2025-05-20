@@ -9,7 +9,7 @@
 <body>
 	<section class="ftco-section">
       <div class="container">
-        <div class="row">
+        <div class="row" style="width:1280px !important;">
           <!--사이드바-->
           <div class="col-lg-3 sidebar ftco-animate shadow pt-3" id="sidebar">
             <div class="sidebar-wrap ftco-animate">

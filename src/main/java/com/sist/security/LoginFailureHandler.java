@@ -25,11 +25,11 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
 		try {
 			if(exception instanceof BadCredentialsException)
 			{
-				errorMsg="아이디나 비밀번호가 틀립니다.";
+				errorMsg="아이디나 비밀번호가 틀립니다."; 
 				
 			} else if(exception instanceof DisabledException)
 			{
-				errorMsg="휴먼 계정입니다.";
+				errorMsg="접근이 제한된 계정입니다!";
 			}
 		}
 		catch(Exception ex) {}

@@ -33,14 +33,22 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler{
 		session.setAttribute("sex", vo.getSex());
 		
 		Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+		 boolean isBan = authorities.stream().anyMatch(role -> role.getAuthority().equals("ROLE_BANNED"));
+	        if(isBan) {
+	        	  response.sendRedirect(request.getContextPath() + "/ban/main.do");
+	        	return; 
+	        }
         boolean isAdmin = authorities.stream()
                 .anyMatch(role -> role.getAuthority().equals("ROLE_ADMIN"));
 
+        
         if (isAdmin) {
             response.sendRedirect(request.getContextPath() + "/admin/main.do");
         } else {
             response.sendRedirect(request.getContextPath() + "/main/main.do");
         }
+        
+       
 	}
 
 }
