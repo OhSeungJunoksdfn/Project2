@@ -20,7 +20,7 @@ import lombok.Data;
 
 @Data
 public class QnaVO {
-	int no,hit,filecount;
-	String id,name,subject,content,dbday,file,filesize,answer,andbday;
+	int no;
+	String id,name,subject,content,dbday,answer,andbday,type,packaged,isok;
 	Date regdate,anser_date;
 }

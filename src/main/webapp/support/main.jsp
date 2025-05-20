@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,6 +23,7 @@
                 @click="changeSup('../customer/main.do')"
               />
             </div>
+            <c:if test="${sessionScope.id!=null }">
             <div class="input-group mb-2">
               <input
                 type="button"
@@ -38,7 +40,7 @@
                  @click="changeSup('../customer/list.do')"
               />
             </div>
-            
+             </c:if>
             </div>
           </div>
           <!-- END-->

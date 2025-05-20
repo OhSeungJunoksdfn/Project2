@@ -43,6 +43,9 @@ public class CarController {
 		System.out.println(pudate);
 		
 		CarVO vo=service.carDetailData(no);
+		System.out.println("carnameeeeeee"+vo.getBranch().getBranch_name());
+		System.out.println("carvoooo"+vo.getBranch().getNo());
+		System.out.println("carvoooo"+vo.getName());
 		// 배열 => List로 변경 asList
 		//String id=(String)session.getAttribute("userid");
 		//model.addAttribute("sessionId", id);

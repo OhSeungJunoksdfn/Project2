@@ -234,7 +234,8 @@
     			  rtime:'${rtime}',
     			  class_checked:'',
     			  fuel_checked:'',
-    			  name_search_data:''
+    			  name_search_data:'',
+    			  loc_search_data:''
     		  }
     	  },
     	  computed: {
@@ -261,6 +262,8 @@
     				checkedLoc+=($(this).data("value")+",")
     			})
     			console.log(checkedLoc.replace(/^,|,$/g, ''))
+    			this.loc_search_data=checkedLoc.replace(/^,|,$/g, '')
+    			this.handleFilter()
     		},
     		nameSearch(){
     			console.log(this.name_search_data)
@@ -328,7 +331,8 @@
 						rtime:this.rtime,
 						class_checked:this.class_checked,
 						fuel_checked:this.fuel_checked,
-						name_search_data:this.name_search_data
+						name_search_data:this.name_search_data,
+						loc_search_data:this.loc_search_data
       				}
 
       			}).then(res => {
