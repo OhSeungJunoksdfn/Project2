@@ -7,85 +7,37 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="<c:url value='/hotel/calendar.css' />">
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="./hotel_searchbar.js"></script>
 <style type="text/css">
 .checkBtn {
 	margin: 1px;
 	padding: 2px 10px;
 	white-space: nowrap;
 }
+.ftco-section.justify-content-end {
+	padding-bottom: 2em;
+	margin-left: 8rem !important;
+	margin-right: 8rem !important;
+	width: 1200px;
+	place-self: center;
+}
 </style>
 </head>
 <body>
 <div id="hotelListApp">
-  <div class="container px-0">
-	<div >
-	 <section class="ftco-section justify-content-end " style="padding-right: 10px; padding-bottom:2em">
+ <section class="ftco-section justify-content-end">
       <div class="container-wrap mx-auto">
         <div class="row no-gutters">
-          <div class="col-md-12 tab-wrap rt-12 shadow" style="border-radius:10px">
-            <div class="tab-content p-4 px-5" id="v-pills-tabContent">
-              <div
-                class="tab-pane fade show active"
-                id="v-pills-2"
-                role="tabpanel"
-                aria-labelledby="v-pills-performance-tab"
-              >
-                <div class="search-destination">
-                  <div class="row">
-                    <div class="col-md align-items-end">
-                      <div class="form-group">
-                        <label>Check In</label>
-                        <div class="form-field">
-                          <div class="icon">
-                            <span class="icon-map-marker"></span>
-                          </div>
-                          <input type="date" class="form-control" name="checkin" placeholder="Check In" v-model="checkin"/>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md align-items-end">
-                      <div class="form-group">
-                        <label>Check Out</label>
-                        <div class="form-field">
-                          <div class="icon">
-                            <span class="icon-map-marker"></span>
-                          </div>
-                          <input type="date" class="form-control" name="checkout" placeholder="Check Out" v-model="checkout"/>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md align-items-end">
-                      <div class="form-group">
-                        <label>Guest</label>
-                        <div class="form-field">
-                          <div class="select-wrap">
-                            <div class="icon">
-                            </div>
-                            <input v-model="person" name="person" class="form-control"/>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md align-self-end">
-                      <div class="form-group">
-                        <div class="form-field">
-                          <button class="form-control btn btn-primary"  @click="searchbar">Search</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+          <div class="col-md-12 tab-wrap rt-12 shadow" style="border-radius: 10px;">
+            <div class="tab-content p-4 px-5">
+		      <hotel-search-bar @search="handleSearch"></hotel-search-bar>
+		    </div>
+		  </div>
+		</div>
       </div>
-    </section>
-	</div>
-	</div>
+ </section>
   <div style="width:100%;display: flex;justify-content: center;">
 	<section class="ftco-section" style="padding: 32px;">
       <div class="container">
@@ -155,6 +107,30 @@
                       :key="info.key" @click="selInfo(info.key)">{{ info.name }}</span>
                     </label>
                   </div>
+<!--                   <div class="form-group"> -->
+<!--                     <input -->
+<!--                       type="text" -->
+<!--                       id="checkin_date" -->
+<!--                       class="form-control checkin_date" -->
+<!--                       placeholder="Date from" -->
+<!--                     /> -->
+<!--                   </div> -->
+<!--                   <div class="form-group"> -->
+<!--                     <input -->
+<!--                       type="text" -->
+<!--                       id="checkout_date" -->
+<!--                       class="form-control checkout_date" -->
+<!--                       placeholder="Date to" -->
+<!--                     /> -->
+<!--                   </div> -->
+
+<!--                   <div class="form-group"> -->
+<!--                     <input -->
+<!--                       type="submit" -->
+<!--                       value="Search" -->
+<!--                       class="btn btn-primary py-3 px-5" -->
+<!--                     /> -->
+<!--                   </div> -->
                 </div>
               </form>
             </div>
@@ -308,25 +284,15 @@
     			this.dataRecv()
     	  },
     	  methods: {
-    		  searchbar() {
-      			console.log('checkin:', this.checkin, 'checkout:', this.checkout)
-      			if (!this.checkin || !this.checkout) {
-      				alert("체크인·체크아웃을 모두 선택해주세요.")
-      				return
-      			}
-      			else if (new Date(this.checkin) < new Date()) {
-      				alert("체크인은 오늘 이후여야 합니다.")
-      				return
-      			} 
-      			else if (new Date(this.checkin) >= new Date(this.checkout)) {
-      				alert("체크아웃은 체크인 이후여야 합니다.")
-      				return
-      			}
-      			else {
-      				this.curpage = 1
-          			this.dataRecv()
-      			}
-      		},
+   		    handleSearch({ checkin, checkout, person }) {
+   		    	const query =
+  			      'checkin=' + encodeURIComponent(checkin) +
+  			      '&checkout=' + encodeURIComponent(checkout) +
+  			      '&person=' + encodeURIComponent(person);
+  			
+  			// 해당 URL로 페이지 이동 (리스트 페이지)
+  			window.location.href = 'http://localhost:8080/hotel/hotel_list.do?' + query;
+   	        },
     		infoValue(key) {
     			return this[key]
     			this.curpage = 1
@@ -423,7 +389,10 @@
       				console.log(error.response)
       			})
       		}
-    	  }
+    	  },
+    	  components:{
+      		'hotel-search-bar': hotel_searchbar
+      	  }
       }).mount("#hotelListApp")
     </script>
 </body>
