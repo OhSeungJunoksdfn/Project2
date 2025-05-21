@@ -12,4 +12,7 @@ public interface CustomerService {
 	public QnaVO qnaboardDetailData(int no);
 	public void qnaboardDelete(int no);
 	public void qnaboardAnswer(String answer);
+	public List<QnaVO> adminQnaboardListData(Map map);
+	public int adminQnaboardTotalPage(Map map);
+	public void adminQnaboardUpdate(QnaVO vo);
 }

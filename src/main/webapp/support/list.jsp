@@ -19,15 +19,24 @@
 		</thead>
 		<tbody>
 			<tr v-for="(vo,key) in list" :key="key" >
-				<th width="80%"  ><a :href="'../customer/detail.do?no='+vo.no">[{{vo.type}}] {{vo.subject}}</a></th>
+				<th width="60%"  ><a :href="'../customer/detail.do?no='+vo.no">[{{vo.type}}] {{vo.subject}}</a></th>
 				<td width="20%" class="text-center">{{vo.dbday}} </td>
 				<td width="20%" class="text-center"  >
 					<input type="button" value="답변대기" v-if="vo.isok==='n'" class="btn btn-danger r-12" style="cursor:default;" />
-					<input type="button" value="답변대기" v-if="vo.isok==='y'" class="btn btn-danger r-12" style="cursor:default;" />
+					<input type="button" value="답변완료" v-if="vo.isok==='y'" class="btn btn-primary r-12" style="cursor:default;" />
 				</td>
 			</tr>
 		</tbody>
 	</table>
+	<div class="col-12 text-center">
+            <div class="block-27">
+              <ul>
+                <li @click="prev()" v-if="startPage>1" ><a>&lt;</a></li>
+                <li @click="pageChange(i)" v-for="i in range(startPage,endPage)"  :class="i===page? 'active cursor-pointer':'cursor-pointer'"><a>{{i}}</a></li>
+                <li @click="next()" v-if="endPage<totalpage"><a>&gt;</a></li>
+              </ul>
+            </div>
+          </div>
 <script>
 	const customerApp=Vue.createApp({
 		data(){
@@ -43,7 +52,28 @@
 			this.renderData()
 		},
 		methods:{
-			
+			next(){
+				this.page=this.endPage+1
+				this.renderData()
+			},
+			prev(){
+				this.page=this.startPage-1
+				this.renderData()
+			},
+			pageChange(i){
+				this.page=i
+				this.renderData()
+			},
+			range(start,end){
+				let arr=[]
+				let len=end-start
+				for(let i = 0; i<=len; i++)
+				{
+					arr[i]=start
+					start++
+				}
+				return arr
+			},
 			renderData(){
 				axios.get("../customer/list_vue.do",{
 					params:{

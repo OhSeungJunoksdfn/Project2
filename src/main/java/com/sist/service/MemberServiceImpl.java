@@ -6,11 +6,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sist.vo.*;
+import com.sist.vo.board.BoardVO;
 import com.sist.dao.*;
 @Service
 public class MemberServiceImpl implements MemberService {
 	@Autowired
 	private MemberDAO dao;
+	@Autowired
+	private BoardDAO bdao;
 	@Override
 	public int memberCheckData(String id) {
 		// TODO Auto-generated method stub
@@ -46,6 +49,21 @@ public class MemberServiceImpl implements MemberService {
 	public void pwdUpdate(MemberVO vo) {
 		// TODO Auto-generated method stub
 		dao.pwdUpdate(vo);
+	}
+	@Override
+	public MemberVO memberDetailData(String id) {
+		// TODO Auto-generated method stub
+		return dao.memberDetailData(id);
+	}
+	@Override
+	public int myBoardTotalPage(Map map) {
+		// TODO Auto-generated method stub
+		return bdao.myBoardTotalPage(map);
+	}
+	@Override
+	public List<BoardVO> myBoardListData(Map map) {
+		// TODO Auto-generated method stub
+		return bdao.myBoardListData(map);
 	}
 
 }

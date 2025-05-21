@@ -44,4 +44,8 @@ public class MemberDAO {
   {
 	  mapper.pwdUpdate(vo);
   }
+  public MemberVO memberDetailData(String id)
+  {
+	  return mapper.memberDetailData(id);
+  }
 }
