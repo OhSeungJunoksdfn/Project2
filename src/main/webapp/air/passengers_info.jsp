@@ -39,15 +39,18 @@
             <!-- 여권번호 -->
             <div class="mb-2">
               <p style="font-size:16px; font-weight:500;">여권번호</p>
-              <input type="text" class="form-control" name="passenger_number" maxlength="9"
-                     pattern="[1-9A-Z]*" title="Digits 1-9 and uppercase letters only"
-                     placeholder="여권번호 (1-9, A-Z)" />
+		      <input type="text" class="form-control"
+		        name="passengers[${st.index}].passport_number"
+		        maxlength="9" pattern="[1-9,A-Z]*"
+		        placeholder="여권번호"/>
             </div>
             <!-- 이메일 -->
             <div class="mb-2">
               <p style="font-size:16px; font-weight:500;">이메일</p>
               <div class="input-group">
-                <input type="text" class="form-control" name="email" placeholder="이메일" />
+                 <input type="text" class="form-control"
+			        name="passengers[${st.index}].email"
+			        placeholder="이메일"/>
                 <select name="emailPrefix" class="form-select" style="max-width:150px;">
                   <option>@naver.com</option><option>@daum.com</option><option>@google.co.kr</option>
                 </select>
@@ -57,14 +60,19 @@
             <div class="mb-2">
               <p style="font-size:16px; font-weight:500;">이름</p>
               <div style="display:flex; gap:0.5rem;">
-                <input type="text" class="form-control" name="first_name" placeholder="성" />
-                <input type="text" class="form-control" name="last_name" placeholder="이름" />
+                 <input type="text" class="form-control"
+			        name="passengers[${st.index}].first_name"
+			        placeholder="성"/>
+                 <input type="text" class="form-control"
+			        name="passengers[${st.index}].last_name"
+			        placeholder="이름"/>
               </div>
             </div>
             <!-- 생일 -->
             <div class="mb-2">
               <p style="font-size:16px; font-weight:500;">생일</p>
-              <input type="date" class="form-control" name="birthday" />
+               <input type="date" class="form-control"
+		        	name="passengers[${st.index}].birthday"/>
             </div>
             <!-- 휴대전화 -->
             <div class="mb-2">
@@ -78,8 +86,12 @@
             <div class="mb-2">
               <p style="font-size:16px; font-weight:500;">성별</p>
               <div>
-                <label><input type="radio" name="sex_${st.index}" value="남자" checked /> 남자</label>
-                <label style="margin-left:1rem;"><input type="radio" name="sex_${st.index}" value="여자" /> 여자</label>
+                <label><input type="radio"
+				        name="passengers[${st.index}].sex"
+				        value="남자" checked/>남자</label>
+                <label style="margin-left:1rem;"> <input type="radio"
+						        name="passengers[${st.index}].sex"
+						        value="여자"/>여자</label>
               </div>
             </div>
             <!-- 블록별 등록/취소 버튼 -->
@@ -92,59 +104,115 @@
 
         <!-- 소아 승객 블록 반복 -->
         <c:forEach var="seat" items="${childList}" varStatus="st">
-          <div class="passenger-block mb-4">
-            <h5>소아 승객 ${st.index+1} (좌석: ${seat})</h5>
-            <!-- 여권번호 -->
-            <div class="mb-2">
-              <p style="font-size:16px; font-weight:500;">여권번호</p>
-              <input type="text" class="form-control" name="passenger_number" maxlength="9"
-                     pattern="[1-9A-Z]*" title="Digits 1-9 and uppercase letters only"
-                     placeholder="여권번호 (1-9, A-Z)" />
-            </div>
-            <!-- 이메일 -->
-            <div class="mb-2">
-              <p style="font-size:16px; font-weight:500;">이메일</p>
-              <div class="input-group">
-                <input type="text" class="form-control" name="email" placeholder="이메일" />
-                <select name="emailPrefix" class="form-select" style="max-width:150px;">
-                  <option>@naver.com</option><option>@daum.com</option><option>@google.co.kr</option>
-                </select>
-              </div>
-            </div>
-            <!-- 이름 -->
-            <div class="mb-2">
-              <p style="font-size:16px; font-weight:500;">이름</p>
-              <div style="display:flex; gap:0.5rem;">
-                <input type="text" class="form-control" name="first_name" placeholder="성" />
-                <input type="text" class="form-control" name="last_name" placeholder="이름" />
-              </div>
-            </div>
-            <!-- 생일 -->
-            <div class="mb-2">
-              <p style="font-size:16px; font-weight:500;">생일</p>
-              <input type="date" class="form-control" id="birthday_child_${st.index}" onchange="calcChildAge(${st.index})" />
-              <small id="age_display_${st.index}" class="errtext age-display"></small>
-            </div>
-            <!-- 휴대전화 -->
-            <div class="mb-2">
-              <p style="font-size:16px; font-weight:500;">휴대전화</p>
-              <div style="display:flex;">
-                <select name="phonePrefix" class="form-select" style="max-width:100px;"><option>010</option><option>011</option></select>
-                <input type="tel" class="form-control" name="phone" maxlength="8" placeholder="숫자만 입력" />
-              </div>
-            </div>
-            <!-- 성별 -->
-            <div class="mb-2">
-              <p style="font-size:16px; font-weight:500;">성별</p>
-              <div>
-                <label><input type="radio" name="sex_child_${st.index}" value="남자" checked /> 남자</label>
-                <label style="margin-left:1rem;"><input type="radio" name="sex_child_${st.index}" value="여자" /> 여자</label>
-              </div>
-            </div>
+   <!-- 소아 인덱스를 성인 수만큼 오프셋 -->
+	<c:set var="i" value="${fn:length(adultList) + st.index}"></c:set>
+   <div class="passenger-block mb-4">
+     <h5>소아 승객 ${st.index+1} (좌석: ${seat})</h5>
+
+     <!-- 여권번호 -->
+     <div class="mb-2">
+       <p style="font-size:16px; font-weight:500;">여권번호</p>
+       <input
+         type="text"
+         class="form-control"
+         name="passengers[${i}].passport_number"
+         maxlength="9"
+         pattern="[1-9A-Z]*"
+         placeholder="여권번호 (1-9, A-Z)" />
+     </div>
+
+     <!-- 이메일 -->
+     <div class="mb-2">
+       <p style="font-size:16px; font-weight:500;">이메일</p>
+       <div class="input-group">
+         <input
+           type="text"
+           class="form-control"
+           name="passengers[${i}].email"
+           placeholder="이메일" />
+         <select
+           name="passengers[${i}].emailPrefix"
+           class="form-select"
+           style="max-width:150px;">
+           <option>@naver.com</option>
+           <option>@daum.com</option>
+           <option>@google.co.kr</option>
+         </select>
+       </div>
+     </div>
+
+     <!-- 이름 -->
+     <div class="mb-2">
+       <p style="font-size:16px; font-weight:500;">이름</p>
+       <div style="display:flex; gap:0.5rem;">
+         <input
+           type="text"
+           class="form-control"
+           name="passengers[${i}].first_name"
+           placeholder="성" />
+         <input
+           type="text"
+           class="form-control"
+          name="passengers[${i}].last_name"
+           placeholder="이름" />
+       </div>
+     </div>
+
+     <!-- 생일 -->
+     <div class="mb-2">
+       <p style="font-size:16px; font-weight:500;">생일</p>
+       <input
+         type="date"
+         class="form-control"
+         name="passengers[${i}].birthday"
+         id="birthday_child_${st.index}"
+         onchange="calcChildAge(${st.index})" />
+      <small id="age_display_${st.index}" class="errtext age-display"></small>
+     </div>
+
+     <!-- 휴대전화 -->
+    <div class="mb-2">
+       <p style="font-size:16px; font-weight:500;">휴대전화</p>
+       <div style="display:flex;">
+         <select
+          name="passengers[${i}].phone"
+           class="form-select"
+           style="max-width:100px;">
+           <option>010</option>
+           <option>011</option>
+         </select>
+         <input
+           type="tel"
+           class="form-control"
+           name="passengers[${i}].phone"
+           maxlength="8"
+           placeholder="숫자만 입력" />
+       </div>
+     </div>
+
+     <!-- 성별 -->
+     <div class="mb-2">
+       <p style="font-size:16px; font-weight:500;">성별</p>
+       <div>
+         <label>
+           <input
+             type="radio"
+             name="passengers[${i}].sex"
+             value="남자"
+             checked /> 남자
+         </label>
+         <label style="margin-left:1rem;">
+           <input
+            type="radio"
+           name="passengers[${i}].sex"
+             value="여자" /> 여자
+         </label>
+       </div>
+     </div>
             <!-- 블록별 등록/취소 버튼 -->
-            <div class="d-grid gap-2">
-              <button type="button" class="btn btn-primary" @click="handleChildRegister(${st.index})">등록</button>
-              <button type="button" class="btn btn-info" onclick="history.back();">취소</button>
+           <div class="d-grid gap-2">
+                     <button type="button" class="btn btn-primary" @click="handleChildRegister(${st.index})">등록</button>
+				      <button type="button" class="btn btn-info" onclick="history.back();">취소</button>
             </div>
           </div>
         </c:forEach>
