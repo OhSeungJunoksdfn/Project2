@@ -15,7 +15,6 @@ public interface HotelService {
 	public List<HotelRoomVO> hotelDetaiListlData(int no);
 	public List<HotelImgVO> hotelImgListData(int no);
 	public HotelVO hotelData(int no);
-	public HotelInfoVO hotelInfoData(int no);
 	public List<HotelVO> hotelRelatedData(Map map);
 	public HotelRoomVO hotelReserveData(Map map);
 	public int hotelReserveInsertData(HotelReserveVO vo);
@@ -27,4 +26,5 @@ public interface HotelService {
 	public int adminHotelListTotalPage();
 	public void adminHotelUpdate(HotelReserveVO vo);
 	public int mypageHotelListTotalPage();
+	public HotelInfoVO hotelInfoData(int no);
 }

@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.sist.service.HotelService;
 import com.sist.vo.admin.NoticeVO;
 import com.sist.vo.hotel.HotelImgVO;
+import com.sist.vo.hotel.HotelInfoVO;
 import com.sist.vo.hotel.HotelRoomVO;
 import com.sist.vo.hotel.HotelVO;
 
@@ -37,7 +38,7 @@ public class HotelController {
 	public String hotel_list(Model model, HttpSession session, HttpServletRequest req,
 			@RequestParam(value = "checkin",  required = false) String checkin,
 		    @RequestParam(value = "checkout", required = false) String checkout,
-		    @RequestParam(value = "person",   defaultValue = "1")  int person)
+		    @RequestParam(value = "person",   defaultValue = "2")  int person)
 	{
 		if (checkin  != null) session.setAttribute("checkin",  checkin);
 	    if (checkout != null) session.setAttribute("checkout", checkout);
@@ -48,12 +49,17 @@ public class HotelController {
 	}
 	@GetMapping("hotel/hotel_detail.do")
 	public String hotel_detail(int no, Model model, HttpSession session)
-	{
+	{	
+		String id = (String) session.getAttribute("member_id");
 		String checkin = (String) session.getAttribute("checkin");
 		String checkout = (String) session.getAttribute("checkout");
-		int person = (int) session.getAttribute("person");
+		Integer person = (Integer) session.getAttribute("person");
+		if (person == null) {
+		    person = 2; 
+		}
 		
 		HotelVO vo = service.hotelData(no);
+		HotelInfoVO hiVo = service.hotelInfoData(no);
 		
 		Map map = new HashMap();
 		map.put("areacode", vo.getAreacode());
@@ -77,6 +83,7 @@ public class HotelController {
 		model.addAttribute("person", person);
 		model.addAttribute("no",no);
 		model.addAttribute("vo", vo);
+//		model.addAttribute("hiVo", hiVo);
 		model.addAttribute("r3List", r3List); // 지역 근처 추천 숙소
 		model.addAttribute("rList", rList);
 		model.addAttribute("iList", iList);
@@ -91,11 +98,7 @@ public class HotelController {
 		String checkout = (String) session.getAttribute("checkout");
 		int person = (int) session.getAttribute("person");
 		
-		String msg = "";
 		if (member_id == null) {
-			msg ="<script>"
-					+ "alert(\"로그인 후 이용 가능합니다. \");"
-					+ "</script>";
 	        return "redirect:../member/login.do"; // 로그인 안 된 경우 로그인 페이지로 이동
 	    }
 		

@@ -30,6 +30,9 @@ Shadowbox.init({
 #map {
 	border-radius: 10px;
 }
+.form-group div {
+	font-weight: bold;
+}
 </style>
 </head>
 <body>
@@ -40,11 +43,30 @@ Shadowbox.init({
         <div class="row">
         	<div class="col-lg-3 order-md-last sidebar pt-3 shadow" id="sidebar">
         		<div class="sidebar-wrap ftco-animate">
-        			<h3 class="heading mb-4">Find City</h3>
+        			<h3 class="heading mb-4">예약 정보</h3>
         			<form action="#">
         				<div class="fields">
 		              <div class="form-group">
-		                <input type="text" class="form-control" placeholder="Destination, City">
+		                <div>예약자명</div>
+		                <span>${name }</span>
+		                <div>예약일 </div>
+		                <span>${checkin } - ${checkout }</span>
+		                
+		                <div>인원 </div>
+		                <span>${person }</span>
+		              </div>
+		              <h3 class="heading mb-4">숙박 정보</h3>
+		              <div class="form-group">
+		                <div>체크인</div>
+		                <span>${hiVo.checkintime }</span>
+		                <div>체크인</div>
+		                <span>${hiVo.checkouttime }</span>
+		                <div>주차</div>
+		                <c:if test="${hiVo.parking == 1 }">
+		                가능
+		                </c:if>
+		                <div>주소</div>
+		                <span>${vo.addr }</span>
 		              </div>
 		              <div class="form-group">
 		                <div class="select-wrap one-third">
@@ -54,7 +76,7 @@ Shadowbox.init({
 	                      <option value="">San Francisco USA</option>
 	                      <option value="">Berlin Germany</option>
 	                      <option value="">Lodon United Kingdom</option>
-	                      <option value="">${checkin}</option>
+	                      <option value=""></option>
 	                    </select>
 	                  </div>
 		              </div>
@@ -131,7 +153,7 @@ Shadowbox.init({
 						    						</p>
 					    						</div>
 					    					   <div class="two">
-					    						  <span class="price" style="font-size: 16px;">
+					    						  <span class="price" style="font-size: 14px;">
 					    						    <fmt:formatNumber value="${room.price}" type="number" groupingUsed="true"/>원
 					    						    <br><small>/ 1박</small>					    							
 				    							  </span>

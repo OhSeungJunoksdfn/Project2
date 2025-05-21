@@ -44,11 +44,6 @@ public class HotelServiceImpl implements HotelService {
 		return dao.hotelData(no);
 	}
 	@Override
-	public HotelInfoVO hotelInfoData(int no) {
-		// TODO Auto-generated method stub
-		return dao.hotelInfoData(no);
-	}
-	@Override
 	public List<HotelVO> hotelRelatedData(Map map) {
 		// TODO Auto-generated method stub
 		return dao.hotelRelatedData(map);
@@ -102,5 +97,10 @@ public class HotelServiceImpl implements HotelService {
 	public int mypageHotelListTotalPage() {
 		// TODO Auto-generated method stub
 		return dao.adminHotelListTotalPage();
+	}
+	@Override
+	public HotelInfoVO hotelInfoData(int no) {
+		// TODO Auto-generated method stub
+		return dao.hotelInfoData(no);
 	}
 }
