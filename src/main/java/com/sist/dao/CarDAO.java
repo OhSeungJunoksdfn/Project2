@@ -45,4 +45,14 @@ public class CarDAO {
 	{
 		return mapper.reserveDetailData(no);
 	}
+	
+	public List<CarReserveVO> reserveListData(String member_id)
+	{
+		return mapper.reserveListData(member_id);
+	}
+	
+	public void carReserveDelete(int no)
+	{
+		mapper.carReserveDelete(no);
+	}
 }

@@ -55,6 +55,18 @@ public class CarServiceImpl implements CarService{
 		// TODO Auto-generated method stub
 		return dao.reserveDetailData(no);
 	}
+
+	@Override
+	public List<CarReserveVO> reserveListData(String member_id) {
+		// TODO Auto-generated method stub
+		return dao.reserveListData(member_id);
+	}
+
+	@Override
+	public void carReserveDelete(int no) {
+		// TODO Auto-generated method stub
+		dao.carReserveDelete(no);
+	}
 	
 	
 }

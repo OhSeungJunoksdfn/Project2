@@ -13,4 +13,6 @@ public interface CarService {
 	public CarVO carDetailData(int no);
 	public void insertCarReserve(Map map);
 	public CarReserveVO reserveDetailData(int no);
+	public List<CarReserveVO> reserveListData(String member_id);
+	public void carReserveDelete(int no);
 }

@@ -12,7 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.sist.aop.CarLoginCheck;
+import com.sist.aop.LoginCheck;
 import com.sist.service.CarService;
 import com.sist.service.MemberService;
 import com.sist.vo.MemberVO;
@@ -35,7 +35,7 @@ public class CarController {
 	}
 	
 	@GetMapping("car/car_search_list.do")
-	@CarLoginCheck
+	@LoginCheck
 	public String car_search_list(Model model,
 			String pudate, String putime,String rdate, String rtime,HttpSession session)
 	{
@@ -48,7 +48,7 @@ public class CarController {
 	}
 	
 	@GetMapping("car/car_detail.do")
-	@CarLoginCheck
+	@LoginCheck
 	public String car_detail(Model model,int no,
 			String pudate, String putime,String rdate, String rtime)
 	{
@@ -71,7 +71,7 @@ public class CarController {
 	}
 	
 	@PostMapping("car/car_reserve.do")
-	@CarLoginCheck
+	@LoginCheck
 	public String car_reserve(Model model,String no,
 			String pudate, String putime,String rdate, String rtime,String ins,int price,HttpSession session)
 	{
@@ -94,7 +94,7 @@ public class CarController {
 	}
 	
 	@PostMapping("car/car_reserve_ok.do")
-	@CarLoginCheck
+	@LoginCheck
 	public String car_reserve_ok(Model model,int reservation_no)
 	{
 		
@@ -105,7 +105,7 @@ public class CarController {
 	}
 	
 	@PostMapping("car/car_reserve_detail.do")
-	@CarLoginCheck
+	@LoginCheck
 	public String car_reserve_detail(Model model,int reservation_no)
 	{
 		
@@ -120,6 +120,12 @@ public class CarController {
 		model.addAttribute("cvo",cvo);
 		model.addAttribute("main_jsp","../car/reserve_detail.jsp");
 		return "main/main";
+	}
+	
+	@GetMapping("mypage/car_reserve_delete_ok.do")
+	public String hotel_reserve_delete_ok(Model model, HttpSession session)
+	{
+		return "redirect:../mypage/car_reserve_list.do";
 	}
 	
 }

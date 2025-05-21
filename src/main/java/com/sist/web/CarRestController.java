@@ -151,11 +151,17 @@ public class CarRestController {
 		map.put("member_id", (String)session.getAttribute("id"));
 		map.put("pickup_date", puRegDate);
 		map.put("return_date", rRegDate);
-		map.put("status", "대기중");
+		map.put("status", "예약 진행 중");
 		map.put("price", price_total);
 		map.put("ins", ins);
 		service.insertCarReserve(map);
 		
 		return (Integer)map.get("no");
+	}
+	
+	@PostMapping("mypage/car_reserve_delete.do")
+	public void hotel_reserve_delete(int no)
+	{
+		service.carReserveDelete(no);
 	}
 }

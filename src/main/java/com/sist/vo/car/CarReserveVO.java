@@ -21,5 +21,5 @@ MEMBER_ID            VARCHAR2(30)
 public class CarReserveVO {
 	int no,car_no,ins,price;
 	Date pickup_date,return_date;
-	String status,member_id;
+	String status,member_id,car_name;
 }

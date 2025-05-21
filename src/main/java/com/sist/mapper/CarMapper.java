@@ -61,5 +61,15 @@ public interface CarMapper {
    @Select("SELECT * FROM car_reserve where no=#{no}")
    public CarReserveVO reserveDetailData(int no);
    
+   @Select("SELECT cr.no as no, pickup_date, return_date, name as car_name, status FROM "
+   		+ "car_reserve cr "
+   		+ "JOIN car c ON cr.car_no = c.no"
+   		+ " where member_id=#{member_id}")
+   public List<CarReserveVO> reserveListData(String member_id);
+   
+   
+   @Select("Delete FROM car_reserve where no=#{no}")
+   public void carReserveDelete(int no);
+   
    
 }

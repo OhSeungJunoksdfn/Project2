@@ -14,7 +14,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 @Aspect
 @Component
 public class CarLoginCheckAspect {
-	@Around("@annotation(com.sist.aop.CarLoginCheck)")
+	@Around("@annotation(com.sist.aop.LoginCheck)")
     public Object checkLogin(ProceedingJoinPoint joinPoint) throws Throwable {
         ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = attr.getRequest();
