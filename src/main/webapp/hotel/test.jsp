@@ -28,9 +28,13 @@
 </head>
 <body>
 <div id="hotelListApp">
-
-<hotel-search-bar @search="handleSearch"></hotel-search-bar>
-
+ <section class="ftco-section justify-content-end">
+      <div class="container-wrap mx-auto">
+        <div class="row no-gutters">
+		  <hotel-search-bar @search="handleSearch"></hotel-search-bar>
+		</div>
+      </div>
+ </section>
   <div style="width:100%;display: flex;justify-content: center;">
 	<section class="ftco-section" style="padding: 32px;">
       <div class="container">
