@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.sist.dao.CarDAO;
+import com.sist.vo.car.CarReserveVO;
 import com.sist.vo.car.CarVO;
 
 @Repository
@@ -47,6 +48,12 @@ public class CarServiceImpl implements CarService{
 	public void insertCarReserve(Map map) {
 		// TODO Auto-generated method stub
 		dao.insertCarReserve(map);
+	}
+
+	@Override
+	public CarReserveVO reserveDetailData(int no) {
+		// TODO Auto-generated method stub
+		return dao.reserveDetailData(no);
 	}
 	
 	

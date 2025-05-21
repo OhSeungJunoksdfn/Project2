@@ -19,7 +19,7 @@ MEMBER_ID            VARCHAR2(30)
 
 @Data
 public class CarReserveVO {
-	int no,car_no;
+	int no,car_no,ins,price;
 	Date pickup_date,return_date;
-	String status,inst_desc,member_id;
+	String status,member_id;
 }

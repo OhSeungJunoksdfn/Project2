@@ -125,10 +125,10 @@ public class CarRestController {
 //    merchant_uid: rsp.merchant_uid,
 //    amount: rsp.paid_amount
 	@PostMapping("car/car_reserve_insert_vue.do")
-	public int car_reserve_insert_vue(int car_no,String user_name, String user_email, 
+	public int car_reserve_insert_vue(int car_no,
 				String pudate, String putime, String rdate, String rtime,
-				int price_total, String imp_uid, String merchant_uid,String amount, String ins_desc
-				,HttpSession session){
+				int price_total, String imp_uid, String merchant_uid,String amount,int ins,
+				HttpSession session){
 		
 		Map map = new HashMap();
 		SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm");
@@ -136,6 +136,7 @@ public class CarRestController {
 		String rRegDateStr = rdate + " " + rtime;
 		Date puRegDate = null;
 		Date rRegDate = null;
+		System.out.println("priceeee"+price_total);
 		try {
 			puRegDate = formatter.parse(puRegDateStr);
 			rRegDate = formatter.parse(rRegDateStr);
@@ -151,9 +152,8 @@ public class CarRestController {
 		map.put("pickup_date", puRegDate);
 		map.put("return_date", rRegDate);
 		map.put("status", "대기중");
-		map.put("ins_price", price_total);
-		map.put("ins_desc", ins_desc);
-		
+		map.put("price", price_total);
+		map.put("ins", ins);
 		service.insertCarReserve(map);
 		
 		return (Integer)map.get("no");

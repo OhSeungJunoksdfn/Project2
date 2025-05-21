@@ -47,7 +47,7 @@
                     >
                       차량명
                     </th>
-                    <td width="80%">${vo.name}</td>
+                    <td width="80%">${cvo.name}</td>
                   </tr>
                   <tr>
                     <th
@@ -56,7 +56,7 @@
                     >
                       차량정보
                     </th>
-                    <td width="80%">${vo.car_class}ㆍ${vo.seat}인승ㆍ${vo.fuel}ㆍ자동</td>
+                    <td width="80%">${cvo.car_class}ㆍ${cvo.seat}인승ㆍ${cvo.fuel}ㆍ자동</td>
                   </tr>
                   <tr>
                     <th
@@ -65,7 +65,10 @@
                     >
                       기간
                     </th>
-                    <td width="80%">{{pudate}}  {{putime}} ~ {{rdate}}  {{rtime}}&nbsp;&nbsp;&nbsp;{{timeInterval}}</td>
+                    <td width="80%">
+                    	<fmt:formatDate value="${crvo.pickup_date}" pattern="yyyy-MM-dd HH:mm" /> ~ 
+                    	<fmt:formatDate value="${crvo.return_date}" pattern="yyyy-MM-dd HH:mm" />
+                    	&nbsp;&nbsp;&nbsp;{{timeInterval}}</td>
                   </tr>
                   <tr>
                     <th
@@ -101,7 +104,7 @@
                     >
                       차량옵션
                     </th>
-                    <td width="80%">${fn:substring(vo.detail_option, 7, fn:length(vo.detail_option))}</td>
+                    <td width="80%">${fn:substring(cvo.detail_option, 7, fn:length(cvo.detail_option))}</td>
                   </tr>
                   <tr>
                     <th
@@ -292,19 +295,10 @@
               <div class="form-group m-2">
                 <div class="form-field">
                   <input
-                    type="submit"
-                    value="결제하기"
-                    class="form-control r-12 btn btn-primary"
-                    @click="payment()"
-                  />
-                </div>
-              </div>
-              <div class="form-group m-2">
-                <div class="form-field">
-                  <input
-                    type="submit"
-                    value="취소하기"
+                    type="button"
+                    value="홈으로 가기"
                     class="form-control r-12 btn btn-info"
+                    @click="home()"
                   />
                 </div>
               </div>
@@ -321,18 +315,19 @@ let listApp=Vue.createApp({
 			  putime:'${putime}',
 			  rdate:'${rdate}',
 			  rtime:'${rtime}',
-			  nor_ins_desc:'${vo.normal_ins_desc}'.split('-'),
-			  pre_ins_desc:'${vo.premium_ins_desc}'.split('-'),
-			  non_ins_qual:'${vo.non_ins_qual}',
-			  normal_ins_qual:'${vo.normal_ins_qual}',
-			  premium_ins_qual:'${vo.premium_ins_qual}',
-			  ins:Number('${ins}'),
-			  puDateObject:new Date(`${pudate} ${putime}`),
-			  rDateObject:new Date(`${rdate} ${rtime}`),
-			  price:Number('${price}')
+			  nor_ins_desc:'${cvo.normal_ins_desc}'.split('-'),
+			  pre_ins_desc:'${cvo.premium_ins_desc}'.split('-'),
+			  non_ins_qual:'${cvo.non_ins_qual}',
+			  normal_ins_qual:'${cvo.normal_ins_qual}',
+			  premium_ins_qual:'${cvo.premium_ins_qual}',
+			  ins:Number('${crvo.ins}'),
+			  puDateObject:new Date('<fmt:formatDate value="${crvo.pickup_date}" pattern="yyyy-MM-dd HH:mm" />'),
+			  rDateObject:new Date('<fmt:formatDate value="${crvo.return_date}" pattern="yyyy-MM-dd HH:mm" />'),
+			  price:Number('${crvo.price}')  
 		}
 	},
 	mounted(){
+		console.log(this.puDateObject)
 	},
 	computed:{
 		timeInterval(){
@@ -357,94 +352,9 @@ let listApp=Vue.createApp({
 		}
 	},
 	methods:{
-		payment(){
-			const _this = this
-			// IMP 결제 라이브러리 초기화
-		    IMP.init("imp06561258");  // ← 아임포트 식별코드로 교체하세요
-
-		    // 결제 요청
-		    IMP.onclose = function() {
-			    console.log("예약처리")
-			}
-		    IMP.request_pay({
-		        pg: "html5_inicis",  // PG사
-		        pay_method: "card",
-		        merchant_uid: 'order_' + new Date().getTime(), // 고유 주문번호
-		        name: "${vo.name}" + " 예약", // 예약명
-		        amount: this.price, // 결제 금액 (숫자)
-		        buyer_email: "${mvo.email}",
-		        buyer_name: "${mvo.name}",
-		        buyer_tel: "${mvo.phone}",
-		        buyer_addr: "",
-		        buyer_postcode: ""
-		    }, function (rsp) {
-		        // 결제 후 콜백 함수
-		        if (!rsp.success) {
-		            console.log("결제 처리")
-		            console.log(_this.price)
-		            $.ajax({
-		                type: "POST",
-		                url: "../car/car_reserve_insert_vue.do",
-		                data: {
-		                    car_no: ${vo.no},//렌터카 pk
-		                    pudate:_this.pudate,
-							putime:_this.putime,
-							rdate:_this.rdate,
-							rtime:_this.rtime,
-		                    ins : _this.ins,
-		                    price_total : _this.price,
-		                    imp_uid: rsp.imp_uid,
-		                    merchant_uid: rsp.merchant_uid,
-		                    amount: rsp.paid_amount
-		                },
-		                success: function (reservationNo) {
-		                    // ✅ DB에 INSERT 성공 → 예약 완료 페이지로 이동
-		                    const form = document.createElement("form");
-		    				form.method = "POST";
-		    				form.action = "../car/car_reserve_ok.do";
-		    	
-		    				const inputReservationNo = document.createElement("input");
-		    				inputReservationNo.type = "hidden";
-		    				inputReservationNo.name = "reservation_no";
-		    				inputReservationNo.value = reservationNo;
-		    	
-		    				form.appendChild(inputReservationNo);
-		    				document.body.appendChild(form);
-		    				
-		    				form.submit();
-		                },
-		                error: function () {
-		                    alert("예약 저장 중 오류가 발생했습니다. 결제는 완료되었으므로 관리자에게 문의해주세요.");
-		                }
-		            });
-		            
-		        }
-		    });
+		home(){
+			location.href='../main/main.do'
 		},
-		test(){
-			console.log("adsfasdf")
-		},
-		dataRecv(){
-			axios.get('../car/list_vue.do',{
-    			params:{
-    				page:this.curpage,
-    				tabVal:this.tabVal
-    			}
-    		}).then(res=>{
-    			console.log(res.data)
-    			this.list=res.data.list
-    			this.curpage=res.data.curpage
-    			this.totalpage=res.data.totalpage
-    			this.startPage=res.data.startPage
-    			this.endPage=res.data.endPage
-    			this.$nextTick(() => {
-                    contentWayPoint()
-               })
-    		}).catch(error=>{
-    			console.log(error.response)
-    		})
-		}
-		
 	},
 	components:{
 	}

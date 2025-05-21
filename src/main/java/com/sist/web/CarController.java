@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.sist.service.CarService;
 import com.sist.service.MemberService;
 import com.sist.vo.MemberVO;
+import com.sist.vo.car.CarReserveVO;
 import com.sist.vo.car.CarVO;
 
 @Controller
@@ -34,8 +35,12 @@ public class CarController {
 	
 	@GetMapping("car/car_search_list.do")
 	public String car_search_list(Model model,
-			String pudate, String putime,String rdate, String rtime)
+			String pudate, String putime,String rdate, String rtime,HttpSession session)
 	{
+		String member_id = (String)session.getAttribute("id");
+		if (member_id == null) {
+	        return "redirect:../member/login.do"; // 로그인 안 된 경우 로그인 페이지로 이동
+	    }
 		model.addAttribute("pudate",pudate);
 		model.addAttribute("putime",putime);
 		model.addAttribute("rdate",rdate);
@@ -88,11 +93,30 @@ public class CarController {
 		return "main/main";
 	}
 	
-	@GetMapping("car/car_reserve_ok.do")
-	public String car_reserve_ok(Model model)
+	@PostMapping("car/car_reserve_ok.do")
+	public String car_reserve_ok(Model model,int reservation_no)
 	{
 		
+		System.out.println(reservation_no);
+		model.addAttribute("no",reservation_no);
 		model.addAttribute("main_jsp","../car/car_reserve_ok.jsp");
+		return "main/main";
+	}
+	
+	@PostMapping("car/car_reserve_detail.do")
+	public String car_reserve_detail(Model model,int reservation_no)
+	{
+		
+		System.out.println(reservation_no);
+		
+		CarReserveVO crvo = service.reserveDetailData(reservation_no);
+		MemberVO mvo=mService.memberSessionData(crvo.getMember_id());
+		CarVO cvo = service.carDetailData(crvo.getCar_no());
+		
+		model.addAttribute("crvo",crvo);
+		model.addAttribute("mvo",mvo);
+		model.addAttribute("cvo",cvo);
+		model.addAttribute("main_jsp","../car/reserve_detail.jsp");
 		return "main/main";
 	}
 	
