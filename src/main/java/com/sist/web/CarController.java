@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,12 +13,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.sist.service.CarService;
+import com.sist.service.MemberService;
+import com.sist.vo.MemberVO;
 import com.sist.vo.car.CarVO;
 
 @Controller
 public class CarController {
 	@Autowired
 	CarService service;
+	
+	@Autowired
+	MemberService mService;
 	
 	@GetMapping("car/car_list.do")
 	public String car_list(Model model)
@@ -61,11 +68,13 @@ public class CarController {
 	
 	@PostMapping("car/car_reserve.do")
 	public String car_reserve(Model model,String no,
-			String pudate, String putime,String rdate, String rtime,String ins,int price)
+			String pudate, String putime,String rdate, String rtime,String ins,int price,HttpSession session)
 	{
 		System.out.println(rdate);
 
 		CarVO vo=service.carDetailData(Integer.parseInt(no));
+		System.out.println("idddd"+session.getAttribute("id"));
+		MemberVO mvo=mService.memberSessionData((String)session.getAttribute("id"));
 		model.addAttribute("vo", vo);
 		model.addAttribute("pudate",pudate);
 		model.addAttribute("putime",putime);
@@ -74,6 +83,8 @@ public class CarController {
 		model.addAttribute("ins",ins);
 		model.addAttribute("price",price);
 		model.addAttribute("main_jsp","../car/car_reserve.jsp");
+		System.out.println(mvo.getEmail());
+		model.addAttribute("mvo",mvo);
 		return "main/main";
 	}
 	

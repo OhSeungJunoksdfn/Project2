@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -71,7 +74,25 @@
                     >
                       보험
                     </th>
-                    <td width="80%"></td>
+                    <td width="80%">{{ins_kind}}</td>
+                  </tr>
+                  <tr>
+                    <th
+                      width="20%"
+                      style="background-color: #e9e9e9; color: black"
+                    >
+                      운전자격
+                    </th>
+                    <td width="80%">{{ins_qual_print}}</td>
+                  </tr>
+                  <tr>
+                    <th
+                      width="20%"
+                      style="background-color: #e9e9e9; color: black"
+                    >
+                      보험설명
+                    </th>
+                    <td width="80%">{{ins_desc_print}}</td>
                   </tr>
                   <tr>
                     <th
@@ -80,7 +101,7 @@
                     >
                       차량옵션
                     </th>
-                    <td width="80%">에어컨 스마트키</td>
+                    <td width="80%">${fn:substring(vo.detail_option, 7, fn:length(vo.detail_option))}</td>
                   </tr>
                   <tr>
                     <th
@@ -174,18 +195,9 @@
                       width="20%"
                       style="background-color: #e9e9e9; color: black"
                     >
-                      상품 금액
+                      결제 금액
                     </th>
-                    <td width="80%">339,000원</td>
-                  </tr>
-                  <tr>
-                    <th
-                      width="20%"
-                      style="background-color: #e9e9e9; color: black"
-                    >
-                      객실 옵션 금액
-                    </th>
-                    <td width="80%">0원</td>
+                    <td width="80%">{{price}}원</td>
                   </tr>
                   <tr>
                     <th
@@ -211,7 +223,7 @@
                       총 결제금액 &nbsp;
                       <span
                         style="font-weight: 700; font-size: 24px; color: black"
-                        >339,000원</span
+                        >{{price}}원</span
                       >
                     </td>
                   </tr>
@@ -239,7 +251,7 @@
                         type="text"
                         style="float: left"
                         size="50"
-                        value="홍길동"
+                        value="${sessionScope.name }"
                       />
                     </td>
                   </tr>
@@ -255,7 +267,7 @@
                         type="text"
                         style="float: left"
                         size="50"
-                        value="hong@hong.com"
+                        value="${mvo.email }"
                       />
                     </td>
                   </tr>
@@ -271,7 +283,7 @@
                         type="text"
                         style="float: left"
                         size="50"
-                        value="010-0000-0000"
+                        value="${mvo.phone }"
                       />
                     </td>
                   </tr>
@@ -314,13 +326,13 @@ let listApp=Vue.createApp({
 			  rtime:'${rtime}',
 			  nor_ins_desc:'${vo.normal_ins_desc}'.split('-'),
 			  pre_ins_desc:'${vo.premium_ins_desc}'.split('-'),
-			  non_ins_price:Number('${vo.non_ins_price}'),
-			  normal_ins_price:Number('${vo.normal_ins_price}'),
-			  premium_ins_price:Number('${vo.premium_ins_price}'),
-			  ins:0,
+			  non_ins_qual:'${vo.non_ins_qual}',
+			  normal_ins_qual:'${vo.normal_ins_qual}',
+			  premium_ins_qual:'${vo.premium_ins_qual}',
+			  ins:Number('${ins}'),
 			  puDateObject:new Date(`${pudate} ${putime}`),
 			  rDateObject:new Date(`${rdate} ${rtime}`),
-			  price:0
+			  price:Number('${price}').toLocaleString()
 		}
 	},
 	mounted(){
@@ -334,6 +346,18 @@ let listApp=Vue.createApp({
 			const str = diffDays + '일 ' + diffHours + '시간'
 			return str
 		},
+		ins_kind(){
+			  const inss = ["","자차면책 가입 안함","일반자차","고급자차"]
+			  return inss[this.ins]
+		},
+		ins_qual_print(){
+			const quals = ["",this.non_ins_qual,this.normal_ins_qual,this.premium_ins_qual]
+			return quals[this.ins]
+		},
+		ins_desc_print(){
+			const descs = [[],[],this.nor_ins_desc,this.pre_ins_desc]
+			return descs[this.ins].join(",").substring(1)
+		}
 	},
 	methods:{
 		payment(){
@@ -348,8 +372,8 @@ let listApp=Vue.createApp({
 		        pg: "html5_inicis",  // PG사
 		        pay_method: "card",
 		        merchant_uid: 'order_' + new Date().getTime(), // 고유 주문번호
-		        name: "기아 모닝 예약", // 예약명
-		        amount: 50000, // 결제 금액 (숫자)
+		        name: "{vo.name}" + " 예약", // 예약명
+		        amount: this.price, // 결제 금액 (숫자)
 		        buyer_email: "oksdfn@gmail.com",
 		        buyer_name: "홍길동",
 		        buyer_tel: "010-1111-2222",

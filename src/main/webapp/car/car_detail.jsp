@@ -361,7 +361,7 @@
     				  				this.non_ins_price,
     				  				this.normal_ins_price,
     				  				this.premium_ins_price]
-    			  this.rentalPrice = ins_prices[this.checked_ins]*diffHours
+    			  this.rentalPrice = Math.floor(ins_prices[this.checked_ins]*(diffHours/24))
     			  return this.rentalPrice.toLocaleString()
     		  },
     		  ins_kind(){
