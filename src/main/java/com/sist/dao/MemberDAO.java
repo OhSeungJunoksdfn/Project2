@@ -48,4 +48,14 @@ public class MemberDAO {
   {
 	  return mapper.memberDetailData(id);
   }
+  public void memberUpdate(MemberVO vo)
+  {
+	  mapper.memberUpdate(vo);
+  }
+  public void memberDelete(String id)
+  {
+	  mapper.authorityDelete(id);
+	  mapper.memberDelete(id);
+  }
+  
 }

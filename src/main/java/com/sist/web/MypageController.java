@@ -20,7 +20,7 @@ public class MypageController {
 	@GetMapping("mypage/main.do")
 	public String mypage_main(Model model)
 	{
-		model.addAttribute("mypage_jsp","../mypage/home.jsp");
+		model.addAttribute("mypage_jsp","../mypage/my.jsp");
 		model.addAttribute("main_jsp","../mypage/main.jsp");
 		return"main/main";
 	}
@@ -45,13 +45,7 @@ public class MypageController {
 		model.addAttribute("main_jsp","../mypage/main.jsp");
 		return"main/main";
 	}
-	@GetMapping("mypage/my.do")
-	public String mypage_my(Model model)
-	{
-		model.addAttribute("mypage_jsp","../mypage/my.jsp");
-		model.addAttribute("main_jsp","../mypage/main.jsp");
-		return"main/main";
-	}
+	
 	@GetMapping("mypage/hotel_reserve_list.do")
 	public String hotel_reserve_list(Model model, HttpSession session)
 	{

@@ -12,5 +12,6 @@ public interface MemberService {
 	public MemberVO memberDetailData(String id);
 	public int myBoardTotalPage(Map map);
 	public List<BoardVO> myBoardListData(Map map);
-	
+	 public void memberDelete(String id);
+	 public void memberUpdate(MemberVO vo);
 }

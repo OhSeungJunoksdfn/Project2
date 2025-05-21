@@ -65,5 +65,16 @@ public class MemberServiceImpl implements MemberService {
 		// TODO Auto-generated method stub
 		return bdao.myBoardListData(map);
 	}
+	@Transactional
+	@Override
+	public void memberDelete(String id) {
+		// TODO Auto-generated method stub
+		dao.memberDelete(id);
+	}
+	@Override
+	public void memberUpdate(MemberVO vo) {
+		// TODO Auto-generated method stub
+		dao.memberUpdate(vo);
+	}
 
 }
