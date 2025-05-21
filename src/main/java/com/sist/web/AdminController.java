@@ -1,5 +1,5 @@
 package com.sist.web;
-import java.util.*; 
+import java.util.*;  
 import com.sist.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,11 +8,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.sist.vo.admin.*;
-@Controller
+import com.sist.vo.board.QnaVO;
+@Controller 
 public class AdminController {
 	@Autowired
 	private AdminService service;
-	
+	@Autowired
+	private CustomerService cService;
 	@GetMapping("admin/main.do")
 	public String adminMain(Model model)
 	{
@@ -25,6 +27,23 @@ public class AdminController {
 		model.addAttribute("admin_jsp","../admin/qna.jsp");
 		return "admin/main";
 	}
+	
+	@GetMapping("admin/qna_insert.do")
+	public String adminQnaInsert(int no,Model model)
+	{
+		model.addAttribute("no",no);
+		model.addAttribute("admin_jsp","../admin/qna_insert.jsp");
+		return "admin/main";
+	}
+	
+	@PostMapping("admin/qna_insert_ok.do")
+	public String adminQnaInsertOk(QnaVO vo)
+	{
+		cService.adminQnaboardUpdate(vo);
+		
+		return "redirect:../admin/qna.do";
+	}
+	
 	@GetMapping("admin/board.do")
 	public String adminBoard(Model model)
 	{
@@ -102,6 +121,10 @@ public class AdminController {
 		model.addAttribute("admin_jsp","../admin/notice_update.jsp");
 		return "admin/main";
 	}
+	
+	
+	
+	
 	
 	
 }

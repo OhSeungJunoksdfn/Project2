@@ -54,66 +54,14 @@ Shadowbox.init({
 	                      <option value="">San Francisco USA</option>
 	                      <option value="">Berlin Germany</option>
 	                      <option value="">Lodon United Kingdom</option>
-	                      <option value="">Paris Italy</option>
+	                      <option value="">${checkin}</option>
 	                    </select>
 	                  </div>
-		              </div>
-		              <div class="form-group">
-		                <input type="text" id="checkin_date" class="form-control" placeholder="Date from">
-		              </div>
-		              <div class="form-group">
-		                <input type="text" id="checkin_date" class="form-control" placeholder="Date to">
-		              </div>
-		              <div class="form-group">
-		              	<div class="range-slider">
-		              		<span>
-										    <input type="number" value="25000" min="0" max="120000"/>	-
-										    <input type="number" value="50000" min="0" max="120000"/>
-										  </span>
-										  <input value="1000" min="0" max="120000" step="500" type="range"/>
-										  <input value="50000" min="0" max="120000" step="500" type="range"/>
-										</div>
-		              </div>
-		              <div class="form-group">
-		                <input type="submit" value="Search" class="btn btn-primary py-3 px-5">
 		              </div>
 		            </div>
 	            </form>
         		</div>
         		<div class="sidebar-wrap ftco-animate">
-        			<h3 class="heading mb-4">Star Rating</h3>
-        			<form method="post" class="star-rating">
-							  <div class="form-check">
-									<input type="checkbox" class="form-check-input" id="exampleCheck1">
-									<label class="form-check-label" for="exampleCheck1">
-										<p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i></span></p>
-									</label>
-							  </div>
-							  <div class="form-check">
-						      <input type="checkbox" class="form-check-input" id="exampleCheck1">
-						      <label class="form-check-label" for="exampleCheck1">
-						    	   <p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-o"></i></span></p>
-						      </label>
-							  </div>
-							  <div class="form-check">
-						      <input type="checkbox" class="form-check-input" id="exampleCheck1">
-						      <label class="form-check-label" for="exampleCheck1">
-						      	<p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-o"></i><i class="icon-star-o"></i></span></p>
-						     </label>
-							  </div>
-							  <div class="form-check">
-							    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-						      <label class="form-check-label" for="exampleCheck1">
-						      	<p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-o"></i><i class="icon-star-o"></i><i class="icon-star-o"></i></span></p>
-						      </label>
-							  </div>
-							  <div class="form-check">
-						      <input type="checkbox" class="form-check-input" id="exampleCheck1">
-						      <label class="form-check-label" for="exampleCheck1">
-						      	<p class="rate"><span><i class="icon-star"></i><i class="icon-star-o"></i><i class="icon-star-o"></i><i class="icon-star-o"></i><i class="icon-star-o"></i></span></p>
-							    </label>
-							  </div>
-							</form>
         		</div>
           </div>
  <!-- 사이드바 End -->
@@ -202,44 +150,10 @@ Shadowbox.init({
           		</div>
 
 				<!-- 댓글 -->
-				<section class="ftco-section-parallax">
-				      <div class="container">
-				        <div class="row">
-				          <h3 class="col-12 mb-5">6 Comments</h3>
-				          <div class="col-12">
-				            <ul class="comment-list">
-				              <li class="comment">
-				                <div class="vcard bio">
-				                  <img src="#" alt="Image placeholder" />
-				                </div>
-				                <div class="comment-body">
-				                  <h3>John Doe</h3>
-				                  <div class="meta">October 03, 2018 at 2:21pm</div>
-				                  <p>
-				                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-				                    Pariatur quidem laborum necessitatibus, ipsam impedit vitae
-				                    autem, eum officia, fugiat saepe enim sapiente iste iure!
-				                    Quam voluptas earum impedit necessitatibus, nihil?
-				                  </p>
-				                  <p><a href="#" class="reply">Reply</a></p>
-				                </div>
-				              </li>
-				            </ul>
-				          </div>
-				          <h3 class="ml-3">댓글입력</h3>
-				          <div class=" container input-group mb-3">
-				            <textarea
-				              class="form-control"
-				              placeholder="Recipient's username"
-				              aria-label="Recipient's username"
-				              aria-describedby="button-addon2"
-				              style="resize: none; height: 100px !important; border-radius: 12px 0 0 12px"
-            				></textarea>
-           					 <button class="replyBtn" style="border-radius: 0 12px 12px 0">댓글</button>
-				          </div>
-				        </div>
-				      </div>
-				    </section>
+				<jsp:include page="../component/replyComponent.jsp">
+				  <jsp:param name="no"   value="${no}" />
+				  <jsp:param name="type" value="hotel"/>
+				</jsp:include>
 				  <!--댓글 끝-->
 
 				  <!--추천-->

@@ -42,4 +42,7 @@ public interface MemberMapper {
   		+ "pwd=#{pwd} "
   		+ "WHERE id=#{id}")
   public void pwdUpdate(MemberVO vo);
+  
+  @Select("SELECT * FROM projectmember WHERE id=#{id}")
+  public MemberVO memberDetailData(String id);
 }

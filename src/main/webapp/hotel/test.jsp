@@ -16,7 +16,7 @@
 	padding: 2px 10px;
 	white-space: nowrap;
 }
-.ftco-section justify-content-end {
+.ftco-section.justify-content-end {
   padding-right: 10px;
   padding-bottom: 2em;
 }

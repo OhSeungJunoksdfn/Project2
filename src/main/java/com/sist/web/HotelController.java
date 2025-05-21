@@ -66,7 +66,7 @@ public class HotelController {
 	    model.addAttribute("checkin", checkin);
 		model.addAttribute("checkout", checkout);
 		model.addAttribute("person", person);
-		
+		model.addAttribute("no",no);
 		model.addAttribute("vo", vo);
 		model.addAttribute("r3List", r3List); // 지역 근처 추천 숙소
 		model.addAttribute("rList", rList);
@@ -81,7 +81,12 @@ public class HotelController {
 		String checkin = (String) session.getAttribute("checkin");
 		String checkout = (String) session.getAttribute("checkout");
 		int person = (int) session.getAttribute("person");
+		
+		String msg = "";
 		if (member_id == null) {
+			msg ="<script>"
+					+ "alert(\"로그인 후 이용 가능합니다. \");"
+					+ "</script>";
 	        return "redirect:../member/login.do"; // 로그인 안 된 경우 로그인 페이지로 이동
 	    }
 		

@@ -130,11 +130,9 @@ public class BoardRestController {
 		vo.setName(name);
 		
 		service.replyInsert(vo);
-		int replycount=service.boardReplycount(vo);
 		List<ReplyVO> list = service.replyListData(vo);
 		
 		Map map = new HashMap();
-		map.put("replycount", replycount);
 		map.put("list",list);
 		
 		return map;
@@ -144,10 +142,8 @@ public class BoardRestController {
 	  {
 		  ReplyVO rvo = service.replyInfoData(no);
 		  service.replyDelete(rvo);
-		  int replycount=service.boardReplycount(vo);
 		  List<ReplyVO> list = service.replyListData(vo);
 		  Map map = new HashMap();
-			map.put("replycount", replycount);
 			map.put("list",list);
 			
 			return map;
@@ -158,10 +154,8 @@ public class BoardRestController {
 	  public Map replyUpdate(ReplyVO vo)
 	  {
 		service.replyUpdate(vo);
-		int replycount=service.boardReplycount(vo);
 		List<ReplyVO> list = service.replyListData(vo); 
 		Map map = new HashMap();
-		map.put("replycount", replycount);
 		map.put("list",list);
 		
 		return map;
@@ -180,10 +174,8 @@ public class BoardRestController {
 			vo.setType(type);
 			service.replyReplyInsert(pno, vo);
 
-			int replycount=service.boardReplycount(vo);
 			List<ReplyVO> list = service.replyListData(vo); 
 			Map map = new HashMap();
-			map.put("replycount", replycount);
 			map.put("list",list);
 			
 			return map;
