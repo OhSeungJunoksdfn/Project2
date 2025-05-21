@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"          import="org.jsoup.Jsoup,
                  org.jsoup.nodes.Document,
-                 org.jsoup.nodes.Element" %>%>
+                 org.jsoup.nodes.Element" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -78,7 +78,8 @@
                 role="tabpanel"
                 aria-labelledby="v-pills-nextgen-tab"
               >
-                <hotel-search-bar @search="handleSearch"></hotel-search-bar>
+              <!-- 호텔 서치바 넣는 곳 -->
+              
               </div>
 				<!-- 호텔 서치바 시작 -->
               <div
@@ -96,66 +97,7 @@
                 role="tabpanel"
                 aria-labelledby="v-pills-effect-tab"
               >
-                <form action="#" class="search-destination">
-                  <div class="row">
-                    <div class="col-md align-items-end">
-                      <div class="form-group">
-                        <label for="#">Where</label>
-                        <div class="form-field">
-                          <div class="icon">
-                            <span class="icon-map-marker"></span>
-                          </div>
-                          <input
-                            type="text"
-                            class="form-control"
-                            placeholder="Where"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md align-items-end">
-                      <div class="form-group">
-                        <label for="#">Check In</label>
-                        <div class="form-field">
-                          <div class="icon">
-                            <span class="icon-map-marker"></span>
-                          </div>
-                          <input
-                            type="text"
-                            class="form-control checkin_date"
-                            placeholder="Check In"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md align-items-end">
-                      <div class="form-group">
-                        <label for="#">Check Out</label>
-                        <div class="form-field">
-                          <div class="icon">
-                            <span class="icon-map-marker"></span>
-                          </div>
-                          <input
-                            type="text"
-                            class="form-control checkout_date"
-                            placeholder="From"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md align-self-end">
-                      <div class="form-group">
-                        <div class="form-field">
-                          <input
-                            type="submit"
-                            value="Search"
-                            class="form-control btn btn-primary"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </form>
+                <!-- 렌트카 서치 바 넣는 곳 -->
               </div>
             </div>
           </div>

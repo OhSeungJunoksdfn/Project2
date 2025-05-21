@@ -17,33 +17,28 @@
 	white-space: nowrap;
 }
 .ftco-section.justify-content-end {
-<<<<<<< HEAD
-<<<<<<< Upstream, based on origin/master
-  padding-right: 10px;
-  padding-bottom: 2em;
+  	padding-right: 10px;
+  	padding-bottom: 2em;
+	margin-left: 8rem !important;
+	margin-right: 8rem !important;
+	width: 1200px;
+	place-self: center;
+	padding-bottom: 2em;
+	margin-left: 8rem !important;
+	margin-right: 8rem !important;
+	width: 1200px;
+	place-self: center;
+	
 }
 
 .col-md-12.tab-wrap.rt-12.shadow {
-  border-radius: 10px;
-	padding-bottom: 2em;
-	margin-left: 8rem !important;
-	margin-right: 8rem !important;
-	width: 1200px;
-	place-self: center;
-	padding-bottom: 2em;
-	margin-left: 8rem !important;
-	margin-right: 8rem !important;
-	width: 1200px;
-	place-self: center;
-
+  	border-radius: 10px;
+  	
 }
 </style>
 </head>
 <body>
 <div id="hotelListApp">
-
-<hotel-search-bar @search="handleSearch"></hotel-search-bar>
-
  <section class="ftco-section justify-content-end">
       <div class="container-wrap mx-auto">
         <div class="row no-gutters">
@@ -278,18 +273,6 @@
     	  },
     	  methods: {
    		    handleSearch({ checkin, checkout, person }) {
-   	            this.checkin = checkin;
-   	            this.checkout = checkout;
-   	            this.person = person;
-   	            this.curpage = 1;
-   	            this.dataRecv();
-   		    	const query =
-  			      'checkin=' + encodeURIComponent(checkin) +
-  			      '&checkout=' + encodeURIComponent(checkout) +
-  			      '&person=' + encodeURIComponent(person);
-  			
-  			// 해당 URL로 페이지 이동 (리스트 페이지)
-  			window.location.href = 'http://localhost:8080/hotel/hotel_list.do?' + query;
    		    	const query =
   			      'checkin=' + encodeURIComponent(checkin) +
   			      '&checkout=' + encodeURIComponent(checkout) +
