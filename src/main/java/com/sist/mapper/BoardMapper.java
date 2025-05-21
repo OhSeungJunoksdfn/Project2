@@ -63,6 +63,17 @@ public interface BoardMapper {
 			+ "WHERE bno=#{no}")
 	public void boardReplyDelete(int no);
 	
+	@Select("SELECT no,subject,TO_CHAR(regdate, 'YYYY-MM-DD') as dbday,replycount,type,num "
+			+ "FROM (SELECT no,subject,regdate,replycount,type,rownum as num "
+			+ "FROM (SELECT /*+ INDEX_DESC(databoard db_no_pk) */ no,subject,regdate,replycount,type "
+			+ "FROM databoard WHERE id=#{id})) "
+			+ "WHERE num BETWEEN #{start} AND #{end}")
+	public List<BoardVO> myBoardListData(Map map);
+	
+	@Select("SELECT CEIL(COUNT(*)/10.0) FROM databoard "
+			+ "WHERE id=#{id}")
+	public int myBoardTotalPage(Map map);
+	
 	/* 댓글 */
 	@Select("SELECT no,bno,id,name,msg,TO_CHAR(regdate,'yyyy-MM-dd  HH24:MI') as dbday,group_tab"
 			+ " FROM reply "
@@ -108,6 +119,8 @@ public interface BoardMapper {
 			+ "#{bno},#{id},#{name},#{msg}, "
 			+ "#{group_id},#{group_step},#{group_tab},#{type})")
 	public void replyReplyInsert(ReplyVO vo);
+	
+	
 	
 	
 	

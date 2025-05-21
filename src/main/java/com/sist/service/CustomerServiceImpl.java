@@ -45,5 +45,23 @@ public class CustomerServiceImpl implements CustomerService {
 		// TODO Auto-generated method stub
 		dao.qnaboardAnswer(answer);
 	}
+
+	@Override
+	public List<QnaVO> adminQnaboardListData(Map map) {
+		// TODO Auto-generated method stub
+		return dao.adminQnaboardListData(map);
+	}
+
+	@Override
+	public int adminQnaboardTotalPage(Map map) {
+		// TODO Auto-generated method stub
+		return dao.adminQnaboardTotalPage(map);
+	}
+
+	@Override
+	public void adminQnaboardUpdate(QnaVO vo) {
+		// TODO Auto-generated method stub
+		dao.adminQnaboardUpdate(vo);
+	}
 	
 }

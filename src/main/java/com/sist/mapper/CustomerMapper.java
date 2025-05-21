@@ -32,4 +32,22 @@ public interface CustomerMapper {
 	@Update("UPDATE qnaboard SET "
 			+ "answer=#{answer},andswer_date=SYSDATE,isok='y'")
 	public void qnaboardAnswer(String answer);
+	
+	
+	//어드민 QNA
+	@Select("SELECT no,subject,TO_CHAR(regdate,'YYYY-MM-DD') as dbday,type,isok,num "
+			+ "FROM (SELECT no,subject,regdate,type,isok,rownum as num "
+			+ "FROM (SELECT /*+INDEX_DESC(qnaboard qna_no_pk)*/ no,subject,regdate,type,isok "
+			+ "FROM qnaboard)) "
+			+ "WHERE num BETWEEN #{start} AND #{end}")
+	public List<QnaVO> adminQnaboardListData(Map map);
+	
+	@Select("SELECT CEIL(COUNT(*)/10.0) FROM qnaboard")
+	public int adminQnaboardTotalPage(Map map);
+	
+	@Update("UPDATE qnaboard SET "
+			+ "answer=#{answer},answer_date=SYSDATE,isok='y' "
+			+ "WHERE no=#{no}")
+	public void adminQnaboardUpdate(QnaVO vo);
+	
 }

@@ -9,6 +9,7 @@ import com.sist.vo.MemberVO;
 import com.sist.vo.ReplyVO;
 import com.sist.vo.admin.*;
 import com.sist.vo.board.BoardVO;
+import com.sist.vo.board.QnaVO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +23,8 @@ public class AdminRestController {
 	private AdminService service;
 	@Autowired
 	private BoardService bservice;
+	@Autowired
+	private CustomerService cservice;
 	
 	String[] boardtype= {"","*","공지사항","자유글","호텔","관광지","맛집","렌트"};
 	@GetMapping("notice/list.do")
@@ -184,5 +187,40 @@ public class AdminRestController {
 	{
 		System.out.println(id);
 		service.adminMemberActivate(id);
+	}
+	
+	@GetMapping("admin/qna_list_vue.do")
+	public Map adminQnaListVue(int page, HttpSession session)
+	{
+		
+		String id = (String) session.getAttribute("id");
+		Map map = new HashMap();
+		int rowSize=10;
+		map.put("start", (rowSize*page)-(rowSize-1));
+		map.put("end",rowSize*page);
+		map.put("id", id);
+		List<QnaVO> list = cservice.adminQnaboardListData(map);
+		int totalpage=cservice.adminQnaboardTotalPage(map);
+		
+		final int BLOCK = 10;
+		int startPage= ((page-1)/BLOCK*BLOCK)+1;
+		int endPage = ((page-1)/BLOCK*BLOCK)+BLOCK;
+		if(endPage>totalpage)
+			endPage=totalpage;
+		map = new HashMap();
+		map.put("list", list);
+		map.put("totalpage", totalpage);
+		map.put("startPage", startPage);
+		map.put("endPage", endPage);
+		
+		return map;
+	}
+	
+	@GetMapping("admin/qna_detail_vue.do")
+	public QnaVO adminQnaDetailVue(int no)
+	{
+		QnaVO vo =cservice.qnaboardDetailData(no);
+		
+		return vo;
 	}
 }

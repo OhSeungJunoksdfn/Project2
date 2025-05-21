@@ -99,4 +99,12 @@ public class BoardDAO {
 	vo.setGroup_tab(pvo.getGroup_tab()+1);
 	mapper.replyReplyInsert(vo);
 	}
+	public List<BoardVO> myBoardListData(Map map)
+	{
+		return mapper.myBoardListData(map);
+	}
+	public int myBoardTotalPage(Map map)
+	{
+		return mapper.myBoardTotalPage(map);
+	}
 }

@@ -37,4 +37,16 @@ public class CustomerDAO {
 	{
 		mapper.qnaboardAnswer(answer);
 	}
+	public List<QnaVO> adminQnaboardListData(Map map)
+	{
+		return mapper.adminQnaboardListData(map);
+	}
+	public int adminQnaboardTotalPage(Map map)
+	{
+		return mapper.adminQnaboardTotalPage(map);
+	}
+	public void adminQnaboardUpdate(QnaVO vo)
+	{
+		mapper.adminQnaboardUpdate(vo);
+	}
 }
