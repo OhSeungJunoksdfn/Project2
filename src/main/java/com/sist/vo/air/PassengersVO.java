@@ -15,13 +15,6 @@ import lombok.Data;
 	UPDATED_AT               DATE         
 	EMAIL           NOT NULL VARCHAR2(50) 
 	
-	@Data
-	public class ReservationsVO {
-    private String reservation_id;
-    private String passenger_id;
-    private int    flight_id;
-    private String seat_number;
-    private Date   reserve_at;
 }
  */
 @Data

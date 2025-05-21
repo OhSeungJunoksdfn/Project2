@@ -157,4 +157,10 @@ public class AirServiceImpl implements AirService{
     public void addFlightSeatsBatch(int flightId, List<FlightSeatVO> seats) {
         aDAO.addFlightSeatsBatch(flightId, seats);
     }
+
+	@Override
+	public int createBooking(int flightId, int adults, int children) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

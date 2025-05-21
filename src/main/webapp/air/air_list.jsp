@@ -174,32 +174,7 @@ Vue.createApp({
         this.totalpage = d.totalpage;
       })
       .catch(console.error);
-    },
-
-/*      goToSeatMap(flightId) {
-        console.log('▶ seatMap 호출, flightId =', flightId,
-                    'adults =', this.adults,
-                    'children =', this.children);
-        const params = new URLSearchParams({
-          flightId,
-          adults:    this.adults,
-          children:  this.children
-        });
-        window.location.href = `/air/seat_map.do?${params.toString()}`;
-      }  */
-      
-/*        openSeatMap(evt, flightId) {
-    	     // 1) 올바른 파라미터 출력
-    	     console.log('▶ 선택된 flightId:', flightId,
-    	                 '성인:', this.adults,
-    	                 '소아:', this.children);
-    	  
-    	     // 2) href 속성 확인
-    	     console.log('▶ 이동할 URL:', evt.currentTarget.href);
-    	  
-    	     // 3) 새 탭 열기
-    	     window.open(evt.currentTarget.href, '_blank');
-    	   } */
+    	},
     },
   mounted() {
     // 무한 스크롤: 편도/왕복 모드에 따라 분기

@@ -27,7 +27,8 @@
     #seatGrid {
       position: absolute;
       /* inset: top right bottom left */
-      inset: 60px  290px  29px  290px;  /* 예시: 배경 이미지의 좌석 영역에 딱 맞추세요 */
+      inset: 60px  290px  29px  273px;
+      0px;  /* 예시: 배경 이미지의 좌석 영역에 딱 맞추세요 */
       display: grid;
       gap: 8px;
 	  
@@ -136,47 +137,43 @@
 </div>
   <div id="seatMapContainer">
     <div id="seatGrid">
-    <c:forEach var="row" begin="1" end="14">
+  <c:forEach var="row" begin="1" end="14">
     <!-- 왼쪽 A·B·C -->
-	<c:forTokens items="A,B,C" delims="," var="col">
-	  <div class="seat ${empty statusMap[row][col] ? 'available' : fn:toLowerCase(statusMap[row][col])}">
-	    ${col}${row}<!-- 좌석 버튼 -->
-	  </div>
-	</c:forTokens>
-	
-	<!-- 4번째빈 통로 -->
-	<div></div>
-	
-	<!-- 오른쪽 D,E,F -->
-	<c:forTokens items="D,E,F" delims="," var="col">
-	  <div class="seat ${empty statusMap[row][col] ? 'available' : fn:toLowerCase(statusMap[row][col])}">
-	    ${col}${row}<!-- 좌석 버튼 -->
-	  </div>
-	</c:forTokens>
+    <c:forTokens items="A,B,C" delims="," var="col">
+      <div class="seat
+           ${empty statusMap[row][col] ? 'available' : fn:toLowerCase(statusMap[row][col])}">
+        <!-- 버튼에 data-seat-id 심기 -->
+        <button type="button"
+                data-seat-id="${row}${col}"
+                <c:if test="${statusMap[row][col]=='BOOKED'}">disabled</c:if>>
+          ${col}${row}
+        </button>
+      </div>
+    </c:forTokens>
+
+    <!-- 가운데 통로 -->
+    <div></div>
+
+    <!-- 오른쪽 D·E·F -->
+    <c:forTokens items="D,E,F" delims="," var="col">
+      <div class="seat
+           ${empty statusMap[row][col] ? 'available' : fn:toLowerCase(statusMap[row][col])}">
+        <button type="button"
+                data-seat-id="${row}${col}"
+                <c:if test="${statusMap[row][col]=='BOOKED'}">disabled</c:if>>
+          ${col}${row}
+        </button>
+      </div>
+    </c:forTokens>
   </c:forEach>
-    
-    
-      <c:forEach var="fs" items="${flightSeats}">
-        <div class="seat ${fn:toLowerCase(fs.status)}">
-          <form action="<c:url value='/air/seat_book.do'/>" method="post">
-            <input type="hidden" name="flightId" value="${fs.flightId}"/>
-            <input type="hidden" name="seatId"   value="${fs.seatId}"/>
-			  <button type="button"
-			          data-seat-id="${fs.seatId}"
-			          <c:if test="${fs.status == 'BOOKED'}">disabled="disabled"</c:if>>
-			    ${fs.seat.rowLabel}${fs.seat.colNum}
-			  </button>
-          </form>
-        </div>
-      </c:forEach>
     </div>
   </div>
 
     <!-- 예약 확정 버튼: 오른쪽 하단에 배치 -->
-		<div style="width: 100%; display: flex; justify-content: flex-end; padding: 30px 100px 50px 0;">
+		<div style="width: 100%; display: flex; justify-content: flex-end; justify-content: center;">
 		  <button id="confirmBooking"
 		          style="padding: 12px 24px; font-size: 16px; background-color: #007bff; color: white; border: none; border-radius: 8px; cursor: pointer;">
-		    예약 확정
+		    좌석 확정
 		  </button>
 		</div>
 
@@ -226,33 +223,28 @@
       alert('모든 승객의 좌석을 선택했습니다.');
     });
     document.getElementById('confirmBooking').addEventListener('click', () => {
-        const selectedButtons = document.querySelectorAll('.seat[data-selected-type] button');
-        const seatIds = Array.from(selectedButtons).map(btn => btn.dataset.seatId);
+       // ▶ 성인/소아별로 나눠서 수집
+       const adultButtons  = document.querySelectorAll('.seat[data-selected-type="adult"] button');
+       const childButtons  = document.querySelectorAll('.seat[data-selected-type="child"] button');
+       const adultSeats    = Array.from(adultButtons).map(btn => btn.dataset.seatId);
+       const childSeats    = Array.from(childButtons).map(btn => btn.dataset.seatId);
 
-        if (seatIds.length === 0) {
-          alert("예약할 좌석을 선택해주세요.");
-          return;
-        }
+       if (adultSeats.length + childSeats.length === 0) {
+             alert("예약할 좌석을 선택해주세요.");
+             return;
+           }
 
-        fetch('/air/seat_book_batch.do', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            flightId: flightId,
-       		adults:     ADULT_MAX,
-       		children:   CHILD_MAX,
-            seatIds: seatIds
-          })
-        })
-        .then(res => res.text())
-        .then(nextUrl => {
-        	console.log('Redirect URL received:', nextUrl);
-          window.location.href = nextUrl;
-        })
-        .catch(() => {
-          console.error('Error during booking fetch:', error);
-          alert("예약 중 오류가 발생했습니다.");
-        });
+
+      // ▶ 성인/소아 좌석을 구분해서 URL에 전달
+      const params = new URLSearchParams({
+        flightId: flightId,
+        adults:   ADULT_MAX,
+        children: CHILD_MAX
+      });
+      if (adultSeats.length) params.append('adultSeats', adultSeats.join(','));
+      if (childSeats.length) params.append('childSeats', childSeats.join(','));
+      
+      window.location.href = '/air/passengers_info.do?' + params.toString();
       });
     });
   </script>

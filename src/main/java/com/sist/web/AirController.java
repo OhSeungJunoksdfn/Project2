@@ -1,6 +1,7 @@
 package com.sist.web;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,12 +64,22 @@ public class AirController {
 
 
     /** 예약 확정 후 → 승객 정보 입력 페이지로 이동 */
-    @GetMapping("passenger_info.do")
-    public String passenger_form(
-            @RequestParam("bookingId") int bookingId,
-            Model model) {
 
-        // 1) 예약 헤더 조회 (성인/소아)
+    	@GetMapping("passengers_info.do")
+    	public String passenger_info(
+           @RequestParam("flightId")    int   flightId,
+           @RequestParam("adults")      int   adults,
+           @RequestParam("children")    int   children,
+           @RequestParam("adultSeats")  String adultSeatsCsv,
+           @RequestParam("childSeats")  String childSeatsCsv,
+           Model model) {
+
+        // ▶ 1) booking 테이블에 헤더 INSERT (리턴된 bookingId 로 아래 조회)
+       int bookingId = service.createBooking(flightId, adults, children);
+
+        // ▶ 2) 좌석별로 insert (comma 구분된 스트링을 split)
+       List<String> adultSeats = Arrays.asList(adultSeatsCsv.split(","));
+       List<String> childSeats = Arrays.asList(childSeatsCsv.split(","));
         BookingVO booking = service.getBookingById(bookingId);
         model.addAttribute("booking", booking);
 
@@ -76,7 +87,7 @@ public class AirController {
         List<FlightSeatVO> bookedSeats = service.getSeatsByBookingId(bookingId);
         model.addAttribute("seats", bookedSeats);
 
-        model.addAttribute("main_jsp", "../air/passenger_info.jsp");
+        model.addAttribute("main_jsp", "../air/passengers_info.jsp");
         return "main/main";
     }
 
@@ -95,15 +106,6 @@ public class AirController {
         return "redirect:/air/passenger_list.do";
     }
     
-//    /** 좌석 전체 목록 조회 (admin용 등) */
-//    @GetMapping("seats.do")
-//    public String seats(Model model) {
-//        List<SeatVO> seats = service.getAllSeats();
-//        model.addAttribute("seats", seats);
-//        model.addAttribute("main_jsp", "../air/seat_list.jsp");
-//        return "main/main";
-//    }
-//
     /** 특정 항공편 좌석맵 조회 */
     @GetMapping("seat_map.do")
     public String seatMap(
