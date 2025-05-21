@@ -35,7 +35,7 @@
         	</tbody>
         </table>
 		<div class="col-12 px-0">
-			<textarea style="width:100%; margin:0; padding:0; height: 500px; resize:none" name="answer"></textarea>
+			<textarea style="width:100%; margin:0; padding:0; height: 300px; resize:none" name="answer"></textarea>
 		</div>
     	<input type="hidden" name="no" :value="no" > 
         <!-- 버튼 -->
@@ -56,7 +56,7 @@
 				no:${no}
 			}
 		},
-		mounted():{
+		mounted(){
 			axios.get("../admin/qna_detail_vue.do",{
 				params:{
 					no:this.no

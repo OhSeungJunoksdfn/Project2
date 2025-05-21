@@ -36,7 +36,7 @@
 				<td width="20%" class="text-center">{{vo.dbday}}</td>
 				<td width="20%" class="text-center" >
 					<a  :href="'../admin/qna_insert.do?no='+vo.no" v-if="vo.isok==='n'" class="btn btn-primary r-12"  >답변하기</a>
-					<input type="button" value="답변완료" v-if="vo	.isok==='y'" class="btn btn-info r-12"  />
+					<input type="button" value="답변수정" v-if="vo	.isok==='y'" class="btn btn-success r-12 "  />
 				</td>
 			</tr>
 		</tbody>
