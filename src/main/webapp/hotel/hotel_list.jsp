@@ -17,6 +17,7 @@
 	white-space: nowrap;
 }
 .ftco-section.justify-content-end {
+<<<<<<< HEAD
 <<<<<<< Upstream, based on origin/master
   padding-right: 10px;
   padding-bottom: 2em;
@@ -31,16 +32,26 @@
 	width: 1200px;
 	place-self: center;
 >>>>>>> 5196a2a 2025-05-22 전현빈 메인 페이지 서치바 컴포넌트 완료 / 디테일 수정 진행
+=======
+	padding-bottom: 2em;
+	margin-left: 8rem !important;
+	margin-right: 8rem !important;
+	width: 1200px;
+	place-self: center;
+>>>>>>> branch 'develop' of https://github.com/OhSeungJunoksdfn/Project2.git
 }
 </style>
 </head>
 <body>
 <div id="hotelListApp">
+<<<<<<< HEAD
 <<<<<<< Upstream, based on origin/master
 
 <hotel-search-bar @search="handleSearch"></hotel-search-bar>
 
 =======
+=======
+>>>>>>> branch 'develop' of https://github.com/OhSeungJunoksdfn/Project2.git
  <section class="ftco-section justify-content-end">
       <div class="container-wrap mx-auto">
         <div class="row no-gutters">
@@ -52,7 +63,10 @@
 		</div>
       </div>
  </section>
+<<<<<<< HEAD
 >>>>>>> 5196a2a 2025-05-22 전현빈 메인 페이지 서치바 컴포넌트 완료 / 디테일 수정 진행
+=======
+>>>>>>> branch 'develop' of https://github.com/OhSeungJunoksdfn/Project2.git
   <div style="width:100%;display: flex;justify-content: center;">
 	<section class="ftco-section" style="padding: 32px;">
       <div class="container">
@@ -300,6 +314,7 @@
     	  },
     	  methods: {
    		    handleSearch({ checkin, checkout, person }) {
+<<<<<<< HEAD
 <<<<<<< Upstream, based on origin/master
    	            this.checkin = checkin;
    	            this.checkout = checkout;
@@ -315,6 +330,15 @@
   			// 해당 URL로 페이지 이동 (리스트 페이지)
   			window.location.href = 'http://localhost:8080/hotel/hotel_list.do?' + query;
 >>>>>>> 5196a2a 2025-05-22 전현빈 메인 페이지 서치바 컴포넌트 완료 / 디테일 수정 진행
+=======
+   		    	const query =
+  			      'checkin=' + encodeURIComponent(checkin) +
+  			      '&checkout=' + encodeURIComponent(checkout) +
+  			      '&person=' + encodeURIComponent(person);
+  			
+  			// 해당 URL로 페이지 이동 (리스트 페이지)
+  			window.location.href = 'http://localhost:8080/hotel/hotel_list.do?' + query;
+>>>>>>> branch 'develop' of https://github.com/OhSeungJunoksdfn/Project2.git
    	        },
     		infoValue(key) {
     			return this[key]

@@ -8,6 +8,7 @@ const hotel_searchbar = {
     };
   },
   template: `
+<<<<<<< HEAD
 <<<<<<< Upstream, based on origin/master
     <section class="ftco-section justify-content-end">
       <div class="container-wrap mx-auto">
@@ -18,6 +19,10 @@ const hotel_searchbar = {
           
             
 >>>>>>> 5196a2a 2025-05-22 전현빈 메인 페이지 서치바 컴포넌트 완료 / 디테일 수정 진행
+=======
+          
+            
+>>>>>>> branch 'develop' of https://github.com/OhSeungJunoksdfn/Project2.git
               <div class="search-destination">
                 <div class="row">
                   <div class="col-md align-items-end">
