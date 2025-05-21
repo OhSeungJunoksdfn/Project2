@@ -6,17 +6,13 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectKey;
 import org.springframework.stereotype.Repository;
 
+import com.sist.vo.car.CarReserveVO;
 import com.sist.vo.car.CarVO;
 
 import java.util.*;
 
 
 public interface CarMapper {
-//   @Select("SELECT no,poster,name,car_class,seat,fuel,premium_ins_price,num "
-//			  +"FROM (SELECT no,poster,name,car_class,seat,fuel,premium_ins_price,rownum as num "
-//			  +"FROM (SELECT no,poster,name,car_class,seat,fuel,premium_ins_price "
-//			  +"FROM car ORDER BY no ASC)) "
-//			  +"WHERE num BETWEEN #{start} AND #{end}")
    public List<CarVO> carListData(Map map);
    
    
@@ -26,15 +22,15 @@ public interface CarMapper {
    public CarVO carDetailData(int no);
    
    @Insert("INSERT INTO car_reserve ("+
-	            "no,car_no,member_id,pickup_date,return_date,status,ins_price,ins_desc) "
+	            "no,car_no,member_id,pickup_date,return_date,status,price,ins) "
 	            + "VALUES ((SELECT NVL(MAX(no)+1,1) FROM car_reserve),"
 	            + "	#{car_no},"
 	            + " #{member_id},"
 	            + "#{pickup_date},"
 	            + "#{return_date},"
 	            + "#{status},"
-	            + "#{ins_price},"
-	            + "#{ins_desc})")
+	            + "#{price},"
+	            + "#{ins})")
    @SelectKey(
 	        statement = "SELECT NVL(MAX(no)+1,1) FROM car_reserve",
 	        keyProperty = "no",
@@ -59,8 +55,11 @@ public interface CarMapper {
   	SELECT CEIL(COUNT(*)/6.0) FROM car 
   </select>
     */
-   
    public List<CarVO> carSearchListData(Map map);
    public int carSearchTotalPage(Map map);
+   
+   @Select("SELECT * FROM car_reserve where no=#{no}")
+   public CarReserveVO reserveDetailData(int no);
+   
    
 }

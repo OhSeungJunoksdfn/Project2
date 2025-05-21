@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.sist.mapper.CarMapper;
+import com.sist.vo.car.CarReserveVO;
 import com.sist.vo.car.CarVO;
 
 @Repository
@@ -38,5 +39,10 @@ public class CarDAO {
 	public void insertCarReserve(Map map)
 	{
 		mapper.insertCarReserve(map);
+	}
+	
+	public CarReserveVO reserveDetailData(int no)
+	{
+		return mapper.reserveDetailData(no);
 	}
 }
