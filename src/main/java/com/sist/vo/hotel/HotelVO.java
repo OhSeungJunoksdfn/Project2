@@ -20,6 +20,6 @@ public class HotelVO {
 	private int no, content_id, content_type, areacode, sigungucode, price, minPrice, maxPrice, person, person_max;
 	private String title, addr, img, cat1, cat2, cat3, overview, checkin, checkout;
 	
-	private int hotel_no, food_place, parking, seminar, sports, sauna, beverage, barbecue, bicycle, fitness, publicpc, publicbath;
+	private int hotel_no, food_place, parking, seminar, sports, sauna, beverage, barbecue, bicycle, fitness, publicpc, publicbath,replycount;
 	private String checkintime, checkouttime;
 }

@@ -8,10 +8,10 @@ const hotel_searchbar = {
     };
   },
   template: `
-    <section class="ftco-section justify-content-end" style="padding-right: 10px; padding-bottom:2em">
+    <section class="ftco-section justify-content-end">
       <div class="container-wrap mx-auto">
         <div class="row no-gutters">
-          <div class="col-md-12 tab-wrap rt-12 shadow" style="border-radius:10px">
+          <div class="col-md-12 tab-wrap rt-12 shadow">
             <div class="tab-content p-4 px-5">
               <div class="search-destination">
                 <div class="row">

@@ -7,7 +7,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="<c:url value='/hotel/calendar.css'/>">
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <style type="text/css">
@@ -16,12 +15,80 @@
 	padding: 2px 10px;
 	white-space: nowrap;
 }
+.calendar {
+      max-width: 400px;
+      margin: 50px auto;
+      font-family: sans-serif;
+    }
+    .calendar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .calendar-header button {
+      background: none;
+      border: 1px solid #666;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+    .calendar-header h2 {
+      margin: 0;
+      font-size: 1.2rem;
+    }
+    .weekdays, .days {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+    }
+    .weekdays div, .days div {
+      text-align: center;
+      padding: 8px 0;
+    }
+    .disabled-day {
+    color: gray !important;
+    pointer-events: none; /* 클릭 시 동작 막기 */
+  }
+   .days div {
+    color: black;       /* 평일 기본 검정 */
+  }
+  .weekend {            
+    color: #e33;        /* 주말(일·토)만 빨간 */
+  }
+  .other-month {       
+    color: gray !important;  
+  }
+  .today {
+    background: #4285f4;
+    color: #fff;
+    border-radius: 50%;
+  }
+  .disabled-day {
+    pointer-events: none;
+  }
+ 	.weekdays .sunday { color: red; }
+  .weekdays .saturday { color: blue; }
+
+  /* 날짜 셀 */
+  .days .sunday { color: red; }
+  .days .saturday { color: blue; }
+
+  /* 이전/다음 달, 비활성, 오늘 등 기존 스타일 */
+  .other-month { color: gray !important; }
+  .disabled-day { color: gray !important; pointer-events: none; }
+  .today { background: #4285f4; color: #fff; border-radius: 50%; }
+  
+    .weekdays div { font-weight: bold; }
+    .days div { border: 1px solid #eee; }
+    .other-month { color: #bbb; }
+    .today { background: #4285f4; color: #fff; border-radius: 50%; }
+    .weekend { color: #e33; }
 </style>
 </head>
 <body>
 <div id="hotelListApp">
   <div class="container px-0">
 	<div >
+	<button type="button" @click="hotelCalendaData">테스트버튼</button>
 	 <section class="ftco-section justify-content-end " style="padding-right: 10px; padding-bottom:2em">
       <div class="container-wrap mx-auto">
         <div class="row no-gutters">
@@ -38,22 +105,22 @@
                     <div class="col-md align-items-end">
                       <div class="form-group">
                         <label>Check In</label>
-                        <div class="form-field">
+                        <div class="form-field" @click="hotelCalendaData()">
                           <div class="icon">
                             <span class="icon-map-marker"></span>
                           </div>
-                          <input type="date" class="form-control" name="checkin" placeholder="Check In" v-model="checkin" @click="hotelCalendaData()"/>
+                          <input type="date" class="form-control" name="checkin" placeholder="Check In" v-model="checkin" />
                         </div>
                       </div>
                     </div>
-                    <div class="col-md align-items-end" @click="hotelCalendaData()">
+                    <div class="col-md align-items-end">
                       <div class="form-group">
                         <label>Check Out</label>
-                        <div class="form-field">
+                        <div class="form-field" @click="hotelCalendaData()">
                           <div class="icon">
                             <span class="icon-map-marker"></span>
                           </div>
-                          <input type="date" class="form-control" name="checkout" placeholder="Check Out" v-model="checkout" @click="hotelCalendaData()"/>
+                          <input type="date" class="form-control" name="checkout" placeholder="Check Out" v-model="checkout" />
                         </div>
                       </div>
                     </div>
@@ -337,15 +404,17 @@
     	  },
     	  methods: {
   			  hotelCalendaData() {
+  				  console.log("버튼 클릭됨");
   				  axios.get("../hotel/calenda_vue.do", {
   					  params: {
   						  checkin: this.checkin,
   						  checkout: this.checkout,
   						  person: this.person
   					  }
-  				  }).then(res => ({
-  					  calendarView: true
-  				  })).catch(err => {
+  				  }).then(res => {
+  					  console.log(res.data)
+  					  this.calendarView = true
+  				  }).catch(err => {
   					  console.log(err.response)
   				  })
   			  },
