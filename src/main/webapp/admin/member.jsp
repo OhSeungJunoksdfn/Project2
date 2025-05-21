@@ -28,7 +28,6 @@
           <table class="table">
             <thead>
               <tr class="text-center">
-                <th >전체 <input type="checkbox" @change="toggleAll($event)" :checked="selected.length === list.length && list.length > 0"></th>
                 <th>유저 ID</th>
                 <th>이름</th>
                 <th>성별</th>
@@ -36,16 +35,12 @@
                 <th>회원가입일</th>
                 <th>상태</th>
                 <th >
-                <input type="button" value="선택삭제" class="btn btn-danger rounded-0"  @click="deleteSelected()">
                 </th>
                 
               </tr>
             </thead>
             <tbody>
               <tr v-for="(vo,key) in list" :key="key">
-                <td class="text-center">
-                <input type="checkbox" v-model="selected" :value="vo.no" >
-                </td>
                 <td class="text-center">{{vo.id }}</td>
                 <td><a @click="userDetailData(vo.id)" class="cursor-pointer text-center" 
                     style="font-weight:700;color:black;overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" 

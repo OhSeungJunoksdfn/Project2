@@ -1,6 +1,7 @@
 package com.sist.mapper;
-import java.util.*; 
+import java.util.*;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -45,4 +46,16 @@ public interface MemberMapper {
   
   @Select("SELECT * FROM projectmember WHERE id=#{id}")
   public MemberVO memberDetailData(String id);
+  
+  @Update("UPDATE projectmember SET "
+  		+ "content=#{content},post=#{post},addr1=#{addr1},addr2=#{addr2} "
+  		+ "WHERE id=#{id}")
+  public void memberUpdate(MemberVO vo);
+  
+  @Delete("DELETE FROM projectmember "
+  		+ "WHERE id=#{id}")
+  public void memberDelete(String id);
+  @Delete("DELETE FROM AUTHORITY "
+  		+ "WHERE id=#{id}")
+  public void authorityDelete(String id);
 }

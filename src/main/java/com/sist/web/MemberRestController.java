@@ -7,8 +7,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.*;
+
+import javax.servlet.http.HttpSession;
+
 import com.sist.service.*;
 import com.sist.vo.*;
+
+import oracle.jdbc.proxy.annotation.Post;
 @RestController
 public class MemberRestController {
 	@Autowired
@@ -49,7 +54,6 @@ public class MemberRestController {
 	public String memberPwdUpdateVue(MemberVO vo)
 	{
 		try {
-			System.out.println(vo.getId());
 			String enPwd = encoder.encode(vo.getPwd());
 			vo.setPwd(enPwd);
 			service.pwdUpdate(vo);
@@ -60,4 +64,32 @@ public class MemberRestController {
 		}
 		return"y";
 	}
+	@PostMapping("mypage/update_vue.do")
+	public String memberUpdateVue(MemberVO vo,HttpSession session)
+	{
+		try {
+			String id = (String) session.getAttribute("id");
+			vo.setId(id);
+			service.memberUpdate(vo);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return "n";
+		};
+		return "y";
+	}
+	
+	@PostMapping("member/Delete_vue.do")
+	public String memberDeleteVue(HttpSession session)
+	{
+		try {
+			String id = (String) session.getAttribute("id");
+			service.memberDelete(id);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return "n";
+		}
+		return "y";
+		
+	}
+	
 }

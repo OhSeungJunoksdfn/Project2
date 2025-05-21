@@ -54,9 +54,6 @@
    </section>
    <script>
    	const app = Vue.createApp({
-   		data(){
-   			
-   		},
    		methods:{
    			changeSup(url){
    				location.href=url

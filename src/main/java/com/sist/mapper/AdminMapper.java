@@ -62,7 +62,7 @@ public interface AdminMapper {
 			+ "WHERE num BETWEEN #{start} AND #{end}")
 	public List<MemberVO> userListData(Map map);
 	
-	@Select("SELECT COUNT(*) FROM projectmember")
+	@Select("SELECT COUNT(*) FROM projectmember WHERE state!='a'")
 	public int userCount();
 	
 	@Update("UPDATE projectmember SET "

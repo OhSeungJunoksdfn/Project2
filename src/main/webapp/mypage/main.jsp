@@ -43,7 +43,7 @@
                 type="button"
                 class="form-control r-12 cursor-pointer"
                 value="내 정보"
-                 @click="changeSup('../mypage/my.do')"
+                 @click="changeSup('../mypage/main.do')"
               />
             </div>
             
@@ -60,9 +60,7 @@
    </section>
    <script>
    	const app = Vue.createApp({
-   		data(){
-   			
-   		},
+   		
    		methods:{
    			changeSup(url){
    				location.href=url
