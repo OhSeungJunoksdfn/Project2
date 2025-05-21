@@ -372,11 +372,11 @@ let listApp=Vue.createApp({
 		        pg: "html5_inicis",  // PG사
 		        pay_method: "card",
 		        merchant_uid: 'order_' + new Date().getTime(), // 고유 주문번호
-		        name: "{vo.name}" + " 예약", // 예약명
+		        name: "${vo.name}" + " 예약", // 예약명
 		        amount: this.price, // 결제 금액 (숫자)
-		        buyer_email: "",
-		        buyer_name: "홍길동",
-		        buyer_tel: "010-1111-2222",
+		        buyer_email: "${mvo.email}",
+		        buyer_name: "${mvo.name}",
+		        buyer_tel: "${mvo.phone}",
 		        buyer_addr: "",
 		        buyer_postcode: ""
 		    }, function (rsp) {
@@ -387,16 +387,16 @@ let listApp=Vue.createApp({
 		                type: "POST",
 		                url: "../car/car_reserve_insert_vue.do",
 		                data: {
-		                    car_no: 5,//렌터카 pk
-		                    user_name: "홍길동",
-		                    user_phone: "010-1111-2222",
-		                    user_email: "oksdfn@gmail.com",
-		                    pudate:"06/15/2025",
-							putime:"10:00",
-							rdate:"06/16/2025",
-							rtime:"10:00",
-		                    price_total: 50000,
-		                    ins_desc : "자차보험 설명",
+		                    car_no: ${vo.no},//렌터카 pk
+		                    user_name: "${mvo.name}",
+		                    user_phone: "${mvo.phone}",
+		                    user_email: "${mvo.email}",
+		                    pudate:this.pudate,
+							putime:this.putime,
+							rdate:this.rdate,
+							rtime:this.rtime,
+		                    price_total: this.price,
+		                    ins_desc : this.ins_desc_print,
 		                    imp_uid: rsp.imp_uid,
 		                    merchant_uid: rsp.merchant_uid,
 		                    amount: rsp.paid_amount
