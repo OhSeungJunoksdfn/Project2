@@ -80,79 +80,16 @@
               >
                 <hotel-search-bar @search="handleSearch"></hotel-search-bar>
               </div>
-
+				<!-- 호텔 서치바 시작 -->
               <div
                 class="tab-pane fade"
                 id="v-pills-2"
                 role="tabpanel"
-                aria-labelledby="v-pills-performance-tab"
+                aria-labelledby="v-pills-2-tab"
               >
-                <form action="#" class="search-destination">
-                  <div class="row">
-                    <div class="col-md align-items-end">
-                      <div class="form-group">
-                        <label for="#">Check In</label>
-                        <div class="form-field">
-                          <div class="icon">
-                            <span class="icon-map-marker"></span>
-                          </div>
-                          <input
-                            type="text"
-                            class="form-control checkin_date"
-                            placeholder="Check In"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md align-items-end">
-                      <div class="form-group">
-                        <label for="#">Check Out</label>
-                        <div class="form-field">
-                          <div class="icon">
-                            <span class="icon-map-marker"></span>
-                          </div>
-                          <input
-                            type="text"
-                            class="form-control checkout_date"
-                            placeholder="From"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md align-items-end">
-                      <div class="form-group">
-                        <label for="#">Guest</label>
-                        <div class="form-field">
-                          <div class="select-wrap">
-                            <div class="icon">
-                              <span class="ion-ios-arrow-down"></span>
-                            </div>
-                            <select name="" id="" class="form-control">
-                              <option value="">1</option>
-                              <option value="">2</option>
-                              <option value="">3</option>
-                              <option value="">4</option>
-                              <option value="">5</option>
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md align-self-end">
-                      <div class="form-group">
-                        <div class="form-field">
-                          <input
-                            type="submit"
-                            value="Search"
-                            class="form-control btn btn-primary"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </form>
+                <hotel-search-bar @search="handleSearch"></hotel-search-bar>
               </div>
-
+				<!-- 호텔 서치바 끝 -->
               <div
                 class="tab-pane fade"
                 id="v-pills-3"
@@ -1066,7 +1003,6 @@
         </div>
       </div>
     </section>
-
     <section class="ftco-section-parallax">
       <div class="parallax-img d-flex align-items-center">
         <div class="container">
@@ -1104,17 +1040,27 @@
       </div>
     </section>
 </div>
+<script src="../hotel/hotel_searchbar.js"></script>
 <script>
 let mainApp = Vue.createApp({
 	data() {
 		return {
-			hotels: []
+			hotels: [],
 		}
 	},
 	mounted() {
 		this.hotelList()
 	},
 	methods: {
+		handleSearch({ checkin, checkout, person }) {
+			// 쿼리스트링 가져온 후 vue로 보내기위한 메소드
+			const query =
+			      'checkin=' + encodeURIComponent(checkin) +
+			      '&checkout=' + encodeURIComponent(checkout) +
+			      '&person=' + encodeURIComponent(person);
+			
+			window.location.href = 'http://localhost:8080/hotel/hotel_list.do?' + query;
+		},
 		hotelList() {
 			axios.get('http://localhost:8080/hotel/hotel_mainPage_vue.do')
 			.then(res => {
@@ -1123,10 +1069,13 @@ let mainApp = Vue.createApp({
 				this.$nextTick(() => {
   		          	contentWayPoint()
   		        })
-			}).catch(error => {
-				console.log(error.response)
+			}).catch(err => {
+				console.log(err.response)
 			})
 		}
+	},
+	components:{
+		'hotel-search-bar': hotel_searchbar
 	}
 }).mount("#mainApp")
 </script>

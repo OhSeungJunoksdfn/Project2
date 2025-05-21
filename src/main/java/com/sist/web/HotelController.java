@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sist.service.HotelService;
 import com.sist.vo.admin.NoticeVO;
@@ -32,8 +34,15 @@ public class HotelController {
 	private HotelService service;
 	
 	@GetMapping("hotel/hotel_list.do")
-	public String hotel_list(Model model)
+	public String hotel_list(Model model, HttpSession session, HttpServletRequest req,
+			@RequestParam(value = "checkin",  required = false) String checkin,
+		    @RequestParam(value = "checkout", required = false) String checkout,
+		    @RequestParam(value = "person",   defaultValue = "1")  int person)
 	{
+		if (checkin  != null) session.setAttribute("checkin",  checkin);
+	    if (checkout != null) session.setAttribute("checkout", checkout);
+	    if (person   != 0) session.setAttribute("person",   person);
+		
 		model.addAttribute("main_jsp", "../hotel/hotel_list.jsp");
 		return "main/main";
 	}
