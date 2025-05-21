@@ -374,7 +374,7 @@ let listApp=Vue.createApp({
 		        merchant_uid: 'order_' + new Date().getTime(), // 고유 주문번호
 		        name: "{vo.name}" + " 예약", // 예약명
 		        amount: this.price, // 결제 금액 (숫자)
-		        buyer_email: "oksdfn@gmail.com",
+		        buyer_email: "",
 		        buyer_name: "홍길동",
 		        buyer_tel: "010-1111-2222",
 		        buyer_addr: "",
