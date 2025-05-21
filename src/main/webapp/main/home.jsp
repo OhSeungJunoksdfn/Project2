@@ -1,10 +1,28 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"          import="org.jsoup.Jsoup,
+                 org.jsoup.nodes.Document,
+                 org.jsoup.nodes.Element" %>%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+    .region-bg {
+      background-size: cover;
+      background-position: center;
+      color: #fff;               /* 텍스트 가시성 확보 */
+    }
+    .region-bg.seoul {
+      background-image: url('${pageContext.request.contextPath}/images/background_seoul.jpg');
+    }
+    .region-bg.jeju {
+      background-image: url('${pageContext.request.contextPath}/images/background_jeju.jpg');
+    }
+        .weather-box { background: rgba(255,255,255,0.8); padding: 1.5rem; border-radius: .5rem; }
+    .city-title { font-size: 1.5rem; font-weight: bold; margin-bottom: .75rem; }
+    .weather-list { list-style: disc inside; }
+  </style>
 </head>
 <body>
 <div id="mainApp">
@@ -302,34 +320,21 @@
     </section>
     <section class="ftco-section bg-light">
       <div class="container">
-        <div class="row">
+        <div class="row justify-content-center">
           <div class="col-md-4">
-            <div class="intro ftco-animate r-12 sidebar shadow p-3">
-              <h3><span>01</span> Travel</h3>
+            <div class="intro ftco-animate r-12 sidebar shadow p-2 region-bg seoul">
+              <h3 class="text-center"> < 서울여행 ></h3>
               <p>
-                A small river named Duden flows by their place and supplies it
-                with the necessary regelialia. It is a paradisematic country, in
-                which roasted parts of sentences fly into your mouth.
+                대한민국의 수도 ‘서울’은 K-컬처를 필두로 빠르게 성장하는 문화 트렌드와 600년 역사와 전통이 만나 다양한 요소들의 조화로움을 느낄 수 있는 도시입니다.<br/>
+                다채로운 매력으로 가득한 도시 서울은 글로벌 관광도시의 최전선으로 나아가고 있습니다.
               </p>
             </div>
           </div>
           <div class="col-md-4">
-            <div class="intro ftco-animate r-12 sidebar shadow p-3">
-              <h3><span>02</span> Experience</h3>
+            <div class="intro ftco-animate r-12 sidebar shadow p-2 region-bg jeju">
+              <h3 class="text-center">< 제주여행 ></h3>
               <p>
-                A small river named Duden flows by their place and supplies it
-                with the necessary regelialia. It is a paradisematic country, in
-                which roasted parts of sentences fly into your mouth.
-              </p>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="intro ftco-animate r-12 sidebar shadow p-3">
-              <h3><span>03</span> Relax</h3>
-              <p>
-                A small river named Duden flows by their place and supplies it
-                with the necessary regelialia. It is a paradisematic country, in
-                which roasted parts of sentences fly into your mouth.
+                제주도는 아름다운 자연 경관과 다양한 관광 명소를 보유한 섬으로, 한국에서 가장 큰 섬입니다.<br/> 제주 여행은 자연을 즐기는 사람들에게 특히 매력적이며, 다양한 테마로 여행을 즐길 수 있습니다.
               </p>
             </div>
           </div>
