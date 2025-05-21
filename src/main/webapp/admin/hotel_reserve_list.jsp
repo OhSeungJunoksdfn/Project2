@@ -102,7 +102,6 @@
 					  }
 				  }).then(res => {
 					  alert("예약이 확정 되었습니다.")
-					  this.curpage = 1
 					  this.dataRecv()
 				  }).catch(err => {
 					  console.log(err.response)
@@ -147,6 +146,7 @@
 				  this.curpage = res.data.curpage
 				  this.startPage = res.data.startPage
     			  this.endPage = res.data.endPage
+    			  this.totalpage = res.data.totalpage
     			  
     			  this.$nextTick(() => {
     		          	contentWayPoint()

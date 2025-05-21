@@ -140,7 +140,6 @@ public class HotelRestController {
 		map.put("endPage", endPage);
 		map.put("totalpage", totalpage);
 		
-		
 		return map;
 	}
 	
