@@ -2,10 +2,15 @@ const hotel_searchbar = {
   name: 'SearchBar',
   data() {
     return {
-      checkin: '',
-      checkout: '',
-      person: 2
+      checkin:this.ckin,
+      checkout:this.ckout,
+      person: this.pers
     };
+  },
+   props: {
+    ckin: String,
+    ckout: String,
+    pers: Number
   },
   template: `
               <div class="search-destination">
