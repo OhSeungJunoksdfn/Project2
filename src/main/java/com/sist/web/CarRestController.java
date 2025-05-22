@@ -203,4 +203,14 @@ public class CarRestController {
 	{
 		service.carReserveUpdate(no);
 	}
+	
+	@GetMapping("/car/car_mainPage_vue.do")
+	public Map car_mainPage()
+	{
+		
+		List<CarVO> list=service.carMainData();
+		Map map = new HashMap();
+		map.put("list", list);
+		return map;
+	}
 }

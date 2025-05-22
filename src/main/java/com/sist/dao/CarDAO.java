@@ -71,4 +71,9 @@ public class CarDAO {
 	{
 		mapper.carReserveUpdate(no);
 	}
+	
+	public List<CarVO> carMainData()
+	{
+		return mapper.carMainData();
+	}
 }

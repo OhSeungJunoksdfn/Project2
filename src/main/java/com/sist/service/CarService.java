@@ -18,4 +18,5 @@ public interface CarService {
 	public List<CarReserveVO> adminCarListData(Map map);
 	public int adminCarTotalPage();
 	public void carReserveUpdate(int no);
+	public List<CarVO> carMainData();
 }

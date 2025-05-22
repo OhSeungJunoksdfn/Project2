@@ -85,5 +85,11 @@ public class CarServiceImpl implements CarService{
 		// TODO Auto-generated method stub
 		dao.carReserveUpdate(no);
 	}
+
+	@Override
+	public List<CarVO> carMainData() {
+		// TODO Auto-generated method stub
+		return dao.carMainData();
+	}
 	
 }

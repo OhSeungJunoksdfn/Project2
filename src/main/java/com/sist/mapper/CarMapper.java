@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.sist.vo.car.CarReserveVO;
 import com.sist.vo.car.CarVO;
 import com.sist.vo.hotel.HotelReserveVO;
+import com.sist.vo.hotel.HotelVO;
 
 import java.util.*;
 
@@ -76,4 +77,11 @@ public interface CarMapper {
    public int adminCarTotalPage();
    @Select("Update car_reserve SET status='예약 확정' where no=#{no}")
    public void carReserveUpdate(int no);
+   
+   
+   @Select("SELECT no,poster,name,car_class,seat,fuel,premium_ins_price,premium_ins_qual "
+			+ "FROM car "
+			+ "WHERE ROWNUM <= 4"
+			+ "ORDER BY DBMS_RANDOM.RANDOM ")
+	public List<CarVO> carMainData();
 }
