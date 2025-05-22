@@ -25,7 +25,7 @@ PREMIUM_INS_PRICE          NUMBER
 CAR_YEAR                   NUMBER         
 DETAIL_OPTION              VARCHAR2(500)  
 	 */
-	int no,seat,non_ins_price,normal_ins_price,premium_ins_price,car_year;
+	int no,seat,non_ins_price,normal_ins_price,premium_ins_price,car_year,replycount;
 	String name,poster,car_class,manufacturer,fuel,non_ins_qual,normal_ins_qual,normal_ins_desc,
 	premium_ins_qual,premium_ins_desc,detail_option,location;
 
