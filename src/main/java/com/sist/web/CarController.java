@@ -128,4 +128,11 @@ public class CarController {
 		return "redirect:../mypage/car_reserve_list.do";
 	}
 	
+	@GetMapping("admin/car_reserve_list.do")
+	public String amdin_car_reserveList(Model model)
+	{
+		model.addAttribute("admin_jsp","../admin/car_reserve_list.jsp");
+		return "admin/main";
+	}
+	
 }

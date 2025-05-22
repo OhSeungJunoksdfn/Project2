@@ -183,4 +183,14 @@
 	)
   	
   </select>
+  
+  <select id="adminCarListData" resultType="CarVO" parameterType="hashmap">
+    SELECT cr.no as no, pickup_date, return_date, name as car_name, status,id,email,phone,m.name as member_name,num
+			  FROM (SELECT cr.no as no, pickup_date, return_date, name as car_name, status,id,email,phone,m.name as member_name,rownum as num
+			  FROM (SELECT cr.no as no, pickup_date, return_date, name as car_name, status,id,email,phone,m.name as member_name 
+			  FROM car_reserve cr 
+   			  JOIN car c ON cr.car_no = c.no
+   			  JOIN projectmember m ON m.id=cr.member_id))
+			  WHERE num BETWEEN #{start} AND #{end}
+  </select>
 </mapper>

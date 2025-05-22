@@ -28,15 +28,14 @@
       <table class="table"  style="margin: 20px;">
         <thead>
           <tr>
-            <th>호텔명</th>
-            <th>객실명</th>
+            <th>차량명</th>
             <th>계정</th>
             <th>예약자명</th>
             <th>예약자 이메일</th>
             <th>예약자 전화번호</th>
-            <th>예약 인원</th>
             <th>총 금액</th>
-            <th>예약일</th>
+            <th>대여일시</th>
+            <th>반납일시</th>
             <th>예약 상태</th>
             <th></th>
           </tr>

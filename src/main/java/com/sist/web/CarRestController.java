@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sist.service.CarService;
 import com.sist.vo.car.CarVO;
+import com.sist.vo.hotel.HotelReserveVO;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -164,4 +165,35 @@ public class CarRestController {
 	{
 		service.carReserveDelete(no);
 	}
+	
+//	@GetMapping("admin/car_reserve_list_vue.do")
+//	public Map hotel_reserveList_vue(int page)
+//	{
+//		int rowSize = 10;
+//		int start = (page-1) * rowSize+1;
+//		int end = page * rowSize;
+//		
+//		Map map=new HashMap();
+//		map.put("start", start);
+//		map.put("end", end);
+//		
+//		int totalpage = service.adminHotelListTotalPage();
+//		
+//		final int BLOCK = 5;
+//		int startPage = ((page - 1) / BLOCK * BLOCK) + 1;
+//		int endPage = startPage + BLOCK - 1;
+//		if (endPage > totalpage)
+//			endPage = totalpage;
+//		
+//		List<HotelReserveVO> list = service.adminHotelListData(map);
+//		
+//		map = new HashMap();
+//		map.put("list", list);
+//		map.put("curpage", page);
+//		map.put("startPage", startPage);
+//		map.put("endPage", endPage);
+//		map.put("totalpage", totalpage);
+//		
+//		return map;
+//	}
 }
