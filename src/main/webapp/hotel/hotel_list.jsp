@@ -44,7 +44,7 @@
         <div class="row no-gutters">
           <div class="col-md-12 tab-wrap rt-12 shadow" style="border-radius: 10px;">
             <div class="tab-content p-4 px-5">
-		      <hotel-search-bar @search="handleSearch"></hotel-search-bar>
+		      <hotel-search-bar @search="handleSearch" :ckin="ckin" :ckout="ckout" :pers="pers"></hotel-search-bar>
 		    </div>
 		  </div>
 		</div>
@@ -89,7 +89,6 @@
                       <span class="checkBtn" :class="{ checked: sigungucode === sgg.sigungucode }" v-for="sgg in filterSGG" 
                       :key="sgg.areacode+'_'+sgg.sigungucode" @click="selSigungucode(sgg.sigungucode)">{{ sgg.name }}</span>
                     </label>
-                    
                    
                     <p style="font-size: 18px" v-show="locDetail">숙박 타입</p>
                     <label class="checkBoxAll pb-1">
@@ -168,14 +167,14 @@
                       </div>
                     </div>
                     <p>
-                      체크인 {{vo.checkintime }} / 체크 아웃 {{vo.checkouttime }}
+                      체크인 {{vo.checkintime }} - 체크 아웃 {{vo.checkouttime }}
                     </p>
                     <p class="days"><span></span></p>
                     <hr />
                     <p class="bottom-area d-flex justify-content-between align-items-center">
 					  <span class="text-truncate" style="max-width: 70%;">
 					    <i class="icon-map-o"></i>{{ vo.addr }}</span>
-                      <span><a :href="'../hotel/hotel_detail.do?no='+vo.no">객실 보기</a></span>
+                      <span><a :href="'../hotel/hotel_detail.do?no='+vo.no" style="font-size: 18px;">객실 보기</a></span>
                     </p>
                   </div>
                 </div>
@@ -208,6 +207,8 @@
     			  list: [],
     			  curpage: 1,
     			  totalpage: 0,
+    			  ckin: "${checkin}",
+    			  ckout: "${checkout}",
     			  startPage: 0,
     			  endPage: 0,
     			  areacode: 0,
@@ -258,7 +259,8 @@
     			  ],
     			  checkin: '',
     			  checkout: '',
-    			  person: 2
+    			  person: 2,
+    			  pers: ${person}
     		  }
     	  },
     	  computed: {
@@ -269,6 +271,8 @@
 	      	}
 	      },
     	  mounted() {
+	    	    console.log("??"+this.ckin)
+	    	    console.log(this.ckout)
     			this.dataRecv()
     	  },
     	  methods: {
@@ -294,6 +298,7 @@
     			window.scrollTo({ top: 0, behavior: 'smooth' })
     		},
     		selCat3(Ccode) {
+    			console.log(Ccode)
     			this.cat3 = Ccode
     			this.curpage = 1
     			this.dataRecv()
@@ -363,7 +368,7 @@
       				}
 
       			}).then(res => {
-      				console.log(res.data)
+      				console.log(res.data.list)
       				this.list = res.data.list
       			    this.curpage = res.data.curpage
       			    this.totalpage = res.data.totalpage

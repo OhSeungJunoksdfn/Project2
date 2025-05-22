@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import com.sist.vo.admin.NoticeVO;
 import com.sist.vo.hotel.HotelReserveVO;
 import com.sist.vo.hotel.HotelVO;
+import com.sist.aop.LoginCheck;
 import com.sist.service.*;
 
 @RestController
@@ -93,7 +94,7 @@ public class HotelRestController {
 		map.put("startPage", startPage);
 		map.put("endPage", endPage);
 		
-		System.out.println("start=" + start + ", end=" + end + ", page=" + page + ", areacode=" + areacode + ", sigungucode=" + sigungucode);
+		System.out.println("start=" + start + ", end=" + end + ", cat3=" + cat3 + ", areacode=" + areacode + ", sigungucode=" + sigungucode);
 		System.out.println("▶️ checkin=" + checkin + ", checkout=" + checkout + ", person=" + person);
 		return map;
 	}
@@ -113,6 +114,7 @@ public class HotelRestController {
 		service.hotelReserveInsertData(vo);
 	}
 	@GetMapping("admin/hotel_reserve_list_vue.do")
+	@LoginCheck
 	public Map hotel_reserveList_vue(int page)
 	{
 		int rowSize = 10;
@@ -155,12 +157,14 @@ public class HotelRestController {
 	}
 	
 	@PostMapping("mypage/hotel_reserve_delete.do")
+	@LoginCheck
 	public void hotel_reserve_delete(int no)
 	{
 		service.hotelReserveDelete(no);
 	}
 	
 	@RequestMapping("admin/hotel_reserve_update_vue.do")
+	@LoginCheck
 	public void hotel_reserve_update_vue(HotelReserveVO vo)
 	{
 		service.adminHotelUpdate(vo);

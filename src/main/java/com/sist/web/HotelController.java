@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.sist.aop.LoginCheck;
 import com.sist.service.HotelService;
 import com.sist.vo.admin.NoticeVO;
 import com.sist.vo.hotel.HotelImgVO;
@@ -83,7 +84,7 @@ public class HotelController {
 		model.addAttribute("person", person);
 		model.addAttribute("no",no);
 		model.addAttribute("vo", vo);
-//		model.addAttribute("hiVo", hiVo);
+		model.addAttribute("hiVo", hiVo);
 		model.addAttribute("r3List", r3List); // 지역 근처 추천 숙소
 		model.addAttribute("rList", rList);
 		model.addAttribute("iList", iList);
@@ -91,6 +92,7 @@ public class HotelController {
 		return "main/main";
 	}
 	@GetMapping("hotel/hotel_reserve.do")
+	@LoginCheck
 	public String hotel_reserve(int no, Model model, HttpSession session)
 	{
 		String member_id = (String)session.getAttribute("id");
@@ -127,6 +129,7 @@ public class HotelController {
 		return "main/main";
 	}
 	@GetMapping("hotel/hotel_reserve_ok.do")
+	@LoginCheck
 	public String hotel_reserve_ok(Model model)
 	{
 		model.addAttribute("main_jsp", "../hotel/hotel_reserve_ok.jsp");
@@ -141,6 +144,7 @@ public class HotelController {
 	
 	///////////////////////// 어드민페이지
 	@GetMapping("admin/hotel_reserve_list.do")
+	@LoginCheck
 	public String amdin_hotel_reserveList(Model model)
 	{
 		model.addAttribute("admin_jsp","../admin/hotel_reserve_list.jsp");

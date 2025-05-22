@@ -69,16 +69,6 @@ Shadowbox.init({
 		                <span>${vo.addr }</span>
 		              </div>
 		              <div class="form-group">
-		                <div class="select-wrap one-third">
-	                    <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-	                    <select name="" id="" class="form-control" placeholder="Keyword search">
-	                      <option value="">Select Location</option>
-	                      <option value="">San Francisco USA</option>
-	                      <option value="">Berlin Germany</option>
-	                      <option value="">Lodon United Kingdom</option>
-	                      <option value=""></option>
-	                    </select>
-	                  </div>
 		              </div>
 		            </div>
 	            </form>
