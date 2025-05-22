@@ -58,7 +58,7 @@ public class CarRestController {
 		
 		int rowSize=9;
 
-		SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		Map map = new HashMap();
 		map.put("start",(page-1)*rowSize+1);
 		map.put("end",page*rowSize);
@@ -131,7 +131,7 @@ public class CarRestController {
 				HttpSession session){
 		
 		Map map = new HashMap();
-		SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		String puRegDateStr = pudate + " " + putime;
 		String rRegDateStr = rdate + " " + rtime;
 		Date puRegDate = null;
