@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -81,8 +82,8 @@
            <c:forEach items="${ingList }" var="ing">
             <tr>
               <td>${ing.car_name }</td>
-              <td>2025-01-01</td>
-              <td>2025-01-01</td>
+              <td><fmt:formatDate value="${ing.pickup_date}" pattern="yyyy:MM:dd" /></td>
+              <td><fmt:formatDate value="${ing.return_date}" pattern="yyyy:MM:dd" /></td>
               <td>${ing.status }</td>
               <td style="padding-left: 2px; padding-right: 2px; padding-top: 6px;">
                 <a href="../mypage/car_reserve_detail.do?no=${ing.no }">
@@ -117,10 +118,9 @@
            <c:forEach items="${confirmedList }" var="confd">
             <tr>
               
-              <td>${ing.car_name }</td>
-              <td>2025-01-01</td>
-              <td>2025-01-01</td>
-              <td>${ing.status }</td>
+              <td>${confd.car_name }</td>
+              <td><fmt:formatDate value="${confd.pickup_date}" pattern="yyyy:MM:dd" /></td>
+              <td><fmt:formatDate value="${confd.return_date}" pattern="yyyy:MM:dd" /></td>
               <td>${confd.status }</td>
               <td style="padding-left: 2px; padding-right: 2px; padding-top: 6px;">
                 <a href="../mypage/car_reserve_detail.do?no=${confd.no }">
@@ -153,10 +153,9 @@
           <tbody>
            <c:forEach items="${pastList }" var="past">
             <tr>
-              <td>${ing.car_name }</td>
-              <td>2025-01-01</td>
-              <td>2025-01-01</td>
-              <td>${ing.status }</td>
+              <td>${past.car_name }</td>
+              <td><fmt:formatDate value="${past.pickup_date}" pattern="yyyy:MM:dd" /></td>
+              <td><fmt:formatDate value="${past.return_date}" pattern="yyyy:MM:dd" /></td>
               <td style="padding-left: 2px; padding-right: 2px; padding-top: 6px;">
                 <a href="../mypage/car_reserve_detail.do?no=${past.no }">
                   <input type="button" value="예약 상세보기" class="btn btn-primary r-12"/>

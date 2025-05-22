@@ -53,7 +53,7 @@ public class HotelRestController {
 		map.put("sort", sort);
 		if(areacode != 0)map.put("areacode", areacode);
 		if(sigungucode != 0)map.put("sigungucode", sigungucode);
-		if(cat3.isEmpty() && cat3 != null)map.put("cat3", cat3);
+		map.put("cat3", cat3);
 		
 		checkin  = (String) session.getAttribute("checkin");
 	    checkout = (String) session.getAttribute("checkout");

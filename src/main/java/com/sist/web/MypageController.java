@@ -35,6 +35,7 @@ public class MypageController {
 	private AirService aService;
 	
 	@GetMapping("mypage/main.do")
+	@LoginCheck
 	public String mypage_main(Model model)
 	{
 		model.addAttribute("mypage_jsp","../mypage/my.jsp");
@@ -56,6 +57,7 @@ public class MypageController {
 		return"main/main";
 	}
 	@GetMapping("mypage/list.do")
+	@LoginCheck
 	public String mypage_list(Model model)
 	{
 		model.addAttribute("mypage_jsp","../mypage/list.jsp");

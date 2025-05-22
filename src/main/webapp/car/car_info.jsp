@@ -27,56 +27,20 @@
 <!-- 사이드바 Start -->
 	<div id="app">
 		<section class="ftco-section ftco-degree-bg">
-      <div class="container">
+      <div class="container" >
         <div class="row">
-        	<div class="col-3 order-md-last sidebar pt-3 shadow" id="sidebar" >
-        		<div class="sidebar-wrap ftco-animate">
-        			<h3 class="heading mb-4">결제 정보</h3>
-        			<form action="#" @submit.prevent>
-	        			<div class="fields">
-	
-			              <div class="form-group">
-			              	대여일시
-			                <input type="text" id="checkin_date" class="form-control" readonly
-			                	:value="pudate + '   ' +putime">
-			              </div>
-			              <div class="form-group">
-			              	반납일시
-			                <input type="text" id="checkin_date" class="form-control" readonly
-			                	:value="rdate + '   ' +rtime">
-			              </div>
-			              <div class="text-center">{{timeInterval}}</div>
-						  <hr>
-						  <div class="form-group">
-						  	<span style="font-size:15px">보험</span>
-			                <span style="font-size:15px;position:absolute;right:0">{{ins_kind}}</span>
-			                <div></div>
-			              </div>
-			              <hr>
-			              <div style="display:flex;">
-			              		<h5 style="font-size:18px">결제액 </h5>
-			              		<h5 style="font-size:18px;margin-left:auto"> {{calcRentalPrice}}원</h5>
-			              </div>
-			              
-			              <div class="form-group">
-			                <input type="submit" value="예약하기" class="btn btn-primary py-3 px-5" @click="reserve()">
-			              </div>
-			            </div>
-	            	</form>
-        		</div>
-          </div>
           
-          <div class="col-9">
+          <div class="">
           	<div class="row mr-2 sidebar shadow pt-3">
-          		<div class="col-12" style="display:flex;">
-          			<div class="col-5 ftco-animate" style="margin:0px;padding:0px">
+          		<div class="col-md-12" style="display:flex;">
+          			<div class="col-md-5 ftco-animate" style="margin:0px;padding:0px">
           				<img class=" r-12" src="${vo.poster }" 
           					style="width:90%">
 	          		</div>
-	          		<div class="col-7" style="padding:0px">
+	          		<div class="col-md-7" style="padding:0px">
 	          			<h5>${vo.name }</h5>
 	          			<hr>
-	          			<ul style="font-size:12px">
+	          			<ul style="font-size:15px">
 	          				<li style="margin-top:20px;margin-bottom:20px">
 	          					<span style="font-weight:450">차량 정보 :</span> ${vo.car_class}ㆍ${vo.seat}인승ㆍ${vo.fuel}ㆍ자동
 	          				</li>
@@ -84,10 +48,10 @@
 	          					<span style="font-weight:450">운전 자격 :</span> ${fn:substring(vo.non_ins_qual, 3, fn:length(vo.non_ins_qual))}
 	          				</li> 
 	          			</ul>
-	          			<h5 style="font-size:16px;margin-top:20px">차량 옵션</h5>
+	          			<h5 style="font-size:20px;margin-top:20px">차량 옵션</h5>
 	          			<hr >
 	          			<ul style="list-style-type: none;padding-left:10px;">
-	          					<li style="font-size:10px">
+	          					<li style="font-size:15px">
 	          						${fn:substring(vo.detail_option, 7, fn:length(vo.detail_option))}
 	          					</li>
 	          			</ul>
@@ -97,14 +61,12 @@
           		
           		
           		
-          		<section class="ftco-section">
+          		<section class="ftco-section col-md-12">
 			      <div class="container">
 			        <div class="row">
-			          <div class="col-4">
+			          <div class="col-md-4">
 			            <div class="intro ftco-animate r-12 sidebar shadow p-3">
 			              <span style="display:flex">
-			              	<input class="ins_radio" type="radio" style="margin-bottom:5px"
-			              	@click="radio_click(1)" id="1"/>
 			              	<h5 style="font-weight:500;font-size:17px">&nbsp;자차면책 가입안함</h5>
 			              </span>
 			              <hr style="transform: translateY(-10px);">
@@ -117,11 +79,9 @@
 			              </h5>
 			            </div>
 			          </div>
-			          <div class="col-4 ">
+			          <div class="col-md-4 ">
 			            <div class="intro ftco-animate r-12 sidebar shadow p-3">
 			              <span style="display:flex">
-			              	<input class="ins_radio" type="radio" style="margin-bottom:5px"
-			              	@click="radio_click(2)" id="2"/>
 			              	<h5 style="font-weight:500;font-size:17px">&nbsp;일반자차 포함</h5>
 			              </span>
 			              <hr style="transform: translateY(-10px);">
@@ -134,11 +94,9 @@
 			              </h5>
 			            </div>
 			          </div>
-			          <div class="col-4">
+			          <div class="col-md-4">
 			            <div class="intro ftco-animate r-12 sidebar shadow p-3">
 			              <span style="display:flex">
-			              	<input class="ins_radio" type="radio" style="margin-bottom:5px"
-			              	@click="radio_click(3)" id="3"/>
 			              	<h5 style="font-weight:500;font-size:17px">&nbsp;고급자차 포함</h5>
 			              </span>
 			              <hr style="transform: translateY(-10px);">
@@ -155,7 +113,7 @@
 			      </div>
 			      <div class="" style="padding:10px;padding-top:100px">
 			      	<h5>${vo.branch.branch_name }</h5>
-	    			<div id="map" style="width:100%;height:280px;"></div> 
+	    			<div id="map" style="width:100%;height:400px;"></div> 
 	    			
 	    			<div style="padding:10px">
 	    				<div style="">
@@ -177,10 +135,12 @@
 			    </section>
           		
 				<!-- 댓글-->
+				
 				<jsp:include page="../component/replyComponent.jsp">
 				  <jsp:param name="no"   value="${no}" />
 				  <jsp:param name="type" value="car"/>
 				</jsp:include>
+
 				  <!--댓글 끝-->
 				<div style="font-size:1px;visibility: hidden;">a</div>
           	</div>
@@ -199,111 +159,21 @@
       const carApp=Vue.createApp({
     	  data() {
     		  return {
-    			  pudate:'${pudate}',
-    			  putime:'${putime}',
-    			  rdate:'${rdate}',
-    			  rtime:'${rtime}',
     			  nor_ins_desc:'${vo.normal_ins_desc}'.split('-'),
     			  pre_ins_desc:'${vo.premium_ins_desc}'.split('-'),
     			  non_ins_price:Number('${vo.non_ins_price}'),
     			  normal_ins_price:Number('${vo.normal_ins_price}'),
     			  premium_ins_price:Number('${vo.premium_ins_price}'),
-    			  checked_ins:0,
-    			  puDateObject:new Date(`${pudate} ${putime}`),
-    			  rDateObject:new Date(`${rdate} ${rtime}`),
     			  rentalPrice:0
     		  }
     	  },
     	  computed: {
-    		  timeInterval(){
-    			  const diffMs = this.rDateObject - this.puDateObject
-    			  const diffHours = Math.floor(diffMs / ((1000 * 60 * 60))%24);
-    			  const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-    			  
-    			  const str = diffDays + '일 ' + diffHours + '시간'
-    			  return str
-    		  },
-    		  calcRentalPrice(){
-    			  const diffMs = this.rDateObject - this.puDateObject
-    			  const diffHours = diffMs / (1000 * 60 * 60);
-    			  const ins_prices = [0,
-    				  				this.non_ins_price,
-    				  				this.normal_ins_price,
-    				  				this.premium_ins_price]
-    			  this.rentalPrice = Math.floor(ins_prices[this.checked_ins]*(diffHours/24))
-    			  return this.rentalPrice.toLocaleString()
-    		  },
-    		  ins_kind(){
-    			  const inss = ["","자차면책 가입 안함","일반자차","고급자차"]
-    			  return inss[this.checked_ins]
-    		  }
 	      },
     	  mounted() { 
-	    	  console.log(this.puDateObject)
 
     	  },
     	  methods: {
-    		reserve(){
-    			console.log("reserve")
-    			
-    			if(this.checked_ins===0){
-    				alert("자차보험을 선택해주세요")
-    			}else{
-					this.postData()
-    			}
-    			
-    		},
-    		radio_click(value) {
-    			$('.ins_radio').prop('checked',false)
-    			$('#'+value).prop('checked',true)
-    			this.checked_ins=Number(value)
-    			console.log(this.checked_ins)
-    		},
-      		postData() {
-    			const form = document.createElement("form");
-				form.method = "POST";
-				form.action = "../car/car_reserve.do";
-	
-				const inputPudate = document.createElement("input");
-				inputPudate.type = "hidden";
-				inputPudate.name = "pudate";
-				inputPudate.value = this.pudate;
-				const inputPutime = document.createElement("input");
-				inputPutime.type = "hidden";
-				inputPutime.name = "putime";
-				inputPutime.value = this.putime;
-				const inputRdate = document.createElement("input");
-				inputRdate.type = "hidden";
-				inputRdate.name = "rdate";
-				inputRdate.value = this.rdate;
-				const inputRtime = document.createElement("input");
-				inputRtime.type = "hidden";
-				inputRtime.name = "rtime";
-				inputRtime.value = this.rtime;
-				const inputIns = document.createElement("input");
-				inputIns.type = "hidden";
-				inputIns.name = "ins";
-				inputIns.value = this.checked_ins;
-				const inputNo = document.createElement("input");
-				inputNo.type = "hidden";
-				inputNo.name = 'no';
-				inputNo.value = '${vo.no}';
-				const inputPrice = document.createElement("input");
-				inputPrice.type = "hidden";
-				inputPrice.name = 'price';
-				inputPrice.value = this.rentalPrice;
-	
-				form.appendChild(inputPudate);
-				form.appendChild(inputPutime);
-				form.appendChild(inputRdate);
-				form.appendChild(inputRtime);
-				form.appendChild(inputIns);
-				form.appendChild(inputNo);
-				form.appendChild(inputPrice);
-				document.body.appendChild(form);
-				
-				form.submit();
-      		}
+
     	  }
     	  
       }).mount("#app");

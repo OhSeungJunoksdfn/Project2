@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.sist.mapper.CarMapper;
 import com.sist.vo.car.CarReserveVO;
 import com.sist.vo.car.CarVO;
+import com.sist.vo.hotel.HotelReserveVO;
 
 @Repository
 public class CarDAO {
@@ -54,5 +55,25 @@ public class CarDAO {
 	public void carReserveDelete(int no)
 	{
 		mapper.carReserveDelete(no);
+	}
+	
+	public List<CarReserveVO> adminCarListData(Map map)
+	{
+		return mapper.adminCarListData(map);
+	}
+	
+	public int adminCarTotalPage()
+	{
+		return mapper.adminCarTotalPage();
+	}
+	
+	public void carReserveUpdate(int no)
+	{
+		mapper.carReserveUpdate(no);
+	}
+	
+	public List<CarVO> carMainData()
+	{
+		return mapper.carMainData();
 	}
 }

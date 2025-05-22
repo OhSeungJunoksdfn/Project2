@@ -15,4 +15,8 @@ public interface CarService {
 	public CarReserveVO reserveDetailData(int no);
 	public List<CarReserveVO> reserveListData(String member_id);
 	public void carReserveDelete(int no);
+	public List<CarReserveVO> adminCarListData(Map map);
+	public int adminCarTotalPage();
+	public void carReserveUpdate(int no);
+	public List<CarVO> carMainData();
 }

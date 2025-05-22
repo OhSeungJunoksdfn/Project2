@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import com.sist.vo.*;
 import com.sist.vo.admin.*;
 import com.sist.vo.board.QnaVO;
+import com.sist.aop.LoginCheck;
 import com.sist.service.*;
 
 
@@ -44,6 +45,7 @@ public class CustomerController {
 	}
 	
 	@GetMapping("customer/list.do")
+	@LoginCheck
 	public String customer_list(Model model)
 	{
 		model.addAttribute("support_jsp","../support/list.jsp");
@@ -52,6 +54,7 @@ public class CustomerController {
 	}
 	
 	@GetMapping("customer/insert.do")
+	@LoginCheck
 	public String customer_insert(Model model)
 	{
 		model.addAttribute("support_jsp","../support/insert.jsp");
@@ -59,6 +62,7 @@ public class CustomerController {
 		return "main/main";
 	}
 	@GetMapping("customer/detail.do")
+	@LoginCheck
 	public String customer_detail(int no,Model model)
 	{
 		model.addAttribute("no",no);

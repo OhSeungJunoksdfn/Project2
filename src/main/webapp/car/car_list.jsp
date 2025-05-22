@@ -90,7 +90,7 @@ span:hover,a:hover{
             <div class="blog-entry align-self-stretch ">
               <!-- <a href="blog-single.html" class="block-20 r-12" :style="{'background-image': 'url('+ vo.poster +')',width:'300px' }">
               </a> -->
-              <a href="blog-single.html" class="block-20 r-12">
+              <a :href="'../car/car_info.do?no='+vo.no" class="block-20 r-12">
               	<img class="block-20 r-12" :src="vo.poster" style="width:300px">
               </a>
               
@@ -108,6 +108,8 @@ span:hover,a:hover{
             </div>
           </div>
         </div>
+        
+        
         
       </div>
     </section>
