@@ -421,6 +421,18 @@ let mainApp = Vue.createApp({
 			}).catch(err => {
 				console.log(err.response)
 			})
+		},
+		carList() {
+			axios.get('http://localhost:8080/car/car_mainPage_vue.do')
+			.then(res => {
+				console.log(res.data)
+				this.cars = res.data.list
+				this.$nextTick(() => {
+  		          	contentWayPoint()
+  		        })
+			}).catch(err => {
+				console.log(err.response)
+			})
 		}
 	},
 	components:{
