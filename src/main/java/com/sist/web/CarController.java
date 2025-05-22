@@ -34,6 +34,17 @@ public class CarController {
 		return "main/main";
 	}
 	
+	@GetMapping("car/car_info.do")
+	public String car_info(Model model,String no)
+	{
+		System.out.println(no);
+		CarVO vo=service.carDetailData(Integer.parseInt(no));
+		
+		model.addAttribute("vo", vo);
+		model.addAttribute("main_jsp","../car/car_info.jsp");
+		return "main/main";
+	}
+	
 	@GetMapping("car/car_search_list.do")
 	@LoginCheck
 	public String car_search_list(Model model,
@@ -58,9 +69,6 @@ public class CarController {
 		System.out.println("carnameeeeeee"+vo.getBranch().getBranch_name());
 		System.out.println("carvoooo"+vo.getBranch().getNo());
 		System.out.println("carvoooo"+vo.getName());
-		// 배열 => List로 변경 asList
-		//String id=(String)session.getAttribute("userid");
-		//model.addAttribute("sessionId", id);
 		model.addAttribute("vo", vo);
 		model.addAttribute("pudate",pudate);
 		model.addAttribute("putime",putime);
