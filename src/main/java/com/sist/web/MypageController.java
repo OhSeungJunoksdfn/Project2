@@ -4,6 +4,7 @@ import java.util.*;
 import javax.servlet.http.HttpSession;
 
 import com.sist.aop.LoginCheck;
+import com.sist.service.AirService;
 import com.sist.service.CarService;
 import com.sist.service.HotelService;
 import com.sist.service.MemberService;
@@ -11,6 +12,8 @@ import com.sist.vo.*;
 import com.sist.vo.car.CarReserveVO;
 import com.sist.vo.car.CarVO;
 import com.sist.vo.hotel.HotelReserveVO;
+import com.sist.vo.air.PassengersVO;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,6 +30,9 @@ public class MypageController {
 	
 	@Autowired
 	private MemberService mService;
+	
+	@Autowired
+	private AirService aService;
 	
 	@GetMapping("mypage/main.do")
 	public String mypage_main(Model model)
@@ -125,6 +131,43 @@ public class MypageController {
 		model.addAttribute("pastList", pastList);
 		
 		model.addAttribute("mypage_jsp", "../mypage/car_reserve_list.jsp");
+		model.addAttribute("main_jsp", "../mypage/main.jsp");
+		return "main/main";
+	}
+	
+	@GetMapping("mypage/air_reserve_list.do")
+	@LoginCheck
+	public String air_reserve_list(Model model, HttpSession session)
+	{
+		String member_id = (String)session.getAttribute("id");
+		if (member_id == null) {
+	        return "redirect:../member/login.do"; // 로그인 안 된 경우 로그인 페이지로 이동
+	    }
+		List<PassengersVO> list = aService.mypageAirReserveListData(member_id);
+		List<PassengersVO> ingList = new ArrayList<>();
+		List<PassengersVO> confirmedList = new ArrayList<>();
+		List<PassengersVO> pastList = new ArrayList<>();
+		
+		// 날짜 초기화
+		Date today = new Date();
+		
+		for(PassengersVO vo : list) {
+			if("예약 진행 중".equals(vo.getStatus())) {
+				ingList.add(vo);
+			}
+			// 예약 승인 & 체크인 날짜가 오늘 날짜 이후
+			else if("예약 확정".equals(vo.getStatus()) && !vo.getCheckout().before(today)) {
+				confirmedList.add(vo);
+			}
+			else if(vo.getCheckout().before(today)) {
+				pastList.add(vo);
+			}
+		}
+		model.addAttribute("ingList", ingList);
+		model.addAttribute("confirmedList", confirmedList);
+		model.addAttribute("pastList", pastList);
+		
+		model.addAttribute("mypage_jsp", "../mypage/air_reserve_list.jsp");
 		model.addAttribute("main_jsp", "../mypage/main.jsp");
 		return "main/main";
 	}

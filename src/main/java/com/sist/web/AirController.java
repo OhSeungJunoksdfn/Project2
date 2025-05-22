@@ -93,7 +93,10 @@ public class AirController {
         // 2) 해당 예약 좌석 목록 조회
         List<FlightSeatVO> bookedSeats = service.getSeatsByBookingId(bookingId);
         model.addAttribute("seats", bookedSeats);
-
+        
+        FlightInfoVO flight = service.getFlightById(flightId);
+        model.addAttribute("flight", flight);
+        
         model.addAttribute("main_jsp", "../air/passengers_info.jsp");
         return "main/main";
     }
@@ -102,6 +105,7 @@ public class AirController {
     @GetMapping("passenger_list.do")
     public String passenger_list(Model model) {
         model.addAttribute("passengers", service.getAllPassengers());
+        
         model.addAttribute("main_jsp", "../air/passenger_list.jsp");
         return "main/main";
     }
@@ -131,21 +135,22 @@ public class AirController {
         model.addAttribute("main_jsp", "../air/seat_map.jsp");
         return "main/main";
     }
+ 
     @PostMapping("reserve.do")
-    public String registerPassengers( BookingVO booking,
-            PassengersVO[] passengers,
+    public String registerPassengers( 
+            BookingVO booking,
+            @ModelAttribute("passengers") ArrayList<PassengersVO> passengers,
             @RequestParam("adultSeats") String adultSeats,
-            @RequestParam("childSeats") String childSeats ) throws UnsupportedEncodingException {
-					// 1) DB insert
-					service.insertPassengers(Arrays.asList(passengers));
-					// 2) 다시 GET /air/reserve.do?… 로 redirect
-					return "redirect:/air/reserve.do"
-					+ "?flightId=" + booking.getFlightId()
-					+ "&adults="   + booking.getAdults()
-					+ "&children=" + booking.getChildren()
-					+ "&adultSeats=" + URLEncoder.encode(adultSeats, "UTF-8")
-					+ "&childSeats=" + URLEncoder.encode(childSeats, "UTF-8");
-					}
+            @RequestParam("childSeats") String childSeats
+    		) throws UnsupportedEncodingException {
+        	service.insertPassengers(passengers);
+        	return "redirect:/air/reserve.do"
+             + "?flightId="   + booking.getFlightId()
+             + "&adults="     + booking.getAdults()
+             + "&children="   + booking.getChildren()
+             + "&adultSeats=" + URLEncoder.encode(adultSeats, "UTF-8")
+             + "&childSeats=" + URLEncoder.encode(childSeats, "UTF-8");
+    	}
 					
 					// — 예약 정보 페이지 띄우기 (air_reserve.jsp)
 					@GetMapping("reserve.do")

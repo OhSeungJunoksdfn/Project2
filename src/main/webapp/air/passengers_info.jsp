@@ -30,12 +30,14 @@
     <div class="container secb shadow py-2" style="max-width:500px;">
       <h3 class="pl-3" style="color:#78d5ef;">승객 개인정보 입력</h3>
       <form ref="myform" method="post" action="../air/reserve.do">
-        <input type="hidden" name="seats" value="${param.seats}" />
-          <input type="hidden" name="bookingId"    value="${param.bookingId}" />
-		  <input type="hidden" name="adults"       value="${param.adults}" />
-		  <input type="hidden" name="children"     value="${param.children}" />
-		  <input type="hidden" name="adultSeats"   value="${param.adultSeats}" />
-		  <input type="hidden" name="childSeats"   value="${param.childSeats}" />
+	  <!-- BookingVO.bookingId 에 제대로 넘어가도록 model 의 booking.bookingId 사용 -->
+	  <input type="hidden" name="bookingId"  value="${booking.bookingId}" />
+	  <!-- flightId, adults, children, adultSeats, childSeats 는 기존처럼 param 으로 OK -->
+	  <input type="hidden" name="flightId"    value="${param.flightId}" />
+	  <input type="hidden" name="adults"      value="${param.adults}" />
+	  <input type="hidden" name="children"    value="${param.children}" />
+	  <input type="hidden" name="adultSeats"  value="${param.adultSeats}" />
+	  <input type="hidden" name="childSeats"  value="${param.childSeats}" />
 
         <!-- 성인 승객 블록 반복 -->
         <c:forEach var="seat" items="${adultList}" varStatus="st">
@@ -84,7 +86,7 @@
               <p style="font-size:16px; font-weight:500;">휴대전화</p>
               <div style="display:flex;">
                 <select name="passengers[${st.index}].phonePrefix" class="form-select" style="max-width:100px;"><option>010</option><option>011</option></select>
-                <input type="tel" class="form-control" name="phone" maxlength="8" placeholder="숫자만 입력" />
+                <input type="tel" class="form-control" name="passengers[${st.index}].phone" maxlength="8" placeholder="숫자만 입력" />
               </div>
             </div>
             <!-- 성별 -->
@@ -136,9 +138,8 @@
            name="passengers[${i}].email"
            placeholder="이메일" />
          <select
-           name="passengers[${st.index}].emailPrefix"
-           class="form-select"
-           style="max-width:150px;">
+           name="passengers[${i}].emailPrefix"
+      	   class="form-select" style="max-width:150px;">
            <option>@naver.com</option>
            <option>@daum.com</option>
            <option>@google.co.kr</option>
@@ -180,7 +181,7 @@
        <p style="font-size:16px; font-weight:500;">휴대전화</p>
        <div style="display:flex;">
          <select
-          name="passengers[${st.index}].phonePrefix"
+          name="passengers[${i}].phonePrefix"
            class="form-select"
            style="max-width:100px;">
            <option>010</option>
@@ -239,9 +240,22 @@
       return age;
     }
   </script>
+  
+    <script>
+    const initialSelected = {
+      airline_code:     '${flight.airline_code}',
+      flight_number:    '${flight.flight_number}',
+      dep_airport_code: '${flight.dep_airport_code}',
+      dep_time:         '${flight.dep_time}',
+      arr_airport_code: '${flight.arr_airport_code}',
+      arr_time:         '${flight.arr_time}',
+      economy_charge:   ${flight.economy_charge}
+    };
+  </script>
 
   <!-- Vue 및 제출 로직 -->
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  
   <script>
     // totalCount 계산
     const adultCount = ${fn:length(adultList)};
@@ -254,23 +268,52 @@
         },
         methods: {
           registerBlock() {
-            // 1) 클릭할 때마다 안내 문구 띄우기
             alert('승객정보 등록됐습니다.');
-
-            // 2) 등록 카운트 올리고, 마지막 블록이면 form 전송
-           this.registeredCount++;
+            this.registeredCount++;
             if (this.registeredCount === totalCount) {
-              this.$refs.myform.submit();
+              // 마지막 블록 등록 후 AJAX 호출
+              this.sendAjax();
             }
-          },                         /* 이 쉼표는 registerBlock 끝에서 함수 구분용 */
-          handleChildRegister(idx) {  /* methods 블록 바로 안에 정의 */
+          },
+          handleChildRegister(idx) {
             const age = calcChildAge(idx);
             if (age >= 12) {
               alert('나이가 12세 이상이므로 소아 등록할 수 없습니다.');
               return;
             }
             this.registerBlock();
-          }                          /* 마지막 메서드는 쉼표 불필요 */
+          },
+          sendAjax() {
+            // 1) 폼 데이터를 FormData 로 읽어오고
+            const form = this.$refs.myform;
+            const formData = new FormData(form);
+
+            // 2) URLSearchParams 로 변환 (x-www-form-urlencoded)
+            const params = new URLSearchParams();
+            for (const [key, val] of formData.entries()) {
+              params.append(key, val);
+            }
+
+            // 3) fetch 호출
+            fetch(form.action, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+              },
+              body: params.toString()
+            })
+            .then(res => {
+              if (!res.ok) throw new Error(`HTTP ${res.status}`);
+              return res.text();
+            })
+            .then(html => {
+              // 받아온 HTML 로 페이지 교체
+              document.open();
+              document.write(html);
+              document.close();
+            })
+            .catch(err => console.error('예약 중 오류:', err));
+          }
         }
       }).mount('#registerApp');
     </script>

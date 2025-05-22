@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,53 +19,76 @@
   <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="./air_reserve_tab.js"></script> <!-- 검색 폼 컴포넌트 -->
+    <!-- 1. Vue는 HEAD나 BODY 상단에서 한 번만 로드 -->
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 </head>
 <body>
   <section class="ftco-section ftco-degree-bg py-5">
     <div class="container">
       <div class="row secb shadow p-4">
         <div class="col-12 mb-4 bb-3 d-flex justify-content-between align-items-center">
-          <h3>항공권 편도예약하기</h3>
-          <small>
-            <span class="font-weight-bold">1. 검색</span> &gt;
-            <span>2. 예약정보</span> &gt;
-            <span>3. 결제완료</span>
-          </small>
-        </div>
-
-        <!-- 검색 탭(Vue 컴포넌트) -->
-        <div class="col-12 mb-4">
-          <div id="searchApp">
-            <air-reserve-tab @search="onSearch"></air-reserve-tab>
-          </div>
+          <h3>항공권 예약하기</h3>
         </div>
 
         <!-- 예약 정보 영역(Vue 컴포넌트에서 선택된 편 정보 바인딩) -->
-        <div id="detailApp" class="col-12" v-if="selected">
-          <h4 class="mb-3">선택 항공편 정보</h4>
-          <table class="table table-bordered">
-            <tbody>
-              <tr>
-                <th class="bg-light">항공사</th>
-                <td>{{ selected.airline_code }}</td>
-                <th class="bg-light">편명</th>
-                <td>{{ selected.flight_number }}</td>
-              </tr>
-              <tr>
-                <th class="bg-light">출발</th>
-                <td>{{ selected.dep_airport_code }} ({{ selected.dep_time }})</td>
-                <th class="bg-light">도착</th>
-                <td>{{ selected.arr_airport_code }} ({{ selected.arr_time }})</td>
-              </tr>
-              <tr>
-                <th class="bg-light">운임</th>
-                <td colspan="3">
-                  <span v-if="selected.economy_charge===0">결항</span>
-                  <span v-else>{{ selected.economy_charge.toLocaleString() }}원</span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+       <!-- 2. detailApp: 서버에서 주입된 flight 정보를 보여줄 영역 -->
+  <div id="detailApp" class="container mb-4">
+    <h4>선택 항공편 정보</h4>
+    <table class="table table-bordered">
+      <tr>
+        <th>항공사</th><td>{{ selected.airline_code }}</td>
+        <th>편명</th><td>{{ selected.flight_number }}</td>
+      </tr>
+      <tr>
+        <th>출발</th><td>{{ selected.dep_airport_code }} ({{ selected.dep_time }})</td>
+        <th>도착</th><td>{{ selected.arr_airport_code }} ({{ selected.arr_time }})</td>
+      </tr>
+      <tr>
+        <th>운임</th><td>{{ selected.economy_charge.toLocaleString() }}원</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- 3. 서버에서 주입된 flight VO를 JS 객체로 초기화 -->
+  <script>
+    const initialSelected = {
+      airline_code:     '${flight.airline_code}',
+      flight_number:    '${flight.flight_number}',
+      dep_airport_code: '${flight.dep_airport_code}',
+      dep_time:         '${flight.dep_time}',
+      arr_airport_code: '${flight.arr_airport_code}',
+      arr_time:         '${flight.arr_time}',
+      economy_charge:   ${flight.economy_charge}
+    };
+       // 3-1. adult/child 카운트도 주입
+       const adultCount   = ${adults};
+  </script>
+
+  <!-- 4. detailApp 전용 Vue 인스턴스 마운트 -->
+  <script>
+     Vue.createApp({
+	       data() {
+	         return {
+	           selected: initialSelected,
+	           adults:   adultCount,
+	         };
+	       },
+	       computed: {
+	    	      // 성인 수에 따른 총 운임 (소아 제외)
+	    	      totalFare() {
+	    	        return this.selected.economy_charge * this.adults;
+	    	      },
+	    	      formattedTotalFare() {
+	    	        return this.totalFare.toLocaleString();
+	    	      }
+	    	    }
+	     }).mount('#detailApp');
+  </script>
+
+  <!-- 5. registerApp: 기존에 쓰시던 승객 정보 입력 폼 -->
+  <section id="registerApp" class="d-flex justify-content-center align-items-center">
+    <!-- … 여기 안에 <form ref="myform"> … </form> 포함 … -->
+  </section>
 
           <!-- 할인/포인트 (예시) -->
           <h4 class="mt-4">할인/포인트</h4>
@@ -92,16 +117,12 @@
             <tbody>
               <tr>
                 <th class="bg-light">기본 운임</th>
-                <td>{{ formattedFare }}원</td>
+                <td>{{ formattedTotalFare }}원</td>
               </tr>
               <tr>
-                <th class="bg-light">할인 금액</th>
-                <td>-{{ formattedDiscount }}원</td>
-              </tr>
-              <tr>
-                <th class="bg-light">총 결제금액</th>
-                <td class="font-weight-bold">{{ formattedTotal }}원</td>
-              </tr>
+		       <th class="bg-light">총 결제금액</th>
+		       <td class="font-weight-bold">{{ formattedTotalFare }}원</td>
+		     </tr>
             </tbody>
           </table>
 			
@@ -186,6 +207,7 @@
         this.searchParams = filters;
         // Vue router나 Axios로 목록 요청 → 여기서는 간단히 다음 화면으로
         // 예시: 목록 컴포넌트를 띄우고 '선택' 버튼에서 this.selectFlight(id) 호출
+        window.location.href = '../air/air_reserve_ok.jsp';
       },
       // 사용자가 테이블에서 “선택” 누르면
       selectFlight(flight) {

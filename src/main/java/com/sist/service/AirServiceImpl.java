@@ -180,5 +180,11 @@ public class AirServiceImpl implements AirService{
 	}
 	}
 
+	@Override
+	public List<PassengersVO> mypageAirReserveListData(String member_id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }

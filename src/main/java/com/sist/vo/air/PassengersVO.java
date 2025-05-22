@@ -20,5 +20,14 @@ import lombok.Data;
 @Data
 public class PassengersVO {
 	public String passenger_id,first_name,last_name,passport_number,sex,email;
-	public Date birthday,created_at,update_at;
+	public Date birthday,created_at,update_at,getCheckout;
+	public Object getStatus;
+	public Object getStatus() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	public Date getCheckout() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

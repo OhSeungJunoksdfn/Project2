@@ -61,4 +61,5 @@ public interface AirService {
    void addFlightSeatsBatch(int flightId, List<FlightSeatVO> seats);
 public int createBooking(int flightId, int adults, int children);
 public void insertPassengers(List<PassengersVO> passengers);
+public List<PassengersVO> mypageAirReserveListData(String member_id);
 }

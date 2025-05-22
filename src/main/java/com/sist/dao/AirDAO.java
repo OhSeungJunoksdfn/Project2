@@ -178,6 +178,7 @@ public class AirDAO {
 	            // fs 에는 seatId, status, bookingId, passengerType 등이 세팅되어 있어야 합니다
 	            mapper.insertFlightSeat(fs);
 	        }
+	    
 	    }
 	    
 	}

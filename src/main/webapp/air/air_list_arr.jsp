@@ -61,10 +61,14 @@
               </td>
               <td>
                 <!-- 왕복 모드이므로 isInbound=true, 왕복선택 버튼 숨김 -->
-			 <button class="btn btn-sm btn-warning"
-			         @click="selectInbound(vo.flight_id)">
+			 <a class="btn btn-sm btn-warning"
+			        v-bind:href="
+			          '/air/seat_map.do?flightId=' + vo.flight_id
+			          + '&adults=' + adults
+			          + '&children=' + children
+			        ">
 			   왕복 좌석선택
-			 </button>
+			 </a>
               </td>
             </tr>
           </tbody>
