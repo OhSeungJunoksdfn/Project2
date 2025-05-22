@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.sist.vo.car.CarReserveVO;
 import com.sist.vo.car.CarVO;
+import com.sist.vo.hotel.HotelReserveVO;
 
 import java.util.*;
 
@@ -24,8 +25,8 @@ public interface CarMapper {
    @Insert("INSERT INTO car_reserve ("+
 	            "no,car_no,member_id,pickup_date,return_date,status,price,ins) "
 	            + "VALUES ((SELECT NVL(MAX(no)+1,1) FROM car_reserve),"
-	            + "	#{car_no},"
-	            + " #{member_id},"
+	            + "#{car_no},"
+	            + "#{member_id},"
 	            + "#{pickup_date},"
 	            + "#{return_date},"
 	            + "#{status},"
@@ -72,4 +73,12 @@ public interface CarMapper {
    public void carReserveDelete(int no);
    
    
+
+	public List<HotelReserveVO> adminCarListData(Map map);
+	
+	@Select("SELECT CEIL(COUNT(*)/10.0) "
+			+ "FROM hotel_reservation rv "
+			+ "JOIN hotel h ON rv.hotel_no = h.no "
+			+ "JOIN hotel_room hr ON rv.room_no = hr.no")
+	public int adminCarListTotalPage();
 }

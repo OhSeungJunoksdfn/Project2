@@ -58,6 +58,7 @@ public class MypageController {
 	}
 	
 	@GetMapping("mypage/hotel_reserve_list.do")
+	@LoginCheck
 	public String hotel_reserve_list(Model model, HttpSession session)
 	{
 		String member_id = (String)session.getAttribute("id");
@@ -77,10 +78,10 @@ public class MypageController {
 				ingList.add(vo);
 			}
 			// 예약 승인 & 체크인 날짜가 오늘 날짜 이후
-			if("예약 확정".equals(vo.getStatus())) {
+			else if("예약 확정".equals(vo.getStatus()) && !vo.getCheckout().before(today)) {
 				confirmedList.add(vo);
 			}
-			if(vo.getCheckout().before(today)) {
+			else if(vo.getCheckout().before(today)) {
 				pastList.add(vo);
 			}
 		}
@@ -130,6 +131,7 @@ public class MypageController {
 	
 	
 	@GetMapping("mypage/hotel_reserve_detail.do")
+	@LoginCheck
 	public String hotel_reserve_detail(int no, Model model)
 	{
 		HotelReserveVO vo = hService.hotelReserveDetailData(no);

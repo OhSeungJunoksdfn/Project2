@@ -50,7 +50,7 @@
     <div class="tab">
       <ul class="mainTab_nav">
         <li class="mainTab"><a href="#" style="color: black;">항공권 예약 조회</a></li>
-        <li class="mainTab"><a href="../mypage/car_reserve_list.do" style="color: black;">렌트카 예약 조회</a></li>
+        <li class="mainTab"><a href="../mypage/car_reserve_list.do" style="color: black;">렌터카 예약 조회</a></li>
         <li class="mainTab" ><a href="../mypage/hotel_reserve_list.do" style="color: black; font-weight: bold;">호텔 예약 조회</a></li>
       </ul>
     </div>
