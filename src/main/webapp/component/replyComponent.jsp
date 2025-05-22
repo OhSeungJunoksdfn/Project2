@@ -83,7 +83,6 @@
           </div>
           
       <script>
-      if (document.getElementById("replyApp")) {
     	const replyApp=Vue.createApp({
     		data(){
     			return{
@@ -251,7 +250,6 @@
     			}
     		}
     	}).mount('#replyApp')
-      }
     </script>
 </body>
 </html>
