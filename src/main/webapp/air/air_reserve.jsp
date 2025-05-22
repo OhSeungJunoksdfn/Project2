@@ -104,7 +104,14 @@
               </tr>
             </tbody>
           </table>
-
+			
+            <div class="col-12 mb-3">
+            <div style="font-size:16px;">
+              선택 좌석:
+              <strong>${param.adultSeats}</strong> (성인),
+              <strong>${param.childSeats}</strong> (소아)
+            </div>
+          </div>
           <!-- 예약자 정보 폼 -->
           <h4 class="mt-4">예약자 정보</h4>
           <form @submit.prevent="onReserve">
@@ -122,6 +129,14 @@
                 <input type="text" class="form-control" v-model="customerPhone" required/>
               </div>
             </div>
+            
+             <div class="form-row">
+              <div class="form-group col-md-4">
+                <label>생일</label>
+                <input type="date" class="form-control" v-model="customerBirthday" required/>
+              </div>
+            </div>
+            
             <div class="text-center mt-4">
               <button type="submit" class="btn btn-lg btn-primary mx-2">결제하기</button>
               <button type="button" class="btn btn-lg btn-secondary mx-2" @click="reset()">취소</button>
@@ -141,13 +156,14 @@
         searchParams: null,
         // 선택된 편 정보
         selected: null,
-        // 할인/포인트
-        coupon: 0,
-        points: 0,
         // 고객 정보
         customerName: '',
         customerEmail: '',
-        customerPhone: ''
+        customerPhone: '',
+        customerBirthday: '',
+        // 할인/포인트
+        coupon: 0,
+        points: 0
       };
     },
     computed: {
@@ -182,6 +198,7 @@
           customerName: this.customerName,
           customerEmail: this.customerEmail,
           customerPhone: this.customerPhone,
+          customerBirthday: this.customerBirthday,
           coupon: Number(this.coupon),
           points: Number(this.points),
         };

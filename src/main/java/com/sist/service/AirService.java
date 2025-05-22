@@ -60,4 +60,5 @@ public interface AirService {
    /** 26) 좌석 일괄 예약 (flight_seat) */
    void addFlightSeatsBatch(int flightId, List<FlightSeatVO> seats);
 public int createBooking(int flightId, int adults, int children);
+public void insertPassengers(List<PassengersVO> passengers);
 }

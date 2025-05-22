@@ -1,16 +1,23 @@
 package com.sist.web;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sist.service.AirService;
 import com.sist.vo.air.*;
@@ -124,6 +131,45 @@ public class AirController {
         model.addAttribute("main_jsp", "../air/seat_map.jsp");
         return "main/main";
     }
+    @PostMapping("reserve.do")
+    public String registerPassengers( BookingVO booking,
+            PassengersVO[] passengers,
+            @RequestParam("adultSeats") String adultSeats,
+            @RequestParam("childSeats") String childSeats ) throws UnsupportedEncodingException {
+					// 1) DB insert
+					service.insertPassengers(Arrays.asList(passengers));
+					// 2) 다시 GET /air/reserve.do?… 로 redirect
+					return "redirect:/air/reserve.do"
+					+ "?flightId=" + booking.getFlightId()
+					+ "&adults="   + booking.getAdults()
+					+ "&children=" + booking.getChildren()
+					+ "&adultSeats=" + URLEncoder.encode(adultSeats, "UTF-8")
+					+ "&childSeats=" + URLEncoder.encode(childSeats, "UTF-8");
+					}
+					
+					// — 예약 정보 페이지 띄우기 (air_reserve.jsp)
+					@GetMapping("reserve.do")
+					public String showReservationInfo(
+					@RequestParam("flightId")    int flightId,
+					@RequestParam("adults")      int adults,
+					@RequestParam("children")    int children,
+					@RequestParam("adultSeats")  String adultSeats,
+					@RequestParam("childSeats")  String childSeats,
+					Model model) {
+					
+					// flight 상세 조회
+					FlightInfoVO flight = service.getFlightById(flightId);
+					model.addAttribute("selected", flight);
+					
+					// Vue에서 쓸 수 있도록
+					model.addAttribute("adults", adults);
+					model.addAttribute("children", children);
+					model.addAttribute("adultSeats", adultSeats);
+					model.addAttribute("childSeats", childSeats);
+					
+					return "air/air_reserve";  // → /WEB-INF/views/air/air_reserve.jsp
+		}
+					 
 //
 //    /** 좌석 예약 (flight_seat 삽입) */
 //    @PostMapping("seat_book.do")
@@ -159,4 +205,5 @@ public class AirController {
 //        return "redirect:/air/seat_map.do?flightId=" + flightId;
 //    }
 //    
+
 }

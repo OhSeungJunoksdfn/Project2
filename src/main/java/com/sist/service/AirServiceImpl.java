@@ -1,4 +1,6 @@
 package com.sist.service;
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -160,7 +162,23 @@ public class AirServiceImpl implements AirService{
 
 	@Override
 	public int createBooking(int flightId, int adults, int children) {
-		// TODO Auto-generated method stub
-		return 0;
+	    BookingVO booking = new BookingVO();
+	    booking.setFlightId(flightId);
+	    booking.setAdults(adults);
+	    booking.setChildren(children);
+	    booking.setCreatedAt(Timestamp.from(Instant.now())); // 또는 new Timestamp(System.currentTimeMillis())
+
+	    return aDAO.createBooking(booking);
 	}
+
+	@Override
+	public void insertPassengers(List<PassengersVO> passengers) {
+		// TODO Auto-generated method stub
+		for (PassengersVO p : passengers) {
+	        aDAO.addPassenger(p);
+		
+	}
+	}
+
+
 }

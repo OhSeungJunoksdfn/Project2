@@ -179,4 +179,5 @@ public class AirDAO {
 	            mapper.insertFlightSeat(fs);
 	        }
 	    }
+	    
 	}

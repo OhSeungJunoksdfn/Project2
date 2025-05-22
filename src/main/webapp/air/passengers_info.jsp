@@ -31,6 +31,11 @@
       <h3 class="pl-3" style="color:#78d5ef;">승객 개인정보 입력</h3>
       <form ref="myform" method="post" action="../air/reserve.do">
         <input type="hidden" name="seats" value="${param.seats}" />
+          <input type="hidden" name="bookingId"    value="${param.bookingId}" />
+		  <input type="hidden" name="adults"       value="${param.adults}" />
+		  <input type="hidden" name="children"     value="${param.children}" />
+		  <input type="hidden" name="adultSeats"   value="${param.adultSeats}" />
+		  <input type="hidden" name="childSeats"   value="${param.childSeats}" />
 
         <!-- 성인 승객 블록 반복 -->
         <c:forEach var="seat" items="${adultList}" varStatus="st">
@@ -51,7 +56,7 @@
                  <input type="text" class="form-control"
 			        name="passengers[${st.index}].email"
 			        placeholder="이메일"/>
-                <select name="emailPrefix" class="form-select" style="max-width:150px;">
+                <select name="passengers[${st.index}].emailPrefix" class="form-select" style="max-width:150px;">
                   <option>@naver.com</option><option>@daum.com</option><option>@google.co.kr</option>
                 </select>
               </div>
@@ -78,7 +83,7 @@
             <div class="mb-2">
               <p style="font-size:16px; font-weight:500;">휴대전화</p>
               <div style="display:flex;">
-                <select name="phonePrefix" class="form-select" style="max-width:100px;"><option>010</option><option>011</option></select>
+                <select name="passengers[${st.index}].phonePrefix" class="form-select" style="max-width:100px;"><option>010</option><option>011</option></select>
                 <input type="tel" class="form-control" name="phone" maxlength="8" placeholder="숫자만 입력" />
               </div>
             </div>
@@ -131,7 +136,7 @@
            name="passengers[${i}].email"
            placeholder="이메일" />
          <select
-           name="passengers[${i}].emailPrefix"
+           name="passengers[${st.index}].emailPrefix"
            class="form-select"
            style="max-width:150px;">
            <option>@naver.com</option>
@@ -175,7 +180,7 @@
        <p style="font-size:16px; font-weight:500;">휴대전화</p>
        <div style="display:flex;">
          <select
-          name="passengers[${i}].phone"
+          name="passengers[${st.index}].phonePrefix"
            class="form-select"
            style="max-width:100px;">
            <option>010</option>
@@ -249,11 +254,15 @@
         },
         methods: {
           registerBlock() {
-            this.registeredCount++;
+            // 1) 클릭할 때마다 안내 문구 띄우기
+            alert('승객정보 등록됐습니다.');
+
+            // 2) 등록 카운트 올리고, 마지막 블록이면 form 전송
+           this.registeredCount++;
             if (this.registeredCount === totalCount) {
               this.$refs.myform.submit();
             }
-          },                          /* 이 쉼표는 registerBlock 끝에서 함수 구분용 */
+          },                         /* 이 쉼표는 registerBlock 끝에서 함수 구분용 */
           handleChildRegister(idx) {  /* methods 블록 바로 안에 정의 */
             const age = calcChildAge(idx);
             if (age >= 12) {
