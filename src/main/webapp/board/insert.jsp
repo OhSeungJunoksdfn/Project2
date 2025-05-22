@@ -33,7 +33,7 @@
 <section class="d-flex ftco-animate justify-content-center align-items-center" style="min-height: 100vh">
   <form id="postForm"
         method="post"
-        action="../board/insert.do"
+        action="../board/insert_ok.do"
         enctype="multipart/form-data"
         class="w-100"
         >
