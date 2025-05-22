@@ -184,13 +184,20 @@
   	
   </select>
   
-  <select id="adminCarListData" resultType="CarVO" parameterType="hashmap">
-    SELECT cr.no as no, pickup_date, return_date, name as car_name, status,id,email,phone,m.name as member_name,num
-			  FROM (SELECT cr.no as no, pickup_date, return_date, name as car_name, status,id,email,phone,m.name as member_name,rownum as num
-			  FROM (SELECT cr.no as no, pickup_date, return_date, name as car_name, status,id,email,phone,m.name as member_name 
-			  FROM car_reserve cr 
-   			  JOIN car c ON cr.car_no = c.no
-   			  JOIN projectmember m ON m.id=cr.member_id))
-			  WHERE num BETWEEN #{start} AND #{end}
+  <select id="adminCarListData" resultType="CarReserveVO" parameterType="hashmap">
+    SELECT no, pickup_date, return_date, car_name, status,member_id,email,phone,price,member_name,num
+	  FROM (SELECT no, pickup_date, return_date, car_name, status,member_id,email,phone,member_name,price,rownum as num
+	  FROM (SELECT cr.no as no, pickup_date, return_date, c.name as car_name, status,member_id,email,phone,m.name as member_name,price 
+	  FROM car_reserve cr 
+	  JOIN car c ON cr.car_no = c.no
+	  JOIN projectmember m ON m.id=cr.member_id))
+	  WHERE num BETWEEN #{start} AND #{end}
+  </select>
+  
+  <select id="adminCarTotalPage" resultType="int">
+    SELECT CEIL(COUNT(*)/10.0)
+	  FROM car_reserve cr 
+	  JOIN car c ON cr.car_no = c.no
+	  JOIN projectmember m ON m.id=cr.member_id
   </select>
 </mapper>

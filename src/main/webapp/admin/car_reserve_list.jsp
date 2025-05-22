@@ -42,18 +42,17 @@
         </thead>
         <tbody v-for="vo in list">
           <tr>
-            <td>{{vo.hotel_title}}</td>
-            <td>{{vo.room_title}}</td>
+            <td>{{vo.car_name}}</td>
             <td>{{vo.member_id}}</td>
-            <td>{{vo.username}}</td>
-            <td>{{vo.useremail}}</td>
-            <td>{{vo.userphone}}</td>
-            <td>{{vo.person}}</td>
-            <td>{{vo.total_price}}</td>
-            <td>{{vo.bookingDateStr}}</td>
+            <td>{{vo.member_name}}</td>
+            <td>{{vo.email}}</td>
+            <td>{{vo.phone}}</td>
+            <td>{{vo.price.toLocaleString()}}</td>
+            <td>{{vo.pickup_date}}</td>
+            <td>{{vo.return_date}}</td>
             <td>{{vo.status}}</td>
             <td v-if="vo.status === '예약 진행 중'" style="padding: 8px;">
-              <button type="button" class="btn btn-primary r-12" @click="confHotel(vo.no)">예약 확정</button>
+              <button type="button" class="btn btn-primary r-12" @click="confCar(vo.no)">예약 확정</button>
             </td>
             <td v-if="vo.status === '예약 확정'" style="padding: 8px;">
               <a class="btn btn-default r-12" style="cursor: default;">확정 완료</a>
@@ -90,12 +89,15 @@
 	  mounted() {
 		  this.dataRecv()
 	  },
+	  computed:{
+	  },
 	  methods: {
-		  confHotel(no) {
+		  
+		  confCar(no) {
 			  console.log(no)
 			  if(confirm("예약 확정 처리를 진행 하시겠습니까?") == true) 
 			  {
-				  axios.post('http://localhost:8080/admin/hotel_reserve_update_vue.do', null, {
+				  axios.post('http://localhost:8080/admin/car_reserve_update_vue.do', null, {
 					  params: {
 						  no
 					  }
@@ -135,7 +137,7 @@
 				this.dataRecv()
 		  },
 		  dataRecv() {
-			  axios.get('http://localhost:8080/admin/hotel_reserve_list_vue.do', {
+			  axios.get('http://localhost:8080/admin/car_reserve_list_vue.do', {
 				  params: {
 					  page: this.curpage
 				  }
