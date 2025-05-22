@@ -85,7 +85,7 @@ template:
 					      <button type="button"
 					              @click="increment('children')"
 					              :disabled="children === 8"
-					              class="btn btn-light">+</button>
+					              class="btn btn-light">+</button> 
 					    </div>
                         </div>
                       </div>

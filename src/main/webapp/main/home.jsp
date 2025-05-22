@@ -1007,7 +1007,7 @@ let mainApp = Vue.createApp({
 	      this.returnDate     = filters.returnDate;
 	      this.adults         = filters.adults;
 	      this.children       = filters.children;
-	      this.fetchPage();
+	      this.fetchPage(); 
 	      
 	    },
 	    
