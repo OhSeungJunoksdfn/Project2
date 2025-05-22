@@ -27,9 +27,9 @@
 <!-- 사이드바 Start -->
 	<div id="app">
 		<section class="ftco-section ftco-degree-bg">
-      <div class="container">
+      <div class="container" >
         <div class="row">
-        	<div class="col-lg-3 order-md-last sidebar pt-3 shadow" id="sidebar">
+        	<div class="col-lg-3 order-md-last sidebar pt-3 shadow" id="sidebar" >
         		<div class="sidebar-wrap ftco-animate">
         			<h3 class="heading mb-4">결제 정보</h3>
         			<form action="#" @submit.prevent>
@@ -65,6 +65,7 @@
 	            	</form>
         		</div>
           </div>
+          
           <div class="col-lg-9">
           	<div class="row mr-2 sidebar shadow pt-3">
           		<div class="col-lg-12" style="display:flex;">
@@ -96,7 +97,7 @@
           		
           		
           		
-          		<section class="ftco-section ">
+          		<section class="ftco-section">
 			      <div class="container">
 			        <div class="row">
 			          <div class="col-md-4">
@@ -116,7 +117,7 @@
 			              </h5>
 			            </div>
 			          </div>
-			          <div class="col-md-4">
+			          <div class="col-md-4 ">
 			            <div class="intro ftco-animate r-12 sidebar shadow p-3">
 			              <span style="display:flex">
 			              	<input class="ins_radio" type="radio" style="margin-bottom:5px"
@@ -152,7 +153,7 @@
 			          </div>
 			        </div>
 			      </div>
-			      <div style="padding:10px;padding-top:100px">
+			      <div class="" style="padding:10px;padding-top:100px">
 			      	<h5>${vo.branch.branch_name }</h5>
 	    			<div id="map" style="width:100%;height:280px;"></div> 
 	    			
@@ -175,49 +176,11 @@
 	    		</div>
 			    </section>
           		
-          		
-
-          		
-
 				<!-- 댓글-->
-				<section class="ftco-section-parallax">
-				      <div class="container">
-				        <div class="row">
-				          <h3 class="col-12 mb-5">6 Comments</h3>
-				          <div class="col-12">
-				            <ul class="comment-list">
-				              <li class="comment">
-				                <div class="vcard bio">
-				                  <img src="../images/person_1.jpg" alt="Image placeholder" />
-				                </div>
-				                <div class="comment-body">
-				                  <h3>John Doe</h3>
-				                  <div class="meta">October 03, 2018 at 2:21pm</div>
-				                  <p>
-				                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-				                    Pariatur quidem laborum necessitatibus, ipsam impedit vitae
-				                    autem, eum officia, fugiat saepe enim sapiente iste iure!
-				                    Quam voluptas earum impedit necessitatibus, nihil?
-				                  </p>
-				                  <p><a href="#" class="reply">Reply</a></p>
-				                </div>
-				              </li>
-				            </ul>
-				          </div>
-				          <h3 class="ml-3">댓글입력</h3>
-				          <div class=" container input-group mb-3">
-				            <textarea
-				              class="form-control"
-				              placeholder="Recipient's username"
-				              aria-label="Recipient's username"
-				              aria-describedby="button-addon2"
-				              style="resize: none; height: 100px !important; border-radius: 12px 0 0 12px"
-            				></textarea>
-           					 <button class="replyBtn" style="border-radius: 0 12px 12px 0">댓글</button>
-				          </div>
-				        </div>
-				      </div>
-				    </section>
+				<jsp:include page="../component/replyComponent.jsp">
+				  <jsp:param name="no"   value="${no}" />
+				  <jsp:param name="type" value="car"/>
+				</jsp:include>
 				  <!--댓글 끝-->
 
 				  <!--추천-->
@@ -319,6 +282,7 @@
           </div> <!-- .col-md-8 -->
         </div>
       </div>
+      
     </section> <!-- .section -->
 
     </div>
@@ -327,7 +291,7 @@
 
 </script>
 <script>
-      let hotelListApp=Vue.createApp({
+      const carApp=Vue.createApp({
     	  data() {
     		  return {
     			  pudate:'${pudate}',
@@ -437,7 +401,7 @@
       		}
     	  }
     	  
-      }).mount("#app")
+      }).mount("#app");
       
       var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
     mapOption = {

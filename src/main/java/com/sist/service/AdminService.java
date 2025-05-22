@@ -3,6 +3,7 @@ package com.sist.service;
 import java.util.*;
 
 import com.sist.vo.*;
+import com.sist.vo.admin.DashVO;
 import com.sist.vo.admin.NoticeVO;
 
 public interface AdminService {
@@ -19,4 +20,10 @@ public interface AdminService {
 	public int userCount();
 	public void adminMemberSuspended(String id);
 	public void adminMemberActivate(String id);
+	public int dashBoardCount();
+	public int dashSalesData();
+	public int dashdataBoardCount();
+	public List<DashVO> dashNewMember();
+	public DashVO dashSexData();
+	public DashVO dashBoardHitData();
 }

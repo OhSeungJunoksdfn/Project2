@@ -24,7 +24,15 @@
   	
   	<section class="ftco-section" style="margin-top:0px;padding-top:0px">
       <div class="container">
-      	<car-reserve-tab :onclickhandler="test"></car-reserve-tab>
+      	<div class="container-wrap mx-auto mb-5 mt-5" >
+	        <div class="row no-gutters">
+	          <div class="col-md-12 tab-wrap rt-12 shadow" style="border-radius: 10px;">
+	            <div class="tab-content p-4 px-5">
+			      <car-reserve-tab :onclickhandler="test"></car-reserve-tab>
+			    </div>
+			  </div>
+			</div>
+	      </div>
         <div class="row">
         
           <!-- 사이드바 -->

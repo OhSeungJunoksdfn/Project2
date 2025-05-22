@@ -12,6 +12,7 @@ import com.sist.vo.board.BoardVO;
 import com.sist.vo.board.QnaVO;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,6 +26,68 @@ public class AdminRestController {
 	private BoardService bservice;
 	@Autowired
 	private CustomerService cservice;
+	
+	
+	@GetMapping("admin/main_vue.do")
+	public Map adminMainVue()
+	{
+		int sales=service.dashSalesData();
+		int qna = service.dashBoardCount();
+		int board=service.dashdataBoardCount();
+		int member=service.userCount();
+		List<DashVO> list = service.dashNewMember();
+		List<String> months= new ArrayList<String>();
+		List<Integer> cnts= new ArrayList<Integer>();
+		int max = 0;
+		
+		for(DashVO vo:list)
+		{
+			months.add(vo.getMonth());
+			cnts.add(vo.getCnt());
+			if(max<vo.getCnt());
+				max=vo.getCnt();
+		}
+		System.out.println(months);
+		System.out.println(cnts);
+		System.out.println(max);
+		Map map= new HashMap();
+		map.put("sales", sales);
+		map.put("board", board);
+		map.put("qna", qna);
+		map.put("member", member);
+		map.put("months",months);
+		map.put("max",max);
+		map.put("cnts",cnts);
+		return map;
+	}
+	@GetMapping("admin/statistics_vue.do")
+	public Map adminStatisticsVue()
+	{
+		List<DashVO> list = service.dashNewMember();
+		List<String> months= new ArrayList<String>();
+		List<Integer> cnts= new ArrayList<Integer>();
+		DashVO bvo = service.dashBoardHitData();
+		DashVO svo = service.dashSexData();
+		
+		bvo.setMan(svo.getMan());
+		bvo.setWoman(svo.getWoman());
+		
+		int max = 0;
+		
+		for(DashVO vo:list)
+		{
+			months.add(vo.getMonth());
+			cnts.add(vo.getCnt());
+			if(max<vo.getCnt());
+				max=vo.getCnt();
+		}
+		Map map= new HashMap();
+		map.put("months",months);
+		map.put("max",max);
+		map.put("cnts",cnts);
+		map.put("vo", bvo);
+		return map;
+	}
 	
 	String[] boardtype= {"","*","공지사항","자유글","호텔","관광지","맛집","렌트"};
 	@GetMapping("notice/list.do")

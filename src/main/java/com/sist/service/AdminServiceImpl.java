@@ -93,6 +93,42 @@ public class AdminServiceImpl implements AdminService {
 		// TODO Auto-generated method stub
 		dao.adminMemberActivate(id);
 	}
+
+	@Override
+	public int dashBoardCount() {
+		// TODO Auto-generated method stub
+		return dao.dashBoardCount();
+	}
+
+	@Override
+	public int dashSalesData() {
+		// TODO Auto-generated method stub
+		return dao.dashSalesData();
+	}
+
+	@Override
+	public int dashdataBoardCount() {
+		// TODO Auto-generated method stub
+		return dao.dashdataBoardCount();
+	}
+
+	@Override
+	public List<DashVO> dashNewMember() {
+		// TODO Auto-generated method stub
+		return dao.dashNewMember();
+	}
+
+	@Override
+	public DashVO dashSexData() {
+		// TODO Auto-generated method stub
+		return dao.dashSexData();
+	}
+
+	@Override
+	public DashVO dashBoardHitData() {
+		// TODO Auto-generated method stub
+		return dao.dashBoardHitData();
+	}
 	
 	
 }

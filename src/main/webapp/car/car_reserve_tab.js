@@ -4,17 +4,7 @@ const car_reserve_tab = {
 template:
 `
 	<div  >
-		<section class="ftco-section justify-content-end " style="">
-	      <div class="container-wrap mx-auto">
-	        <div class="row no-gutters">
-	          <div class="col-md-12 tab-wrap rt-12 shadow" style="border-radius:10px">
-	            <div class="tab-content p-4 px-5" id="v-pills-tabContent">
-	              <div
-	                class="tab-pane fade show active"
-	                id="v-pills-1"
-	                role="tabpanel"
-	                aria-labelledby="v-pills-nextgen-tab"
-	              >
+
 	                <form action="#" class="search-destination" @submit.prevent="search()">
 	                  <div class="row">
 	                  	<div class="col-md align-items-end">
@@ -24,12 +14,8 @@ template:
 	                          <div class="icon">
 	                            <span class="icon-map-marker"></span>
 	                          </div>
-	                          <input
-	                          	ref="pickupdate"
-	                            type="text"
-	                            class="form-control checkin_date"
-	                            placeholder="Pick up"
-	                          />
+
+	                          <input ref="pickupdate" type="date" class="form-control" v-model="checkin" />
 	                        </div>
 	                      </div>
 	                    </div>
@@ -58,12 +44,7 @@ template:
 	                          <div class="icon">
 	                            <span class="icon-map-marker"></span>
 	                          </div>
-	                          <input
-	                          	ref="returndate"
-	                            type="text"
-	                            class="form-control checkin_date"
-	                            placeholder="Return"
-	                          />
+	                          <input ref="returndate" type="date" class="form-control" v-model="checkin" />
 	                        </div>
 	                      </div>
 	                    </div>
@@ -98,13 +79,7 @@ template:
 	                    </div>
 	                  </div>
 	                </form>
-	              </div>
-	              
-	            </div>
-	          </div>
-	        </div>
-	      </div>
-	    </section>
+
 	</div>
 `,
 	props: {
@@ -137,19 +112,19 @@ template:
 				return_time:rtime
 			}
 			
-			const pudateSplit = pudate.split('/').map(Number)
+			const pudateSplit = pudate.split('-').map(Number)
 			const putimeSplit = putime.split(':').map(Number)
-			const puDateType = new Date(pudateSplit[2],
-										pudateSplit[0]-1,
-										pudateSplit[1],
+			const puDateType = new Date(pudateSplit[0],
+										pudateSplit[1]-1,
+										pudateSplit[2],
 										putimeSplit[0],
 										putimeSplit[1])
-										
-			const rdateSplit = rdate.split('/').map(Number)
+			console.log(puDateType)
+			const rdateSplit = rdate.split('-').map(Number)
 			const rtimeSplit = rtime.split(':').map(Number)
-			const rDateType = new Date(rdateSplit[2],
-										rdateSplit[0]-1,
-										rdateSplit[1],
+			const rDateType = new Date(rdateSplit[0],
+										rdateSplit[1]-1,
+										rdateSplit[2],
 										rtimeSplit[0],
 										rtimeSplit[1])
 

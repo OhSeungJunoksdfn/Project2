@@ -97,6 +97,7 @@
                 role="tabpanel"
                 aria-labelledby="v-pills-effect-tab"
               >
+              	<car-search-bar @search="handleSearch"></car-search-bar>
                 <!-- 렌트카 서치 바 넣는 곳 -->
               </div>
             </div>
@@ -983,6 +984,7 @@
     </section>
 </div>
 <script src="../hotel/hotel_searchbar.js"></script>
+<script src="../car/car_reserve_tab.js"></script>
 <script>
 let mainApp = Vue.createApp({
 	data() {
@@ -1017,7 +1019,8 @@ let mainApp = Vue.createApp({
 		}
 	},
 	components:{
-		'hotel-search-bar': hotel_searchbar
+		'hotel-search-bar': hotel_searchbar,
+		'car-search-bar':car_reserve_tab
 	}
 }).mount("#mainApp")
 </script>
