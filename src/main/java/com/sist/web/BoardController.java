@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.sist.aop.LoginCheck;
 import com.sist.service.*;
 import com.sist.vo.board.*;
 
@@ -66,6 +67,7 @@ public class BoardController {
 	}
 	
 	@GetMapping("board/insert.do")
+	@LoginCheck
 	public String board_insert(Model model)
 	{
 		model.addAttribute("main_jsp","../board/insert.jsp");
@@ -93,7 +95,7 @@ public class BoardController {
 		return "main/main";
 	}
 	
-	@PostMapping("board/insert.do")
+	@PostMapping("board/insert_ok.do")
 	public String insert(BoardVO vo, HttpServletRequest request) throws Exception {
 	    HttpSession session = request.getSession();
 	    String id   = (String) session.getAttribute("id");
@@ -165,6 +167,7 @@ public class BoardController {
 	}
 	 
 	 @GetMapping("board/update.do")
+	 @LoginCheck
 	 public String board_update(Model model, int no)
 	 {
 		 BoardVO vo = service.boardDetailData(no);

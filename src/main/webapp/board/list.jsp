@@ -14,7 +14,7 @@
       
       id="boardListApp"
     >
-      <div class="container secb shadow py-2" style="width:960px">
+      <div class="container py-2" style="width:960px">
         <div class="row p-2">
         <div class="col-12 d-flex justify-content-between align-items-center">
           <ul class="nav nav-tabs">

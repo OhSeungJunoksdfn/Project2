@@ -28,11 +28,8 @@
 
         <div class="collapse navbar-collapse" id="ftco-nav">
           <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
-              <a href="../main/main.do" class="nav-link">Home</a>
-            </li>
             <li class="nav-item">
-              <a href="about.html" class="nav-link">About</a>
+              <a href="../main/main.do" class="nav-link">Home</a>
             </li>
             <li class="nav-item">
               <a href="../air/air_list.do" class="nav-link">Places</a>
@@ -87,10 +84,10 @@
               class="mb-4"
               data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"
             >
-              Discover <br />A new Place
+               Escape to<br />Jeju Island
             </h1>
             <p data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">
-              Find great places to stay, eat, shop, or visit from local experts
+              Explore the island's best spots for food, nature, and culture
             </p>
           </div>
         </div>
