@@ -85,4 +85,51 @@ public interface AdminMapper {
 			+ "WHERE id=#{id}")
 	public void adminAuthorityActivate(String id);
 	
+	
+	// 새문의
+	@Select("SELECT COUNT(*) FROM qnaboard WHERE isok='n'")
+	public int dashBoardCount();
+	
+	//월 호텔 매출
+	@Select("SELECT SUM(total_price) FROM hotel_reservation "
+			+ "WHERE TO_CHAR(BOOKING_DATE, 'YYYYMM') = TO_CHAR(SYSDATE, 'YYYYMM') AND status='예약 확정'")
+	public int dashSalesData();
+	//금일 신규 게시글
+	@Select("SELECT COUNT(*) FROM databoard "
+			+ "WHERE TRUNC(regdate) = TRUNC(SYSDATE)")
+	public int dashdataBoardCount();
+	//월별 신규 회원
+	@Select("SELECT  TO_CHAR(regdate, 'YYYY-MM') AS month,COUNT(*) AS cnt "
+			+ "FROM projectmember "
+			+ "WHERE regdate >= ADD_MONTHS(TRUNC(SYSDATE,'mm'),-5) "
+			+ " AND regdate < ADD_MONTHS(TRUNC(SYSDATE, 'MM'), 1) "
+			+ "GROUP BY TO_CHAR(regdate, 'YYYY-MM') "
+			+ "ORDER BY month")
+	public List<DashVO> dashNewMember();
+	//남녀 성비
+	@Select("SELECT COUNT(CASE WHEN sex = '남자' THEN 1 END) AS man, "
+			+ "COUNT(CASE WHEN sex = '여자' THEN 1 END) AS woman "
+			+ "FROM projectmember")
+	public DashVO dashSexData(); 
+	
+	//게시글별 작성도
+	@Select("SELECT SUM(CASE WHEN type = '자유글' THEN hit ELSE 0 END) AS free, "
+			+ "SUM(CASE WHEN type = '호텔' THEN hit ELSE 0 END) AS hotel, "
+			+ "SUM(CASE WHEN type = '관광지' THEN hit ELSE 0 END) AS travel, "
+			+ "SUM(CASE WHEN type = '맛집' THEN hit ELSE 0 END) AS food,"
+			+ "SUM(CASE WHEN type = '렌트' THEN hit ELSE 0 END) AS rental, "
+			+ "GREATEST( "
+			+ "SUM(CASE WHEN type = '자유글' THEN hit ELSE 0 END),"
+			+ "SUM(CASE WHEN type = '호텔' THEN hit ELSE 0 END), "
+			+ "SUM(CASE WHEN type = '관광지' THEN hit ELSE 0 END),"
+			+ "SUM(CASE WHEN type = '맛집' THEN hit ELSE 0 END), "
+			+ "SUM(CASE WHEN type = '렌트' THEN hit ELSE 0 END) "
+			+ ") AS bmax "
+			+ "FROM databoard "
+			+ "WHERE regdate >= TRUNC(SYSDATE, 'MM') "
+			+ "AND regdate < ADD_MONTHS(TRUNC(SYSDATE, 'MM'), 1)")
+	public DashVO dashBoardHitData();
+	
+	
+	
 }

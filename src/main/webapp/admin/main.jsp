@@ -67,12 +67,34 @@
     flex: 1 1 auto;
     overflow-y: auto;
   }
+  #sidebar {
+  width: 250px;
+}
+@media (max-width: 768px) {
+.row.full-height-row {
+    flex-direction: column; /* 안전하게 위아래로 정렬되도록 */
+  }
+   #sidebar {
+    width: 100% !important;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 5px;
+  }
+  .main-col {
+    width: 100% !important;
+  }
+  #sideBtn {
+    flex: 1 1 calc(50% - 10px);
+    margin-bottom: 5px;
+  }
+}
 </style>
 </head>
 <body>
 	<div class="container-fluid full-height px-0" style="max-width:100%;">
-  		<div class="row full-height-row no-gutters">
-			<div class="col-auto p-2 bg-dark" style="width:250px;">
+  		<div class="row full-height-row no-gutters flex-wrap">
+			<div class="col-md-3 col-12 bg-dark p-2 " id="sidebar">
 				
 				<a href="../admin/main.do" class="col btn btn-outline-primary border-0 rounded-0 d-flex justify-content-center align-items-center" id="sideBtn" style="height:50px; color:white"  >대시보드</a>
 				<a href="../admin/board.do" class="col btn btn-outline-primary border-0 rounded-0 d-flex justify-content-center align-items-center" id="sideBtn" style="height:50px; color:white"  >게시판관리</a>
@@ -82,11 +104,10 @@
 				<a href="../admin/reserve.do" class="col btn btn-outline-primary border-0 rounded-0 d-flex justify-content-center align-items-center" id="sideBtn" style="height:50px; color:white"  >예약관리</a>
 				<a href="../admin/notice.do" class="col btn btn-outline-primary border-0 rounded-0 d-flex justify-content-center align-items-center" id="sideBtn" style="height:50px; color:white"  >공지사항</a>
 				<a href="../admin/statistics.do" class="col btn btn-outline-primary border-0 rounded-0 d-flex justify-content-center align-items-center" id="sideBtn" style="height:50px; color:white"  >통계</a>
-				<a href="../admin/coupon.do" class="col btn btn-outline-primary border-0 rounded-0 d-flex justify-content-center align-items-center" id="sideBtn" style="height:50px; color:white"  >쿠폰</a>
 		        <a href="../member/logout.do" class="col btn btn-primary rounded-0 mt-1">나가기</a>
 				
 			</div>
-			<div class="col main-col bg-light px-0">
+			<div class="col-md-9 col-12 main-col bg-light px-0">
 			   <div class="scrollable-content">
 		        <div class="container h-100">
 		          <div class="row pt-4 justify-content-center">
