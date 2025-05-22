@@ -39,7 +39,7 @@
         >
 
     <div class="container secb shadow py-2">
-      <h3>글쓰기</h3>
+      <h3>글 수정하기</h3>
       <div class="row p-3">
         <!-- 제목, 유형 -->
         <div class="input-group mb-2">
