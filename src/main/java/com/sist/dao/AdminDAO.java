@@ -72,4 +72,39 @@ public class AdminDAO {
 		mapper.adminMemberActivate(id);
 		mapper.adminAuthorityActivate(id);
 	}
+	
+	//대시보드 통계
+	//새 문의
+	public int dashBoardCount()
+	{
+		return mapper.dashBoardCount();
+	}
+	//호텔 매출
+	public int dashSalesData()
+	{
+		return mapper.dashSalesData();
+	}
+	//금일 신규 게시글
+	public int dashdataBoardCount()
+	{
+		return mapper.dashdataBoardCount();
+	}
+	
+	//월별 신규 회원
+	public List<DashVO> dashNewMember()
+	{
+		return mapper.dashNewMember();
+	}
+	//남녀 성비
+	public DashVO dashSexData()
+	{
+		return mapper.dashSexData();
+	}
+	//게시글별 방문수
+	public DashVO dashBoardHitData()
+	{
+		return mapper.dashBoardHitData();
+	}
+	
+	
 }
