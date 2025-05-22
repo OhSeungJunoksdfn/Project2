@@ -79,7 +79,7 @@
                 aria-labelledby="v-pills-nextgen-tab"
               >
               <!-- 호텔 서치바 넣는 곳 -->
-              
+              <air-search-bar @search="handleSearch1"></air-search-bar>
               </div>
 				<!-- 호텔 서치바 시작 -->
               <div
@@ -985,6 +985,7 @@
 </div>
 <script src="../hotel/hotel_searchbar.js"></script>
 <script src="../car/car_reserve_tab.js"></script>
+<script src="../air/air_reserve_tab1.js"></script>
 <script>
 let mainApp = Vue.createApp({
 	data() {
@@ -995,7 +996,34 @@ let mainApp = Vue.createApp({
 	mounted() {
 		this.hotelList()
 	},
-	methods: {
+	methods: {    
+		handleSearch1(filters) {
+	      this.isInbound      = false;
+	      this.curpage        = 1;
+	      this.list           = [];
+	      this.from           = filters.from;
+	      this.to             = filters.to;
+	      this.departureDate  = filters.departureDate;
+	      this.returnDate     = filters.returnDate;
+	      this.adults         = filters.adults;
+	      this.children       = filters.children;
+	      this.fetchPage();
+	      
+	    },
+	    
+	    fetchPage() {
+	        axios.get('/air/list_vue.do', {
+	          params:{
+	            page:this.curpage,
+	            from:this.from,
+	            to:this.to,
+	            date:this.departureDate,
+	            adults:   this.adults,
+	            children: this.children
+	          }
+	        })
+	        .catch(console.error);
+	      },
 		handleSearch({ checkin, checkout, person }) {
 			// 쿼리스트링 가져온 후 vue로 보내기위한 메소드
 			const query =
@@ -1020,7 +1048,8 @@ let mainApp = Vue.createApp({
 	},
 	components:{
 		'hotel-search-bar': hotel_searchbar,
-		'car-search-bar':car_reserve_tab
+		'car-search-bar':car_reserve_tab,
+		'air-search-bar':air_reserve_tab1
 	}
 }).mount("#mainApp")
 </script>
