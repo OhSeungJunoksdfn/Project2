@@ -25,11 +25,11 @@
 <body>
 <!-- 시작 -->
 <!-- 사이드바 Start -->
-	<div id="appp">
+	<div id="app">
 		<section class="ftco-section ftco-degree-bg">
       <div class="container" >
         <div class="row">
-        	<div class="col-lg-3 order-md-last sidebar pt-3 shadow app" id="sidebar" >
+        	<div class="col-lg-3 order-md-last sidebar pt-3 shadow" id="sidebar" >
         		<div class="sidebar-wrap ftco-animate">
         			<h3 class="heading mb-4">결제 정보</h3>
         			<form action="#" @submit.prevent>
@@ -98,7 +98,7 @@
           		
           		
           		<section class="ftco-section">
-			      <div class="container app">
+			      <div class="container">
 			        <div class="row">
 			          <div class="col-md-4">
 			            <div class="intro ftco-animate r-12 sidebar shadow p-3">
@@ -401,11 +401,7 @@
       		}
     	  }
     	  
-      })
-      
-      document.querySelectorAll('.app').forEach((el) => {
-    	  carApp.mount(el);
-		});
+      }).mount("#app");
       
       var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
     mapOption = {
