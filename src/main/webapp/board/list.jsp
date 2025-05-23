@@ -37,9 +37,26 @@
               <a :class="type===7?'tablink nav-link cursor-pointer active':'tablink nav-link cursor-pointer'" @click="changeType('7')" >렌트</a>
             </li>
           </ul>
+          <div style="float:left">
+         <form method="get" action="../board/list.do" >
+          <div class="input-group py-1"><select
+                  class="form-select"
+                  name="fd"
+                  v-model="fd"
+                  style="border-radius: 0;border: 1px solid #ced4da;"
+                >
+                  <option value="subject">제목</option>
+                  <option value="name">작성자</option>
+                  <option value="content">내용</option>
+                </select>
+	          <input type="text" class="form-control rounded-0" v-model="ss" name="ss">
+	          <input type="submit" class="btn btn-primary rounded-0" value="검색">
           <c:if test="${sessionScope.id!=null }">
-          <a href="../board/insert.do" class="btn btn-primary r-12" >글쓰기</a>
+          <a href="../board/insert.do" class="btn btn-success rounded-0 d-flex justify-content-center align-items-center " >글쓰기</a>
           </c:if>
+          </div>
+         </form>
+          </div>
           </div>
           <table class="table">
             <thead>
@@ -70,15 +87,15 @@
             <div class="block-27">
               <ul>
               <c:if test="${startPage>1 }">
-                <li><a href="../board/list.do?type=${type }&page=${startPage-1}">&lt;</a></li>
+                <li><a href="../board/list.do?type=${type }&page=${startPage-1}&fd=${fd}&ss=${ss}">&lt;</a></li>
               </c:if>
               
               	<c:forEach var="i" begin="${startPage }" end="${endPage }" >
-                <li class="${i==curpage? 'active':'' }"><a href="../board/list.do?type=${type }&page=${i }" >${i }</a></li>
+                <li class="${i==curpage? 'active':'' }"><a href="../board/list.do?type=${type }&page=${i }&fd=${fd}&ss=${ss}" >${i }</a></li>
               	</c:forEach>
                 
                 <c:if test="${endPage<totalpage }">
-                <li ><a href="../board/list.do?type=${type }&page=${endPage+1}">&gt;</a></li>
+                <li ><a href="../board/list.do?type=${type }&page=${endPage+1}&fd=${fd}&ss=${ss}">&gt;</a></li>
                 </c:if>
               </ul>
             </div>
@@ -91,7 +108,9 @@
 const boardListApp=Vue.createApp({
 	data(){
 		return{
-			type:${type}
+			type:${type},
+			fd:"${fd}",
+			ss:"${ss}"
 		}
 	},
 	mounted(){

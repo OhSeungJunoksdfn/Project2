@@ -12,6 +12,42 @@
   height: auto;    
   display: block;  
 }
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+.modal-content {
+  background-color: white;
+  width: 100%;
+  max-width: 960px;
+  max-height: 80vh;
+  overflow-y: auto;
+  padding: 24px;
+  border-radius: 4px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  position: relative;
+}
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 8px;
+  margin-bottom: 16px;
+}
+.modal-header h5 {
+  margin: 0;
+  color: #007bff;
+  font-weight: bold;
+}
 </style>
 </head>
 <body>
@@ -21,7 +57,7 @@
     >
       <div class="container secb rounded-0 shadow py-2 bg-white" style="max-width:960px; width:100%">
         <div class="col-12 p-2">
-     	  <h3>게시글 관리</h3>   
+      	  <h3>게시글 관리</h3>   
           <table class="table">
             <thead>
               <tr class="text-center">
@@ -32,7 +68,6 @@
                 <th width="10%">
                 <input type="button" value="선택삭제" class="btn btn-danger rounded-0"  @click="deleteSelected()">
                 </th>
-                
               </tr>
             </thead>
             <tbody>
@@ -64,50 +99,15 @@
           </div>
         </div>
       </div>
-    <section
-    	class="row justify-content-center align-items-center"
-        style="
-          background-color: rgba(0, 0, 0, 0.1);
-          z-index: 999;
-          width: 100vw;
-          height: 100vh;
-          position: fixed;
-          left: 0;
-          top: 0;
-		  display:none;
-        "
-        id="showBox"
-        @click="hideBox()"
-      >
-        <div
-          class="container rounded-0"
-          style="width: 960px; background-color: white;"
-          @click.stop
-        >
-          <div class="row justify-content-center">
-            <p
-              class="col-12 p-3 mb-2"
-              style="
-                font-size: 16px;
-                color: white;
-                font-weight: 500;
-                line-height: 16px;
-                background-color: #3f5277;
-                
-              "
-            >
-              {{dvo.subject}}
-            </p>
+      <div v-if="modalVisible" class="modal-overlay" @click="hideBox">
+        <div class="modal-content" @click.stop>
+          <div class="modal-header">
+            <h5>{{ dvo.subject }}</h5>
+            <button type="button" class="btn-close" aria-label="Close" @click="hideBox"></button>
           </div>
-          <div width="100%">
-          <div  style="min-height:300px;max-height:500px; width:100%;
-          overflow:auto; white-space:pre-wrap; word-wrap:break-word;"
-          v-html="dvo.content"
-          class="html-content">
-          </div>
-          </div>
+          <div v-html="dvo.content" class="html-content"></div>
         </div>
-      </section>
+      </div>
     </section>
 <script>
 const boardListApp=Vue.createApp({
@@ -122,7 +122,8 @@ const boardListApp=Vue.createApp({
 			fd:'subject',
 			ss:'',
 			selected: [],
-			dvo:{}
+			dvo:{},
+      modalVisible: false
 		}
 	},
 	mounted(){
@@ -142,13 +143,12 @@ const boardListApp=Vue.createApp({
 			.catch(err => {
 				console.log(err.response)
 			})
-			
 		},
 		hideBox(){
-			$("#showBox").hide();
+			this.modalVisible = false;
 		},
 		showBox(){
-			$("#showBox").show();
+			this.modalVisible = true;
 		},
 		deleteSelected() {
 			if(this.selected.length===0){
@@ -225,9 +225,7 @@ const boardListApp=Vue.createApp({
 			.catch(err => {
 				console.log(err.response)
 			})
-			
 		},
-		
 	}
 }).mount("#boardListApp")
 </script>

@@ -20,7 +20,7 @@ public interface BoardMapper {
 	public List<BoardVO> boardListData(Map map);
 	
 	@Select("SELECT CEIL(COUNT(*)/10.0) FROM databoard "
-			+ "WHERE REGEXP_LIKE(type,#{type})")
+			+ "WHERE REGEXP_LIKE(type,#{type}) AND REGEXP_LIKE(${fd},#{ss})")
 	public int boardTotalPage(Map map);
 	
 	@Select("SELECT NVL(MAX(no),0) from databoard ")

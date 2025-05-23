@@ -38,7 +38,7 @@ public class BoardController {
 			type="1";
 		if(fd==null)
 			fd="subject";
-		if(ss==null)
+		if(ss==""||ss==null)
 			ss="*";
 		int rowSize= 10;
 		Map map = new HashMap();
@@ -56,6 +56,11 @@ public class BoardController {
 		if(endPage>totalpage)
 			endPage=totalpage;
 		
+		
+		model.addAttribute("fd",fd);
+		if(ss.equals("*"))
+			ss="";
+		model.addAttribute("ss",ss);
 		model.addAttribute("list",list);
 		model.addAttribute("totalpage",totalpage);
 		model.addAttribute("startPage",startPage);

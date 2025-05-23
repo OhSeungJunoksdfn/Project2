@@ -12,10 +12,41 @@
     height: auto;
     display: block;
   }
-  @media (max-width: 768px) {
-    .responsive-wrapper {
-      padding: 0 20px !important;
-    }
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }
+  .modal-content {
+    background-color: white;
+    width: 100%;
+    max-width: 960px;
+    max-height: 80vh;
+    overflow-y: auto;
+    padding: 24px;
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    position: relative;
+  }
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 8px;
+    margin-bottom: 16px;
+  }
+  .modal-header h5 {
+    margin: 0;
+    color: #007bff;
+    font-weight: bold;
   }
 </style>
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
@@ -70,24 +101,16 @@
         </div>
       </div>
 
-      <section
-        class="row justify-content-center align-items-center"
-        style="background-color: rgba(0, 0, 0, 0.1); z-index: 999; width: 100vw; height: 100vh; position: fixed; left: 0; top: 0; display:none;"
-        id="showBox"
-        @click="hideBox()">
-        <div class="container rounded-0" style="width: 960px; background-color: white;" @click.stop>
-          <div class="row justify-content-center">
-            <p class="col-12 p-3 mb-2" style="font-size: 16px; color: white; font-weight: 500; line-height: 16px; background-color: #3f5277;">
-              댓글
-            </p>
+      <div v-if="modalVisible" class="modal-overlay" @click="hideBox">
+        <div class="modal-content" @click.stop>
+          <div class="modal-header">
+            <h5>댓글</h5>
+            <button type="button" class="btn-close" aria-label="Close" @click="hideBox"></button>
           </div>
-          <div width="100%">
-            <pre style="min-height:300px; max-height:500px; width:100%; overflow:auto; white-space:pre-wrap; word-wrap:break-word;">
-{{dmsg}}
-            </pre>
-          </div>
+          <pre style="white-space: pre-wrap; word-wrap: break-word; font-size: 1rem; line-height: 1.6;">{{ dmsg }}</pre>
         </div>
-      </section>
+      </div>
+
     </div>
   </div>
 </section>
@@ -102,7 +125,8 @@ const boardListApp = Vue.createApp({
       startPage: 0,
       endPage: 0,
       selected: [],
-      dmsg: ""
+      dmsg: "",
+      modalVisible: false
     }
   },
   mounted() {
@@ -114,10 +138,10 @@ const boardListApp = Vue.createApp({
       this.showBox()
     },
     hideBox() {
-      $("#showBox").hide();
+      this.modalVisible = false;
     },
     showBox() {
-      $("#showBox").show();
+      this.modalVisible = true;
     },
     deleteSelected() {
       if (this.selected.length === 0) {

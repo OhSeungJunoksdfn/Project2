@@ -211,7 +211,7 @@
     </section>
 	
 	<!-- 호텔 랜덤 리스트 시작 -->
-	<section class="ftco-section pt-0">
+	<section class="ftco-section ">
       <div class="container">
         <div class="row justify-content-center mb-5 pb-3">
           <div class="col-md-7 heading-section text-center ftco-animate">
@@ -273,7 +273,7 @@
 	<!-- 호텔 랜덤 리스트 끝 -->
     
 	<!-- 차량 랜덤 리스트 시작 -->
-	<section class="ftco-section">
+	<section class="ftco-section pt-0">
       <div class="container">
         <div class="row justify-content-center mb-5 pb-3">
           <div class="col-md-7 heading-section text-center ftco-animate">
