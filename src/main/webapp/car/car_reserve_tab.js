@@ -139,9 +139,9 @@ template:
 			{
 				alert("날짜나 시간이 올바르지 않습니다.")
 			}else{
-				location.href='../car/car_search_list.do?
+				location.href=`../car/car_search_list.do?
 								pudate=${pudate}&putime=${putime}&
-								rdate=${rdate}&rtime=${rtime}'
+								rdate=${rdate}&rtime=${rtime}`
 			}
 		},
 		generateTimeOptions() {
