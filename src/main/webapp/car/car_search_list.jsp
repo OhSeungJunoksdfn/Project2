@@ -330,7 +330,7 @@
       			return arr
       		},
       		dataRecv() {
-      			axios.get('http://localhost:8080/car/list_search_vue.do', {
+      			axios.get('../car/list_search_vue.do', {
       				params: {
 	      				page: this.curpage,
 						pudate:this.pudate,

@@ -283,7 +283,7 @@
   			      '&person=' + encodeURIComponent(person);
   			
   			// 해당 URL로 페이지 이동 (리스트 페이지)
-  			window.location.href = 'http://localhost:8080/hotel/hotel_list.do?' + query;
+  			window.location.href = '../hotel/hotel_list.do?' + query;
    	        },
     		infoValue(key) {
     			return this[key]
@@ -345,7 +345,7 @@
       		},
       		dataRecv() {
       			console.log("🚀 전송 값:", this.checkin, this.checkout, this.person)
-      			axios.get('http://localhost:8080/hotel/list_vue.do', {
+      			axios.get('../hotel/list_vue.do', {
       				params: {
 	      				page: this.curpage,
 	      				areacode: this.areacode,

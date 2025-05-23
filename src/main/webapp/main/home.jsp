@@ -409,10 +409,10 @@ let mainApp = Vue.createApp({
 			      '&checkout=' + encodeURIComponent(checkout) +
 			      '&person=' + encodeURIComponent(person);
 			
-			window.location.href = 'http://localhost:8080/hotel/hotel_list.do?' + query;
+			window.location.href = '../hotel/hotel_list.do?' + query;
 		},
 		hotelList() {
-			axios.get('http://localhost:8080/hotel/hotel_mainPage_vue.do')
+			axios.get('../hotel_mainPage_vue.do')
 			.then(res => {
 				console.log(res.data)
 				this.hotels = res.data
@@ -424,7 +424,7 @@ let mainApp = Vue.createApp({
 			})
 		},
 		carList() {
-			axios.get('http://localhost:8080/car/car_mainPage_vue.do')
+			axios.get('../car/car_mainPage_vue.do')
 			.then(res => {
 				console.log(res.data)
 				this.cars = res.data.list

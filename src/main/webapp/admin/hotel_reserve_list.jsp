@@ -99,7 +99,7 @@
 			  console.log(no)
 			  if(confirm("예약 확정 처리를 진행 하시겠습니까?") == true) 
 			  {
-				  axios.post('http://localhost:8080/admin/hotel_reserve_update_vue.do', null, {
+				  axios.post('../admin/hotel_reserve_update_vue.do', null, {
 					  params: {
 						  no
 					  }
@@ -139,7 +139,7 @@
 				this.dataRecv()
 		  },
 		  dataRecv() {
-			  axios.get('http://localhost:8080/admin/hotel_reserve_list_vue.do', {
+			  axios.get('../admin/hotel_reserve_list_vue.do', {
 				  params: {
 					  page: this.curpage
 				  }
