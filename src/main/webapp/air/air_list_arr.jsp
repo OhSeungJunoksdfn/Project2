@@ -63,7 +63,7 @@
                 <!-- 왕복 모드이므로 isInbound=true, 왕복선택 버튼 숨김 -->
 			 <a class="btn btn-sm btn-warning"
 			        v-bind:href="
-			          '/air/seat_map.do?flightId=' + vo.flight_id
+			          '../air/seat_map.do?flightId=' + vo.flight_id
 			          + '&adults=' + adults
 			          + '&children=' + children
 			        ">
@@ -114,7 +114,7 @@ Vue.createApp({
 
     // 편도 API (필요 시 사용)
     fetchPage() {
-      axios.get('/air/list_vue.do', {
+      axios.get('../air/list_vue.do', {
         params:{
           page:this.curpage,
           from:this.from,
@@ -136,7 +136,7 @@ Vue.createApp({
 
     // 왕복(오는 편) API
     fetchInboundPage() {
-      axios.get('/air/air_list_arr_vue.do', {
+      axios.get('../air/air_list_arr_vue.do', {
         params:{
           page:this.curpage,
           from:this.from,
@@ -161,7 +161,7 @@ Vue.createApp({
     	      outboundFlightId: this.outboundFlightId,
     	      inboundFlightId:  this.inboundFlightId
     	    });
-      window.location.href = `/air/passenger_info.do?flightId=${id}`;
+      window.location.href = `../air/passenger_info.do?flightId=${id}`;
     }
   },
   mounted() {
