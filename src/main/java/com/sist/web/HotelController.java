@@ -1,5 +1,7 @@
 package com.sist.web;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -8,7 +10,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +53,7 @@ public class HotelController {
 		return "main/main";
 	}
 	@GetMapping("hotel/hotel_detail.do")
-	public String hotel_detail(int no, Model model, HttpSession session)
+	public String hotel_detail(int no, Model model, HttpSession session, HttpServletResponse res)
 	{	
 		String id = (String) session.getAttribute("member_id");
 		String checkin = (String) session.getAttribute("checkin");
@@ -59,6 +63,7 @@ public class HotelController {
 		    person = 2; 
 		}
 		
+	    
 		HotelVO vo = service.hotelData(no);
 		HotelInfoVO hiVo = service.hotelInfoData(no);
 		
@@ -92,16 +97,29 @@ public class HotelController {
 		return "main/main";
 	}
 	@GetMapping("hotel/hotel_reserve.do")
-	@LoginCheck
-	public String hotel_reserve(int no, Model model, HttpSession session)
+	public String hotel_reserve(int no, Model model, HttpSession session, HttpServletResponse res) 
+			throws ServletException, IOException 
 	{
 		String member_id = (String)session.getAttribute("id");
 		String checkin = (String) session.getAttribute("checkin");
 		String checkout = (String) session.getAttribute("checkout");
-		int person = (int) session.getAttribute("person");
+		Integer person = (Integer) session.getAttribute("person");
+		if (person == null) {
+		    person = 2; 
+		}
 		
 		if (member_id == null) {
 	        return "redirect:../member/login.do"; // 로그인 안 된 경우 로그인 페이지로 이동
+	    }
+		
+		if (checkin == null || checkin.trim().equals("")) {
+	        res.setContentType("text/html;charset=UTF-8");
+	        PrintWriter out = res.getWriter();
+	        out.println("<script>");
+	        out.println("alert(\"날짜 선택 후 객실 예약을 진행 해주세요.\");");
+	        out.println("location.href='../main/main.do';");
+	        out.println("</script>");
+	        return null;
 	    }
 		
 		// DATE 값으로 변경 후 N 박으로 계산

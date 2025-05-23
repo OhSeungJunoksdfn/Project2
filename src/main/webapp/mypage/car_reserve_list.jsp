@@ -30,7 +30,6 @@
 }
 
 .tab_nav a.active {
-	border-bottom: 3px solid #4eb8d1; /* 활성 탭 밑줄 */
 	color: #4eb8d1;
 	font-weight: bold;
 }
@@ -44,6 +43,9 @@
 	font-size: 14px;
 	color: black;
 }
+.mainTab a.active::after {
+  width: 100%;
+}
 </style>
 </head>
 <body>
@@ -51,8 +53,8 @@
     <div class="tab">
       <ul class="mainTab_nav">
         <li class="mainTab"><a href="#" style="color: black;">항공권 예약 조회</a></li>
-        <li class="mainTab"><a href="../mypage/car_reserve_list.do" style="color: black;">렌터카 예약 조회</a></li>
-        <li class="mainTab" ><a href="../mypage/hotel_reserve_list.do" style="color: black; font-weight: bold;">호텔 예약 조회</a></li>
+        <li class="mainTab"><a href="../mypage/car_reserve_list.do" class="active">렌터카 예약 조회</a></li>
+        <li class="mainTab" ><a href="../mypage/hotel_reserve_list.do">호텔 예약 조회</a></li>
       </ul>
     </div>
     <br>
@@ -183,6 +185,7 @@ $(function(){
 function delCar(no) {
 	console.log(no)
 	var msg = confirm("예약을 취소 하시겠습니까?");
+	if (!msg) return;
 	if(msg){
 		$.ajax({
 			type: "POST",

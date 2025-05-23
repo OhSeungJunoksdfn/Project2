@@ -12,6 +12,9 @@
 	text-align: center;
 	min-width: 1400px;
 }
+.mainTab a.active::after {
+  width: 100%;
+}
 </style>
 </head>
 <body>
@@ -20,7 +23,7 @@
 <div class="tab">
     <ul class="mainTab_nav mb-0 mt-2">
       <li class="mainTab"><a href="#">항공권 예약 관리</a></li>
-      <li class="mainTab"><a href="../admin/car_reserve_list.do">렌터카 예약 관리</a></li>
+      <li class="mainTab"><a href="../admin/car_reserve_list.do" class="active">렌터카 예약 관리</a></li>
       <li class="mainTab" ><a href="../admin/hotel_reserve_list.do">호텔 예약 관리</a></li>
     </ul>
   </div>
