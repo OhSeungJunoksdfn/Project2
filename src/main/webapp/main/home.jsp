@@ -366,6 +366,7 @@ let mainApp = Vue.createApp({
 	data() {
 		return {
 			hotels: [],
+			cars:[]
 		}
 	},
 	mounted() {
@@ -395,7 +396,8 @@ let mainApp = Vue.createApp({
 	            to:this.to,
 	            date:this.departureDate,
 	            adults:   this.adults,
-	            children: this.children
+	            children: this.children,
+	            
 	          }
 	        })
 	        .catch(console.error);
