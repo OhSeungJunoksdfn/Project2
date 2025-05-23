@@ -61,12 +61,13 @@ template:
                         <!-- 성인 카운터 -->
                         <div style="text-align:center">
                           <div>성인<br/><small>18세 이상</small></div>
-                          <span style="margin:0 0.5rem">{{ adults }}</span>
+                          
                            <div class="btn-group btn-group-sm">
 					      <button type="button"
 					              @click="decrement('adults')"
 					              :disabled="adults===0"
 					              class="btn btn-light">−</button>
+					              <span style="margin:0 0.5rem">{{ adults }}</span>
 					      <button type="button"
 					              @click="increment('adults')"
 					              :disabled="adults === 8"
@@ -76,12 +77,13 @@ template:
                         <!-- 유·소아 카운터 -->
                         <div style="text-align:center">
                           <div>유·소아<br/><small>0~17세</small></div>
-                          <span style="margin:0 0.5rem">{{ children }}</span>
+                          
                            <div class="btn-group btn-group-sm">
 					      <button type="button"
 					              @click="decrement('children')"
 					              :disabled="children===0"
 					              class="btn btn-light">−</button>
+					              <span style="margin:0 0.5rem">{{ children }}</span>
 					      <button type="button"
 					              @click="increment('children')"
 					              :disabled="children === 8"
@@ -122,6 +124,18 @@ template:
      children: this.initialChildren,
      errorMsg:  ''
     };
+  },
+  watch: {
+    // from이 바뀔 때마다 to를 자동 설정
+    from(newVal) {
+      if (newVal === 'GMP') {
+        this.to = 'CJU';
+      } else if (newVal === 'CJU') {
+        this.to = 'GMP';
+      } else {
+        this.to = '';
+      }
+    }
   },
   methods: {
    increment(type) {
