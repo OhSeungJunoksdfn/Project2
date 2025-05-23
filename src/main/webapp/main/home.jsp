@@ -412,7 +412,7 @@ let mainApp = Vue.createApp({
 			window.location.href = '../hotel/hotel_list.do?' + query;
 		},
 		hotelList() {
-			axios.get('../hotel_mainPage_vue.do')
+			axios.get('../hotel/hotel_mainPage_vue.do')
 			.then(res => {
 				console.log(res.data)
 				this.hotels = res.data
