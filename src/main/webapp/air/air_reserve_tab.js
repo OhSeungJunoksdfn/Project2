@@ -125,6 +125,18 @@ template:
      errorMsg:  ''
     };
   },
+  watch: {
+    // from이 바뀔 때마다 to를 자동 설정
+    from(newVal) {
+      if (newVal === 'GMP') {
+        this.to = 'CJU';
+      } else if (newVal === 'CJU') {
+        this.to = 'GMP';
+      } else {
+        this.to = '';
+      }
+    }
+  },
   methods: {
    increment(type) {
       if (type === 'adults') this.adults++;
