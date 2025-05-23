@@ -20,7 +20,7 @@
             <div
               class="row mb-5 justify-content-between align-items-center bb-3"
             >
-              <h3>예약하기</h3>
+              <h3>예약 완료</h3>
               <div>
                 <span style="font-weight: 700">예약정보</span> > 예약완료
               </div>

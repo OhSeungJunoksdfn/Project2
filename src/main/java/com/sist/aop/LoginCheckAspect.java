@@ -24,7 +24,7 @@ public class LoginCheckAspect {
         String id = session != null ? (String)session.getAttribute("id") : null;
 
         if (id == null) {
-            response.sendRedirect(request.getContextPath() + "../member/login.do");
+            response.sendRedirect(request.getContextPath() + "/member/login.do");
             return null; // 더 이상 컨트롤러로 가지 않음
         }
 
