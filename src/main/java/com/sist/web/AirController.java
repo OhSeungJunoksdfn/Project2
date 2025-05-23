@@ -188,7 +188,7 @@ public class AirController {
 //        vo.setStatus("BOOKED");
 //        vo.setBookingId(bookingId);
 //        service.addFlightSeat(vo);
-//        return "redirect:/air/seat_map.do?flightId=" + flightId;
+//        return "redirect:../air/seat_map.do?flightId=" + flightId;
 //    }
 //
 //    /** 좌석 예약 취소 (flight_seat 삭제) */
@@ -197,7 +197,7 @@ public class AirController {
 //            @RequestParam int flightId,
 //            @RequestParam int seatId) {
 //        service.deleteFlightSeat(flightId, seatId);
-//        return "redirect:/air/seat_map.do?flightId=" + flightId;
+//        return "redirect:../air/seat_map.do?flightId=" + flightId;
 //    }
 //
 //    /** 좌석 상태 변경 (예: AVAILABLE / HELD 등) */

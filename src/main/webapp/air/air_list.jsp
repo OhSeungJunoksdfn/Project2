@@ -61,7 +61,7 @@
       			<a
 			        class="btn btn-sm btn-warning"
 			        v-bind:href="
-			          '/air/seat_map.do?flightId=' + vo.flight_id
+			          '../air/seat_map.do?flightId=' + vo.flight_id
 			          + '&adults=' + adults
 			          + '&children=' + children
 			        ">
@@ -109,7 +109,7 @@ Vue.createApp({
 
     // 2) 편도 API
     fetchPage() {
-      axios.get('/air/list_vue.do', {
+      axios.get('../air/list_vue.do', {
         params:{
           page:this.curpage,
           from:this.from,
@@ -151,12 +151,12 @@ Vue.createApp({
 	  //    => from=GMP&to=CJU&departureDate=…&returnDate=…&travellers=…
 
 	  // 3) 완성된 쿼리스트링을 한 번에 붙여 리다이렉트
-	  window.location.href = '/air/air_list_arr.do?' + params.toString();
+	  window.location.href = '../air/air_list_arr.do?' + params.toString();
    },
 
     // 4) 왕복 API
     fetchInboundPage() {
-      axios.get('/air/air_list_arr_vue.do', {
+      axios.get('../air/air_list_arr_vue.do', {
         params:{
           page:this.curpage,
           from:this.from,

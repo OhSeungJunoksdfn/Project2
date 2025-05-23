@@ -225,7 +225,7 @@ public class AirRestController {
         service.addFlightSeatsBatch(flightId, fsList);
 
         // 3) 리다이렉트 URL 리턴
-        return "/air/passengers_info.do?bookingId=" + bookingId
+        return "../air/passengers_info.do?bookingId=" + bookingId
              + "&adults=" + adults
              + "&children=" + children;
     }

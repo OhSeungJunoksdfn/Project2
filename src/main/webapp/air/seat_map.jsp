@@ -244,7 +244,7 @@
       if (adultSeats.length) params.append('adultSeats', adultSeats.join(','));
       if (childSeats.length) params.append('childSeats', childSeats.join(','));
       
-      window.location.href = '/air/passengers_info.do?' + params.toString();
+      window.location.href = '../air/passengers_info.do?' + params.toString();
       });
     });
   </script>
